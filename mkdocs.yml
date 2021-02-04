@@ -1,11 +1,16 @@
 site_name: vAccel
 nav:
-    - Home: index.md
-    - Build:
-        - build.md
-        - run.md
-    - Unikernels:
-        - unikernels/unikraft.md
-    - k8s:
-        - k8s/kata.md
-theme: readthedocs
+  - Home: index.md
+  - Getting Started:
+    - build.md
+    - run.md
+  - Unikernels:
+    - unikernels/unikraft.md
+  - k8s:
+    - k8s/kata.md
+
+theme: material 
+ 
+features:
+  - navigation.instant
+  - navigation.sections

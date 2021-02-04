@@ -1,1 +1,1 @@
-## Running a simple example
+# Running a simple example
