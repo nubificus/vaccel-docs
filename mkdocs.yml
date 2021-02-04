@@ -15,6 +15,12 @@ theme: material
 features:
   - navigation.instant
   - navigation.sections
+  - navigation.expand
+  - toc.integrate
 
 markdown_extensions:
   - footnotes
+
+toc:
+  - permalink: true
+
