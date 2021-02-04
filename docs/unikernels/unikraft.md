@@ -123,8 +123,8 @@ LD_LIBRARY_PATH=/.local/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64 qemu-s
 ```
 
 Let's highlight some parts of the qemu command:
-` 
-- LD\_LIBRARY\_PATH environment variable: QEMU will dynamically link with every library it needs and in this case it also needs the vAccelrt library
-- -fsdev local,id=myid,path=./data,security\_model=none: We need to tell QEMU where will find the data that will pass to the guest. The data directory contains the image we want to classify
-- -object acceldev-backend-vaccelrt,id=gen0 -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on : For the vAccel driver
-- -append : In the command line we need to tell the classify application which image to classify and how many iterations to do
+ 
+- `LD\_LIBRARY\_PATH` environment variable: QEMU will dynamically link with every library it needs and in this case it also needs the vAccelrt library
+- `-fsdev local,id=myid,path=./data,security\_model=none`: We need to tell QEMU where will find the data that will pass to the guest. The data directory contains the image we want to classify
+- `-object acceldev-backend-vaccelrt,id=gen0 -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on`: For the vAccel driver
+- `-append "vfs.rootdev=data -- dog_0.jpg 1"`: In the command line we need to tell the classify application which image to classify and how many iterations to do
