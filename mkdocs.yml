@@ -2,6 +2,7 @@ site_name: vAccel
 nav:
   - Home: index.md
   - Getting Started:
+    - requirements.md
     - build.md
     - run.md
   - Unikernels:
@@ -14,3 +15,6 @@ theme: material
 features:
   - navigation.instant
   - navigation.sections
+
+markdown_extensions:
+  - footnotes
