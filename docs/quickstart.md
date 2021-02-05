@@ -165,3 +165,50 @@ classification tags: 60.498% malamute, malemute, Alaskan malamute
 
 ### Docker execution
 
+If you don't have a Jetson-inference installation available on your machine, you
+can use our `nubificus/vaccel-deps` Docker image to run a vAccel application.
+
+You need to install the Nvidia container runtime following the instructions
+[here](https://github.com/NVIDIA/nvidia-container-runtime), which allows you
+to pass to expose Nvidia GPU devices inside Docker containers.
+
+Once, you're all setup with the nvidia runtime you can run the application:
+
+```sh
+docker run --runtime=nvidia --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \
+  -e LD_LIBRARY_PATH=$(pwd)/lib \
+  -e VACCEL_BACKENDS=./lib/libvaccel-jetson.so \
+  -e VACCEL_IMAGENET_NETWORKS=$(pwd)/share/networks \
+  nubificus/vaccel-deps:latest \
+  ./bin/classify share/images/dog_0.jpg 1 
+```
+
+Similarly, we can launch a Firecracker VM inside the container. In this case,
+we need to add the `--privileged` flag to allow launching VMs inside the
+container and `-it` to be able to use the VM's console.
+
+```sh
+docker run --runtime=nvidia --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \
+  --privileged \
+  -it \
+  -e LD_LIBRARY_PATH=$(pwd)/lib \
+  -e VACCEL_BACKENDS=./lib/libvaccel-jetson.so \
+  -e VACCEL_IMAGENET_NETWORKS=$(pwd)/share/networks \
+  nubificus/vaccel-deps:latest \
+  ./bin/firecracker --api-sock fc.sock --config-file ./share/config_virtio_accel.json --seccomp-level 0
+```
+
+which we'll give us a console inside the VM, from which we can run our application
+the same way as we did before:
+
+```sh
+# export the library path
+export LD_LIBRARY_PATH=/opt/vaccel/lib
+
+# Tell vAccelRT to use the VirtIO plugin
+export VACCEL_BACKENDS=/opt/vaccel/lib/libvaccel-virtio.so
+
+# Launch the Firecracker VM
+/opt/vaccel/bin/classify images/dog_0.jpg 1
+```
+
