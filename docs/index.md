@@ -19,18 +19,33 @@ acceleratable functions from insde the VM to the host, incuring minimum overhead
 5. **scalability**: Integration with k8s allows deployment of vAccel applications
 at scale.
 
-
 ## vAccel design
-
-The core component of vAccel is the vaccel runtime (vaccelrt). vaccelrt is
-designed in a modular way. The core runtime exposes the vAccel API to user
-applications and dispatches requests to one of many *backend plugins*, which
-are the components that implement the vAccel API on a particular hardware
-accelerator.
 
 <figure>
   <img src="img/vaccel.svg" width="600" align=left />
   <figcaption>vAccel runtime stack</figcaption>
 </figure>
 
-The user application links against the core runtime 
+The core component of vAccel is the vaccel runtime (vAccelRT). vAccelRT is
+designed in a modular way. The core runtime exposes the vAccel API to user
+applications and dispatches requests to one of many *backend plugins*, which
+are the components that implement the vAccel API on a particular hardware
+accelerator.
+
+The user application links against the core runtime library and the plugin
+modules are loaded at runtime by the runtime. This workflow decouples the
+application from the hardware accelerator-specific parts of the stack, allowing
+for seamless migration of the same binary to different platforms with different
+accelerator capabilities, without the need to recomplile user code.
+
+### Hardware acceleration in Virtual Machines
+
+Hardware acceleration for virtualized guests is a difficult to tackle problem.
+Typical solutions involve device pass-through and paravirtual drivers that
+exposes hardware semantics inside the guest. vAccel differentiates itself from
+these approaches by exposing coarse grain "acceleratable" functions in the guest
+over a custom transport layer.
+
+## Performance
+
+## 
