@@ -20,4 +20,4 @@ at scale.
 
 ## vAccel design
 
-![vAccel](img/vaccel.png)
+![vAccel](img/vaccel.svg)
