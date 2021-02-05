@@ -20,6 +20,7 @@ features:
 
 markdown_extensions:
   - footnotes
+  - attr_list
 
 toc:
   - permalink: true
