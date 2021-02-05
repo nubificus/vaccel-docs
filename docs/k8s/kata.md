@@ -29,7 +29,7 @@ $ kubectl label nodes <your-node-name> vaccel=true
 Install vAccel-kata on each "vaccel=true" node:
 
 ```
-$ kubectl kata-deploy.yaml 
+$ kubectl apply -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-deploy/base/kata-deploy.yaml 
 ```
 
 The kata-deploy daemon calls the vAccel download script. It may take a few minutes to download the ML Inference models.
@@ -48,7 +48,7 @@ $ k3s kubectl -n kube-system logs kata-deploy-575tm
 ...
 ...
 Done! containerd-shim-kata-v2 is now configured to run Firecracker with vAccel
-warning: containerd-shim-kata-fc-v2 already exists
+**warning: containerd-shim-kata-fc-v2 already exists**
 node/node3.nubificus.com labeled
 ```
 That's it! You are now ready to accelerate your functions on Kubernetes with vAccel.
