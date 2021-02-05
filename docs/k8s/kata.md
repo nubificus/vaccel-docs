@@ -82,6 +82,23 @@ web-classify-kata-fc   ClusterIP   10.43.214.52   <none>        80/TCP    91m
 Run a `curl` command (from a cluster node) like the following to send your POST request to the Service web-classify-kata-fc (to access the Service from outside the cluster use nodePort or deploy an ingress route)
 
 ```
-$ wget https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg -O - | curl -L -X POST 10.43.214.52:80 --data-binary @-
-TODO OUTPUT
+$ wget https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg -O - | curl -L -X POST 10.43.214.52:80/classify --data-binary @-
 ```
+
+And see the result of the image classification!
+```
+--2021-02-05 20:17:15--  https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg
+Resolving pbs.twimg.com (pbs.twimg.com)... 2606:2800:134:fa2:1627:1fe:edb:1665, 192.229.233.50
+Connecting to pbs.twimg.com (pbs.twimg.com)|2606:2800:134:fa2:1627:1fe:edb:1665|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12605 (12K) [image/jpeg]
+Saving to: 'STDOUT'
+
+-                             100%[================================================>]  12.31K  --.-KB/s    in 0.04s   
+
+2021-02-05 20:17:15 (296 KB/s) - written to stdout [12605/12605]
+
+["web-classify-kata-fc-567bddccc4-s79b5"]: "29.761% wall clock"
+```
+
+![Cloudkernels logo](https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg)
