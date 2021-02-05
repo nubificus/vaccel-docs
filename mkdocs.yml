@@ -1,14 +1,18 @@
 site_name: vAccel
 nav:
   - Home: index.md
-  - Getting Started:
-    - requirements.md
-    - build.md
+  - Quickstart: quickstart.md
+  - User Guide:
+    - vaccelrt.md
+    - Plugins:
+      - jetson.md
+      - virtio.md
+      - coral.md
     - run.md
-  - Unikernels:
-    - unikernels/unikraft.md
   - k8s:
     - k8s/kata.md
+  - Unikernels:
+    - unikernels/unikraft.md
 
 theme: material 
  
