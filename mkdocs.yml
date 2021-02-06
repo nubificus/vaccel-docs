@@ -19,23 +19,6 @@ theme:
   name: material
   #favicon: img/vaccel-logo.png
   logo: img/vaccel-logo.png
-  palette:
-          #primary: light green
-          #accent: deep purple
-    - scheme: default
-      primary: light green
-      accent: light green
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-
-    # Toggle dark mode
-    - scheme: slate
-      primary: light green
-      accent: light green
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
  
 features:
   - navigation.instant
@@ -51,3 +34,6 @@ toc:
   - permalink: true
 
 copyright: Copyright &copy; 2018 - 2021 Nubificus LTD
+
+extra_css:
+  - stylesheets/extra.css
