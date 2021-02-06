@@ -11,11 +11,11 @@ In order to run vAccel on Kata containers with Firecracker you need to meet the 
 
 
 ## Quick start
-<sup>*We rely on* [kata-containers/kata-deploy](https://github.com/kata-containers/packaging/tree/master/kata-deploy) *to create the vaccel-kata-deploy daemon. Our fork repo can be found on* [cloudkernels/packaging](https://github.com/cloudkernels/packaging/tree/vaccel-dev)</sub> .*We are working on building a Kata Containers release with vAccel support.
 
 ### Deploy vAccel with Kata
+<sup>*We rely on* [kata-containers/kata-deploy](https://github.com/kata-containers/packaging/tree/master/kata-deploy) *to create the vaccel-kata-deploy daemon. Our fork repo can be found on* [cloudkernels/packaging](https://github.com/cloudkernels/packaging/tree/vaccel-dev).*We are working on building a Kata Containers release with vAccel support.*</sup>
 
-First label each node where vAccel-kata should be deployed:
+Label each node where vAccel-kata should be deployed:
 
 ```
 $ kubectl label nodes <your-node-name> vaccel=true
@@ -103,7 +103,5 @@ Saving to: 'STDOUT'
 ```
 
 <p align="center">
-  <img width="460" height="300" src="https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg">
+  <img width="300" height="300" src="https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg">
 </p>
-
-![Cloudkernels logo](https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg)
