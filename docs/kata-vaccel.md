@@ -1,5 +1,8 @@
-We have ported vAccel to Kata Containers Runtime for Firecracker with
-containerd Shim v2. You can try it directly on Kubernetes following the [docs](/k8s/kata)!
+# vAccel on kata containers
+
+We have ported vAccel to the Kata Containers Runtime for Firecracker with
+containerd Shim v2. You can try it directly on Kubernetes following the
+[docs](/k8s/kata)!
 
 Visit our fork repos to have a look on our WiP to fully integrate vAccel with
 Kata Containers on QEMU / Firecracker.

@@ -6,8 +6,8 @@ application both directly on a Linux host and inside a Firecracker VM.
 
 ## Building the vAccel stack
 
-The [vAccel](https://github.com/cloudkernels/vaccel) is a meta repo which keeps
-track of all the individual components needed for running a vAccel application.
+The [vAccel](https://github.com/cloudkernels/vaccel) repo serves as a means to
+keep track of all the individual components needed to run a vAccel application.
 
 ```sh
 git clone https://github.com/cloudkernels/vaccel
@@ -34,8 +34,10 @@ you can just run:
 
 Note: while building the rootfs, this script will require your sudo password.
 
-If a jetson-inference setup is not available you can use our `nubificus/vaccel-deps`
-container image to build the necessary components, by running:
+If a jetson-inference setup is not available you can either follow [this
+guide](/jetson) to build the vAccel jetson plugin and install the prerequisites
+on your host machine, or use our `nubificus/vaccel-deps` container image to
+build the necessary components, by running:
 
 ```sh
 ./build.sh -c all
@@ -88,7 +90,7 @@ classification tags: 60.498% malamute, malemute, Alaskan malamute
 **Note**: The first time your run a classification with a model jetson-inference
 is performing some JIT steps to optimize the classification result, so you can
 expect increased execution time. The output of this operation is cached for
-subsequent executions
+subsequent executions.
 
 #### Running in a Firecracker VM 
 
@@ -170,7 +172,7 @@ can use our `nubificus/vaccel-deps` Docker image to run a vAccel application.
 
 You need to install the Nvidia container runtime following the instructions
 [here](https://github.com/NVIDIA/nvidia-container-runtime), which allows you
-to pass to expose Nvidia GPU devices inside Docker containers.
+to use NVIDIA GPU devices inside Docker containers.
 
 Once, you're all setup with the nvidia runtime you can run the application:
 

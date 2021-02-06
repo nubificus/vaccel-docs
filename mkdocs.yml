@@ -9,7 +9,7 @@ nav:
       - virtio.md
       - coral.md
     - run.md
-  - vAccel on Kata-containers: kata-vaccel.md
+  - kata-vaccel.md
   - k8s:
     - k8s/kata.md
   - Unikernels:

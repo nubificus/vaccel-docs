@@ -1,6 +1,6 @@
-# Building the vAccelRT
+# Building the vAccel Runtime
 
-## vAccel Runtime System
+## vAccelRT
 
 vAccel is a runtime system for hardware acceleration. It provides an API with a set of functions that the runtime is able to offload to hardware acceleration
 devices. The design of the runtime is modular, it consists of a front-end library which exposes the API to the user application and a set of back-end plugins
