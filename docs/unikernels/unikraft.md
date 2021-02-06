@@ -1,28 +1,30 @@
 ---
-
 title: "How to run a vAccel application using Unikraft"
-
 date: 2021-02-03T17:15:12+02:00
-
 author: Charalampos Mainas
-
 description : "Instructions to use vAccel in Unikraft"
-
 ---
 
-In this post we will describe the process of running an image classification app in Unikraft using vAccel. In order to do that we gonna need;
+To run an image classification app in Unikraft using vAccel, we need:
 
-- a NVIDIA GPU which supports CUDA 
-- the appropriate drivers
-- and [jetson-inference](https://github.com/dusty-nv/jetson-inference)
+- an NVIDIA GPU which supports CUDA 
+- the appropriate device drivers
+- [jetson-inference](https://github.com/dusty-nv/jetson-inference)
 
-As long as we have the above depedencies, we can move on setting up the vAccel environment for our example. We will need to set up 3 components:
+As long as we have the above depedencies, we can proceed setting up the vAccel
+environment for our example. A comprehensive walk through on installing the above dependencies is given in [Jetson-inference](/jetson). 
 
-- [vAccelrt](https://github.com/cloudkernels/vaccelrt) on the bost
-- A hypervisor with vAccel suuport, in our case [QEMU](https://github.com/cloudkernels/qemu-vaccel/tree/vaccelrt_legacy_virtio)
+Additionally, we will need to set up 3 components:
+
+- The vAccel Runtime system, [vAccelrt](https://github.com/cloudkernels/vaccelrt) on the bost
+- A hypervisor with vAccel support, in our case [QEMU](https://github.com/cloudkernels/qemu-vaccel/tree/vaccelrt_legacy_virtio)
 - and of course [Unikraft](https://github.com/cloudkernels/unikraft/tree/vaccel_new)
 
-To make things easier we have created some scripts and Docketfiles which produce a vAccel enabled QEMU and a Unikraft unikernel. You can get them from [this](https://github.com/nubificus/qemu-x86-build/tree/unikernels_vaccelrt) repo. The first 2 components can be built using the build.sh script with the -u option, like:
+To make things easier we have created some scripts and Docketfiles which
+produce a vAccel enabled QEMU and a Unikraft unikernel. You can get them from
+[this](https://github.com/nubificus/qemu-x86-build/tree/unikernels_vaccelrt)
+repo. The first 2 components can be built using the build.sh script with the -u
+option, like:
 
 ```
 bash build.sh -u
@@ -32,27 +34,34 @@ The last component can be created using the build\_guest.sh script with the -u o
 bash build_guest.sh -u
 ```
 
-After succefully building all components we can just fire up our unikernel using the command:
+After succefully building all components we can just fire up our unikernel
+using the command:
 ```
 bash run.sh
 ```
 
-This command will start Unikraft over QEMU classifying the image dog\_0.jpg under `guest/data/` directory of this repo.
+This command will start Unikraft over QEMU classifying the image dog\_0.jpg
+under `guest/data/` directory of this repo.
 
-Let's take a closer look on what is happening inside the containers and how we can do each step by ourselves.
+Let's take a closer look on what is happening inside the containers and how we
+can perform each step by ourselves.
 
 ### Setting up vAccert for the host
 
-vAccelrt is a thin and efficient runtime system that links against the user application and is responsible for dispatching operations to the relevant hardware accelerators.
-In our case this hardware will be a NVIDIA GPU. As a result we need to build the Jetson plugin for vAccelrt too. At first let's get the source code
+vAccelrt is a thin and efficient runtime system that links against the user
+application and is responsible for dispatching operations to the relevant
+hardware accelerators. In our case the backend plugin will be an NVIDIA GPU,
+and more specifically, jetson-inference, using TensorRT. As a result we need to
+build the Jetson plugin for vAccelrt. 
 
+At first let's get the source code:
 ```
-git clone https://github.com/cloudkernels/vaccelrt.git
+git clone --recursive https://github.com/cloudkernels/vaccelrt.git
 cd vaccelrt 
-git submodule update --init
 ```
 
-As we said before we will also build the jetson plugin and we will speccify `~/.local/` as the directory where vAccelrt will be installed.
+As we mentioned before, we will also build the jetson plugin and we will
+specify `~/.local/` as the directory where vAccelrt will be installed.
 
 ```
 mkdir build && cd build
@@ -64,26 +73,33 @@ Now that we have vAccelrt installed we need to set the plugin that we will use
 ```
 export VACCEL_BACKENDS=/.local/lib/libvaccel-jetson.so
 ```
+
 ### Build QEMU with vAccel support
-As always at first we need to get the source code. For the time being we have a seperated branch where QEMU exposes vAccel to the guest with legacy virtio.
+
+For the time being we have a seperated branch where QEMU exposes vAccel to the
+guest with legacy virtio. First lets get the source code:
 ```
-git clone https://github.com/cloudkernels/qemu-vaccel.git -b vaccelrt_legacy_virtio
+git clone --recursive https://github.com/cloudkernels/qemu-vaccel.git -b vaccelrt_legacy_virtio
 cd qemu-vaccel
-git submodule update --init
 ```
 
-We will configure QEMU with only one target and we need to point out the install location of vAccelrt with cflags and ldflags. Please set the install prefix in case you do not want it to be installed in the default directory.
+We will configure QEMU with only one target and we need to point out the
+install location of vAccelrt with cflags and ldflags. Please set the install
+prefix in case you do not want it to be installed in the default directory.
 ```
 mkdir build && cd build
 ../configure --extra-cflags="-I /.local/include" --extra-ldflags="-L/.local/lib" --target-list=x86_64-softmmu --enable-virtfs
 make -j12 && make install
 ```
 
-THat's it. We are done with the host side.
+THat's it. We are done with the host side!
 
 ### Build the Unikraft application
 
-We will follow the instructions from [Unikraft's documentation](http://docs.unikraft.org/users-advanced.html#) with a minor change. We will not use the official Unikraft repo but out fork. In out fork there is also an example application for image classification.
+We will follow the instructions from [Unikraft's
+documentation](http://docs.unikraft.org/users-advanced.html#) with a minor
+change. We will not use the official Unikraft repo but our fork. In our fork we
+have added an example application for image classification.
 
 ```
 git clone https://github.com/cloudkernels/unikraft.git
@@ -92,16 +108,18 @@ cp -r unikraft/example apps/classify
 cd apps/classify
 ```
 
-Our example has a config which enables vAccel support for Unikraft and a lot of debug messages.. You can use that config or you can make your own config, but make sure you select vaccelrt under library configuration inside menuconfig.
+Our example has a config which enables vAccel support for Unikraft and a lot of
+debug messages. You can use that config or you can make your own config, but
+make sure you select vaccelrt under library configuration inside menuconfig.
 
 ```
 cp vaccel_config .config && make olddefconfig
 make
 ```
 
-After building is done, there will be a Unikraft image for KVM under build direcotry.
+After building is done, there will be a Unikraft image for KVM under the build directory.
 
-### Fire it up
+### Fire it up!
 
 After that long journey of building let's see what we have done. Not yet...
 
@@ -113,7 +131,7 @@ cp /usr/local/share/jetson-inference/data/networks/* networks
 export VACCEL_IMAGENET_NETWORKS=/full/path/to/newly/downloaded/networks/directory
 ```
 
-Finally we can run out unikernel.
+Finally we can run our unikernel using the command below:
 
 ```
 LD_LIBRARY_PATH=/.local/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64 qemu-system-x86_64 -cpu host -m 512 -enable-kvm -nographic -vga none \

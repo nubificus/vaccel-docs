@@ -1,21 +1,15 @@
-# Building the vAccel stack
+# Building the vAccelRT
 
-## vaccel Runtime System
+## vAccel Runtime System
 
-vaccel is a runtime system for hardware acceleration. It provides an API with a set of functions that the runtime is able to offload to hardware acceleration
+vAccel is a runtime system for hardware acceleration. It provides an API with a set of functions that the runtime is able to offload to hardware acceleration
 devices. The design of the runtime is modular, it consists of a front-end library which exposes the API to the user application and a set of back-end plugins
 that are responsible to offload computations to the accelerator.
 
 This design decouples the user application from the actual accelerator specific code. The advantage of this choice is that the application can make use of
 different hardware accelerators without extra development cost or re-compiling.
 
-This repo includes the core runtime system, and back-end plugins for VirtIO and the Jetson Inference framework.
-
-### VirtIO backend
-TODO: put link to VirtIO README.md
-
-### Jetson Inference backend
-
+[This](https://github.com/cloudkernels/vaccelrt) repo includes the core runtime system, and back-end plugins for VirtIO and the Jetson Inference framework.
 
 ### Build & Installation
 
