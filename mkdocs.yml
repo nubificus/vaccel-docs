@@ -15,7 +15,27 @@ nav:
   - Unikernels:
     - unikernels/unikraft.md
 
-theme: material 
+theme:
+  name: material
+  #favicon: img/vaccel-logo.png
+  logo: img/vaccel-logo.png
+  palette:
+          #primary: light green
+          #accent: deep purple
+    - scheme: default
+      primary: light green
+      accent: light green
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+    # Toggle dark mode
+    - scheme: slate
+      primary: light green
+      accent: light green
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
  
 features:
   - navigation.instant
@@ -30,3 +50,4 @@ markdown_extensions:
 toc:
   - permalink: true
 
+copyright: Copyright &copy; 2018 - 2021 Nubificus LTD
