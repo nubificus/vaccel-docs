@@ -7,12 +7,13 @@ We will use an example of image classification which can be found under the
 of the vAccel runtime [repo](https://github.com/cloudkernels/vaccelrt).
 
 You can build the example using the CMake of the repo:
+
 ```bash
-$ mkdir build
-$ cd build
-$ cmake -DBUILD_EXAMPLES=ON ..
-$ make
-$ ls examples
+mkdir build
+cd build
+cmake -DBUILD_EXAMPLES=ON ..
+make
+ls examples
 classify  CMakeFiles  cmake_install.cmake  Makefile
 ```
 
@@ -20,9 +21,9 @@ If, instead, you want to build by hand you need to define the include and librar
 in your respective default search paths) and also link with `dl`:
 
 ```
-$ cd ../examples
-$ gcc -Wall -Wextra -I${HOME}/.local/include -L${HOME}/.local/lib classification.c -o classify -lvaccel -ldl
-$ ls
+cd ../examples
+gcc -Wall -Wextra -I${HOME}/.local/include -L${HOME}/.local/lib classification.c -o classify -lvaccel -ldl
+ls
 classification.c  classify  CMakeLists.txt  images
 ```
 
@@ -49,9 +50,10 @@ Finally, the classification application needs the imagent models in the current 
 (TODO: Find link to download those). Once you have these, you can do:
 
 ```bash
-$ ls 
+ls 
 classify  images  networks
-$ VACCEL_IMAGENET_NETWORKS=$(pwd) ./classify images/banana_0.jpg 1
+
+VACCEL_IMAGENET_NETWORKS=$(pwd) ./classify images/banana_0.jpg 1
 Initialized session with id: 1
 Image size: 79281B
 classification tags: 99.902% banana
