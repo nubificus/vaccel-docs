@@ -1,4 +1,4 @@
-# vAccel on k8s using Kata & Firecracker
+# vAccel on k8s using Kata-containers & Firecracker
 
 ## Prerequisites
 
