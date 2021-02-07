@@ -54,7 +54,7 @@ node/node3.nubificus.com labeled
 ```
 **That's it! You are now ready to accelerate your functions on Kubernetes with vAccel.**
 
-*Alternatively* use the following daemon which already contains all the vAccel artifacts and required components in the container image. The image is slightly bigger than before (~2GB).
+*Alternatively* use the following daemon which already contains all the vAccel artifacts and required components in the container image. The image is slightly bigger than before as it already contains jetson inference models.
 
 ```
 $ kubectl apply -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/full?ref=vaccel-dev
@@ -173,7 +173,7 @@ $ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vac
 $ k3s kubectl delete -k github.com/cloudkernels/packaging/kata-deploy/kata-cleanup/overlays/k3s?ref=vaccel-dev
 ``` 
 
-Delete `vaccel=true` from each node
+Remove `vaccel=true` from each node
 
 ```
 $ kubectl label nodes <your-node-name> vaccel=true-
