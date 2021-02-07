@@ -28,7 +28,11 @@ $ kubectl apply -f https://raw.githubusercontent.com/cloudkernels/packaging/vacc
 
 Install vAccel-kata on each "vaccel=true" node:
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-deploy/base/kata-deploy.yaml 
+$ kubectl apply -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-deploy/base/kata-deploy.yaml
+
+# or for k3s
+
+$ k3s kubectl apply -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/k3s?ref=vaccel-dev
 ```
 
 The kata-deploy daemon calls the vAccel download script. It may take a few minutes to download the ML Inference models.
@@ -54,6 +58,10 @@ node/node3.nubificus.com labeled
 
 ```
 $ kubectl apply -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/full?ref=vaccel-dev
+
+# or for k3s
+
+$ k3s kubectl apply -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/full-k3s?ref=vaccel-dev
 ```
 
 Don't forget to create a RuntimeClass in order to run your workloads with vAccel enabled kata runtime
@@ -75,7 +83,7 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 web-classify-kata-fc-5f44fd448f-mtvlv   1/1     Running   0          92m
 web-classify-kata-fc-5f44fd448f-h7j84   1/1     Running   0          92m
 
-$ k3s kubectl get svc                  
+$ kubectl get svc                  
 NAME                   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
 web-classify-kata-fc   ClusterIP   10.43.214.52   <none>        80/TCP    91m
 ```
@@ -105,3 +113,69 @@ Saving to: 'STDOUT'
 <p align="center">
   <img width="300" height="300" src="https://pbs.twimg.com/profile_images/1186928115571941378/1B6zKjc3_400x400.jpg">
 </p>
+
+### Cleanup everything
+
+Delete the web-classify-fc deployment and service:
+
+```
+$ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/examples/web-classify.yaml
+```
+
+Delete the daemon:
+(removes artifacts from host paths /opt/vaccel & /opt/kata and restores containerd configuration)
+
+```
+$ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-deploy/base/kata-deploy.yaml
+
+# or for k3s
+
+$ k3s kubectl delete -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/k3s?ref=vaccel-dev
+```
+
+or in case you deployed the full vAccel overlay:
+
+```
+$ kubectl delete -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/full?ref=vaccel-dev
+
+# or for k3s
+
+$ k3s kubectl delete -k github.com/cloudkernels/packaging/kata-deploy/kata-deploy/overlays/full-k3s?ref=vaccel-dev
+``` 
+
+Reset the runtime and remove kata related labels from nodes:
+```
+$ kubectl apply -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-cleanup/base/kata-cleanup.yaml
+
+# or for k3s
+
+$ k3s kubectl apply -k github.com/cloudkernels/packaging/kata-deploy/kata-cleanup/overlays/k3s?ref=vaccel-dev
+``` 
+
+
+Delete the kata-fc RuntimeClass and the rbac
+
+```
+$ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/k8s-1.14/kata-fc-runtimeClass.yaml
+```
+
+```
+$ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-rbac/base/kata-rbac.yaml
+```
+
+Delete the cleanup daemon
+
+```
+$ kubectl delete -f https://raw.githubusercontent.com/cloudkernels/packaging/vaccel-dev/kata-deploy/kata-cleanup/base/kata-cleanup.yaml
+
+# or for k3s
+
+$ k3s kubectl delete -k github.com/cloudkernels/packaging/kata-deploy/kata-cleanup/overlays/k3s?ref=vaccel-dev
+``` 
+
+Delete `vaccel=true` from each node
+
+```
+$ kubectl label nodes <your-node-name> vaccel=true-
+```
+
