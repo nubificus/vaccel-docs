@@ -11,6 +11,7 @@ nav:
     - run.md
   - kata-vaccel.md
   - k8s:
+    - devmapper.md
     - k8s/kata.md
   - Unikernels:
     - unikernels/unikraft.md

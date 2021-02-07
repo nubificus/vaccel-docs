@@ -5,9 +5,9 @@
 In order to run vAccel on Kata containers with Firecracker you need to meet the following prerequisites on each k8s node that will be used for acceleration:
 
 - containerd as container manager
-- devicemapper as CRI plugin default snapshotter
-- nvidia GPU which supports CUDA (*for now*)
-- [jetson-inference](https://github.com/dusty-nv/jetson-inference) libraries (libjetson-inference.so must be installed and properly linked with CUDA libraries)
+- devicemapper as CRI plugin default snapshotter ([info](/devmapper))
+- nvidia GPU which supports CUDA (*for now*) ([info](/jetson))
+- [jetson-inference](https://github.com/dusty-nv/jetson-inference) libraries (libjetson-inference.so must be installed and properly linked with CUDA libraries) ([info](/jetson))
 
 
 ## Quick start
