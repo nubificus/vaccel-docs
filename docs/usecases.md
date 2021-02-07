@@ -64,7 +64,7 @@ metadata:
     name: gvisor
     namespace: openfaas
 spec:
-    runtimeClassName: kata
+    runtimeClassName: kata-fc
 EOF
 ```
 
