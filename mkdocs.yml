@@ -17,6 +17,9 @@ nav:
     - unikernels/unikraft.md
   - examples.md
   - usecases.md
+  - Developer Guide:
+    - api.md
+    - plugin.md
 
 theme:
   name: material
