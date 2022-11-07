@@ -1,27 +1,122 @@
 # Quickstart
 
-This is a quick start guide for running a simple vAccel application on a x86
-machine with an Nvidia GPU. We will build the vAccel stack and run a simple
-application both directly on a Linux host and inside a Firecracker VM.
+This is a quick start guide for running a simple vAccel application. 
 
-## Building the vAccel stack
+- [Build from Source](#build-from-source) or [get the binary packages](#binary-packages) [currently only for Debian/Ubuntu variants]
+- Run a [simple example](#simple-example) [using the `noop` plugin]
+- Run a more [elaborate example](#jetson-example) [using the `jetson-inference` plugin]
 
-The [vAccel](https://github.com/cloudkernels/vaccel) repo serves as a means to
-keep track of all the individual components needed to run a vAccel application.
+<hr>
+## Binary packages
 
-```sh
-git clone https://github.com/cloudkernels/vaccel
-cd vaccel
+We provide release debs of the vAccelRT library, along with an example, debug
+plugin (`noop`), and a hardware plugin (`jetson-inference`).
+
+### Get vAccelRT
+
+You can install vAccelRT (in `/usr/local`) using the following commands:
+
+```
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+sudo dpkg -i vaccel-0.5.0-Linux.deb
 ```
 
-The repo includes a build script which will build all the components:
+### Get the `jetson-inference` plugin
 
-1. The `vAccelRT` with the currently supported plugins
-. The `virtio-accel` kernel module which acts as the transport layer when
-running inside the Firecracker VM
-1. The forked Firecracker VMM which is patched to handle virtio-accel requests
-1. A rootfs and suitable vmlinux kernel image for booting the Firecracker VM
-1. An example application for testing our setup
+You can install the `jetson-inference` plugin using the following commands:
+
+```
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/master/x86_64/vaccelrt-plugin-jetson-0.1-Linux.deb
+dpkg -i vaccelrt-plugin-jetson-0.1-Linux.deb
+```
+
+You can now go ahead and run a [simple example](#simple-example) using the `noop` plugin.
+
+<hr>
+
+## Build from Source
+
+### Prerequisites
+
+In Ubuntu-based systems, you need to have the following packages to build `vaccelrt`:
+
+- cmake
+- build-essential
+
+You can install them using the following command:
+
+```bash
+sudo apt-get install -y cmake build-essential
+```
+
+
+### Get the source code
+
+Get the source code for **vaccelrt**:
+
+```bash
+git clone https://github.com/cloudkernels/vaccelrt --recursive
+```
+
+### Build and install vaccelrt
+
+Build vaccelrt and install it in `/usr/local`:
+
+```bash
+cd vaccelrt
+mkdir build
+cd build
+cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_PLUGIN_NOOP=ON -DBUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
+make
+make install
+```
+
+<hr>
+
+## Simple Example
+
+Donwload an adorable kitten photo:
+
+```bash
+wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
+```
+
+
+Try one of our examples, available at `/usr/local/bin/classify` or `/usr/local/bin/classify_generic`:
+
+```bash
+# set some env variables to specify where to find libvaccel.so
+# and the backend plugin (noop)
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+# execute the operation
+/usr/local/bin/classify_generic cat.jpeg 1
+```
+
+The output should be something like the following:
+
+```
+# /usr/local/bin/classify_generic cat.jpeg 1
+Initialized session with id: 1
+Image size: 54372B
+[noop] Calling Image classification for session 1
+[noop] Dumping arguments for Image classification:
+[noop] len_img: 54372
+[noop] will return a dummy result
+classification tags: This is a dummy classification tag!
+```
+
+
+
+
+
+
+
+
+
+
+
 
 Building the Jetson inference plugin requires a working
 [jetson-inference](https://github.com/dusty-nv/jetson-inference) installation
