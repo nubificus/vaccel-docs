@@ -3,20 +3,23 @@ nav:
   - Home: index.md
   - Quickstart: quickstart.md
   - User Guide:
-    - vaccelrt.md
-    - Plugins:
-      - jetson.md
-      - virtio.md
-      - coral.md
-    - run.md
-  - kata-vaccel.md
-  - k8s:
-    - devmapper.md
-    - k8s/kata.md
-  - Unikernels:
-    - unikernels/unikraft.md
-  - examples.md
-  - usecases.md
+    - building.md
+    - binaries.md
+    - build_run_app.md
+    #- vaccelrt.md
+    #- Plugins:
+    #  - jetson.md
+    #  - virtio.md
+    #  - coral.md
+    #- run.md
+  #- kata-vaccel.md
+  #- k8s:
+  #  - devmapper.md
+  #  - k8s/kata.md
+  #- Unikernels:
+  #  - unikernels/unikraft.md
+  #- examples.md
+  #- usecases.md
   - Developer Guide:
     - api.md
     - plugin.md
