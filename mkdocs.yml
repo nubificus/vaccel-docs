@@ -6,6 +6,7 @@ nav:
     - building.md
     - binaries.md
     - build_run_app.md
+    - vm-example.md
     #- vaccelrt.md
     #- Plugins:
     #  - jetson.md
@@ -42,7 +43,7 @@ markdown_extensions:
 toc:
   - permalink: true
 
-copyright: Copyright &copy; 2018 - 2021 Nubificus LTD
+copyright: Copyright &copy; 2018 - 2022 Nubificus LTD
 
 extra_css:
   - stylesheets/extra.css

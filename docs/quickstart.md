@@ -4,7 +4,8 @@ This is a quick start guide for running a simple vAccel application.
 
 - [Build from Source](#build-from-source) or [get the binary packages](#binary-packages) [currently only for Debian/Ubuntu variants]
 - Run a [simple example](#simple-example) [using the `noop` plugin]
-- Run a more [elaborate example](#jetson-example) [using the `jetson-inference` plugin]
+- Run the same example [in a VM](#vm-example) [same code in a VM]
+- Run a more [elaborate example](#jetson-example) [same scenario, using the `jetson-inference` plugin]
 
 <hr>
 ## Binary packages
@@ -107,205 +108,103 @@ Image size: 54372B
 classification tags: This is a dummy classification tag!
 ```
 
+## VM example
 
+To run our code in a VM, we will have to use a virtual plugin that will handle
+the forwarding of the function call from the VM to the Host system. That said,
+we still need vAccel in the Host system to execute the forwarded call. A visual
+representation of the execution flow is shown in Figure 1.
 
+<figure>
+  <img src="/img/vaccel-vm-flow.png" width="800" align=left />
+  <figcaption>Figure 1. VM application execution flow</figcaption>
+</figure>
 
+To enable this functionality, we will use the `VSOCK` plugin in the guest, and,
+still, the `NOOP` plugin in the Host.
 
+First, let's bootstrap the VM.
 
+### VM setup
 
+To bootstrap a simple VM we will use AWS firecracker and an example kernel &
+rootfs. In [Run a vAccel application in a VM](vm-example.md) we provide more
+examples of the various hypervisors/VMMs we have tested and support. You can
+get the binaries using the commands below:
 
-
-
-
-
-Building the Jetson inference plugin requires a working
-[jetson-inference](https://github.com/dusty-nv/jetson-inference) installation
-along with the corresponding CUDA environment on the machine. If you have it
-you can just run:
-
-```sh
-./build.sh all
+```bash
 ```
 
-Note: while building the rootfs, this script will require your sudo password.
+We should have the following files available:
 
-If a jetson-inference setup is not available you can either follow [this
-guide](/jetson) to build the vAccel jetson plugin and install the prerequisites
-on your host machine, or use our `nubificus/vaccel-deps` container image to
-build the necessary components, by running:
+```console
+# tree .
+.
+├── config_vsock.json
+├── firecracker
+├── rootfs.img
+└── vmlinux
 
-```sh
-./build.sh -c all
+0 directories, 4 files
 ```
 
-## Running the application
+To launch the VM, all we have to do is run the following command:
 
-The above build process create two directories: `build` includes intermediate
-files of the building process and `output` includes the build artifacts we will
-need to run our example:
-
-```sh
-cd output/debug
-ls
-bin  include  lib  share
+```bash
+./firecracker --api-sock fc.sock --config-file config_vsock.json
 ```
 
-### Native execution
+We should be presented with a login prompt:
 
-#### Running on the host
+```console
+# ./firecracker --api-sock fc.sock --config-file config_vsock.json
+[    0.000000] Linux version 5.10.0 (runner@gh-cloud-pod-t4rjg) (gcc (Ubuntu 8.4.0-3ubuntu2) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1 SMP Tue Mar 22 20:07:37 UTC 2022
+[    0.000000] Command line: console=ttyS0 reboot=k panic=1 pci=off loglevel=8 root=/dev/vda ip=172.42.0.2::172.42.0.1:255.255.255.0::eth0:off random.trust_cpu=on root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6 virtio_mmio.device=4K@0xd0002000:7
+[...]
+[    1.113425] EXT4-fs (vda): mounted filesystem with ordered data mode. Opts: (null)
+[    1.114644] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    1.115459] devtmpfs: mounted
+[    1.116096] Freeing unused decrypted memory: 2036K
+[    1.116945] Freeing unused kernel image (initmem) memory: 1420K
+[    1.128668] Write protecting the kernel read-only data: 14336k
+[    1.131705] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    1.133465] Freeing unused kernel image (rodata/data gap) memory: 144K
+[    1.134869] Run /sbin/init as init process
+[    1.135755]   with arguments:
+[    1.136400]     /sbin/init
+[    1.137017]   with environment:
+[    1.137712]     HOME=/
+[    1.138225]     TERM=linux
+[    1.159918] systemd[1]: Failed to find module 'autofs4'
+[    1.163986] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
+[    1.166524] systemd[1]: Detected virtualization kvm.
+[    1.167101] systemd[1]: Detected architecture x86-64.
 
-In case you have the jetson-inference framework installed on your host, we
-simply can execute:
+Welcome to Ubuntu 20.04.2 LTS!
 
-```sh
-# export the library path
-export LD_LIBRARY_PATH=$(pwd)/lib
+[...]
+[  OK  ] Finished Permit User Sessions.
+[  OK  ] Started Getty on tty1.
+[  OK  ] Started Serial Getty on ttyS0.
+[  OK  ] Reached target Login Prompts.
+[  OK  ] Started Network Name Resolution.
+[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
+[  OK  ] Reached target Host and Network Name Lookups.
+[  OK  ] Started OpenBSD Secure Shell server.
+[  OK  ] Started Login Service.
+[  OK  ] Started Dispatcher daemon for systemd-networkd.
+[  OK  ] Reached target Multi-User System.
+[  OK  ] Reached target Graphical Interface.
+         Starting Update UTMP about System Runlevel Changes...
+[  OK  ] Finished Update UTMP about System Runlevel Changes.
 
-# Tell vAccelRT to use the jetson plugin
-export VACCEL_BACKENDS=./lib/libvaccel-jetson.so
+Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
 
-# Tell the Jetson plugin where to find the pre-trained models
-export VACCEL_IMAGENET_NETWORKS=./share/networks
-
-# Run the image classification example
-./bin/classify ./share/images/dog_0.jpg 1
+vaccel-guest login:
 ```
 
-You should some logging from the jetson-inference framework and in the end of
-it you should get the classification tags of the image:
+Go ahead and log in (user: `root`, no password).
 
-```
-imagenet: 60.49805% class #249 (malamute, malemute, Alaskan malamute)
-imagenet: attempting to save output image
-imagenet: completed saving
-imagenet: shutting down...
-classification tags: 60.498% malamute, malemute, Alaskan malamute
-```
+## Jetson example
 
-**Note**: The first time your run a classification with a model jetson-inference
-is performing some JIT steps to optimize the classification result, so you can
-expect increased execution time. The output of this operation is cached for
-subsequent executions.
-
-#### Running in a Firecracker VM 
-
-`build.sh` created for us a rootfs image and a vmlinux kernel for booting a
-Firecracker VM. The rootfs has pre-installed the `vAccel` libraries, the example
-application the images and models.
-
-Additionally, it installed for us the following Firecracker configuration for
-booting the VM.
-
-In similar fashion as before, we launch the VM:
-
-```sh
-# export the library path
-export LD_LIBRARY_PATH=$(pwd)/lib
-
-# Tell vAccelRT to use the jetson plugin
-export VACCEL_BACKENDS=./lib/libvaccel-jetson.so
-
-# Tell the Jetson plugin where to find the pre-trained models
-export VACCEL_IMAGENET_NETWORKS=./share/networks
-
-# Launch the Firecracker VM
-./bin/firecracker --api-sock fc.sock --config-file share/config_virtio_accel.json --seccomp-level 0
-```
-
-This will launch the Firecracker VM and it will result in a login prompt in the
-VM, to which we can login using the `root` user without a password.
-
-```sh
-Ubuntu 20.04.1 LTS vaccel-guest.nubificus.co.uk ttyS0
-
-vaccel-guest login: root
-Welcome to Ubuntu 20.04.1 LTS (GNU/Linux 4.20.0 x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-This system has been minimized by removing packages and content that are
-not required on a system that users do not log into.
-
-To restore this content, you can run the 'unminimize' command.
-Last login: Fri Feb  5 17:32:12 UTC 2021 on ttyS0
-root@vaccel-guest:~# 
-```
-
-Once, in the prompt of the guest we setup the environment and run the example:
-
-```sh
-# export the library path
-export LD_LIBRARY_PATH=/opt/vaccel/lib
-
-# Tell vAccelRT to use the VirtIO plugin
-export VACCEL_BACKENDS=/opt/vaccel/lib/libvaccel-virtio.so
-
-# Launch the Firecracker VM
-/opt/vaccel/bin/classify images/dog_0.jpg 1
-```
-
-**Note**: In this case, we use the VirtIO plugin since we are inside the VM
-and we do not need to define the path to the pre-trained model. The latter is
-necessary only on the host where we use the jetson plugin.
-
-The result of the classification should be the same as before:
-
-```sh
-imagenet: 60.49805% class #249 (malamute, malemute, Alaskan malamute)
-imagenet: attempting to save output image
-imagenet: completed saving
-imagenet: shutting down...
-classification tags: 60.498% malamute, malemute, Alaskan malamute
-```
-
-### Docker execution
-
-If you don't have a Jetson-inference installation available on your machine, you
-can use our `nubificus/vaccel-deps` Docker image to run a vAccel application.
-
-You need to install the Nvidia container runtime following the instructions
-[here](https://github.com/NVIDIA/nvidia-container-runtime), which allows you
-to use NVIDIA GPU devices inside Docker containers.
-
-Once, you're all setup with the nvidia runtime you can run the application:
-
-```sh
-docker run --runtime=nvidia --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \
-  -e LD_LIBRARY_PATH=$(pwd)/lib \
-  -e VACCEL_BACKENDS=./lib/libvaccel-jetson.so \
-  -e VACCEL_IMAGENET_NETWORKS=$(pwd)/share/networks \
-  nubificus/vaccel-deps:latest \
-  ./bin/classify share/images/dog_0.jpg 1 
-```
-
-Similarly, we can launch a Firecracker VM inside the container. In this case,
-we need to add the `--privileged` flag to allow launching VMs inside the
-container and `-it` to be able to use the VM's console.
-
-```sh
-docker run --runtime=nvidia --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \
-  --privileged \
-  -it \
-  -e LD_LIBRARY_PATH=$(pwd)/lib \
-  -e VACCEL_BACKENDS=./lib/libvaccel-jetson.so \
-  -e VACCEL_IMAGENET_NETWORKS=$(pwd)/share/networks \
-  nubificus/vaccel-deps:latest \
-  ./bin/firecracker --api-sock fc.sock --config-file ./share/config_virtio_accel.json --seccomp-level 0
-```
-
-which we'll give us a console inside the VM, from which we can run our application
-the same way as we did before:
-
-```sh
-# export the library path
-export LD_LIBRARY_PATH=/opt/vaccel/lib
-
-# Tell vAccelRT to use the VirtIO plugin
-export VACCEL_BACKENDS=/opt/vaccel/lib/libvaccel-virtio.so
-
-# Launch the Firecracker VM
-/opt/vaccel/bin/classify images/dog_0.jpg 1
-```
 
