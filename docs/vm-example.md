@@ -477,7 +477,7 @@ speficies the endpoint of the agent. Its default value is `vsock://2:2048`.
 Since we've setup the agent to listen to port `2048`, we're good to go.
 
 **Note**: _The Host's default `vsock_id` is `2`, that's why the guest only
-needs to set up the port (`2048`).
+needs to set up the port (`2048`)._
 
 The vAccel examples are already in the `rootfs` image, installed at
 `/opt/vaccel/bin`. So the only thing needed is to execute the example:

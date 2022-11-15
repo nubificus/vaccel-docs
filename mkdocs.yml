@@ -7,6 +7,7 @@ nav:
     - binaries.md
     - build_run_app.md
     - vm-example.md
+    - remote-example.md
     #- vaccelrt.md
     #- Plugins:
     #  - jetson.md
