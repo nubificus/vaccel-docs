@@ -522,10 +522,3 @@ Destroyed session 1
 Aha! the plugin output is there (which is expected, since the plugin is running
 on the Host).
 
-
-
-
-
-## Jetson example
-
-

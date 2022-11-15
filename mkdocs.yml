@@ -23,6 +23,10 @@ nav:
   #  - unikernels/unikraft.md
   #- examples.md
   #- usecases.md
+  - Framework & Language bindings:
+    - language_bindings.md
+    - python_bindings.md
+    - tensorflow.md
   - Developer Guide:
     - dev_guide.md
     - api.md
