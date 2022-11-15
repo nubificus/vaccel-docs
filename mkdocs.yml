@@ -2,7 +2,8 @@ site_name: vAccel
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
-  - User Guide:
+  - User Guide: 
+    - user_guide.md
     - building.md
     - binaries.md
     - build_run_app.md
@@ -23,8 +24,12 @@ nav:
   #- examples.md
   #- usecases.md
   - Developer Guide:
+    - dev_guide.md
     - api.md
     - plugin.md
+  - Useful Docs: 
+    - misc_docs.md
+    - jetson.md
 
 theme:
   name: material
@@ -50,3 +55,5 @@ extra_css:
   - stylesheets/extra.css
 gtags:
   - G-X2S0PFR6ZY
+plugins:
+  - section-index
