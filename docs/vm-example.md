@@ -35,7 +35,7 @@ Each section below describes the steps for the respective VMM.
 The common file for all cases is the `rootfs` image. You can get it using the following command:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rootfs.img
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
 ```
 
 ### Firecracker
@@ -43,9 +43,9 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rootfs.img
 You can get the binaries needed for booting a Firecracker VM using the commands below:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/fc/firecracker
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/fc/config.json
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rust-vmm/vmlinux
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config_vsock.json
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
 ```
 
 We should have the following files available:
@@ -53,7 +53,7 @@ We should have the following files available:
 ```console
 # tree .
 .
-├── config.json
+├── config_vsock.json
 ├── firecracker
 ├── rootfs.img
 └── vmlinux
@@ -64,7 +64,9 @@ We should have the following files available:
 To launch the VM, all we have to do is run the following command:
 
 ```bash
-firecracker --api-sock fc.sock --config-file config_vsock.json
+chmod +x firecracker
+
+./firecracker --api-sock fc.sock --config-file config_vsock.json
 ```
 
 We should be presented with a login prompt:
@@ -127,8 +129,8 @@ For Cloud Hypervisor, the process is almost identical to Firecracker
 VM using the commands below:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/clh/cloud-hypervisor
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rust-vmm/vmlinux
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/clh/cloud-hypervisor
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
 ```
 
 We should have the following files available:
@@ -357,8 +359,8 @@ tool to launch the Dragonball hypervisor and interact with it.
 The files we need are:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/dbs/dbs-cli
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rust-vmm/vmlinux
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/dbs/dbs-cli
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
 ```
 
 We should have the following directory structure:
@@ -376,6 +378,10 @@ We should have the following directory structure:
 The command to spawn a Dragonball VM is shown below:
 
 ```bash
+# make the VMM binary executable
+chmod +x dbs-cli
+
+# launch the VM
 ./dbs-cli --kernel-path vmlinux --rootfs rootfs.img \
 	  --boot-args "console=ttyS0 pci=off root=/dev/vda rw" \
 	  --vsock /tmp/vaccel.sock
@@ -483,7 +489,7 @@ The vAccel examples are already in the `rootfs` image, installed at
 `/opt/vaccel/bin`. So the only thing needed is to execute the example:
 
 ```console
-# /opt/vaccel/bin/classify cat.jpeg 1
+# /opt/vaccel/bin/classify /opt/vaccel/share/images/dog_1.jpg 1
 Initialized session with id: 1
 Image size: 54372B
 classification tags: This is a dummy classification tag!

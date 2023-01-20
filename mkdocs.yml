@@ -26,10 +26,12 @@ nav:
   - Framework & Language bindings:
     - language_bindings.md
     - python_bindings.md
-    - tensorflow.md
+    - tensorflow_bindings.md
+    - pytorch_bindings.md
   - Developer Guide:
     - dev_guide.md
     - api.md
+    - Python API: python/index.md
     - plugin.md
   - Useful Docs: 
     - misc_docs.md
@@ -38,8 +40,47 @@ nav:
 theme:
   name: material
   #favicon: img/vaccel-logo.png
-  logo: img/vaccel-logo.png
+  logo: img/vaccel-img-logo.png
+  palette: 
+
+    # Palette toggle for light mode
+    - scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/eye
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: black
+      accent: light blue
+      toggle:
+        icon: material/eye-outline
+        name: Switch to light mode
+
+#theme:
+#    name: alabaster
+    #custom_dir: 
+#    logo: img/vaccel-logo.png
+#    palette:
+#        scheme: slate
+#        accent: indigo
  
+
+#extra:
+#  logo: img/vaccel-logo.png
+#  logo_title: "Rocketbank logo"
+#  include_toc: yes
+#  sidebars:
+#    - about
+#    - navigation
+#    - related
+#    - search
+#
+#  extra_nav_links:
+#    Fork me on GitHub: https://github.com/iamale/rock-cli
+
 features:
   - navigation.instant
   - navigation.sections
@@ -53,10 +94,10 @@ markdown_extensions:
 toc:
   - permalink: true
 
-copyright: Copyright &copy; 2018 - 2022 Nubificus LTD
+copyright: Copyright &copy; 2018 - 2023 Nubificus LTD
 
-extra_css:
-  - stylesheets/extra.css
+#extra_css:
+#  - stylesheets/extra.css
 gtags:
   - G-X2S0PFR6ZY
 plugins:

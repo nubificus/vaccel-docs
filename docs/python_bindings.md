@@ -1,8 +1,41 @@
 # Python bindings
 
-## Initial Setup
+### TL;DR
 
-### Install vAccelRT
+```sh
+# install vAccelRT
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/`uname -m`/Release-deb/vaccel-0.5.0-Linux.deb
+sudo dpkg -i vaccel-0.5.0-Linux.deb
+# install python bindings
+wget https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz
+pip3 install vaccel-python-0.0.1.tar.gz
+# Run an example
+cat << EOF > cat.py
+from vaccel.session import Session
+from vaccel.image import ImageClassify
+
+source = "cat.jpeg"
+
+def main():
+    ses = Session(flags=3)
+    print(f'Session id is {ses.id()}')
+    res = ImageClassify.classify_from_filename(session=ses, source=source)
+    print(res)
+
+if __name__=="__main__":
+    main()
+EOF
+wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
+export LD_LIBRARY_PATH=/usr/local/lib
+#export PYTHONPATH=.
+python3 cat.py
+
+```
+
+### Initial Setup
+
+#### Install vAccelRT
 
 In order to build the python bindings for vAccel, we first need a vAccelRT
 installation. We can either [build it from source](/building), or [get
@@ -11,35 +44,18 @@ the latest binary release](/binaries).
 The relevant libs & plugins should be in `/usr/local/lib`, along with include
 files in `/usr/local/include`.
 
-TL;DR
-
 ```sh
+# install vAccelRT
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/`uname -m`/Release-deb/vaccel-0.5.0-Linux.deb
 sudo dpkg -i vaccel-0.5.0-Linux.deb
 ```
 
-### Install Python
+#### Install Python
 
 To build and use the Python bindings, we need to have Python3 installed.
 
 ```sh
 sudo apt-get install python3 python3-venv python3-pip
-```
-
-### Install tools to build the bindings
-
-Additionally, to build the bindings we need the following packages (installable
-via pip3). To avoid polluting the host, we could use a virtual environment:
-
-```sh
-python3 -m venv .venv
-. .venv/bin/activate
-```
-
-and install the required packages:
-
-```sh
-pip3 install datestamp cffi wheel setuptools cmake_build_extension
 ```
 
 ## Install from binaries
@@ -50,50 +66,35 @@ following commands:
 
 ```sh
 
-
+wget https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz
+pip3 install vaccel-python-0.0.1.tar.gz
 ```
 
+You should be presented with the following output:
 
-First clone the repo:
-
-```bash
-git clone https://github.com/nubificus/python-vaccel
+```console
+$ pip3 install vaccel-python-0.0.1.tar.gz 
+Processing ./vaccel-python-0.0.1.tar.gz
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Installing backend dependencies ... done
+  Preparing metadata (pyproject.toml) ... done
+Requirement already satisfied: cffi>=1.0.0 in /usr/local/lib/python3.8/dist-packages (from vaccel-python==0.0.1) (1.15.1)
+Requirement already satisfied: pycparser in /usr/local/lib/python3.8/dist-packages (from cffi>=1.0.0->vaccel-python==0.0.1) (2.21)
+Building wheels for collected packages: vaccel-python
+  Building wheel for vaccel-python (pyproject.toml) ... done
+  Created wheel for vaccel-python: filename=vaccel_python-0.0.1-cp38-cp38-linux_x86_64.whl size=44484 sha256=f0a9e056367207690f08e78cf771f15d00b5e2d7b67fac1d56b17bbe9b6b9509
+  Stored in directory: /root/.cache/pip/wheels/2e/2e/a0/f07c8ed8d59a2cb16825ef23a4ef15b34d452a3bab962fea61
+Successfully built vaccel-python
+Installing collected packages: vaccel-python
+  Attempting uninstall: vaccel-python
+    Found existing installation: vaccel-python 0.0.1
+    Uninstalling vaccel-python-0.0.1:
+      Successfully uninstalled vaccel-python-0.0.1
+Successfully installed vaccel-python-0.0.1
 ```
 
-Finally, call the `builder.py` to build the bindings. The required python
-packages to build are: `datestamp cffi wheel setuptools cmake_build_extension`.
-To install them use:
-
-```bash
-pip3 install datestamp cffi wheel setuptools cmake_build_extension
-```
-
-and run the builder:
-
-```bash
-python3 builder.py
-```
-
-The module should be ready. To test run:
-
-```bash
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
-export LD_LIBRARY_PATH=/usr/local/lib 
-export PYTHONPATH=$PYTHONPATH:. 
-python3 vaccel/test.py
-```
-Alternatively, you could build the pip package:
-
-```
-pip3 install build
-python3 -m build
-```
-
-and install it:
-
-```
-pip install dist/vaccel*.tar.gz
-```
+Go ahead and run an [example](#simple-example)!
 
 
 ## Build from Source
@@ -113,6 +114,21 @@ You can install them using the following command:
 sudo apt-get install -y cmake build-essential python3-dev python3-venv
 ```
 
+### Install tools to build the bindings
+
+Additionally, to build the bindings we need the following packages (installable
+via pip3). To avoid polluting the host, we could use a virtual environment:
+
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+```
+
+and install the required packages:
+
+```sh
+pip3 install datestamp cffi wheel setuptools cmake_build_extension
+```
 ### Get the source code
 
 Get the source code for **python-vaccel**:
@@ -163,7 +179,7 @@ python3 setup.py install
 python3 -m pytest
 ```
 
-## Test the installation
+### Test the installation
 
 To run the tests:
 

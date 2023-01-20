@@ -133,10 +133,11 @@ examples of the various hypervisors/VMMs we have tested and support. You can
 get the binaries using the commands below:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/fc/firecracker
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/fc/config.json
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rust-vmm/vmlinux
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/rootfs.img
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config.json
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config_vsock.json
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
 ```
 
 We should have the following files available:
@@ -155,6 +156,10 @@ We should have the following files available:
 To launch the VM, all we have to do is run the following command:
 
 ```bash
+# make the firecracker binary executable
+chmod +x firecracker
+
+# launch the VM
 ./firecracker --api-sock fc.sock --config-file config_vsock.json
 ```
 
@@ -245,7 +250,7 @@ Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
 
 vaccel-guest login: root
 
-# /opt/vaccel/bin/classify cat.jpeg 1
+# /opt/vaccel/bin/classify /opt/vaccel/share/images/dog_1.jpg 1
 Initialized session with id: 1
 Image size: 54372B
 classification tags: This is a dummy classification tag!
