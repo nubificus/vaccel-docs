@@ -96,8 +96,8 @@ toc:
 
 copyright: Copyright &copy; 2018 - 2023 Nubificus LTD
 
-#extra_css:
-#  - stylesheets/extra.css
+extra_css:
+  - stylesheets/extra.css
 gtags:
   - G-X2S0PFR6ZY
 plugins:

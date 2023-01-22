@@ -27,7 +27,7 @@ applications at scale.
 
 <figure>
   <!--<img src="img/vaccel-overview.svg" width="600" align=left />-->
-  <img src="img/vaccel-overview-updated.png" width="800" align=left />
+  <img src="img/vaccel-overview-updated2.png" width="800" align=left />
   <figcaption>Figure 1. vAccel software stack</figcaption>
 </figure>
 
@@ -85,7 +85,7 @@ VSOCK and TCP sockets.
 ## Performance
 
 <figure>
-  <img src="img/perf_bm.svg" width="600" align=left />
+  <img src="img/perf_bm.png" width="600" align=left />
   <figcaption>Figure 2. vAccel performance overhead of VM execution with virtio and jetson-inference compared to bare-metal on x86_64</figcaption>
 </figure>
 

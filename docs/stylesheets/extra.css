@@ -1,5 +1,5 @@
 /*[data-md-color-scheme="nbfc"] {*/
-:root {
+/*:root {
   --md-primary-fg-color: #8DB48E;
   --md-primary-fg-color--light: #8DB48E;
   --md-primary-fg-color--dark:  #4D724D;
@@ -22,9 +22,11 @@
   --md-footer-fg-color--lighter: #8DB48E;
   --md-footer-fg-color--dark:  #4D724D;
   --md-footer-fg-color--darker:  #4D724D;
-}
+  --md-typeset-a-color: #6877ca;
+}*/
 
 [data-md-color-scheme="slate"] {
-  --md-hue: 210; /* [0, 360] */
+  /*--md-hue: 210; *//* [0, 360] */
+  --md-typeset-a-color: #9a9bff;
 }
 
