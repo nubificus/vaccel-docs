@@ -441,6 +441,18 @@ commands via `ttrpc`. So we need to include the path to `libvaccel.so` in the
 `VACCEL_BACKENDS` variable. The agent currently supports three socket types:
 `UNIX`, `VSOCK`, and `TCP`.
 
+##### Install vAccelrt agent
+
+If you haven't already installed the vaccelrt-agent binary, follow the
+instructions in the [relevant section](/binaries#install-vaccelrt-agent).
+
+In short, for `x86_64`: 
+
+```sh
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
+dpkg -i vaccelrt-agent-0.3.0-Linux.deb
+```
+
 To run the agent we use the following commands:
 
 ```bash

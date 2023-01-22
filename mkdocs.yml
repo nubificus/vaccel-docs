@@ -26,8 +26,11 @@ nav:
   - Framework & Language bindings:
     - language_bindings.md
     - python_bindings.md
-    - tensorflow_bindings.md
+    - Tensorflow: tensorflow_bindings.md
     - pytorch_bindings.md
+  - Container runtimes:
+    - container_runtimes.md
+    - kata_vaccel.md
   - Developer Guide:
     - dev_guide.md
     - api.md
@@ -35,12 +38,14 @@ nav:
     - plugin.md
   - Useful Docs: 
     - misc_docs.md
-    - jetson.md
+    - Jetson Inference: jetson.md
+    - Tensorflow: tf.md
+    - PyTorch: pytorch.md
 
 theme:
   name: material
-  #favicon: img/vaccel-logo.png
-  logo: img/vaccel-img-logo.png
+  favicon: img/vaccel-img-logo.png
+  logo: img/vaccel-logo-full.svg
   palette: 
 
     # Palette toggle for light mode

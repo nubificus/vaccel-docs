@@ -1,8 +1,6 @@
 # Jetson-inference
 
-vAccel is a hardware acceleration framework, so, in order to use it the system
-must have a hardware accelerator and its software stack installed in the Host
-OS. To walk through the requirements for running a vAccel-enabled workload with
+To walk through the requirements for running a vAccel-enabled workload with
 the jetson-inference plugin, we will use a set of NVIDIA GPUs (RTX 2060 SUPER,
 Jetson Nano and Xavier AGX) and a common distribution like Ubuntu. 
 
