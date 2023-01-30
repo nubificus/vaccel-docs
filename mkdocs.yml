@@ -2,30 +2,93 @@ site_name: vAccel
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
-  - User Guide:
-    - vaccelrt.md
-    - Plugins:
-      - jetson.md
-      - virtio.md
-      - coral.md
-    - run.md
-  - kata-vaccel.md
-  - k8s:
-    - devmapper.md
-    - k8s/kata.md
+  - User Guide: 
+    - user_guide.md
+    - building.md
+    - binaries.md
+    - build_run_app.md
+    - vm-example.md
+    - remote-example.md
+    #- vaccelrt.md
+    #- Plugins:
+    #  - jetson.md
+    #  - virtio.md
+    #  - coral.md
+    #- run.md
+  #- kata-vaccel.md
+  #- k8s:
+  #  - devmapper.md
+  #  - k8s/kata.md
+  #- Unikernels:
+  #  - unikernels/unikraft.md
+  #- examples.md
+  #- usecases.md
+  - Framework & Language bindings:
+    - language_bindings.md
+    - python_bindings.md
+    - Tensorflow: tensorflow_bindings.md
+    - pytorch_bindings.md
+  - Container runtimes:
+    - container_runtimes.md
+    - kata_vaccel.md
   - Unikernels:
+    - unikernels/unikernels.md
     - unikernels/unikraft.md
-  - examples.md
-  - usecases.md
   - Developer Guide:
+    - dev_guide.md
     - api.md
+    - Python API: python/index.md
     - plugin.md
+  - Useful Docs: 
+    - misc_docs.md
+    - Jetson Inference: jetson.md
+    - Tensorflow: tf.md
+    - PyTorch: pytorch.md
 
 theme:
   name: material
-  #favicon: img/vaccel-logo.png
-  logo: img/vaccel-logo.png
+  favicon: img/vaccel-img-logo.png
+  logo: img/vaccel-logo-full.svg
+  palette: 
+
+    # Palette toggle for light mode
+    - scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/eye
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: black
+      accent: light blue
+      toggle:
+        icon: material/eye-outline
+        name: Switch to light mode
+
+#theme:
+#    name: alabaster
+    #custom_dir: 
+#    logo: img/vaccel-logo.png
+#    palette:
+#        scheme: slate
+#        accent: indigo
  
+
+#extra:
+#  logo: img/vaccel-logo.png
+#  logo_title: "Rocketbank logo"
+#  include_toc: yes
+#  sidebars:
+#    - about
+#    - navigation
+#    - related
+#    - search
+#
+#  extra_nav_links:
+#    Fork me on GitHub: https://github.com/iamale/rock-cli
+
 features:
   - navigation.instant
   - navigation.sections
@@ -39,9 +102,11 @@ markdown_extensions:
 toc:
   - permalink: true
 
-copyright: Copyright &copy; 2018 - 2021 Nubificus LTD
+copyright: Copyright &copy; 2018 - 2023 Nubificus LTD
 
 extra_css:
   - stylesheets/extra.css
 gtags:
   - G-X2S0PFR6ZY
+plugins:
+  - section-index

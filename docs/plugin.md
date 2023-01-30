@@ -1,141 +1,144 @@
-# Add a plugin
+# vAccel plugin API
 
-To implement a vAccel plugin, all we need to do is add the implementation of
-the relevant frontend function and register it to the vAccel plugin subsystem.
+vAccel plugins provide the glue code between vAccel User API operations and
+their hardware implementations.
 
-To better understand the steps, it would be useful to go through
-[lab1](https://github.com/nubificus/vaccel-tutorials/blob/main/lab1/README.md).
+A vAccel plugin is a shared object, built in any programming language that can
+output a shared object. This page describes the needed operations to be
+implemented for a shared object to be linked as a vAccel plugin.
 
-First, lets grab the code:
 
-```
-git clone --recursive https://github.com/cloudkernels/vaccelrt
-cd vaccelrt
-```
+#### Plugin API
 
-We will use the `noop` plugin as a skeleton for our new plugin which we will
-call `helloworld`. For simplicity, we copy the `noop` plugin directory
-structure to a new directory:
+[vaccelrt-plugin-template](https://github.com/nubificus/vaccelrt-plugin-template)
+hosts an example, template repo which is probably a good start for developing a
+vAccel plugin in C.
 
-```
-cp -avf plugins/noop plugins/helloworld
-```
+The structure of a vAccel plugin is the following:
 
-we replace `noop` with the name of our choosing (`helloworld`) so we come up with
-the following directory structure:
-
-```
-$ tree -L 1 plugins/helloworld
-plugins/helloworld
-├── CMakeLists.txt
-└── vaccel.c
-```
-
-We need to change the contents of `plugins/helloworld/CMakeLists.txt` to reflect
-the `noop` to `helloworld` change:
-
-```cmake
-set(include_dirs ${CMAKE_SOURCE_DIR}/src)
-set(SOURCES vaccel.c ${include_dirs}/vaccel.h ${include_dirs}/plugin.h)
-
-add_library(vaccel-helloworld SHARED ${SOURCES})
-target_include_directories(vaccel-helloworld PRIVATE ${include_dirs})
-
-# Setup make install
-install(TARGETS vaccel-helloworld DESTINATION "${lib_path}")
-```
-
-Similarly, we replace the plugin implementation with our own in `vaccel.c`,
-adding a simple message:
+- An `init()` function, called upon plugin initialization
 
 ```C
-#include <stdio.h>
-#include <plugin.h>
+static int init(void) {
 
-static int helloworld(struct vaccel_session *session)
-{
-	fprintf(stdout, "Calling vaccel-helloworld for session %u\n", session->session_id);
-
-	printf("_______________________________________________________________\n\n");
-	printf("This is the helloworld plugin, implementing the NOOP operation!\n");
-	printf("===============================================================\n\n");
-
-	return VACCEL_OK;
 }
+```
 
-struct vaccel_op op = VACCEL_OP_INIT(op, VACCEL_NO_OP, helloworld);
+- A `fini()` function, called before unloading the plugin
+```C
+static int fini(void) {
 
-static int init(void)
-{
-	return register_plugin_function(&op);
 }
+```
 
-static int fini(void)
-{
-	return VACCEL_OK;
-}
+- A definition of the `VACCEL_MODULE` with:
 
+    - `.name` : The name of the plugin
+    - `.version` : The version of the plugin
+    - `.init` : the function to call upon plugin initialization (eg. `init()`)
+    - `.fini` : the function to call before unloading the plugin (eg. on program exit, `fini()`)
+
+```C
 VACCEL_MODULE(
-	.name = "helloworld",
-	.version = "0.1",
-	.init = init,
-	.fini = fini
+        .name = "vAccel template plugin",
+        .version = "0.9",
+        .init = init,
+        .fini = fini
 )
 ```
 
-Additionally, we need to add the relevant rules in the `CMakeLists.txt` files
-to build the plugin along with the rest of the vAccelRT code.
-
-We add the following to `plugins/CMakeLists.txt`:
-
-```cmake
-if (BUILD_PLUGIN_HELLOWORLD)
-        add_subdirectory(helloworld)
-endif(BUILD_PLUGIN_HELLOWORLD)
-```
-
-and to `CMakeLists.txt`:
-
-```cmake
-option(BUILD_PLUGIN_HELLOWORLD "Build the hello-world debugging plugin" OFF)
-```
-
-Now we can build our new plugin, by specifying the new option we just added:
+At initialization, the plugin needs to register its operations to the relevant
+vAccel User API operation. To do that, we use an array of `struct vaccel_op`s,
+to map each function implementation to the respective API operation.  For
+instance, the array could look like the following:
 
 ```
+static struct vaccel_op ops[] = {
+	VACCEL_OP_INIT(ops[0], VACCEL_NO_OP, my_noop_function),
+	VACCEL_OP_INIT(ops[1], VACCEL_MINMAX, my_minmax_function),
+};
+```
+where
+
+```
+struct vaccel_op {
+	/* operation type */
+	uint8_t type;
+
+	/* function implementing the operation */
+	void *func;
+
+	[...]
+};
+```
+
+#### building a vAccel plugin
+
+Based on the [template
+repo](https://github.com/nubificus/vaccelrt-plugin-template), we can build a
+simple vAccel plugin that implements the `NOOP` user API operation with our own
+custom function.
+
+First let's clone the repo:
+
+```
+git clone https://github.com/nubificus/vaccelrt-plugin-template
+```
+
+Let's get the vaccelrt code base (submodule):
+
+```
+git submodule update --init --recursive
+```
+
+then let's create the build environment:
+
+```
+mkdir build
 cd build
-cmake ../ -DBUILD_PLUGIN_HELLOWORLD=ON
-make
+cmake ../
 ```
 
-We see that a new plugin is now available, `libvaccel-helloworld.so`. Lets use this
-one instead of the `noop` one!
+and let's look into `../src/vaccel.c`:
 
 ```
-$ LD_LIBRARY_PATH=src VACCEL_DEBUG_LEVEL=4 VACCEL_BACKENDS=./plugins/helloworld/libvaccel-helloworld.so ./hello_world
-2021.04.09-12:40:45.86 - <debug> Initializing vAccel
-2021.04.09-12:40:45.86 - <debug> Registered plugin helloworld
-2021.04.09-12:40:45.86 - <debug> Registered function noop from plugin helloworld
-2021.04.09-12:40:45.86 - <debug> Loaded plugin helloworld from ./plugins/helloworld/libvaccel-helloworld.so
-2021.04.09-12:40:45.86 - <debug> session:1 New session
-Initialized session with id: 1
-2021.04.09-12:40:45.86 - <debug> session:1 Looking for plugin implementing noop
-2021.04.09-12:40:45.86 - <debug> Found implementation in helloworld plugin
-Calling vaccel-helloworld for session 1
-_______________________________________________________________
+#include <stdio.h>
 
-This is the helloworld plugin, implementing the NOOP operation!
-===============================================================
+#include <vaccel.h> /* needed for vAccel specific structures (eg Session */
+#include <plugin.h> /* needed for register_plugin_functions */
 
-2021.04.09-12:40:45.86 - <debug> session:1 Free session
-2021.04.09-12:40:45.86 - <debug> Shutting down vAccel
-2021.04.09-12:40:45.86 - <debug> Cleaning up plugins
-2021.04.09-12:40:45.86 - <debug> Unregistered plugin helloworld
+/* A function that will be mapped to a vAccel User API operation using
+ * register_plugin_functions() */
+static int my_noop_function(struct vaccel_session *sess)
+{
+        fprintf(stderr, "[my noop function] session: %d\n", sess->session_id);
+
+        return VACCEL_OK;
+}
+
+/* An array of the operations to be mapped */
+struct vaccel_op ops[] = {
+        VACCEL_OP_INIT(ops[0], VACCEL_NO_OP, my_noop_function),
+};
+
+/* The init() function, called upon plugin initialization */
+static int init(void)
+{
+        /* This is where the static function above `my_noop_function()`
+         * gets mapped to the relevant vAccel User API operation. */
+        return register_plugin_functions(ops, sizeof(ops) / sizeof(ops[0]));
+}
+
+/* The fini() function, called before unloading the plugin */
+static int fini(void)
+{
+        return VACCEL_OK;
+}
+
+VACCEL_MODULE(
+        .name = "vAccel template plugin",
+        .version = "0.9",
+        .init = init,
+        .fini = fini
+)
 ```
-
-### Takeaway
-
-We made it! We just added our own plugin to implement a vAccel operation: 
-- we integrated it into the vAccel source tree, 
-- we built it and 
-- used it to run the `noop` operation.
