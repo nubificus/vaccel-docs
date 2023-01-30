@@ -50,8 +50,8 @@ can perform each step by ourselves.
 ### Setting up vAccert for the host
 
 Follow the relevant documentation to install the [vAccelrt core
-library](/binaries/#deb-package) and the [jetson-infernece
-plugin](binaries/#deb-package_1).  ```
+library](/binaries/#deb-package) and the [jetson-inference
+plugin](binaries/#deb-package_1). 
 
 ### Build QEMU with vAccel support
 
