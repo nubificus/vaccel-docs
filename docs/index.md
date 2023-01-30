@@ -18,7 +18,7 @@ Hypervisor](https://www.cloudhypervisor.org/) are currently supported
 3. **compatibility**: vAccel supports the OCI container format through integration
 with the [Kata containers](https://katacontainers.io/) framework [downstream].
 4. **low-overhead**: vAccel uses a very efficient transport layer for
-offloading acceleratable functions from insde the VM to the host, incurring
+offloading "accelerate-able" functions from insde the VM to the host, incurring
 minimum overhead.
 5. **scalability**: Integration with k8s allows the deployment of vAccel
 applications at scale.
@@ -66,7 +66,7 @@ example programs supported.
 Hardware acceleration for virtualized guests is, still, a real challenge.
 Typical solutions involve device pass-through or paravirtual drivers that
 expose hardware semantics inside the guest. vAccel differentiates itself from
-these approaches by exposing coarse-grain "acceleratable" functions in the
+these approaches by exposing coarse-grain "accelerate-able" functions in the
 guest over a generic transport layer.
 
 The semantics of the transport layer are hidden from the programmer. A vAccel
@@ -80,7 +80,9 @@ We have implemented the necessary parts for our VirtIO driver in our forks of
 Additionally, we have designed the above transport protocol over sockets,
 allowing vAccel applications to use any backend, as long as there is a socket
 interface installed between the two peers. Existing implementations include
-VSOCK and TCP sockets.
+VSOCK and TCP sockets. Any hypervisor supporting `virtio-vsock` can support
+vAccel. See the [relevant page](/vm-example#bootstrap-the-vm) for more
+information.
 
 ## Performance
 

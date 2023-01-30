@@ -31,6 +31,9 @@ nav:
   - Container runtimes:
     - container_runtimes.md
     - kata_vaccel.md
+  - Unikernels:
+    - unikernels/unikernels.md
+    - unikernels/unikraft.md
   - Developer Guide:
     - dev_guide.md
     - api.md
