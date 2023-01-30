@@ -20,5 +20,5 @@ jobs:
           CUSTOM_DOMAIN: docs.vaccel.org
           CONFIG_FILE: mkdocs.yml
           EXTRA_PACKAGES: build-base
-          #REQUIREMENTS: requirements.txt
+          REQUIREMENTS: requirements.txt
 
