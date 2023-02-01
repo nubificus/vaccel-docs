@@ -4,6 +4,21 @@ In this post, we will be going through the steps to build our downstream branch
 for kata-containers with vAccel from source, both for amd64 and arm64
 architectures.
 
+This is a lengthy process. For convenience, we have bundled the steps below to
+a bash script available
+[here](https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/build.sh).
+Although we have tried the steps below on Ubuntu 20.04 `x86_64` & `aarch64` and
+Ubuntu 22.04 `x86_64`, we strongly advise to run this script on a fresh Ubuntu
+22.04 `x86_64`. This process takes approximately 30-40 minutes.
+
+Additionally, we provide pre-built binaries for `x86_64` (`aarch64` coming
+soon!) and the respective installation script
+[here](https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/install.sh),
+which takes less than a minute!
+
+The process is highly experimental and for showcase purposes -- please don't
+use these scripts on a production machine ;-)
+
 ### Install requirements
 
 To build Kata Containers we need to install Rust v1.58.1, Go v1.18.0, Docker
