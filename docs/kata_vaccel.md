@@ -11,17 +11,17 @@ and some apt/snap packages. The specific versions may change, so make sure to
 check the [versions
 database](https://github.com/kata-containers/kata-containers/blob/main/versions.yaml).
 
-#### Apt/Snap Packages:
+#### Apt/Snap Packages
 
 We need to install `gcc`, `make` and `yq v3`. `containerd` and `runc` are installed by the Docker install script, in the following steps.
 
 ```bash
 sudo apt update && sudo apt upgrade -y
-sudo apt install gcc make snapd -y
+sudo apt install gcc make snapd bc -y
 sudo snap install yq --channel=v3/stable
 ```
 
-#### Rust (version 1.58.1):
+#### Rust (version 1.58.1)
 
 We will use `rustup` to install and set Rust 1.58.1 as our default toolchain:
 
@@ -36,17 +36,17 @@ popd
 rm -rf $down_dir
 ```
 
-#### Go (version 1.18.0)
+#### Go (version 1.18)
 
 We will download the appropriate Go binaries and add them to the `PATH` environment variable:
 
 ```bash
 down_dir=$(mktemp -d)
 pushd $down_dir
-wget -q https://go.dev/dl/go1.18.0.linux-$(dpkg --print-architecture).tar.gz
-sudo mkdir -p /usr/local/go1.16
-sudo tar -C /usr/local/go1.16 -xzf go1.18.0.linux-$(dpkg --print-architecture).tar.gz
-echo 'export PATH=$PATH:/usr/local/go1.16/go/bin' >> $HOME/.profile
+wget -q https://go.dev/dl/go1.18.linux-$(dpkg --print-architecture).tar.gz
+sudo mkdir -p /usr/local/go1.18
+sudo tar -C /usr/local/go1.18 -xzf go1.18.linux-$(dpkg --print-architecture).tar.gz
+echo 'export PATH=$PATH:/usr/local/go1.18/go/bin' >> $HOME/.profile
 source $HOME/.profile
 popd
 rm -rf $down_dir
@@ -63,8 +63,6 @@ down_dir=$(mktemp -d)
 pushd $down_dir
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
-# Optionally add user to docker group to run docker without sudo
-# sudo usermod -aG docker $USER
 popd
 rm -rf $down_dir
 ```
@@ -105,6 +103,7 @@ export PREFIX=/opt/kata
 make
 popd
 ```
+
 To install the binaries to a specific path (say `/opt/kata`) we need to specify
 the `PREFIX` environment variable prior to installing:
 
@@ -114,6 +113,7 @@ export PREFIX=/opt/kata
 sudo -E PATH=$PATH -E PREFIX=$PREFIX make install
 popd
 ```
+
 Kata binaries are now installed in `/opt/kata/bin` and configs are installed in
 `/opt/kata/share/defaults/kata-containers/`.
 
@@ -125,11 +125,12 @@ binaries from the default system `PATH`.
 sudo ln -s /opt/kata/bin/kata-runtime /usr/local/bin
 sudo ln -s /opt/kata/bin/containerd-shim-kata-v2 /usr/local/bin
 ```
+
 #### Create a rootfs
 
 We can use either a rootfs or initrd image to launch Kata Containers with QEMU.
 However, AWS Firecracker does not work with initrd images, so we will be using a
-rootfs image for Kata with Firecracker. 
+rootfs image for Kata with Firecracker.
 
 Create the rootfs base image:
 
@@ -147,7 +148,7 @@ A possible workaround was to remove the USE_DOCKER variable. This requires `qemu
 You can install it with `sudo apt install -y qemu-utils`.
 
 ```bash
-export ROOTFS_DIR="${GOPATH}/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder/rootfs"
+export ROOTFS_DIR="${GOPATH}/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder/rootfs-ubuntu"
 sudo rm -rf ${ROOTFS_DIR}
 cd $GOPATH/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder
 script -fec 'sudo -E GOPATH=$GOPATH AGENT_INIT=yes ./rootfs.sh ubuntu'
@@ -202,11 +203,12 @@ sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d install
 **Note**:
 
 We noticed that in some instances the installation or build process failed with the following error: `ERROR: path to kernel does not exist, use build-kernel.sh setup`. We mitigated this problem by specifying the version:
+
 ```bash
 ./build-kernel.sh -d -v 5.15.26 build
 export PREFIX=/opt/kata
 sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d -v 5.15.26 install
-``` 
+```
 
 At this point we have succesfully built all the Kata components. All the binaries we built are stored under the `/opt/kata/bin` dir:
 
@@ -275,20 +277,21 @@ sudo cp build/cargo_target/${toolchain}/release/jailer /opt/kata/bin/jailer
 
 AWS Firecracker requires a block device as the backing store for a VM. To interact with containerd and kata we use the devmapper snapshotter. To check support for your containerd installation, you can run:
 
-```
+```bash
 ctr plugins ls |grep devmapper
 ```
 
 if the output of the above command is:
 
-```
+```bash
 io.containerd.snapshotter.v1    devmapper                linux/amd64    ok
 ```
-then you can skip this section and move on to `Configure Kata Containers to use Firecracker`
+
+then you can skip this section and move on to [Configure Kata Containers to use Firecracker](#configure-kata-containers-to-use-firecracker)
 
 If the output of the above command is:
 
-```
+```bash
 io.containerd.snapshotter.v1    devmapper                linux/amd64    error
 ```
 
@@ -344,7 +347,7 @@ EOF
 
 Make it executable and run it:
 
-```
+```bash
 sudo chmod +x ~/scripts/devmapper/create.sh && \
   cd ~/scripts/devmapper/ && \
   sudo ./create.sh
@@ -399,7 +402,7 @@ sudo nano /lib/systemd/system/devmapper_reload.service
 
 The service file:
 
-```
+```bash
 [Unit]
 Description=Devmapper reload script
 
@@ -426,13 +429,13 @@ built [previously](#create-a-rootfs).
 
 ```bash
 sudo mkdir -p /opt/kata/configs
-sudo install -o root -g root -m 0640 /opt/kata/share/defaults/kata-containers/configuration-fc.toml /opt/kata/configs
-sudo sed -i 's/^\(initrd =.*\)/# \1/g' /opt/kata/configs/configuration-fc.toml
+sudo install -o root -g root -m 0640 /opt/kata/share/defaults/kata-containers/configuration-fc-vaccel.toml /opt/kata/configs
+sudo sed -i 's/^\(initrd =.*\)/# \1/g' /opt/kata/configs/configuration-fc-vaccel.toml
 # enable seccomp
-sudo sed -i '/^disable_guest_seccomp/ s/true/false/' /opt/kata/configs/configuration-fc.toml
+sudo sed -i '/^disable_guest_seccomp/ s/true/false/' /opt/kata/configs/configuration-fc-vaccel.toml
 ```
 
-Make sure that /opt/kata/configs/configuration-fc.toml has an image entry pointing to the rootfs we created:
+Make sure that /opt/kata/configs/configuration-fc-vaccel.toml has an image entry pointing to the rootfs we created:
 
 ```bash
 17   | image = "/opt/kata/share/kata-containers/kata-containers.img"
@@ -455,7 +458,7 @@ sudo chmod +x /usr/local/bin/containerd-shim-kata-fc-vaccel-v2
 
 Add the relevant section in containerd’s config.toml file (`/etc/containerd/config.toml`):
 
-```
+```toml
 [plugins.cri.containerd.runtimes]
   [plugins.cri.containerd.runtimes.kata-fc-vaccel]
     runtime_type = "io.containerd.kata-fc-vaccel.v2"
@@ -478,7 +481,22 @@ sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.
 
 You should see the `vaccelrt-agent` running alongside the containerd process.
 
-### Run a vAccel-enabled kata conatiner
+### Install vAccel components
+
+Before we proceed to run our first vAccel enabled kata container, we need to install the required vAccel components:
+
+```bash
+down_dir=$(mktemp -d)
+pushd $down_dir
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+sudo dpkg -i vaccel-0.5.0-Linux.deb
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
+sudo dpkg -i vaccelrt-agent-0.3.0-Linux.deb
+popd
+rm -rf $down_dir
+```
+
+### Run a vAccel-enabled kata container
 
 To run a vAccel enabled kata container, first, you have to get a container
 image with vaccel installed. We built one with docker, based on the following
@@ -514,7 +532,7 @@ CMD ["sleep", "infinity"]
 Build it, or pull a pre-built one:
 
 ```console
-$ sudo ctr image pull docker.io/nubificus/vaccel-app-container:x86_64
+$ sudo ctr image pull --snapshotter devmapper docker.io/nubificus/vaccel-app-container:x86_64
 docker.io/nubificus/vaccel-app-container:x86_64:                                  resolved       |++++++++++++++++++++++++++++++++++++++| 
 manifest-sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed: done           |++++++++++++++++++++++++++++++++++++++| 
 config-sha256:1bf757ff35444f01a96f9481b61cf82a0ced9afe53e37e2a04e1f3d943b4d241:   done           |++++++++++++++++++++++++++++++++++++++| 
@@ -561,4 +579,3 @@ root      983900  983888  0 18:14 ?        00:00:01 /opt/kata/bin/firecracker --
 root      983906  983888  0 18:14 ?        00:00:02 /opt/vaccel-v0.4.0/bin/vaccelrt-agent --server-address unix:///run/vc/firecracker/ubuntu-kata-fc-vaccel/root/kata.hvsock_2048
 root      994531  894257  0 18:19 pts/17   00:00:00 grep ubuntu-kata-fc
 ```
-
