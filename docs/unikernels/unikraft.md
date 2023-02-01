@@ -366,39 +366,19 @@ classification tags: 99.902% banana
 [    2.999903] Info: [libkvmplat] <shutdown.c @   35> Unikraft halted
 ```
 
+**Note**
+We need to get the model which will be used for the image classification. We
+will use a script which is already provided by jetson-inference (normally under
+`/usr/local/share/jetson-inference`. Also we need to point vAccel's jetson
+plugin the path to that model. The jetson-inference installation handles that
+just fine using the [`download_models.sh`](https://github.com/dusty-nv/jetson-inference/blob/master/tools/download-models.sh) script.
 
+For the vAccel `jetson-inference` plugin, you can specify the path
+to the `networks` folder using the `VACCEL_IMAGENET_NETWORKS` environment
+variable.
 
-
-
-
-
-
-
-
-### Oldnotes
-One more thing. We need to get the model which will be used for the image
-classification. We will use a script which is already provided by
-jetson-inference (normally under `/usr/local/share/jetson-inference/tools`. Also
-we need to point vAccel's jetson plugin the path to that model.
+e.g.:
 
 ```sh
-/path/to/download-models.sh
-cp /usr/local/share/jetson-inference/data/networks/* networks
-export VACCEL_IMAGENET_NETWORKS=/full/path/to/newly/downloaded/networks/directory
+export VACCEL_IMAGENET_NETWORKS=/jetson-inference/data/networks
 ```
-
-Finally we can run our unikernel using the command below:
-
-```sh
-LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64 qemu-system-x86_64 -cpu host -m 512 -enable-kvm -nographic -vga none \
-	-fsdev local,id=myid,path=/data/data,security_model=none -device virtio-9p-pci,fsdev=myid,mount_tag=data,disable-modern=on,disable-legacy=off \
-	-object acceldev-backend-vaccelrt,id=gen0 -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on \
-	-kernel /data/classify_kvm-x86_64 -append "vfs.rootdev=data -- dog_0.jpg 1"
-```
-
-Let's highlight some parts of the qemu command:
- 
-- `LD\_LIBRARY\_PATH` environment variable: QEMU will dynamically link with every library it needs and in this case it also needs the vAccelrt library
-- `-fsdev local,id=myid,path=./data,security\_model=none`: We need to tell QEMU where will find the data that will pass to the guest. The data directory contains the image we want to classify
-- `-object acceldev-backend-vaccelrt,id=gen0 -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on`: For the vAccel driver
-- `-append "vfs.rootdev=data -- dog_0.jpg 1"`: In the command line we need to tell the classify application which image to classify and how many iterations to do
