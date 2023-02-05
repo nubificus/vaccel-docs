@@ -46,7 +46,9 @@ change. We will not use the official Unikraft repo but our fork.
 ```
 mkdir unikraft_dev && cd unikraft_dev
 git clone https://github.com/cloudkernels/unikraft.git -b vaccelrt_rel010
-mkdir apps/ && cd apps/
+mkdir apps/ && mkdir libs 
+cd libs && git clone https://github.com/unikraft/lib-newlib && cd ..
+cd apps
 git clone https://github.com/cloudkernels/unikraft_vaccel_examples
 cd unikraft_vaccel_examples
 ```
