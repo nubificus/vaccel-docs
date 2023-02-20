@@ -69,6 +69,21 @@ chmod +x firecracker
 ./firecracker --api-sock fc.sock --config-file config_vsock.json
 ```
 
+**Note** You have to make sure that `./fc.sock` and `/tmp/vaccel.sock` are cleaned up
+before launching the VM, as firecracker will fail with the following errors:
+
+```console
+[anonymous-instance:fc_api:ERROR:src/firecracker/src/api_server_adapter.rs:163] Failed to open the API socket at: fc.sock. Check that it is not already used.
+```
+
+or 
+
+```console
+[anonymous-instance:main:ERROR:src/firecracker/src/main.rs:496] Configuration for VMM from one single json failed: Vsock device error: Cannot create backend for vsock device: UnixBind(Os { code: 98, kind: AddrInUse, message: "Address in use" })
+```
+
+So make sure before launching to rm these files: `rm fc.sock ; rm /tmp/vaccel.sock`
+
 We should be presented with a login prompt:
 
 ```console
@@ -453,7 +468,8 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-de
 dpkg -i vaccelrt-agent-0.3.0-Linux.deb
 ```
 
-To run the agent we use the following commands:
+To run the agent we need to set the plugin using the `VACCEL_BACKENDS` variable
+and the endpoint. Use the following commands:
 
 ```bash
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
@@ -469,6 +485,8 @@ You should be presented with the following output:
 vaccel ttRPC server started. address: vsock://40:2048
 Server is running, press Ctrl + C to exit
 ```
+
+You could also enable `debug` by setting the env variable `VACCEL_DEBUG=4`.
 
 **Note**: _Depending on which VM case you consider, you might need to edit
 `$VACCEL_AGENT_ENDPOINT`. For example, for the all `rust-vmm` clones
@@ -512,7 +530,7 @@ case](build_run_app.md#running-a-vaccel-application). Well, almost the same;
 what we missed is the plugin output. See the native execution case below:
 
 ```console
-$ ./classify images/example.jpg 1
+$ /opt/vaccel/bin/classify images/example.jpg 1
 Initialized session with id: 1
 Image size: 79281B
 [noop] Calling Image classification for session 1
