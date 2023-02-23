@@ -39,6 +39,17 @@ Execute noop
 
 
 
+**Args:**
+ 
+ - <b>`session`</b>:  A vaccel.Session instance 
+
+
+
+**Returns:**
+ A string containing the noop result 
+
+
+
 
 ---
 

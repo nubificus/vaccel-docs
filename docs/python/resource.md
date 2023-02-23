@@ -35,7 +35,18 @@ The id of a vAccel resource
 is_registered(session)
 ```
 
-Returns true if the resource is registered with the session 
+Checks if the resource is registered with the session 
+
+
+
+**Args:**
+ 
+ - <b>`session`</b>:  A vaccel.Session instance 
+
+
+
+**Returns:**
+ True if the resource is registered with the session 
 
 
 

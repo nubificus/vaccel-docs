@@ -8,6 +8,7 @@
 **Global Variables**
 ---------------
 - **imgsource**
+- **minmaxsource**
 
 ---
 
