@@ -180,11 +180,18 @@ genop(
 
 Vaccel genop. 
 
-Paramters 
---------- session : `Any` arg_read : `list`  arg_write : `list` 
 
-Returns 
---------- List of `str`. 
+
+**Args:**
+ 
+ - <b>`session `</b>:  A vaccel.Session instance 
+ - <b>`arg_read `</b>:  A list of inputs 
+ - <b>`arg_write `</b>:  A list of outputs 
+
+
+
+**Returns:**
+ List of `str`. 
 
 
 

@@ -39,12 +39,12 @@
 - [`image_genop.ImageSegment`](./image_genop.md#class-imagesegment)
 - [`minmax.MinMax`](./minmax.md#class-minmax): A MinMax model vAccel resource.
 - [`noop.Noop`](./noop.md#class-noop)
-- [`pynq_array_copy.Pynq_array_copy`](./pynq_array_copy.md#class-pynq_array_copy)
-- [`pynq_parallel.Pynq_parallel`](./pynq_parallel.md#class-pynq_parallel)
-- [`pynq_vector_add.Pynq_vector_add`](./pynq_vector_add.md#class-pynq_vector_add)
+- [`pynq_array_copy.Pynq_array_copy`](./pynq_array_copy.md#class-pynq_array_copy): A Pynq array copy model vAccel resource.
+- [`pynq_parallel.Pynq_parallel`](./pynq_parallel.md#class-pynq_parallel): A Pynq parallel model vAccel resource.
+- [`pynq_vector_add.Pynq_vector_add`](./pynq_vector_add.md#class-pynq_vector_add): A Pynq vector add model vAccel resource.
 - [`resource.Resource`](./resource.md#class-resource): A vAccel resource
 - [`session.Session`](./session.md#class-session)
-- [`sgemm.Sgemm`](./sgemm.md#class-sgemm)
+- [`sgemm.Sgemm`](./sgemm.md#class-sgemm): An Sgemm model vAccel resource.
 - [`tensorflow.Node`](./tensorflow.md#class-node): A representation of TensorFlow graph input or output node
 - [`tensorflow.Tensor`](./tensorflow.md#class-tensor): A representation of a Tensor
 - [`tensorflow.TensorFlowModel`](./tensorflow.md#class-tensorflowmodel): A TensorFlow model vAccel resource

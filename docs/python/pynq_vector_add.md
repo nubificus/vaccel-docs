@@ -10,9 +10,14 @@
 ---
 
 ## class `Pynq_vector_add`
+A Pynq vector add model vAccel resource. 
 
 
 
+**Attributes:**
+ 
+ - <b>`__op__`</b>:  The genop operation type 
+ - <b>`def_arg_write`</b> (bytes):  The result of the operation 
 
 
 
@@ -25,13 +30,22 @@
 pynq_vector_add(len_a: int, len_b: int)
 ```
 
-Pynq vector_add using vAccel over genop. 
+Executes Pynq vector add operation using vAccel over genop. 
 
-Parameters 
----------- len_a : `int` len_b : `int` 
 
-Returns 
----------- a : `float` b : `float` c : `float` 
+
+**Args:**
+ 
+ - <b>`len_a`</b>:  An integer giving the length of the array a 
+ - <b>`len_b`</b>:  An integer giving the length of the array b 
+
+
+
+**Returns:**
+ 
+ - <b>`a`</b>:  A float for the array a 
+ - <b>`b`</b>:  A float for the array b 
+ - <b>`c`</b>:  A float for the result of the addition 
 
 
 
