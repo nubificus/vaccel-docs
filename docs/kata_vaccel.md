@@ -502,9 +502,9 @@ Before we proceed to run our first vAccel enabled kata container, we need to ins
 ```bash
 down_dir=$(mktemp -d)
 pushd $down_dir
-wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/$(uname -m)/Release-deb/vaccel-0.5.0-Linux.deb
 sudo dpkg -i vaccel-0.5.0-Linux.deb
-wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/$(uname -m)/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
 sudo dpkg -i vaccelrt-agent-0.3.0-Linux.deb
 popd
 rm -rf $down_dir
@@ -524,10 +524,10 @@ ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && apt-get install -y wget unzip && apt-get clean
 
 # Install vAccelrt core library
-RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb && dpkg -i vaccel-0.5.0-Linux.deb
+RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/$(uname -m)/Release-deb/vaccel-0.5.0-Linux.deb && dpkg -i vaccel-0.5.0-Linux.deb
 
 # Install the vsock plugin
-RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/x86_64/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb && dpkg -i vaccelrt-plugin-vsock-0.1.0-Linux.deb
+RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/$(uname -m)/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb && dpkg -i vaccelrt-plugin-vsock-0.1.0-Linux.deb
 
 # Set some env variables
 ENV LD_LIBRARY_PATH=/usr/local/lib
@@ -546,7 +546,7 @@ CMD ["sleep", "infinity"]
 Build it, or pull a pre-built one:
 
 ```console
-$ sudo ctr image pull --snapshotter devmapper docker.io/nubificus/vaccel-app-container:x86_64
+$ sudo ctr image pull --snapshotter devmapper docker.io/nubificus/vaccel-app-container:$(uname -m)
 docker.io/nubificus/vaccel-app-container:x86_64:                                  resolved       |++++++++++++++++++++++++++++++++++++++| 
 manifest-sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed: done           |++++++++++++++++++++++++++++++++++++++| 
 config-sha256:1bf757ff35444f01a96f9481b61cf82a0ced9afe53e37e2a04e1f3d943b4d241:   done           |++++++++++++++++++++++++++++++++++++++| 
@@ -563,7 +563,7 @@ Finally, run the container with the `kata-fc-vaccel` runtime using the
 following commnad:
 
 ```sh
-sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:x86_64 ubuntu-kata-fc-vaccel /bin/bash
+sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash
 ```
 
 You should be presented with the prompt of the container. Then, run the vaccel
@@ -576,7 +576,7 @@ classify /usr/local/share/images/example.jpg 1
 The full output is shown below:
 
 ```console
-$ sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:x86_64 ubuntu-kata-fc-vaccel /bin/bash
+$ sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash
 root@clr-5746603866294b7885b6f2a30c04c7b7:/# classify /usr/local/share/images/example.jpg 1
 Initialized session with id: 1
 Image size: 79281B
