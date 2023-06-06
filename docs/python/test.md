@@ -242,6 +242,32 @@ test_image_depth()
 
 
 
+---
+
+## function `test_exec_genop`
+
+```python
+test_exec_genop()
+```
+
+
+
+
+
+
+---
+
+## function `test_exec_with_resource`
+
+```python
+test_exec_with_resource()
+```
+
+
+
+
+
+
 
 
 ---

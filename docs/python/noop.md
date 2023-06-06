@@ -29,7 +29,7 @@ __init__()
 
 ---
 
-### classmethod `noop`
+### method `noop`
 
 ```python
 noop(session)
