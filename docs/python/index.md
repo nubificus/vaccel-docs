@@ -5,6 +5,7 @@
 ## Modules
 
 - [`error`](./error.md#module-error)
+- [`exec`](./exec.md#module-exec)
 - [`genop`](./genop.md#module-genop)
 - [`image`](./image.md#module-image)
 - [`image_genop`](./image_genop.md#module-image_genop)
@@ -16,12 +17,17 @@
 - [`resource`](./resource.md#module-resource)
 - [`session`](./session.md#module-session)
 - [`sgemm`](./sgemm.md#module-sgemm)
+- [`shared_object`](./shared_object.md#module-shared_object)
 - [`tensorflow`](./tensorflow.md#module-tensorflow)
 - [`test`](./test.md#module-test)
 
 ## Classes
 
 - [`error.VaccelError`](./error.md#class-vaccelerror): Exception raised when a vAccel runtime error occurs
+- [`exec.Exec`](./exec.md#class-exec): An Exec operation model vAccel resource
+- [`exec.Exec_Operation`](./exec.md#class-exec_operation): An Exec Operation model vAccel resource
+- [`exec.Exec_with_resource`](./exec.md#class-exec_with_resource): An Exec with resource model vAccel resource.
+- [`exec.Vaccel_Args`](./exec.md#class-vaccel_args): A helper class for converting argument lists to the appropriate vAccel format
 - [`genop.Genop`](./genop.md#class-genop)
 - [`genop.VaccelArg`](./genop.md#class-vaccelarg)
 - [`genop.VaccelArgInfo`](./genop.md#class-vaccelarginfo)
@@ -45,6 +51,7 @@
 - [`resource.Resource`](./resource.md#class-resource): A vAccel resource
 - [`session.Session`](./session.md#class-session)
 - [`sgemm.Sgemm`](./sgemm.md#class-sgemm): An Sgemm model vAccel resource.
+- [`shared_object.Object`](./shared_object.md#class-object)
 - [`tensorflow.Node`](./tensorflow.md#class-node): A representation of TensorFlow graph input or output node
 - [`tensorflow.Tensor`](./tensorflow.md#class-tensor): A representation of a Tensor
 - [`tensorflow.TensorFlowModel`](./tensorflow.md#class-tensorflowmodel): A TensorFlow model vAccel resource
@@ -52,6 +59,8 @@
 
 ## Functions
 
+- [`test.test_exec_genop`](./test.md#function-test_exec_genop)
+- [`test.test_exec_with_resource`](./test.md#function-test_exec_with_resource)
 - [`test.test_genop`](./test.md#function-test_genop): should work, but it doesn't because the sanity check on vAccel
 - [`test.test_image_class_genop`](./test.md#function-test_image_class_genop)
 - [`test.test_image_classify`](./test.md#function-test_image_classify)

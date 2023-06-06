@@ -168,12 +168,12 @@ __init__()
 
 ---
 
-### classmethod `genop`
+### method `genop`
 
 ```python
 genop(
     session: Session,
-    arg_read: List[VaccelArg],
+    arg_read: List[int],
     arg_write: List[VaccelArg]
 ) → List[str]
 ```
