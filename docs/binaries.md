@@ -19,7 +19,7 @@ Download the relevant binaries (`deb` or artifacts) using the links in the
 
 Component     | Version |  Package | Binary Artifact
 ------------- | --------| -------- | -------------
-vAccelRT core | v0.5.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/aarch64/Release-deb/vaccel-0.5.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/armv7l/Release-deb/vaccel-0.5.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-tar/vaccel-0.5.0-Linux.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/aarch64/Release-tar/vaccel-0.5.0-Linux.tar.gz) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/armv7l/Release-tar/vaccel-0.5.0-Linux.tar.gz)
+vAccelRT core | v0.5.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.5.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-deb/vaccel-0.5.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-deb/vaccel-0.5.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-tar/vaccel-0.5.0-Linux.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-tar/vaccel-0.5.0-Linux.tar.gz) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-tar/vaccel-0.5.0-Linux.tar.gz)
 vAccelRT agent  | v0.3.5  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.5-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release-deb/vaccelrt-agent-0.3.5-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release-deb/vaccelrt-agent-0.3.5-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release/vaccelrt-agent) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release/vaccelrt-agent) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release/vaccelrt-agent)
 Jetson plugin | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release/libvaccel-jetson.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release/libvaccel-jetson.so)
 Tensorflow plugin | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release/libvaccel-tf.so)
@@ -49,15 +49,15 @@ system.
 For example, to install the vAccelRT core library for an `x86_64` host, do:
 
 ```
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
 dpkg -i vaccel-0.5.0-Linux.deb
 ```
 
 The output should be something like the following:
 
 ```console
-# wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
---2022-11-08 21:25:08--  https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+# wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+--2022-11-08 21:25:08--  https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
 Resolving s3.nbfc.io (s3.nbfc.io)... 84.254.1.240
 Connecting to s3.nbfc.io (s3.nbfc.io)|84.254.1.240|:443... connected.
 HTTP request sent, awaiting response... 200 OK
@@ -152,7 +152,7 @@ The core runtime library package contains the following:
 Alternatively, you can install the vAccelRT core runtime library using the tar artifact. Use the commands below to install it to `/usr/local/`:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-tar/vaccel-0.5.0-Linux.tar.gz
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-tar/vaccel-0.5.0-Linux.tar.gz
 tar -zxvf /vaccel-0.5.0-Linux.tar.gz  --strip-components=1 -C /
 ```
 
