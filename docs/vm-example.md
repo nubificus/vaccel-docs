@@ -61,7 +61,7 @@ We should have the following files available:
 0 directories, 4 files
 ```
 
-To launch the VM, all we have to do is run the following command:
+To launch the VM, all we have to do is run the following command (make sure you run as `root`):
 
 ```bash
 chmod +x firecracker
@@ -464,8 +464,8 @@ instructions in the [relevant section](/binaries#install-vaccelrt-agent).
 In short, for `x86_64`: 
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
-dpkg -i vaccelrt-agent-0.3.0-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.5-Linux.deb
+dpkg -i vaccelrt-agent-0.3.5-Linux.deb
 ```
 
 To run the agent we need to set the plugin using the `VACCEL_BACKENDS` variable
