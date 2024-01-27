@@ -28,6 +28,7 @@ nav:
     - python_bindings.md
     - Tensorflow: tensorflow_bindings.md
     - pytorch_bindings.md
+    - Go Bindings: vaccel_go.md  
   - Container runtimes:
     - container_runtimes.md
     - kata_vaccel.md
