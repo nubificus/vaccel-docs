@@ -1,0 +1,37 @@
+name: "Spellcheck"
+
+on:
+  pull_request:
+    branches:
+       - main
+
+jobs:
+  spellcheck:
+    runs-on: [self-hosted, x86_64]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+            **/*.md
+
+      - name: Check if any Markdown file was changed
+        if: steps.changed-files.outputs.any_changed == 'false'
+        run: |
+          echo "No Markdown files were changed"
+          exit 0
+
+      - name: Spellcheck
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: rojopolis/spellcheck-github-actions@v0
+        with:
+          config_path: .spellcheck.yml
+          source_files: ${{ steps.changed-files.outputs.all_changed_files }}
+          task_name: Markdown
