@@ -40,6 +40,7 @@ nav:
     - api.md
     - Python API: python/index.md
     - plugin.md
+    - tests.md
   - Useful Docs: 
     - misc_docs.md
     - Jetson Inference: jetson.md
