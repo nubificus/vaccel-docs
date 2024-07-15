@@ -1,64 +1,60 @@
 # Build & install from source
 
-To build the components of vAccel we need the vAccelRT core library and a
+To build the components of vAccel we need the vAccel core library and a
 backend plugin that implements the operation we want to execute.
 
 ## Build vAccelRT
 
-[This](https://github.com/cloudkernels/vaccelrt) repo includes the core runtime
+[This](https://github.com/cloudkernels/vaccel) repo includes the core runtime
 system, the `exec` backend plugin and a debug plugin for testing (`noop`).
 
 ### 1. Cloning and preparing the build directory
 
-In Ubuntu-based systems, you need to have the following packages to build `vaccelrt`:
+In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
 
 - cmake
 - build-essential
+- meson
+- ninja
 
 You can install them using the following command:
 
 ```bash
-sudo apt-get install -y cmake build-essential
+apt-get install build-essential ninja-build pkg-config python3-pip 
+pip install meson
 ```
+
 Get the source code for **vaccelrt**:
 
 ```bash
-git clone https://github.com/cloudkernels/vaccelrt --recursive
+git clone https://github.com/cloudkernels/vaccel --recursive
 ```
 
-Prepare the build directory:
+### 2. Building and isntalling the core runtime library
 
 ```bash
-cd vaccelrt
-mkdir build
-cd build
-```
+cd vaccel
 
-### 2. Building the core runtime library
+# Configure the build directory with the default options and set build
+# type to 'release'.
+meson setup --buildtype=release build
 
-```bash
-# This sets the installation path to /usr/local, and the current build
-# type to 'Release'. The other option is the 'Debug' build
-cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release
-make
-make install
+# Compile the project
+meson compile -C build
+
+# Install the project
+meson install -C build
 ```
 
 ### 3. Building the plugins
 
 Building the plugins is disabled, by default. You can enable building one or
-more plugins at configuration time of CMake by setting the corresponding
-variable of the following table to `ON`
-
-Backend Plugin | Variable | Default
--------------- | -------- | -------
-noop | BUILD\_PLUGIN\_NOOP | `OFF`
-exec | BUILD\_PLUGIN\_EXEC | `OFF`
+more plugins at configuration time of meson by replacing ```meson setup --buildtype=release build``` with the plugin alternative
 
 For example:
 
 ```bash
-cmake -DBUILD_PLUGIN_NOOP=ON ..
+meson setup --buildtype=release -Dplugin-noop=enabled build
 ```
 
 will enable building the noop backend plugin.
@@ -66,13 +62,14 @@ will enable building the noop backend plugin.
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccelrt/tree/master/examples) folder of this project.
+[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder of this project.
 
-You can build the example using the following directive in the build directory:
+You can build the example using the following reconfiguration in the meson build:
+
 ```bash
-cmake -DBUILD_EXAMPLES=ON ..
-make
+meson setup --reconfigure -Dexamples=enabled build
 ```
+
 A number of example binaries have been built:
 ```console
 # ls examples
@@ -140,4 +137,9 @@ Image size: 79281B
 [noop] len_img: 79281
 [noop] will return a dummy result
 classification tags: This is a dummy classification tag!
+```
+
+For debug level output:
+```
+export VACCEL_DEBUG_LEVEL=4
 ```

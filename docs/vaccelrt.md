@@ -9,14 +9,14 @@ that are responsible to offload computations to the accelerator.
 This design decouples the user application from the actual accelerator specific code. The advantage of this choice is that the application can make use of
 different hardware accelerators without extra development cost or re-compiling.
 
-[This](https://github.com/cloudkernels/vaccelrt) repo includes the core runtime system, and back-end plugins for VirtIO and the Jetson Inference framework.
+[This](https://github.com/cloudkernels/vaccel) repo includes the core runtime system, and back-end plugins for VirtIO and the Jetson Inference framework.
 
 ### Build & Installation
 
 #### 1. Cloning and preparing the build directory
 
 ```zsh
-~ » git clone https://github.com/cloudkernels/vaccelrt.git
+~ » git clone https://github.com/cloudkernels/vaccel.git
 
 Cloning into 'vaccelrt'...
 remote: Enumerating objects: 215, done.

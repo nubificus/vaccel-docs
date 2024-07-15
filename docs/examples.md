@@ -14,8 +14,8 @@ Firecracker VM, using the Maxwell GPU present in the Jetson compute module.
 ### Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccelrt/tree/master/examples) folder
-of the vAccel runtime [repo](https://github.com/cloudkernels/vaccelrt).
+[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder
+of the vAccel runtime [repo](https://github.com/cloudkernels/vaccel).
 
 You can build the example using the CMake of the repo:
 ```bash
