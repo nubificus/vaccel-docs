@@ -39,37 +39,44 @@ You can now go ahead and run a [simple example](#simple-example) using the `noop
 
 ### Prerequisites
 
-In Ubuntu-based systems, you need to have the following packages to build `vaccelrt`:
+In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
 
 - cmake
 - build-essential
+- meson
+- ninja
 
 You can install them using the following command:
 
 ```bash
-sudo apt-get install -y cmake build-essential
+apt-get install build-essential ninja-build pkg-config python3-pip 
+pip install meson
 ```
-
 
 ### Get the source code
 
-Get the source code for **vaccelrt**:
+Get the source code for **vaccel**:
 
 ```bash
-git clone https://github.com/cloudkernels/vaccelrt --recursive
+git clone https://github.com/cloudkernels/vaccel --recursive
 ```
 
-### Build and install vaccelrt
+### Build and install vaccel
 
-Build vaccelrt and install it in `/usr/local`:
+Build vaccel and install
 
 ```bash
-cd vaccelrt
-mkdir build
-cd build
-cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_PLUGIN_NOOP=ON -DBUILD_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Release
-make
-make install
+cd vaccel
+
+# Configure the build directory with the default options and set build
+# type to 'release'.
+meson setup --buildtype=release build
+
+# Compile the project
+meson compile -C build
+
+# Install the project
+meson install -C build
 ```
 
 <hr>

@@ -243,7 +243,7 @@ Following the generic process for vAccelRT building (from [Building vAccelRT](/v
 In short, the previous steps for vAccelRT were the following[^1]:
 
 ```
-git clone --recursive https://github.com/cloudkernels/vaccelrt -b feat_gcoral_plugin
+git clone --recursive https://github.com/cloudkernels/vaccel -b feat_gcoral_plugin
 cd vaccelrt
 mkdir build
 cd build
@@ -342,4 +342,4 @@ imagenet_labels.txt
 
 available for download from: [https://github.com/google-coral/test_data](https://github.com/google-coral/test_data).
 
-[^1]: Support for Google Coral is [WiP](https://github.com/cloudkernels/vaccelrt/pull/14), and will be available shortly in the main branch.
+[^1]: Support for Google Coral is [WiP](https://github.com/cloudkernels/vaccel/pull/14), and will be available shortly in the main branch.

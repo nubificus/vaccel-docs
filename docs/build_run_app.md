@@ -7,22 +7,12 @@ will walk through the process of running a simple vAccel application
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccelrt/tree/master/examples)
-folder of this project.
+[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder of this project.
 
-If you haven't already done so, get the code and prepare the build directory:
+You can build the example using the following reconfiguration in the meson build:
 
-```
-git clone https://github.com/cloudkernels/vaccelrt --recursive
-cd vaccelrt
-mkdir -p build
-cd build
-```
-
-You can build the example using the following directive in the build directory:
 ```bash
-cmake -DBUILD_EXAMPLES=ON ..
-make
+meson setup --reconfigure -Dexamples=enabled build
 ```
 
 A number of example binaries have been built:
@@ -37,18 +27,9 @@ If, instead, you want to build by hand you need to define the include and
 library paths (if they are not in your respective default search paths) and
 also link with `dl`:
 
-```bash
-# Make sure to replace VACCEL_INSTALL with your current vAccel installation
-# path, eg. ${HOME}/.local
-export VACCEL_INSTALL=/usr/local
-export VACCEL_LIBS=${VACCEL_INSTALL}/lib
-export VACCEL_INCLUDES=${VACCEL_INSTALL}/include
-cd ../examples
-gcc -Wall -Wextra -I${VACCEL_INSTALL}include -L${VACCEL_INSTALL}/lib classify.c -o classify -lvaccel -ldl
-```
-You should be presented with the classify binary in the current directory:
-
 ```console
+$ cd ../examples
+$ gcc -Wall -Wextra -I/usr/local/include -L/usr/local/lib classify.c -o classify -lvaccel -ldl
 $ ls classify.c classify
 classify.c  classify  
 ```
@@ -57,17 +38,13 @@ classify.c  classify
 
 Having built our `classify` example, we need to prepare the vaccel environment for it to run:
 
-### 1. Set library path 
-
-Define the path to `libvaccel.so` (if not in the default search path):
+1. Define the path to `libvaccel.so` (if not in the default search path):
 
 ```bash
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ```
 
-### 2. Set the plugin
-
-Define the backend plugin to use for our application.
+2. Define the backend plugin to use for our application.
 
 In this example, we will use the noop plugin:
 
@@ -75,9 +52,7 @@ In this example, we will use the noop plugin:
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 ```
 
-### 3. Run the app
-
-Finally, you can do:
+3. Finally, you can do:
 
 ```bash
 ./classify images/example.jpg 1
@@ -107,4 +82,9 @@ Image size: 79281B
 [noop] len_img: 79281
 [noop] will return a dummy result
 classification tags: This is a dummy classification tag!
+```
+
+For debug level output:
+```
+export VACCEL_DEBUG_LEVEL=4
 ```

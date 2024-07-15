@@ -71,7 +71,7 @@ module's ioctl language to offload computation from a VM guest to the host.
 
 ```sh
 # Fetch the vAccelRT repo
-git clone --recursive https://github.com/cloudkernels/vaccelrt
+git clone --recursive https://github.com/cloudkernels/vaccel
 cd vaccelrt
 
 mkdir build
