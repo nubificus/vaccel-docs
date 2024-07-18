@@ -12,7 +12,6 @@ system, the `exec` backend plugin and a debug plugin for testing (`noop`).
 
 In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
 
-- cmake
 - build-essential
 - meson
 - ninja
