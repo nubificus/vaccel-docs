@@ -58,7 +58,7 @@ pip install meson
 Get the source code for **vaccel**:
 
 ```bash
-git clone https://github.com/cloudkernels/vaccel --recursive
+git clone https://github.com/nubificus/vaccel --recursive
 ```
 
 ### Build and install vaccel

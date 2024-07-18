@@ -52,7 +52,7 @@ sudo apt-get install -y cmake build-essential
 ```
 Get the source code for **vaccelrt**:
 ```
-git clone https://github.com/cloudkernels/vaccel --recursive
+git clone https://github.com/nubificus/vaccel --recursive
 ```
 Prepare the build directory:
 ```
