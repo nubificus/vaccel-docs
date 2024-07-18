@@ -3,15 +3,15 @@
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder
-of the vAccel runtime [repo](https://github.com/cloudkernels/vaccel).
+[examples](https://github.com/nubificus/vaccel/tree/master/examples) folder
+of the vAccel runtime [repo](https://github.com/nubificus/vaccel).
 
 You can build the example using the Meson/CMake of the repo:
 
 Using Meson:
 
 ```bash
-meson setup --reconfigure -Dexamples=enabled build
+meson setup --buildtype=release -Dexamples=enabled build
 meson compile -C build
 meson install -C build
 ```

@@ -7,7 +7,7 @@ will walk through the process of running a simple vAccel application
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder of this project.
+[examples](https://github.com/nubificus/vaccel/tree/master/examples) folder of this project.
 
 You can build the example using the following reconfiguration in the meson build:
 

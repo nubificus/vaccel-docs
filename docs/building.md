@@ -5,7 +5,7 @@ backend plugin that implements the operation we want to execute.
 
 ## Build vAccelRT
 
-[This](https://github.com/cloudkernels/vaccel) repo includes the core runtime
+[This](https://github.com/nubificus/vaccel) repo includes the core runtime
 system, the `exec` backend plugin and a debug plugin for testing (`noop`).
 
 ### 1. Cloning and preparing the build directory
@@ -26,7 +26,7 @@ pip install meson
 Get the source code for **vaccelrt**:
 
 ```bash
-git clone https://github.com/cloudkernels/vaccel --recursive
+git clone https://github.com/nubificus/vaccel --recursive
 ```
 
 ### 2. Building and isntalling the core runtime library
@@ -61,7 +61,7 @@ will enable building the noop backend plugin.
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder of this project.
+[examples](https://github.com/nubificus/vaccel/tree/master/examples) folder of this project.
 
 You can build the example using the following reconfiguration in the meson build:
 

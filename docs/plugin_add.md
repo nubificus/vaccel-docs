@@ -9,7 +9,7 @@ To better understand the steps, it would be useful to go through
 First, lets grab the code:
 
 ```
-git clone --recursive https://github.com/cloudkernels/vaccel
+git clone --recursive https://github.com/nubificus/vaccel
 cd vaccelrt
 ```
 
