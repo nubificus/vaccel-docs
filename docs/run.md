@@ -6,7 +6,17 @@ We will use an example of image classification which can be found under the
 [examples](https://github.com/cloudkernels/vaccel/tree/master/examples) folder
 of the vAccel runtime [repo](https://github.com/cloudkernels/vaccel).
 
-You can build the example using the CMake of the repo:
+You can build the example using the Meson/CMake of the repo:
+
+Using Meson:
+
+```bash
+meson setup --reconfigure -Dexamples=enabled build
+meson compile -C build
+meson install -C build
+```
+
+Alternatively, we can also use CMake to build our exmaples:
 
 ```bash
 mkdir build
