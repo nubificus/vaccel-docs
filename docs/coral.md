@@ -236,14 +236,14 @@ g++ -shared -fPIC -std=c++11 classify.cc
         tensorflow/tensorflow/lite/tools/make/gen/linux_aarch64/lib/libtensorflow-lite.a
 ```
 
-## Build vAccelRT plugin
+## Build vAccel plugin
 
-Following the generic process for vAccelRT building (from [Building vAccelRT](/vaccelrt)) we now have to enable the vAccel Google Coral Edge TPU plugin.
+Following the generic process for vAccel building (from [Building vAccel](user-guide/building.md)) we now have to enable the vAccel Google Coral Edge TPU plugin.
 
-In short, the previous steps for vAccelRT were the following[^1]:
+In short, the previous steps for vAccel were the following[^1]:
 
 ```
-git clone --recursive https://github.com/cloudkernels/vaccel -b feat_gcoral_plugin
+git clone --recursive https://github.com/nubificus/vaccel -b feat_gcoral_plugin
 cd vaccelrt
 mkdir build
 cd build
@@ -317,7 +317,7 @@ Include directories: /data/vaccelrt/src
 -- Build files have been written to: /data/vaccelrt/build_coral
 ```
 
-Finally, building the plugin is as simple as issueing a make command:
+Finally, building the plugin is as simple as issuing a make command:
 
 ```
 make
@@ -331,7 +331,8 @@ vaccelrt/build_coral/plugins/coral/libvaccel-coral.so
 
 ## Extra Files 
 
-To run an example on the Google Coral Edge TPU, follow the instructions available at [Running a simple example](/run).
+To run an example on the Google Coral Edge TPU, follow the instructions available at
+[Run a simple vAccel application](user-guide/build-run-app.md#running-a-vaccel-application).
 
 The files needed for classification are:
 
@@ -342,4 +343,4 @@ imagenet_labels.txt
 
 available for download from: [https://github.com/google-coral/test_data](https://github.com/google-coral/test_data).
 
-[^1]: Support for Google Coral is [WiP](https://github.com/cloudkernels/vaccel/pull/14), and will be available shortly in the main branch.
+[^1]: Support for Google Coral is [WiP](https://github.com/nubificus/vaccel/pull/14), and will be available shortly in the main branch.

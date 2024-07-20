@@ -84,7 +84,7 @@ VACCEL_MODULE(
 ```
 
 Additionally, we need to add the relevant rules in the `CMakeLists.txt` files
-to build the plugin along with the rest of the vAccelRT code.
+to build the plugin along with the rest of the vAccel code.
 
 We add the following to `plugins/CMakeLists.txt`:
 

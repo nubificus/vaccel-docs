@@ -224,7 +224,7 @@ export PREFIX=/opt/kata
 sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d -v 5.15.26 install
 ```
 
-At this point we have succesfully built all the Kata components. All the binaries we built are stored under the `/opt/kata/bin` dir:
+At this point we have successfully built all the Kata components. All the binaries we built are stored under the `/opt/kata/bin` dir:
 
 ```bash
 $ ls -l /opt/kata/bin/
@@ -502,8 +502,8 @@ Before we proceed to run our first vAccel enabled kata container, we need to ins
 ```bash
 down_dir=$(mktemp -d)
 pushd $down_dir
-wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/$(uname -m)/Release-deb/vaccel-0.5.0-Linux.deb
-sudo dpkg -i vaccel-0.5.0-Linux.deb
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/$(uname -m)/Release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
 wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/$(uname -m)/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
 sudo dpkg -i vaccelrt-agent-0.3.0-Linux.deb
 popd
@@ -524,7 +524,7 @@ ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && apt-get install -y wget unzip && apt-get clean
 
 # Install vAccelrt core library
-RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/$(uname -m)/Release-deb/vaccel-0.5.0-Linux.deb && dpkg -i vaccel-0.5.0-Linux.deb
+RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/$(uname -m)/Release-deb/vaccel-0.6.0-Linux.deb && dpkg -i vaccel-0.6.0-Linux.deb
 
 # Install the vsock plugin
 RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/$(uname -m)/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb && dpkg -i vaccelrt-plugin-vsock-0.1.0-Linux.deb
@@ -560,7 +560,7 @@ done
 ```
 
 Finally, run the container with the `kata-fc-vaccel` runtime using the
-following commnad:
+following command:
 
 ```sh
 sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash

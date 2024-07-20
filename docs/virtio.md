@@ -6,7 +6,7 @@ Machine.
 
 We extended the idea of accelerated crypto operations to any acceleratable
 operation, which resulted in the `virtio-accel` module and the corresponding
-`vAccelRT` plugin that uses it to allow vAccel applications to use accelerated
+`vAccel` plugin that uses it to allow vAccel applications to use accelerated
 operations from within a Virtual Machine. Currently we support the AWS
 Firecracker and QEMU hypervisors. 
 
@@ -64,15 +64,15 @@ has not been implemented yet in Firecracker, so we disabled the feature passing
 
 TBD
 
-## Building the vAccelRT plugin
+## Building the vAccel plugin
 
-The `vAccelRT` runtime ships with a virtio plugin which *speaks* the virtio-accel
+The `vAccel` runtime ships with a virtio plugin which *speaks* the virtio-accel
 module's ioctl language to offload computation from a VM guest to the host.
 
 ```sh
-# Fetch the vAccelRT repo
-git clone --recursive https://github.com/cloudkernels/vaccel
-cd vaccelrt
+# Fetch the vAccel repo
+git clone --recursive https://github.com/nubificus/vaccel
+cd vaccel
 
 mkdir build
 cd build

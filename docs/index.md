@@ -18,7 +18,7 @@ Hypervisor](https://www.cloudhypervisor.org/) are currently supported
 3. **compatibility**: vAccel supports the OCI container format through integration
 with the [Kata containers](https://katacontainers.io/) framework [downstream].
 4. **low-overhead**: vAccel uses a very efficient transport layer for
-offloading "accelerate-able" functions from insde the VM to the host, incurring
+offloading "accelerate-able" functions from inside the VM to the host, incurring
 minimum overhead.
 5. **scalability**: Integration with k8s allows the deployment of vAccel
 applications at scale.
@@ -31,7 +31,7 @@ applications at scale.
   <figcaption>Figure 1. vAccel software stack</figcaption>
 </figure>
 
-The core component of vAccel is the vaccel runtime library (vAccelRT). vAccelRT
+The core component of vAccel is the runtime library. vAccel runtime library
 is designed in a modular way: the core runtime exposes the vAccel API to user
 applications and dispatches requests to one of many *backend plugins*, which
 implement the glue code between the vAccel API operations on a particular
@@ -81,7 +81,7 @@ Additionally, we have designed the above transport protocol over sockets,
 allowing vAccel applications to use any backend, as long as there is a socket
 interface installed between the two peers. Existing implementations include
 VSOCK and TCP sockets. Any hypervisor supporting `virtio-vsock` can support
-vAccel. See the [relevant page](/vm-example#bootstrap-the-vm) for more
+vAccel. See the [relevant page](user-guide/vm-example.md#bootstrap-the-vm) for more
 information.
 
 ## Performance

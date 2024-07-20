@@ -10,16 +10,16 @@ This is a quick start guide for running a simple vAccel application.
 <hr>
 ## Binary packages
 
-We provide release debs of the vAccelRT library, along with an example, debug
+We provide release debs of the vAccel library, along with an example, debug
 plugin (`noop`), and a hardware plugin (`jetson-inference`).
 
-### Get vAccelRT
+### Get vAccel
 
-You can install vAccelRT (in `/usr/local`) using the following commands:
+You can install vAccel (in `/usr/local`) using the following commands:
 
 ```
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
-sudo dpkg -i vaccel-0.5.0-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccel/main/x86_64/release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 ### Get the `jetson-inference` plugin
@@ -41,10 +41,9 @@ You can now go ahead and run a [simple example](#simple-example) using the `noop
 
 In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
 
-- cmake
 - build-essential
 - meson
-- ninja
+- ninja-build
 
 You can install them using the following command:
 
@@ -83,7 +82,7 @@ meson install -C build
 
 ## Simple Example
 
-Donwload an adorable kitten photo:
+Download an adorable kitten photo:
 
 ```bash
 wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
@@ -135,7 +134,7 @@ First, let's bootstrap the VM.
 ### VM setup
 
 To bootstrap a simple VM we will use AWS firecracker and an example kernel &
-rootfs. In [Run a vAccel application in a VM](vm-example.md) we provide more
+rootfs. In [Run a vAccel application in a VM](user-guide/vm-example.md) we provide more
 examples of the various hypervisors/VMMs we have tested and support. You can
 get the binaries using the commands below:
 
@@ -222,13 +221,13 @@ vaccel-guest login:
 Go ahead and log in (user: `root`, no password).
 
 
-Now, open another terminal to run the vAccelRT Agent. A detailed walkthrough of the execution flow with the agent is shown in [Running the vAccelRT Agent](vm-example.md#running-the-vaccelrt-agent).
+Now, open another terminal to run the vAccel Agent. A detailed walkthrough of the execution flow with the agent is shown in [Running the vAccel Agent](user-guide/vm-example.md#running-the-vaccel-agent).
 
 First get the binary:
 
 ```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/release/vaccelrt-agent
-chmod +x vaccelrt-agent
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/release/vaccel-agent
+chmod +x vaccel-agent
 ```
 
 Then, go ahead and run the binary with the `noop` plugin:
@@ -239,13 +238,13 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ### Listen to port 2048 on the socket exposed by the 
 ### VM (specified in config_vsock.json)
 export VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
-./vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 ```
 
 You should be presented with the following output:
 
 ```console
-# ./vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+# ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 vaccel ttRPC server started. address: unix:///tmp/vaccel.sock_2048
 Server is running, press Ctrl + C to exit
 ```
@@ -281,7 +280,9 @@ Destroyed session 1
 Running with the Jetson inference plugin requires a working
 [jetson-inference](https://github.com/dusty-nv/jetson-inference) installation
 along with the corresponding CUDA environment on the machine. If all is set up 
-correctly you can just skip to [Running a Jetson-inference example](#running-a-jeson-inference-example). If not, you can follow the steps below to get a working environment.
+correctly you can just skip to
+[Running a Jetson-inference example](#running-a-jeson-inference-example). If
+not, you can follow the steps below to get a working environment.
 
 If a jetson-inference setup is not available you can either follow [this
 guide](jetson.md) to build the vAccel jetson plugin and install the
@@ -489,7 +490,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ### Listen to port 2048 on the socket exposed by the
 ### VM (specified in config_vsock.json)
 export VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
-./vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 ```
 
 Similarly, we login as root (no password).
@@ -545,7 +546,7 @@ VACCEL_BACKENDS=/opt/vaccel/lib/libvaccel-vsock.so
 and we make sure the agent is running on the separate terminal:
 
 ```console
-# /opt/vaccel-v0.4.0/bin/vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+# /opt/vaccel-v0.4.0/bin/vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 vaccel ttRPC server started. address: unix:///tmp/vaccel.sock_2048
 Server is running, press Ctrl + C to exit
 ```

@@ -77,14 +77,15 @@ export UNIKRAFT_BINARY=$PWD/build/unikraft_vaccel_examples_kvm-x86_64
 ### Install vAccel dependencies
 
 Now, we need to install the vAccel core library and a plugin. Follow the
-instructions from the [docs](/binaries#install-vaccelrt-core-library). Bundled
+instructions from the
+[docs](user-guide/binaries.md#install-vaccelrt-core-library). Bundled
 with the core library is the `noop` plugin which we will use as the example.
 
 *TL;DR*
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
-dpkg -i vaccel-0.5.0-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
+dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 ### Run the application
@@ -160,8 +161,8 @@ installing the above dependencies is given in [Jetson-inference](/jetson).
 
 Given we have a working jetson-inference installation, we need to get the
 vAccel jetson-inference plugin. Have a look at [how we install plugins for
-vAccel](/binaries#install plugins) and pick-up the jetson-inference binary from
-the [binaries](/binaries#binaries) table.
+vAccel](user-guide/binaries.md#install plugins) and pick-up the jetson-inference
+binary from the [binaries](user-guide/binaries.md#binaries) table.
 
 TL;DR
 

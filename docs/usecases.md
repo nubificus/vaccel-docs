@@ -8,7 +8,7 @@ fraction of the price of having a dedicated VM or bare-metal machine.
 
 However, apart from the limitation that one has to re-write its application to
 match the Serverless computing paradigm (micro-service, event triggered),
-access to "specialized" equipement is not something common / supported now.
+access to "specialized" equipment is not something common / supported now.
 Major serverless offerings such as AWS Lambda, Azure functions, or Google
 Functions do not offer access to hardware acceleration for even the most common
 tasks (ML inference).
@@ -70,7 +70,7 @@ EOF
 
 ### Build an image classification function example
 
-Then, we need to build a function that consumes the vAccelRT API, as exposed to
+Then, we need to build a function that consumes the vAccel API, as exposed to
 the available functions. Check out
 [this](https://github.com/nubificus/stdinout/tree/vaccel) repo to get an idea
 of how easy it is to create a function that classifies images ;-)
@@ -181,7 +181,7 @@ Finally, using the command below:
 faas-cli deploy -f fclassify.yaml
 ```
 
-will instatiate the number of replicas chosen for fclassify as well as listen
+will instantiate the number of replicas chosen for fclassify as well as listen
 to requests for image classification, ready to forward them to the actual
 hardware securely and efficiently!
 

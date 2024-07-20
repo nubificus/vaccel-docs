@@ -3,25 +3,20 @@ nav:
   - Home: index.md
   - Quickstart: quickstart.md
   - User Guide: 
-    - user_guide.md
-    - building.md
-    - binaries.md
-    - build_run_app.md
-    - vm-example.md
-    - remote-example.md
-    #- vaccelrt.md
+    - user-guide/index.md
+    - user-guide/building.md
+    - user-guide/binaries.md
+    - user-guide/build-run-app.md
+    - user-guide/vm-example.md
+    - user-guide/remote-example.md
     #- Plugins:
     #  - jetson.md
     #  - virtio.md
     #  - coral.md
-    #- run.md
   #- kata-vaccel.md
   #- k8s:
   #  - devmapper.md
   #  - k8s/kata.md
-  #- Unikernels:
-  #  - unikernels/unikraft.md
-  #- examples.md
   #- usecases.md
   - Framework & Language bindings:
     - language_bindings.md
@@ -33,7 +28,7 @@ nav:
     - container_runtimes.md
     - kata_vaccel.md
   - Unikernels:
-    - unikernels/unikernels.md
+    - unikernels/index.md
     - unikernels/unikraft.md
   - Developer Guide:
     - dev_guide.md
