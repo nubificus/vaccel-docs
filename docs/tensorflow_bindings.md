@@ -61,8 +61,8 @@ and perform the steps below inside the container.
 ### Install vAccel on the host
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
-sudo dpkg -i vaccel-0.5.0-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 ### Get the Tensorflow plugin & bindings
@@ -80,7 +80,7 @@ libvaccel-tf-bindings.so
 libvaccel-tf.so
 ```
 
-Alternatively, get the binary artifacts manually from the [binaries](/binaries#binaries) table and install them to /usr/local/lib:
+Alternatively, get the binary artifacts manually from the [binaries](user-guide/binaries.md#binaries) table and install them to /usr/local/lib:
 
 ```
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf.so

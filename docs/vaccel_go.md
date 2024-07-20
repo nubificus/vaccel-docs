@@ -39,7 +39,7 @@ demonstrates the functionality of the vaccel package:
 
 ### Installation Guide
 #### vAccel Installation
-First of all, a vAccelRT installation is required before proceeding to the next sections. 
+First of all, a vAccel installation is required before proceeding to the next sections. 
 
 #### Build from source
 In Ubuntu-based systems, you need to have the following packages to build vaccelrt:

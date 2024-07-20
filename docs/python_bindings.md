@@ -3,9 +3,9 @@
 ### TL;DR
 
 ```sh
-# install vAccelRT
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/`uname -m`/Release-deb/vaccel-0.5.0-Linux.deb
-sudo dpkg -i vaccel-0.5.0-Linux.deb
+# install vAccel
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/`uname -m`/Release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
 # install python bindings
 wget https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz
 pip3 install vaccel-python-0.0.1.tar.gz
@@ -35,19 +35,19 @@ python3 cat.py
 
 ### Initial Setup
 
-#### Install vAccelRT
+#### Install vAccel
 
-In order to build the python bindings for vAccel, we first need a vAccelRT
-installation. We can either [build it from source](/building), or [get
-the latest binary release](/binaries).
+In order to build the python bindings for vAccel, we first need a vAccel
+installation. We can either [build it from source](user-guide/building.md), or
+[get the latest binary release](user-guide/binaries.md).
 
 The relevant libs & plugins should be in `/usr/local/lib`, along with include
 files in `/usr/local/include`.
 
 ```sh
-# install vAccelRT
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/`uname -m`/Release-deb/vaccel-0.5.0-Linux.deb
-sudo dpkg -i vaccel-0.5.0-Linux.deb
+# install vAccel
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/`uname -m`/Release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 #### Install Python
@@ -61,7 +61,7 @@ sudo apt-get install python3 python3-venv python3-pip
 ## Install from binaries
 
 We provide experimental builds (as a pip wheel and binary package). Get them
-through the [binaries table](/binaries#binaries) or just run the
+through the [binaries table](user-guide/binaries.md#binaries) or just run the
 following commands:
 
 ```sh
@@ -284,7 +284,7 @@ To see python vAccel bindings in action, let's try the following example:
 
 ### Simple Example
 
-Donwload an adorable kitten photo:
+Download an adorable kitten photo:
 
 ```bash
 wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
@@ -348,27 +348,27 @@ so, assuming our code is in `/data/code` let's spawn our container and see this 
 docker run --gpus 0 --rm -it -v/data/code:/data/ -w /data nubificus/jetson-inference-updated:x86_64 /bin/bash
 ```
 
-Afterwards, the steps are more or less the same as above. Install the vAccelRT package:
+Afterwards, the steps are more or less the same as above. Install the vAccel package:
 
 ```console
-root@32e90efe86b9:/data/code# wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
---2022-11-05 13:43:43--  https://s3.nbfc.io/nbfc-assets/github/vaccelrt/master/x86_64/Release-deb/vaccel-0.5.0-Linux.deb
+root@32e90efe86b9:/data/code# wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
+--2022-11-05 13:43:43--  https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
 Resolving s3.nbfc.io (s3.nbfc.io)... 84.254.1.240
 Connecting to s3.nbfc.io (s3.nbfc.io)|84.254.1.240|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 2124230 (2.0M) [application/x-debian-package]
-Saving to: 'vaccel-0.5.0-Linux.deb'
+Saving to: 'vaccel-0.6.0-Linux.deb'
 
-vaccel-0.5.0-Linux.deb          100%[=======================================================>]   2.03M  --.-KB/s    in 0.06s
+vaccel-0.6.0-Linux.deb          100%[=======================================================>]   2.03M  --.-KB/s    in 0.06s
 
-2022-11-05 13:43:43 (33.8 MB/s) - 'vaccel-0.5.0-Linux.deb' saved [2124230/2124230]
+2022-11-05 13:43:43 (33.8 MB/s) - 'vaccel-0.6.0-Linux.deb' saved [2124230/2124230]
 
-root@32e90efe86b9:/data/code# dpkg -i vaccel-0.5.0-Linux.deb
+root@32e90efe86b9:/data/code# dpkg -i vaccel-0.6.0-Linux.deb
 Selecting previously unselected package vaccel.
 (Reading database ... 60677 files and directories currently installed.)
-Preparing to unpack vaccel-0.5.0-Linux.deb ...
-Unpacking vaccel (0.5.0) ...
-Setting up vaccel (0.5.0) ...
+Preparing to unpack vaccel-0.6.0-Linux.deb ...
+Unpacking vaccel (0.6.0) ...
+Setting up vaccel (0.6.0) ...
 ```
 
 Get and install the jetson plugin:
@@ -578,11 +578,11 @@ cmake ../
 make install
 ```
 
-- install vAccelRT:
+- install vAccel:
 
 ```
-wget https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/master/aarch64/Release-deb/vaccel-0.5.0-Linux.deb
-dpkg -i vaccel-0.5.0-Linux.deb
+wget https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/main/aarch64/Release-deb/vaccel-0.6.0-Linux.deb
+dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 - install the jetson plugin:

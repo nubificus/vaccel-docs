@@ -7,29 +7,41 @@ will walk through the process of running a simple vAccel application
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/nubificus/vaccel/tree/master/examples) folder of this project.
+[examples](https://github.com/nubificus/vaccel/tree/main/examples) folder of this project.
 
-You can build the example using the following reconfiguration in the meson build:
-
+If you haven't already done so, get the code and change to the cloned directory:
 ```bash
-meson setup --reconfigure -Dexamples=enabled build
+git clone https://github.com/nubificus/vaccel
+cd vaccel
+```
+
+You can then build the example using:
+```bash
+meson setup -Dexamples=enabled build
+meson compile -C build
 ```
 
 A number of example binaries have been built:
 ```console
-# ls examples
+$ ls build/examples
 classify          detect          exec_generic     minmax          pose             pynq_parallel    segment_generic  tf_inference
 classify_generic  depth           detect_generic   minmax_generic  pose_generic     pynq_vector_add  sgemm            tf_model
 depth_generic     exec            Makefile         noop            pynq_array_copy  segment          sgemm_generic    tf_saved_model
 ```
 
-If, instead, you want to build by hand you need to define the include and
-library paths (if they are not in your respective default search paths) and
-also link with `dl`:
+Alternatively, to build the example manually you can use the provided pkg-config
+specification - make sure vAccel is installed globally or set the
+`PKG_CONFIG_PATH`environment variable.
 
 ```console
-$ cd ../examples
-$ gcc -Wall -Wextra -I/usr/local/include -L/usr/local/lib classify.c -o classify -lvaccel -ldl
+$ # install vaccel to build/install
+$ meson setup --reconfigure --prefix=<absolute/path/to/>build/install build
+$ meson install -C build
+$ # set path to the pkgconfig dir (so pkg-config will find vaccel.pc)
+$ export PKG_CONFIG_PATH=<absolute/path/to/>build/install/lib/<multirarch-triplet>/pkgconfig
+$
+$ cd examples
+$ gcc classify.c -o classify -Wall -Wextra $(pkg-config --cflags --libs vaccel)
 $ ls classify.c classify
 classify.c  classify  
 ```

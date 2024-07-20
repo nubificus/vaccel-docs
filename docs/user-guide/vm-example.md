@@ -14,12 +14,12 @@ representation of the execution flow is shown in Figure 1.
 
 To enable this functionality, we will use the `VSOCK` plugin in the guest, and,
 as previously, the `NOOP` plugin in the Host. To intercept requests originating
-from the guest, we use the vAccelRT agent, running on the Host. Section
-[Running the agent](#running-the-vaccelrt-agent) describes the process to run the agent.
+from the guest, we use the vAccel Agent, running on the Host. Section
+[Running the agent](#running-the-vaccel-agent) describes the process to run the agent.
 
 First, let's bootstrap the VM.
 
-## Boostrap the VM
+## Bootstrap the VM
 
 To bootstrap a simple VM we have the option of using any hypervisor/VMM that
 supports the `virtio-vsock` device. We have tried: [AWS
@@ -444,28 +444,28 @@ launch a new terminal and go to [Running the application](#running-the-applicati
 
 To run the application we first need to provide the backend where the vAccel
 API operations will be handled. This is done in the guest via the `VSOCK`
-plugin and in the Host via the `vaccelrt-agent`. We have setup the guest part
+plugin and in the Host via the `vaccel-agent`. We have setup the guest part
 above for each of the hypervisors supported. Let's now move to the agent part.
 
-#### Running the vAccelRT agent
+#### Running the vAccel agent
 
-The `vaccelrt-agent` is just another vAccel application. It consumes the vAccel
+The `vaccel-agent` is just another vAccel application. It consumes the vAccel
 API like any other app, with the additional value of being able to receive
 commands via `ttrpc`. So we need to include the path to `libvaccel.so` in the
 `LD_LIBRARY_PATH` variable, and specify the plugin we want to use via the
 `VACCEL_BACKENDS` variable. The agent currently supports three socket types:
 `UNIX`, `VSOCK`, and `TCP`.
 
-##### Install vAccelrt agent
+##### Installing the vAccel agent
 
-If you haven't already installed the vaccelrt-agent binary, follow the
-instructions in the [relevant section](/binaries#install-vaccelrt-agent).
+If you haven't already installed the vaccel-agent binary, follow the
+instructions in the [relevant section](binaries.md#install-vaccel-agent).
 
 In short, for `x86_64`: 
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.6-Linux.deb
-dpkg -i vaccelrt-agent-0.3.6-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccel-agent-0.3.6-Linux.deb
+dpkg -i vaccel-agent-0.3.6-Linux.deb
 ```
 
 To run the agent we need to set the plugin using the `VACCEL_BACKENDS` variable
@@ -475,13 +475,13 @@ and the endpoint. Use the following commands:
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export VACCEL_AGENT_ENDPOINT=vsock://42:2048
-./vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 ```
 
 You should be presented with the following output:
 
 ```console
-# ./vaccelrt-agent -a $VACCEL_AGENT_ENDPOINT
+# ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
 vaccel ttRPC server started. address: vsock://40:2048
 Server is running, press Ctrl + C to exit
 ```
@@ -509,7 +509,7 @@ In the guest, we will be running a vAccel application; so we need to specify
 the path to `libvaccel.so` and the plugin to be used. In the pre-built rootfs
 we have included the `VSOCK` plugin, at `/opt/vaccel/lib/libvaccel-vsock.so`.
 All the env vars are set, except for the `VACCEL_VSOCK` parameter, which
-speficies the endpoint of the agent. Its default value is `vsock://2:2048`.
+specifies the endpoint of the agent. Its default value is `vsock://2:2048`.
 Since we've setup the agent to listen to port `2048`, we're good to go.
 
 **Note**: _The Host's default `vsock_id` is `2`, that's why the guest only
@@ -526,7 +526,7 @@ classification tags: This is a dummy classification tag!
 ```
 
 We got the same output as with the [native execution
-case](build_run_app.md#running-a-vaccel-application). Well, almost the same;
+case](build-run-app.md#running-a-vaccel-application). Well, almost the same;
 what we missed is the plugin output. See the native execution case below:
 
 ```console
@@ -542,7 +542,8 @@ classification tags: This is a dummy classification tag!
 
 The `[noop]` lines are not present when running from the VM. This is because
 the plugin is executing in the host. We only get the `classification tags:`
-result back. If you look at the other terminal, where the agent is runing, you should see the following:
+result back. If you look at the other terminal, where the agent is running,
+you should see the following:
 
 ```console
 Created session 1
@@ -557,4 +558,3 @@ Destroyed session 1
 
 Aha! the plugin output is there (which is expected, since the plugin is running
 on the Host).
-
