@@ -52,13 +52,11 @@ for acceleration of ML operation on Nvidia GPUs.
 3. [OpenVINO inference](https://github.com/openvinotoolkit/openvino) framework,
 for image inference on OpenCL-compatible accelerators (Intel CPU/GPUs, MyriadX
 chips etc.).
-4. [Tensorflow inference](https://github.com/nubificus/tf-classify), a simple
-inference program in TensorFlow.
-5. [Tensorflow](https://github.com/tensorflow/tensorflow), with a limited
+4. [Tensorflow](https://github.com/tensorflow/tensorflow), with a limited
 number of operations and API calls supported.
-6. [PyTorch](https://github.com/pytorch/pytorch), with a limited number of
+5. [PyTorch](https://github.com/pytorch/pytorch), with a limited number of
 operations and API calls supported.
-7. [Xilinx PYNQ](https://github.com/xilinx/PYNQ), with a limited number of
+6. [Xilinx PYNQ](https://github.com/xilinx/PYNQ), with a limited number of
 example programs supported.
 
 ### Hardware acceleration in Virtual Machines

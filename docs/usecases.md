@@ -41,19 +41,17 @@ detect and use to apply the advanced configuration.
 Profiles must be pre-created, similar to Secrets, by the cluster admin. When
 installing OpenFaaS on Kubernetes, Profiles use a CRD. This must be installed
 during or prior to start the OpenFaaS controller. When using the official Helm
-chart this will happen automatically. Alternatively, you can apply [this
-YAML](https://github.com/openfaas/faas-netes/blob/master/yaml/crd.yml) to
-install the CRD.
+chart this will happen automatically. 
 
 So, let's create a hardware acceleration profile on our OpenFaaS installation!
 
 As mentioned earlier in the docs, to deploy vAccel-able workloads on a k8s
-cluster we have to follow the [relevant instructions](/k8s/kata.md).
+cluster we have to follow the [relevant instructions](k8s/kata.md).
 Essentially, we leverage the awesome work done by the `kata-containers` team
 and provide an alternative to the generic Firecracker `RuntimeClass`, kata-fc.
 
 So, assuming you have a working cluster with [vAccel installed on
-k8s](/k8s/kata.md), all you need to do to run an OpenFaaS function there is to
+k8s](k8s/kata.md), all you need to do to run an OpenFaaS function there is to
 create a Profile:
 
 ```

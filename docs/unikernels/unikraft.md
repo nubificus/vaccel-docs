@@ -78,7 +78,7 @@ export UNIKRAFT_BINARY=$PWD/build/unikraft_vaccel_examples_kvm-x86_64
 
 Now, we need to install the vAccel core library and a plugin. Follow the
 instructions from the
-[docs](user-guide/binaries.md#install-vaccelrt-core-library). Bundled
+[docs](../user-guide/binaries.md#install-vaccelrt-core-library). Bundled
 with the core library is the `noop` plugin which we will use as the example.
 
 *TL;DR*
@@ -155,14 +155,14 @@ To run such an example, we will need:
 
 As long as we have the above dependencies, the only thing we need to change in
 the example we just ran is the plugin.  A comprehensive walk through on
-installing the above dependencies is given in [Jetson-inference](/jetson).
+installing the above dependencies is given in [Jetson-inference](../jetson.md).
 
 ### Install the jetson-inference vAccel plugin
 
 Given we have a working jetson-inference installation, we need to get the
 vAccel jetson-inference plugin. Have a look at [how we install plugins for
-vAccel](user-guide/binaries.md#install plugins) and pick-up the jetson-inference
-binary from the [binaries](user-guide/binaries.md#binaries) table.
+vAccel](../user-guide/binaries.md#install plugins) and pick-up the jetson-inference
+binary from the [binaries](../user-guide/binaries.md#binaries) table.
 
 TL;DR
 

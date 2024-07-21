@@ -20,7 +20,7 @@ VM. We will need the source of the kernel module and a kernel tree.
 For Firecracker we use Linux kernel version `4.20`, because that is consistent
 with the configuration the AWS Firecracker team is shipping but the module itself
 should be able to build with newer kernel versions, as well. For example, for
-our [k8s](/k8s/kata) deployment of vAccel we use Linux Kernel version `5.4.60`
+our [k8s](k8s/kata.md) deployment of vAccel we use Linux Kernel version `5.4.60`
 
 Let's fetch and build the kernel
 

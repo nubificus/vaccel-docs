@@ -367,9 +367,8 @@ launch a new terminal and go to [Running the application](#running-the-applicati
 
 To launch a Dragonball VM, we will use a nifty
 [tool](https://github.com/openanolis/dbs-cli) developed by the OpenAnolis
-people, `dbs-cli`. Essentially, it shares code with `rust-vmm`'s
-[vmm-template](https://github.com/rust-vmm/vmm-template), and it provides a CLI
-tool to launch the Dragonball hypervisor and interact with it.
+people, `dbs-cli`. This tool provides a CLI to launch the Dragonball hypervisor
+and interact with it.
 
 The files we need are:
 
@@ -464,8 +463,8 @@ instructions in the [relevant section](binaries.md#install-vaccel-agent).
 In short, for `x86_64`: 
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccel-agent-0.3.6-Linux.deb
-dpkg -i vaccel-agent-0.3.6-Linux.deb
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb
+dpkg -i vaccelrt-agent-0.3.7-Linux.deb
 ```
 
 To run the agent we need to set the plugin using the `VACCEL_BACKENDS` variable

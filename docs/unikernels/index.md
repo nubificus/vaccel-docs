@@ -24,4 +24,4 @@ various unikernel frameworks. Currently we support
 pretty straightforward.
 
 In this space we include some rough instructions on how to test [vAccel with
-Unikraft](/unikernels/unikraft).
+Unikraft](unikraft.md).
