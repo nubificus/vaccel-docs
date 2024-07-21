@@ -7,7 +7,7 @@ tags: [vAccel, go]
 To facilitate the use of vAccel, we provide bindings for popular languages,
 apart from `C`. Essentially, the vAccel `C` API can be called from any language
 that interacts with `C` libraries. Building on this, we are thrilled to present
-support for [Go](https://golang.dev).
+support for [Go](https://go.dev).
 
 Essentially, the `C`/`Go` interaction is already pretty smooth, given the
 native `CGO` support available. We introduce v0.1 of the vAccel-go bindings,
