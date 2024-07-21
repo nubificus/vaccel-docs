@@ -7,7 +7,7 @@ on:
 
 jobs:
   spellcheck:
-    runs-on: [self-hosted, x86_64]
+    runs-on: [self-hosted, x86_64, go]
 
     steps:
       - name: Checkout Code
@@ -34,3 +34,21 @@ jobs:
         with:
           config: .github/linters/typos.toml
           files: ${{ steps.changed-files.outputs.all_changed_files }}
+
+          #- name: Check links with linkcheck
+          #uses: filiph/linkcheck@3.0.0
+
+          #- name: Run linkspector
+          #uses: umbrelladocs/action-linkspector@v1
+          #with:
+          ##github_token: ${{ secrets.github_token }}
+          #reporter: github-pr-review
+          #fail_on_error: true
+
+
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-verbose-mode: 'yes'
+          folder-path: 'docs' #, md/dir2'
+          #file-path: './README.md, ./LICENSE, ./md/file4.markdown'
+
