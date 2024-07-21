@@ -6,6 +6,7 @@ This is a quick start guide for running a simple vAccel application.
 - Run a [simple example](#simple-example) [using the `noop` plugin]
 - Run the same example [in a VM](#vm-example) [same code in a VM]
 - Run a more [elaborate example](#jetson-example) [same scenario, using the `jetson-inference` plugin]
+- For the legacy version of instructions using CMake, follow [here](legacy.md)
 
 <hr>
 ## Binary packages
