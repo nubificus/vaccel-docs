@@ -1,4 +1,4 @@
-name: "Spellcheck"
+name: "Check Spelling/Links"
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
        - main
 
 jobs:
-  spellcheck:
+  check:
     runs-on: [self-hosted, x86_64, go]
 
     steps:
@@ -35,20 +35,17 @@ jobs:
           config: .github/linters/typos.toml
           files: ${{ steps.changed-files.outputs.all_changed_files }}
 
-          #- name: Check links with linkcheck
-          #uses: filiph/linkcheck@3.0.0
+#      - name: Check links
+#        uses: umbrelladocs/action-linkspector@v1
+#        with:
+#          #github_token: ${{ secrets.github_token }}
+#          #reporter: github-pr-review
+#          config_file: .github/linters/linkspector.toml
+#          fail_on_error: true
 
-          #- name: Run linkspector
-          #uses: umbrelladocs/action-linkspector@v1
-          #with:
-          ##github_token: ${{ secrets.github_token }}
-          #reporter: github-pr-review
-          #fail_on_error: true
-
-
-      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Check links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
         with:
           use-verbose-mode: 'yes'
-          folder-path: 'docs' #, md/dir2'
-          #file-path: './README.md, ./LICENSE, ./md/file4.markdown'
+          folder-path: 'docs'
 
