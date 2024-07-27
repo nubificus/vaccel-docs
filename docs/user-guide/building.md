@@ -1,4 +1,4 @@
-# Build & install from source
+# Build & Install from source
 
 To build the components of vAccel we need the vAccel core library and a
 backend plugin that implements the operation we want to execute.
