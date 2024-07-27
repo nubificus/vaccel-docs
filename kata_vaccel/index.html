@@ -1,0 +1,1755 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../container_runtimes/">
+      
+      
+        <link rel="next" href="../unikernels/">
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Kata-containers with vAccel - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kata-containers-with-vaccel" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Kata-containers with vAccel
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build & Install from source
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/binaries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../language_bindings/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch [WiP]
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vaccel_go/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../container_runtimes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Container runtimes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Container runtimes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aptsnap-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apt/Snap Packages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rust-version-1581" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rust (version 1.58.1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#go-version-118" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go (version 1.18)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-kata-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Kata components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Kata components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-kata-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build kata-runtime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-rootfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a rootfs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-kata-containers-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Kata Containers kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-firecracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Firecracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devmapper-snapshotter" class="md-nav__link">
+    <span class="md-ellipsis">
+      devmapper snapshotter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-kata-containers-to-use-firecracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Kata Containers to use Firecracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-containerd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure containerd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-vaccel-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install vAccel components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-vaccel-enabled-kata-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run a vAccel-enabled kata container
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../unikernels/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Unikernels
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unikernels
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unikernels/unikraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../dev_guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Developer Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel User API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../misc_docs/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Useful Docs
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jetson/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aptsnap-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apt/Snap Packages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rust-version-1581" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rust (version 1.58.1)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#go-version-118" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go (version 1.18)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-kata-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Kata components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Kata components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-kata-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build kata-runtime
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-rootfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a rootfs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-kata-containers-kernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Kata Containers kernel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-firecracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Firecracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#devmapper-snapshotter" class="md-nav__link">
+    <span class="md-ellipsis">
+      devmapper snapshotter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-kata-containers-to-use-firecracker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure Kata Containers to use Firecracker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-containerd" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configure containerd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-the-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verify the installation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-vaccel-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install vAccel components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-vaccel-enabled-kata-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run a vAccel-enabled kata container
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="kata-containers-with-vaccel">Kata-containers with vAccel</h1>
+<p>In this post, we will be going through the steps to build our downstream branch
+for kata-containers with vAccel from source, both for amd64 and arm64
+architectures.</p>
+<p>** Note **
+<em>This is a lengthy process. A TL;DR script (highly experimental!) is available
+<a href="https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/build.sh">here</a>.
+We have tried the steps below on Ubuntu 20.04 and 22.04 <code>x86_64</code> &amp; <code>aarch64</code>.
+This process takes approximately 30-40 minutes.</em></p>
+<p><em>Additionally, we provide pre-built binaries for <code>x86_64</code> &amp; <code>aarch64</code> and the
+respective installation script
+<a href="https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/install.sh">here</a>,
+which should take less than a minute (~200MB artifacts).</em></p>
+<p><em>The process is highly experimental and for showcase purposes -- please don't
+use these scripts on a production machine ;-)</em></p>
+<h3 id="install-requirements">Install requirements</h3>
+<p>To build Kata Containers we need to install Rust v1.58.1, Go v1.18.0, Docker
+and some apt/snap packages. The specific versions may change, so make sure to
+check the <a href="https://github.com/kata-containers/kata-containers/blob/main/versions.yaml">versions
+database</a>.</p>
+<h4 id="aptsnap-packages">Apt/Snap Packages</h4>
+<p>We need to install <code>gcc</code>, <code>make</code> and <code>yq v3</code>. <code>containerd</code> and <code>runc</code> are installed by the Docker install script, in the following steps.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt upgrade -y
+sudo apt install gcc make snapd bc -y
+sudo snap install yq --channel=v3/stable
+</code></pre>
+<h4 id="rust-version-1581">Rust (version 1.58.1)</h4>
+<p>We will use <code>rustup</code> to install and set Rust 1.58.1 as our default toolchain:</p>
+<pre><code class="language-bash">down_dir=$(mktemp -d)
+pushd $down_dir
+wget -q https://static.rust-lang.org/rustup/dist/$(uname -p)-unknown-linux-gnu/rustup-init
+sudo chmod +x rustup-init
+./rustup-init -q -y --default-toolchain 1.58.1
+source $HOME/.cargo/env
+popd
+rm -rf $down_dir
+</code></pre>
+<h4 id="go-version-118">Go (version 1.18)</h4>
+<p>We will download the appropriate Go binaries and add them to the <code>PATH</code> environment variable:</p>
+<pre><code class="language-bash">down_dir=$(mktemp -d)
+pushd $down_dir
+wget -q https://go.dev/dl/go1.18.linux-$(dpkg --print-architecture).tar.gz
+sudo mkdir -p /usr/local/go1.18
+sudo tar -C /usr/local/go1.18 -xzf go1.18.linux-$(dpkg --print-architecture).tar.gz
+echo 'export PATH=$PATH:/usr/local/go1.18/go/bin' &gt;&gt; $HOME/.profile
+source $HOME/.profile
+popd
+rm -rf $down_dir
+</code></pre>
+<h4 id="docker">Docker</h4>
+<p>We will install Docker using the provided convenience script:</p>
+<pre><code class="language-bash">sudo apt-get remove docker docker-engine docker.io containerd runc -y &gt; /dev/null 2&gt;&amp;1
+sudo rm -rf /var/lib/docker/
+down_dir=$(mktemp -d)
+pushd $down_dir
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+popd
+rm -rf $down_dir
+</code></pre>
+<h3 id="build-kata-components">Build Kata components</h3>
+<h4 id="build-kata-runtime">Build kata-runtime</h4>
+<p>First, we need to set the correct Go environment variables:</p>
+<pre><code class="language-bash">export PATH=$PATH:$(go env GOPATH)/bin &amp;&amp; \
+  export GOPATH=$(go env GOPATH) &amp;&amp; \
+  export GO111MODULE=off
+</code></pre>
+<p>We will use <code>go get</code> to download kata-containers source code:</p>
+<pre><code class="language-bash">go get -d -u github.com/kata-containers/kata-containers
+</code></pre>
+<p>Checkout our downstream branch:</p>
+<pre><code class="language-bash">cd $GOPATH/src/github.com/kata-containers/kata-containers
+git remote add nbfc https://github.com/nubificus/kata-containers
+git fetch -u nbfc
+git checkout vaccel-v3.0
+</code></pre>
+<p>We are now ready to build the <code>kata-runtime</code>:</p>
+<pre><code class="language-bash">pushd $GOPATH/src/github.com/kata-containers/kata-containers/src/runtime
+export GO111MODULE=on
+export PREFIX=/opt/kata
+make
+popd
+</code></pre>
+<p>To install the binaries to a specific path (say <code>/opt/kata</code>) we need to specify
+the <code>PREFIX</code> environment variable prior to installing:</p>
+<pre><code class="language-bash">pushd $GOPATH/src/github.com/kata-containers/kata-containers/src/runtime
+export PREFIX=/opt/kata
+sudo -E PATH=$PATH -E PREFIX=$PREFIX make install
+popd
+</code></pre>
+<p>Kata binaries are now installed in <code>/opt/kata/bin</code> and configs are installed in
+<code>/opt/kata/share/defaults/kata-containers/</code>.</p>
+<p>It is recommended you add a symbolic link to /opt/kata/bin/kata-runtime and
+/opt/kata/bin/containerd-shim-kata-v2 in order for containerd to reach these
+binaries from the default system <code>PATH</code>.</p>
+<pre><code class="language-bash">sudo ln -s /opt/kata/bin/kata-runtime /usr/local/bin
+sudo ln -s /opt/kata/bin/containerd-shim-kata-v2 /usr/local/bin
+</code></pre>
+<h4 id="create-a-rootfs">Create a rootfs</h4>
+<p>We can use either a rootfs or initrd image to launch Kata Containers with QEMU.
+However, AWS Firecracker does not work with initrd images, so we will be using a
+rootfs image for Kata with Firecracker.</p>
+<p>Create the rootfs base image:</p>
+<pre><code class="language-bash">export ROOTFS_DIR=${GOPATH}/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder/rootfs
+cd $GOPATH/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder
+# you may change the distro (in this case we used ubuntu). to get supported distros list, run ./rootfs.sh -l
+script -fec 'sudo -E GOPATH=$GOPATH AGENT_INIT=yes USE_DOCKER=true ./rootfs.sh ubuntu'
+</code></pre>
+<p><strong>Note for arm64</strong>:</p>
+<p>We noticed that in some instances the kata-agent compilation failed.
+A possible workaround was to remove the USE_DOCKER variable. This requires <code>qemu-img</code> command to be available on your system.
+You can install it with <code>sudo apt install -y qemu-utils</code>.</p>
+<pre><code class="language-bash">export ROOTFS_DIR=&quot;${GOPATH}/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder/rootfs-ubuntu&quot;
+sudo rm -rf ${ROOTFS_DIR}
+cd $GOPATH/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder
+script -fec 'sudo -E GOPATH=$GOPATH AGENT_INIT=yes ./rootfs.sh ubuntu'
+</code></pre>
+<p>Build a kata rootfs image:</p>
+<pre><code class="language-bash">cd $GOPATH/src/github.com/kata-containers/kata-containers/tools/osbuilder/image-builder &amp;&amp; \
+  script -fec 'sudo -E USE_DOCKER=true -E AGENT_INIT=yes ./image_builder.sh ${ROOTFS_DIR}'
+</code></pre>
+<p>Install the kata rootfs image:</p>
+<pre><code class="language-bash">export PREFIX=/opt/kata
+commit=$(git log --format=%h -1 HEAD) &amp;&amp; \
+  date=$(date +%Y-%m-%d-%T.%N%z) &amp;&amp; \
+  image=&quot;kata-containers-${date}-${commit}&quot; &amp;&amp; \
+  sudo install -o root -g root -m 0640 -D kata-containers.img &quot;$PREFIX/share/kata-containers/${image}&quot; &amp;&amp; \
+  (cd $PREFIX/share/kata-containers &amp;&amp; sudo ln -sf &quot;$image&quot; kata-containers.img)
+</code></pre>
+<h4 id="build-kata-containers-kernel">Build Kata Containers kernel</h4>
+<p>First, we need some additional packages to build the kernel:</p>
+<pre><code class="language-bash">sudo apt install -y libelf-dev bison flex
+</code></pre>
+<p>Setup the kernel source code:</p>
+<pre><code class="language-bash">cd $GOPATH/src/github.com/kata-containers/kata-containers/tools/packaging/kernel
+./build-kernel.sh -d setup
+</code></pre>
+<p>Build the kernel:</p>
+<pre><code class="language-bash">./build-kernel.sh -d build
+</code></pre>
+<p>Install the kernel in the default path for Kata:</p>
+<pre><code class="language-bash">export PREFIX=/opt/kata
+sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d install
+</code></pre>
+<p><strong>Note</strong>:</p>
+<p>We noticed that in some instances the installation or build process failed with the following error: <code>ERROR: path to kernel does not exist, use build-kernel.sh setup</code>. We mitigated this problem by specifying the version:</p>
+<pre><code class="language-bash">./build-kernel.sh -d -v 5.15.26 build
+export PREFIX=/opt/kata
+sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d -v 5.15.26 install
+</code></pre>
+<p>At this point we have successfully built all the Kata components. All the binaries we built are stored under the <code>/opt/kata/bin</code> dir:</p>
+<pre><code class="language-bash">$ ls -l /opt/kata/bin/
+total 142296
+-rwxr-xr-x 1 root root 50919312 Mar  25 15:32 containerd-shim-kata-v2
+-rwxr-xr-x 1 root root    16691 Mar  25 15:32 kata-collect-data.sh
+-rwxr-xr-x 1 root root 42093616 Mar  25 15:32 kata-monitor
+-rwxr-xr-x 1 root root 52673784 Mar  25 15:32 kata-runtime
+</code></pre>
+<p>The rootfs image, the initrd image and the kernel are stored under the <code>/opt/kata/share/defaults/kata-containers</code> dir:</p>
+<pre><code class="language-bash">$ ls -l /opt/kata/share/kata-containers/
+total 221972
+-rw-r--r-- 1 root root     72480 Μαρ  25 15:51 config-5.15.26
+-rw-r----- 1 root root 134217728 Μαρ  25 15:41 kata-containers-2022-03-25-15:41:55.534872004+0200-486322a0
+lrwxrwxrwx 1 root root        59 Μαρ  25 15:41 kata-containers.img -&gt; kata-containers-2022-03-25-15:41:55.534872004+0200-486322a0
+-rw-r----- 1 root root  27627256 Μαρ  24 14:43 kata-containers-initrd-2022-03-24-14:43:59.501993241+0200-853dd98b
+-rw-r----- 1 root root  27626874 Μαρ  25 15:42 kata-containers-initrd-2022-03-25-15:42:28.034074480+0200-486322a0
+lrwxrwxrwx 1 root root        66 Μαρ  25 15:42 kata-containers-initrd.img -&gt; kata-containers-initrd-2022-03-25-15:42:28.034074480+0200-486322a0
+-rw-r--r-- 1 root root  38736168 Μαρ  25 15:51 vmlinux-5.15.26-90
+lrwxrwxrwx 1 root root        18 Μαρ  25 15:51 vmlinux.container -&gt; vmlinux-5.15.26-90
+-rw-r--r-- 1 root root   5795664 Μαρ  25 15:51 vmlinuz-5.15.26-90
+lrwxrwxrwx 1 root root        18 Μαρ  25 15:51 vmlinuz.container -&gt; vmlinuz-5.15.26-90
+</code></pre>
+<p>The configuration files are stored under the <code>/opt/kata/share/defaults/kata-containers</code> dir:</p>
+<pre><code class="language-bash">ls -l /opt/kata/share/defaults/kata-containers
+total 72
+-rw-r--r-- 1 root root  9717 Μαρ  25 15:32 configuration-acrn.toml
+-rw-r--r-- 1 root root 13535 Μαρ  25 15:32 configuration-clh.toml
+-rw-r--r-- 1 root root 15364 Μαρ  25 15:32 configuration-fc.toml
+-rw-r--r-- 1 root root 25701 Μαρ  25 15:32 configuration-qemu.toml
+lrwxrwxrwx 1 root root    23 Μαρ  25 15:32 configuration.toml -&gt; configuration-qemu.toml
+</code></pre>
+<h4 id="build-firecracker">Build Firecracker</h4>
+<p>Kata Containers support AWS Firecracker v1.1.0. To build Firecracker, we will
+clone the Github repo and checkout to the 1.1.0 version:</p>
+<pre><code class="language-bash">git clone https://github.com/firecracker-microvm/firecracker.git -b v1.1.0 --depth 1 &amp;&amp;\
+  cd firecracker &amp;&amp;\
+  git submodule update --init
+</code></pre>
+<p>Now we can build the binaries:</p>
+<p><strong>Note</strong> AWS Firecracker uses docker to build the image, so make sure your user
+can access the docker daemon, or just run with sudo.</p>
+<pre><code class="language-bash">sudo ./tools/devtool -y build --release
+toolchain=&quot;$(uname -m)-unknown-linux-musl&quot;
+sudo cp build/cargo_target/${toolchain}/release/firecracker /opt/kata/bin/firecracker &amp;&amp;\
+sudo cp build/cargo_target/${toolchain}/release/jailer /opt/kata/bin/jailer
+</code></pre>
+<h4 id="devmapper-snapshotter">devmapper snapshotter</h4>
+<p>AWS Firecracker requires a block device as the backing store for a VM. To interact with containerd and kata we use the devmapper snapshotter. To check support for your containerd installation, you can run:</p>
+<pre><code class="language-bash">ctr plugins ls |grep devmapper
+</code></pre>
+<p>if the output of the above command is:</p>
+<pre><code class="language-bash">io.containerd.snapshotter.v1    devmapper                linux/amd64    ok
+</code></pre>
+<p>then you can skip this section and move on to <a href="#configure-kata-containers-to-use-firecracker">Configure Kata Containers to use Firecracker</a></p>
+<p>If the output of the above command is:</p>
+<pre><code class="language-bash">io.containerd.snapshotter.v1    devmapper                linux/amd64    error
+</code></pre>
+<p>then we need to setup devmapper snapshotter. Based on a <a href="https://docs.docker.com/storage/storagedriver/device-mapper-driver/">very useful
+guide</a>
+from docker, we can set it up using the following scripts:</p>
+<pre><code class="language-bash">#!/bin/bash
+set -ex
+
+DATA_DIR=/var/lib/containerd/io.containerd.snapshotter.v1.devmapper
+POOL_NAME=containerd-pool
+
+mkdir -p ${DATA_DIR}
+
+# Create data file
+sudo touch &quot;${DATA_DIR}/data&quot;
+sudo truncate -s 100G &quot;${DATA_DIR}/data&quot;
+
+# Create metadata file
+sudo touch &quot;${DATA_DIR}/meta&quot;
+sudo truncate -s 10G &quot;${DATA_DIR}/meta&quot;
+
+# Allocate loop devices
+DATA_DEV=$(sudo losetup --find --show &quot;${DATA_DIR}/data&quot;)
+META_DEV=$(sudo losetup --find --show &quot;${DATA_DIR}/meta&quot;)
+
+# Define thin-pool parameters.
+# See https://www.kernel.org/doc/Documentation/device-mapper/thin-provisioning.txt for details.
+SECTOR_SIZE=512
+DATA_SIZE=&quot;$(sudo blockdev --getsize64 -q ${DATA_DEV})&quot;
+LENGTH_IN_SECTORS=$(bc &lt;&lt;&lt; &quot;${DATA_SIZE}/${SECTOR_SIZE}&quot;)
+DATA_BLOCK_SIZE=128
+LOW_WATER_MARK=32768
+
+# Create a thin-pool device
+sudo dmsetup create &quot;${POOL_NAME}&quot; \
+    --table &quot;0 ${LENGTH_IN_SECTORS} thin-pool ${META_DEV} ${DATA_DEV} ${DATA_BLOCK_SIZE} ${LOW_WATER_MARK}&quot;
+
+cat &lt;&lt; EOF
+#
+# Add this to your config.toml configuration file and restart containerd daemon
+#
+[plugins]
+  [plugins.devmapper]
+    pool_name = &quot;${POOL_NAME}&quot;
+    root_path = &quot;${DATA_DIR}&quot;
+    base_image_size = &quot;10GB&quot;
+    discard_blocks = true
+EOF
+</code></pre>
+<p>Make it executable and run it:</p>
+<pre><code class="language-bash">sudo chmod +x ~/scripts/devmapper/create.sh &amp;&amp; \
+  cd ~/scripts/devmapper/ &amp;&amp; \
+  sudo ./create.sh
+</code></pre>
+<p>Now, we can add the devmapper configuration provided from the script to <code>/etc/containerd/config.toml</code> and restart containerd.</p>
+<pre><code class="language-bash">sudo systemctl restart containerd
+</code></pre>
+<p>We can use <code>dmsetup</code> to verify that the thin-pool was created successfully. We should also check that devmapper is registered and running:</p>
+<pre><code class="language-bash">sudo dmsetup ls
+# devpool (253:0)
+sudo ctr plugins ls | grep devmapper
+# io.containerd.snapshotter.v1    devmapper                linux/amd64    ok
+</code></pre>
+<p>This script needs to be run only once, while setting up the devmapper snapshotter for containerd. Afterwards, make sure that on each reboot, the thin-pool is initialized from the same data dir. Otherwise, all the fetched containers (or the ones that you’ve created) will be re-initialized. A simple script that re-creates the thin-pool from the same data dir is shown below:</p>
+<pre><code class="language-bash">#!/bin/bash
+set -ex
+
+DATA_DIR=/var/lib/containerd/io.containerd.snapshotter.v1.devmapper
+POOL_NAME=containerd-pool
+
+# Allocate loop devices
+DATA_DEV=$(sudo losetup --find --show &quot;${DATA_DIR}/data&quot;)
+META_DEV=$(sudo losetup --find --show &quot;${DATA_DIR}/meta&quot;)
+
+# Define thin-pool parameters.
+# See https://www.kernel.org/doc/Documentation/device-mapper/thin-provisioning.txt for details.
+SECTOR_SIZE=512
+DATA_SIZE=&quot;$(sudo blockdev --getsize64 -q ${DATA_DEV})&quot;
+LENGTH_IN_SECTORS=$(bc &lt;&lt;&lt; &quot;${DATA_SIZE}/${SECTOR_SIZE}&quot;)
+DATA_BLOCK_SIZE=128
+LOW_WATER_MARK=32768
+
+# Create a thin-pool device
+sudo dmsetup create &quot;${POOL_NAME}&quot; \
+    --table &quot;0 ${LENGTH_IN_SECTORS} thin-pool ${META_DEV} ${DATA_DEV} ${DATA_BLOCK_SIZE} ${LOW_WATER_MARK}&quot;
+</code></pre>
+<p>We can create a systemd service to run the above script on each reboot:</p>
+<pre><code class="language-bash">sudo nano /lib/systemd/system/devmapper_reload.service
+</code></pre>
+<p>The service file:</p>
+<pre><code class="language-bash">[Unit]
+Description=Devmapper reload script
+
+[Service]
+ExecStart=/path/to/script/reload.sh
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Enable the newly created service:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable devmapper_reload.service
+sudo systemctl start devmapper_reload.service
+</code></pre>
+<h4 id="configure-kata-containers-to-use-firecracker">Configure Kata Containers to use Firecracker</h4>
+<p>Next, we need to install the Kata Containers-Firecracker configuration file. We
+will use this file to configure Kata Containers to use the rootfs image we
+built <a href="#create-a-rootfs">previously</a>.</p>
+<pre><code class="language-bash">sudo mkdir -p /opt/kata/configs
+sudo install -o root -g root -m 0640 /opt/kata/share/defaults/kata-containers/configuration-fc-vaccel.toml /opt/kata/configs
+sudo sed -i 's/^\(initrd =.*\)/# \1/g' /opt/kata/configs/configuration-fc-vaccel.toml
+# enable seccomp
+sudo sed -i '/^disable_guest_seccomp/ s/true/false/' /opt/kata/configs/configuration-fc-vaccel.toml
+</code></pre>
+<p>Make sure that /opt/kata/configs/configuration-fc-vaccel.toml has an image entry pointing to the rootfs we created:</p>
+<pre><code class="language-bash">17   | image = &quot;/opt/kata/share/kata-containers/kata-containers.img&quot;
+</code></pre>
+<h4 id="configure-containerd">Configure containerd</h4>
+<p>Next, we need to configure containerd. Add a file in your path (eg. <code>/usr/local/bin/containerd-shim-kata-fc-vaccel-v2</code>) with the following contents:</p>
+<pre><code class="language-bash">#!/bin/bash
+KATA_CONF_FILE=/opt/kata/configs/configuration-fc-vaccel.toml /usr/local/bin/containerd-shim-kata-v2 $@
+</code></pre>
+<p>Make it executable:</p>
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/containerd-shim-kata-fc-vaccel-v2
+</code></pre>
+<p>Add the relevant section in containerd’s config.toml file (<code>/etc/containerd/config.toml</code>):</p>
+<pre><code class="language-toml">[plugins.cri.containerd.runtimes]
+  [plugins.cri.containerd.runtimes.kata-fc-vaccel]
+    runtime_type = &quot;io.containerd.kata-fc-vaccel.v2&quot;
+</code></pre>
+<p>Restart containerd:</p>
+<pre><code class="language-bash">sudo systemctl restart containerd
+</code></pre>
+<h4 id="verify-the-installation">Verify the installation</h4>
+<p>We are now ready to launch a container using Kata-vaccel with Firecracker to verify that everything worked:</p>
+<pre><code class="language-bash">sudo ctr images pull --snapshotter devmapper docker.io/library/ubuntu:latest
+sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/library/ubuntu:latest ubuntu-kata-fc-test uname -a
+</code></pre>
+<p>You should see the <code>vaccelrt-agent</code> running alongside the containerd process.</p>
+<h3 id="install-vaccel-components">Install vAccel components</h3>
+<p>Before we proceed to run our first vAccel enabled kata container, we need to install the required vAccel components:</p>
+<pre><code class="language-bash">down_dir=$(mktemp -d)
+pushd $down_dir
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/$(uname -m)/Release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
+wget -q https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/$(uname -m)/Release-deb/vaccelrt-agent-0.3.0-Linux.deb
+sudo dpkg -i vaccelrt-agent-0.3.0-Linux.deb
+popd
+rm -rf $down_dir
+</code></pre>
+<h3 id="run-a-vaccel-enabled-kata-container">Run a vAccel-enabled kata container</h3>
+<p>To run a vAccel enabled kata container, first, you have to get a container
+image with vaccel installed. We built one with docker, based on the following
+container image file:</p>
+<pre><code class="language-Dockerfile">FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=&quot;noninteractive&quot;
+
+RUN apt-get update &amp;&amp; apt-get install -y wget unzip &amp;&amp; apt-get clean
+
+# Install vAccelrt core library
+RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/$(uname -m)/Release-deb/vaccel-0.6.0-Linux.deb &amp;&amp; dpkg -i vaccel-0.6.0-Linux.deb
+
+# Install the vsock plugin
+RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/$(uname -m)/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb &amp;&amp; dpkg -i vaccelrt-plugin-vsock-0.1.0-Linux.deb
+
+# Set some env variables
+ENV LD_LIBRARY_PATH=/usr/local/lib
+ENV VACCEL_BACKENDS=/usr/local/lib/libvaccel-vsock.so 
+
+# This is the default value, no need to set it
+# Also, this value is passed on from the Kata runtime
+#ENV VACCEL_VSOCK=vsock://2:2048
+
+# Uncomment for debug messages
+#ENV VACCEL_DEBUG_LEVEL=4
+
+CMD [&quot;sleep&quot;, &quot;infinity&quot;]
+</code></pre>
+<p>Build it, or pull a pre-built one:</p>
+<pre><code class="language-console">$ sudo ctr image pull --snapshotter devmapper docker.io/nubificus/vaccel-app-container:$(uname -m)
+docker.io/nubificus/vaccel-app-container:x86_64:                                  resolved       |++++++++++++++++++++++++++++++++++++++| 
+manifest-sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed: done           |++++++++++++++++++++++++++++++++++++++| 
+config-sha256:1bf757ff35444f01a96f9481b61cf82a0ced9afe53e37e2a04e1f3d943b4d241:   done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:7a8454f39a31d19d7b1b497aa5dea0f717605b93fc5e9d10405f1a04cecb6a88:    exists         |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:db0a0fb32697f17998cf1e72c2d38a41d13c79effa25ee9a4cac3870bc4980c0:    exists         |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:45dd8fb4f524a0182c1b79769dd6a2ee05eaee8b095b4af343f324c699848fb7:    exists         |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:846c0b181fff0c667d9444f8378e8fcfa13116da8d308bf21673f7e4bea8d580:    exists         |++++++++++++++++++++++++++++++++++++++| 
+elapsed: 2.7 s                                                                    total:  1.1 Ki (430.0 B/s)                                       
+unpacking linux/amd64 sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed...
+done
+</code></pre>
+<p>Finally, run the container with the <code>kata-fc-vaccel</code> runtime using the
+following command:</p>
+<pre><code class="language-sh">sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash
+</code></pre>
+<p>You should be presented with the prompt of the container. Then, run the vaccel
+classify example, using an image from the vAccel release:</p>
+<pre><code class="language-sh">classify /usr/local/share/images/example.jpg 1
+</code></pre>
+<p>The full output is shown below:</p>
+<pre><code class="language-console">$ sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash
+root@clr-5746603866294b7885b6f2a30c04c7b7:/# classify /usr/local/share/images/example.jpg 1
+Initialized session with id: 1
+Image size: 79281B
+classification tags: 99.902% banana
+</code></pre>
+<p>If you inspect the host while the container is running, you can see the vAccelrt agent running, bound to the specific container instance:</p>
+<pre><code class="language-console">$ ps -fe |grep ubuntu-kata-fc
+root      983620  566482  0 18:14 pts/16   00:00:00 ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:x86_64 ubuntu-kata-fc-vaccel /bin/bash
+root      983888       1  0 18:14 ?        00:00:00 /opt/kata/bin/containerd-shim-kata-v2 -namespace default -address /run/containerd/containerd.sock -publish-binary /usr/bin/containerd -id ubuntu-kata-fc-vaccel
+root      983900  983888  0 18:14 ?        00:00:01 /opt/kata/bin/firecracker --api-sock /run/vc/firecracker/ubuntu-kata-fc-vaccel/root/run/firecracker.socket --config-file /run/vc/firecracker/ubuntu-kata-fc-vaccel/root/fcConfig.json
+root      983906  983888  0 18:14 ?        00:00:02 /opt/vaccel-v0.4.0/bin/vaccelrt-agent --server-address unix:///run/vc/firecracker/ubuntu-kata-fc-vaccel/root/kata.hvsock_2048
+root      994531  894257  0 18:19 pts/17   00:00:00 grep ubuntu-kata-fc
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

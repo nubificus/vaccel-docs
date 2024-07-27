@@ -1,0 +1,1200 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Use Cases - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#use-cases" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Use Cases
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build & Install from source
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/binaries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../language_bindings/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch [WiP]
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vaccel_go/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../container_runtimes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Container runtimes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Container runtimes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kata_vaccel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../unikernels/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Unikernels
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unikernels
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unikernels/unikraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../dev_guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Developer Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel User API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../misc_docs/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Useful Docs
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jetson/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hw-acceleration-on-serverless-deployments" class="md-nav__link">
+    <span class="md-ellipsis">
+      HW Acceleration on Serverless deployments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HW Acceleration on Serverless deployments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-new-openfaas-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create a new OpenFaaS Profile
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-an-image-classification-function-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build an image classification function example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrate-this-operation-into-a-function-for-openfaas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integrate this operation into a function for OpenFaaS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-the-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy the function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consume-the-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consume the function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="use-cases">Use Cases</h1>
+<h2 id="hw-acceleration-on-serverless-deployments">HW Acceleration on Serverless deployments</h2>
+<p>Serverless Computing has gained significant ground over the past couple of
+years, especially due to its unprecedented "on-demand" computing offering at a
+fraction of the price of having a dedicated VM or bare-metal machine.</p>
+<p>However, apart from the limitation that one has to re-write its application to
+match the Serverless computing paradigm (micro-service, event triggered),
+access to "specialized" equipment is not something common / supported now.
+Major serverless offerings such as AWS Lambda, Azure functions, or Google
+Functions do not offer access to hardware acceleration for even the most common
+tasks (ML inference).</p>
+<p>To work around this issue, and study the implications of hardware acceleration
+in serverless computing we started experimenting on
+<a href="https://openfaas.com">OpenFaaS</a> and its integration with
+<a href="https://vAccel.org">vAccel</a></p>
+<p>Given OpenFaaS huge community support, installing it on a working k8s cluster is 
+a piece of cake. You can find more information in the following document:</p>
+<ul>
+<li><a href="https://docs.openfaas.com/deployment/kubernetes/">Deployment guide for Kubernetes</a></li>
+</ul>
+<p>Assuming you have a working OpenFaaS installation, leveraging the hardware
+acceleration capabilities of your cluster with vAccel should be really
+straightforward.</p>
+<h3 id="create-a-new-openfaas-profile">Create a new OpenFaaS Profile</h3>
+<p>To take advantage of vAccel on Firecracker via OpenFaaS, all you have to do, is
+tell OpenFaaS to spawn the relevant functions using a different profile. </p>
+<p>To allow maximum flexibility without overloading the OpenFaaS function
+configuration, the OpenFaaS developers have introduced the concept of Profiles.
+This is simply a reserved function annotation that the <code>faas-provider</code> can
+detect and use to apply the advanced configuration.</p>
+<p>Profiles must be pre-created, similar to Secrets, by the cluster admin. When
+installing OpenFaaS on Kubernetes, Profiles use a CRD. This must be installed
+during or prior to start the OpenFaaS controller. When using the official Helm
+chart this will happen automatically. </p>
+<p>So, let's create a hardware acceleration profile on our OpenFaaS installation!</p>
+<p>As mentioned earlier in the docs, to deploy vAccel-able workloads on a k8s
+cluster we have to follow the <a href="../k8s/kata/">relevant instructions</a>.
+Essentially, we leverage the awesome work done by the <code>kata-containers</code> team
+and provide an alternative to the generic Firecracker <code>RuntimeClass</code>, kata-fc.</p>
+<p>So, assuming you have a working cluster with <a href="../k8s/kata/">vAccel installed on
+k8s</a>, all you need to do to run an OpenFaaS function there is to
+create a Profile:</p>
+<pre><code>kubectl apply -f- &lt;&lt; EOF
+kind: Profile
+apiVersion: openfaas.com/v1
+metadata:
+    name: gvisor
+    namespace: openfaas
+spec:
+    runtimeClassName: kata-fc
+EOF
+</code></pre>
+<h3 id="build-an-image-classification-function-example">Build an image classification function example</h3>
+<p>Then, we need to build a function that consumes the vAccel API, as exposed to
+the available functions. Check out
+<a href="https://github.com/nubificus/stdinout/tree/vaccel">this</a> repo to get an idea
+of how easy it is to create a function that classifies images ;-)</p>
+<pre><code>git clone https://github.com/nubificus/stdinout -b vaccel
+cd stdinout
+</code></pre>
+<p>Examine <code>test.c</code>: it is a simple file that gets its input from stdin, stores it
+into a memory buffer and pushes it to be classified, using the vAccel API. The
+output is a string of the classification label, along with the accuracy given
+by the specific model used. Lets build this simple function:</p>
+<pre><code>make
+</code></pre>
+<p>The output of this command is an executable that given an image from <code>STDIN</code>
+will output the classification text, consuming the vAccel API. More or less,
+something like the following:</p>
+<pre><code># Set the library path to ./ for libfileread.so and 
+# /usr/local/lib for libvaccel.so
+export LD_LIBRARY_PATH=./:/usr/local/lib
+
+# set the vAccel Backend (running on an RTX 2060 Super
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-jetson.so
+
+cat dog_0.jpg | ./test
+</code></pre>
+<p>Given the input is the file below:</p>
+<p align="center">
+  <img src="/img/dog_0.jpg">
+</p>
+
+<p>the output should be something like the following:</p>
+<pre><code>Initialized session with id: 1
+imagenet: 60.54688% class #249 (malamute, malemute, Alaskan malamute)
+classification tags: 60.547% malamute, malemute, Alaskan malamute
+</code></pre>
+<h3 id="integrate-this-operation-into-a-function-for-openfaas">Integrate this operation into a function for OpenFaaS</h3>
+<p>To integrate this into a function, we first need to build a container image,
+with the libvaccel library along with the vAccel-virtio backend (Since this
+workload is going to be running on a Firecracker VM ;-).</p>
+<pre><code>docker build -t nubificus/fclassify -f Dockerfile.virtio .
+</code></pre>
+<p>Then, a simple YAML like the following (<code>fclassify.yaml</code>) will instantiate a
+function that will execute the <code>fprocess:</code> directive, in our case, <code>test</code>:</p>
+<pre><code>provider:
+  name: openfaas
+  gateway: http://myclusternode:31112
+
+functions:
+  fclassify:
+    skip_build: false
+    image: nubificus/fclassify
+    fprocess: &quot;/test&quot;
+    annotations:
+      com.openfaas.profile: kata
+    labels:
+      com.openfaas.scale.min: 12
+      com.openfaas.scale.max: 100
+      com.openfaas.scale.factor: 40
+    limits:
+      cpu: 10m
+    requests:
+      cpu: 10m
+</code></pre>
+<p>The important parts to note at this YAML file are:</p>
+<pre><code>      com.openfaas.profile: kata
+</code></pre>
+<p>which makes sure that the function will be invoked on the kata profile, using
+the kata-fc RuntimeClass (which supports vAccel).</p>
+<p>and</p>
+<pre><code>    image: nubificus/fclassify
+    fprocess: &quot;/test&quot;
+</code></pre>
+<p>which denotes that the image to be used is nubificus/fclassify, built earlier
+using <code>Dockerfile.virtio</code>, with /test being the entrypoint.</p>
+<h3 id="deploy-the-function">Deploy the function</h3>
+<p>Finally, using the command below:</p>
+<pre><code>faas-cli deploy -f fclassify.yaml
+</code></pre>
+<p>will instantiate the number of replicas chosen for fclassify as well as listen
+to requests for image classification, ready to forward them to the actual
+hardware securely and efficiently!</p>
+<h3 id="consume-the-function">Consume the function</h3>
+<p>Given an ingress rule that will route traffic to the fclassify function, we can
+invoke this operation externally. For instance, given the following three
+images:</p>
+<p align="center">
+  <img src="/img/object_0.jpg" width=200px>
+  <img src="/img/object_2.jpg" width=200px>
+  <img src="/img/object_3.jpg" width=200px>
+</p>
+
+<p>we can invoke the OpenFaaS function on our local K8s OpenFaaS cluster:</p>
+<pre><code>for x in object_0.jpg object_2.jpg object_3.jpg
+do 
+  cat $x | curl -L -X POST https://openfaas.nbfc.io/function/fclassify \
+    --data-binary &quot;@$x&quot; &amp; 
+done 
+</code></pre>
+<p>and the output should be:</p>
+<pre><code>[1] 3129602
+[2] 3129604
+[3] 3129606
+
+Initialized session with id: 1
+classification tags: 23.145% mountain bike, all-terrain bike, off-roader
+Initialized session with id: 1
+classification tags: 45.776% freight car
+Initialized session with id: 1
+classification tags: 90.771% canoe
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>

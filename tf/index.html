@@ -1,0 +1,1281 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../jetson/">
+      
+      
+        <link rel="next" href="../pytorch/">
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Tensorflow - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#install-requirements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tensorflow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build & Install from source
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/binaries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../language_bindings/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch [WiP]
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vaccel_go/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../container_runtimes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Container runtimes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Container runtimes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kata_vaccel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../unikernels/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Unikernels
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unikernels
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unikernels/unikraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../dev_guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Developer Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel User API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../misc_docs/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Useful Docs
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jetson/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-python-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup the python environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-bazel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Bazel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-and-build-protobuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get and build Protobuf
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tensorflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build tensorflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build tensorflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-and-compile-tensorflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get and compile tensorflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-tf-runtime-libs-to-some-dir-in-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      install TF runtime &amp; libs to some dir in the host
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-python-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup the python environment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-bazel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install Bazel
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-and-build-protobuf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get and build Protobuf
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tensorflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build tensorflow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build tensorflow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-and-compile-tensorflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get and compile tensorflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-tf-runtime-libs-to-some-dir-in-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      install TF runtime &amp; libs to some dir in the host
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Tensorflow</h1>
+
+<h3 id="install-requirements">Install requirements</h3>
+<p>Assuming cuda (v11.6) and cudnn (v8) are installed on a Ubuntu 20.04 system, we need the following packages for tensorflow:</p>
+<pre><code class="language-sh">apt-get install -y build-essential \
+         cmake \
+         git \
+         wget \
+         curl \
+         gnupg \
+         vim \
+         software-properties-common \
+         libatlas-base-dev \
+         libleveldb-dev \
+         libsnappy-dev \
+         libhdf5-serial-dev \
+         libboost-all-dev \
+         libgflags-dev \
+         libgoogle-glog-dev \
+         liblmdb-dev \
+         pciutils \
+         python3-setuptools \
+         python3-dev \
+         python3-pip \
+         opencl-headers \
+         ocl-icd-opencl-dev \
+         libviennacl-dev \
+         libcanberra-gtk-module
+</code></pre>
+<p>Make sure you have a recent version of cmake (<code>v3.10</code> and newer). If not, upgrade through the official repo:</p>
+<pre><code class="language-sh">wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - &amp;&amp; \
+    apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' &amp;&amp; \
+    apt update -y &amp;&amp; \
+    apt install cmake --upgrade -y
+</code></pre>
+<p>Optionally install OpenCV python bindings:</p>
+<pre><code class="language-sh">apt-get install -y libopencv-dev python3-opencv
+</code></pre>
+<h3 id="setup-the-python-environment">Setup the python environment</h3>
+<pre><code class="language-sh">apt-get install python-is-python3
+python3 -m pip install pip --upgrade
+python3 -m pip install numpy scikit-build
+</code></pre>
+<h3 id="install-bazel">Install Bazel</h3>
+<pre><code class="language-sh">curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor &gt; bazel.gpg
+mv bazel.gpg /etc/apt/trusted.gpg.d/
+echo &quot;deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8&quot; | tee /etc/apt/sources.list.d/bazel.list
+apt-get update -y &amp;&amp; apt-get install bazel-5.3.0 -y
+ln -s /usr/bin/bazel-5.3.0 /usr/bin/bazel
+ldconfig
+</code></pre>
+<h3 id="get-and-build-protobuf">Get and build Protobuf</h3>
+<pre><code class="language-sh">mkdir /protocol_buffers
+cd /protocol_buffers
+wget -c https://github.com/protocolbuffers/protobuf/releases/download/v3.9.2/protobuf-all-3.9.2.tar.gz
+tar xvf protobuf-all-3.9.2.tar.gz &amp;&amp; cd protobuf-3.9.2/
+./configure
+make
+make install
+ldconfig
+</code></pre>
+<h2 id="build-tensorflow">Build tensorflow</h2>
+<p>Set some config environment variables:</p>
+<pre><code class="language-sh">export PYTHON_BIN_PATH=/usr/bin/python3.8
+export PYTHON_LIB_PATH=/usr/lib/python3/dist-packages
+export CUDA_TOOLKIT_PATH=/usr/local/cuda-11.6
+export CUDNN_INSTALL_PATH=/usr/lib/x86_64-linux-gnu
+export TF_NEED_GCP=0
+export TF_NEED_CUDA=1
+export TF_CUDA_VERSION=11.6
+export TF_CUDA_COMPUTE_CAPABILITIES=7.5
+export TF_NEED_HDFS=0
+export TF_NEED_OPENCL=0
+export TF_NEED_JEMALLOC=1
+export TF_ENABLE_XLA=0
+export TF_NEED_VERBS=0
+export TF_CUDA_CLANG=0
+export TF_CUDNN_VERSION=8
+export TF_NEED_MKL=0
+export TF_DOWNLOAD_MKL=0
+export TF_NEED_AWS=0
+export TF_NEED_MPI=0
+export TF_NEED_GDR=0
+export TF_NEED_S3=0
+export TF_NEED_OPENCL_SYCL=0
+export TF_SET_ANDROID_WORKSPACE=0
+export TF_NEED_COMPUTECPP=0
+export GCC_HOST_COMPILER_PATH=/usr/bin/gcc
+export CC_OPT_FLAGS=&quot;-march=native&quot;
+export TF_NEED_KAFKA=0
+export TF_NEED_TENSORRT=0
+</code></pre>
+<h3 id="get-and-compile-tensorflow">Get and compile tensorflow</h3>
+<pre><code class="language-sh">git clone https://github.com/tensorflow/tensorflow.git
+cd tensorflow
+git checkout v2.11.0
+./configure
+bazel build --local_ram_resources=HOST_RAM*.7 \
+            --local_cpu_resources=HOST_CPUS-1 \
+            --jobs=4 \
+            --config=v2 \
+            --copt=-O3 \
+            --copt=-m64 \
+            --copt=-march=native \
+            --config=cuda \
+            --verbose_failures \
+            //tensorflow:tensorflow_cc \
+            //tensorflow:install_headers \
+            //tensorflow:tensorflow \
+            //tensorflow:tensorflow_framework \
+            //tensorflow/c:c_api \
+            //tensorflow/tools/lib_package:libtensorflow
+mkdir -p /opt/tensorflow/lib
+cp -r bazel-bin/tensorflow/* /opt/tensorflow/lib/
+cd /opt/tensorflow/lib
+ln -s libtensorflow_cc.so.2.11.0 libtensorflow_cc.so
+ln -s libtensorflow_cc.so.2.11.0 libtensorflow_cc.so.2
+ln -s libtensorflow.so.2.11.0 libtensorflow.so
+ln -s libtensorflow.so.2.11.0 libtensorflow.so.2
+</code></pre>
+<h3 id="install-tf-runtime-libs-to-some-dir-in-the-host">install TF runtime &amp; libs to some dir in the host</h3>
+<pre><code class="language-sh">wget https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/c/c_api_internal.h \
+     -O /opt/tensorflow/lib/include/tensorflow/c/c_api_internal.h
+wget https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/core/framework/op_gen_lib.h \
+     -O /opt/tensorflow/lib/include/tensorflow/core/framework/op_gen_lib.h
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
