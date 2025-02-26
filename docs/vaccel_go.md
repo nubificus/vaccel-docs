@@ -1,126 +1,44 @@
 ---
-title: "vAccel-go: Golang bindings for vAccel"
+title: "vAccel-Go: Go bindings for vAccel"
 date: 2024-01-02T14:28:46Z
 tags: [vAccel, go] 
 ---
 
-To facilitate the use of vAccel, we provide bindings for popular languages,
-apart from `C`. Essentially, the vAccel `C` API can be called from any language
-that interacts with `C` libraries. Building on this, we are thrilled to present
-support for [Go](https://go.dev).
+[Go](https://go.dev/) bindings for vAccel are implemented in the `vaccel` Go package. The `vaccel` package leverages the vAccel C API to provide native Go support for vAccel operations.
 
-Essentially, the `C`/`Go` interaction is already pretty smooth, given the
-native `CGO` support available. We introduce v0.1 of the vAccel-go bindings,
-pending a feature-full update in the coming months. In this post, we go
-through the initial implementation details, as well as a hands-on tutorial on
-how to write your first vAccel program in `Go`!
+## Installation Guide
 
-### Golang overview
-The `Go` Programming Language is designed for scalability, 
-making it suitable for cloud computing and large-scale servers.
-Go enhances development speed and efficiency, since it compiles
-quickly (compared to other languages), and provides a great
-Standard Library, along with built-in concurrency tools. Golang 
-is also a cloud-native Programming Language. Information
-about Go installation can be found [here](https://go.dev/doc/install), 
-but there are also instructions on how to install `Go` in the
-[vAccel-go bindings installation guide](https://github.com/nubificus/go-vaccel).
+### vAccel Installation
+First of all, a vAccel installation is required before proceeding to the next sections. Instructions on how to install vAccel can be found [here](https://docs.vaccel.org/quickstart/).
 
-### vAccel Go package
-The vaccel package in Golang provides access to vAccel operations, which
-can be used by the developers on their own `Go` programs. The vaccel package uses 
-the native `C` bindings in order to use the vAccel `C` API. The following diagram 
-demonstrates the functionality of the vaccel package:
+### vAccel-Go Bindings Installation
 
-<figure>
-  <img src="img/vaccel_go.png" align=center />
-  <figcaption>Figure 1: High-level overview of the vAccel Go package</figcaption>
-</figure>
-
-### Installation Guide
-#### vAccel Installation
-First of all, a vAccel installation is required before proceeding to the next sections. 
-
-#### Build from source
-In Ubuntu-based systems, you need to have the following packages to build vaccelrt:
-1. `cmake`
-2. build-essential
-
-You can install them using the following command:
-```
-sudo apt-get install -y cmake build-essential
-```
-Get the source code for **vaccelrt**:
-```
-git clone https://github.com/nubificus/vaccel --recursive
-```
-Prepare the build directory:
-```
-cd vaccelrt
-mkdir build
-cd build
-```
-#### Building the core runtime library
-```
-# This sets the installation path to /usr/local, and the current build
-# type to 'Release'. The other option is the 'Debug' build
-cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON -DBUILD_PLUGIN_EXEC=ON -DBUILD_PLUGIN_NOOP=ON
-```
-```
-make
-sudo make install
-```
-#### vAccel-Go Bindings Installation
-
-##### Go Installation
-Of course, prior to installing the bindings, we have to make sure that Golang 1.20 or newer is installed in our system. We can check this using the following command:
+Prior to installing the bindings, we have to make sure that Go 1.20 or newer is installed on our system. We can check this using the following command:
 ```
 go version
 ```
-Otherwise, `go 1.20` needs to be installed. You can find instructions on how to install Go [here.](https://go.dev/doc/install) 
+Otherwise, Go 1.20 needs to be installed. You can find instructions on how to install Go [here](https://go.dev/doc/install).
 
-##### Build the Bindings from source
-Download the source code:
+Afterwards:
 ```
 git clone https://github.com/nubificus/go-vaccel.git
-```
-First, you can build the examples:
-```
-# Set vaccel location
-export PKG_CONFIG_PATH=/usr/local/share/
 cd go-vaccel
 make all
 ```
-Now you have successfully built some vaccel programs using Go. The executables are located in go-vaccel/bin. You can run the `noop` example:
+Now you have successfully built some vAccel programs using Go. The executables are located in go-vaccel/bin. You can run the `noop` example:
 ```
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export VACCEL_LOG_LEVEL=4
+export VACCEL_PLUGINS=/usr/lib/x84_64-linux-gnu/libvaccel-noop.so
 ./bin/noop
 ```
 Or the `exec` example, providing a path for the shared object and an integer:
 ```
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-exec.so
+export VACCEL_PLUGINS=/usr/lib/x86_64-linux-gnu/libvaccel-exec.so
 ./bin/exec /usr/local/lib/libmytestlib.so 100
-# if everything go as expected, the
-# plugin will probably double the integer 
 ```
 
-### Tutorial
-The following example demonstrates the usage of the `vaccel` package to build vaccel-enabled `Go` programs. The tutorial will perform an image classification operation, using the no-op plugin.
-Keep in mind the following three conditions before building:
-
-**1. Make sure to import the package in your programs:**
-```go
-import "github.com/nubificus/go-vaccel/vaccel"
-```
-**2. Define `vaccel` location:**
-```
-export PKG_CONFIG_PATH=/usr/local/share
-```
-**3. And finally, always define the location of the `vaccel-plugin` you are willing to use:**
-```
-# In case of No-Op for testing:
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
-```
+## Tutorial
+The following example demonstrates the usage of the `vaccel` package to build vAccel-enabled Go programs. The tutorial will perform an image classification operation, using the no-op plugin.
 
 ### Example
 **Create the project directory**
@@ -139,7 +57,7 @@ go mod init go-vaccel-test
 go get github.com/nubificus/go-vaccel
 ```
 
-**And create a `Go` file**
+**Add a Go file**
 ```
 touch main.go
 ```
@@ -195,23 +113,22 @@ func main() {
 	fmt.Println("Output: ", outText)
 
 	/* Free Session */
-	if vaccel.SessionFree(&session) != 0 {
-		fmt.Println("An error occurred while freeing the session")
+	if vaccel.SessionRelease(&session) != 0 {
+		fmt.Println("An error occurred while releasing the session")
 	}
 }
 ```
-**Then, specify vaccel location:**
-```
-export PKG_CONFIG_PATH=/usr/local/share
-```
-**Define the location of the plugin:**
-```
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
-```
+
 **Build the source file:**
 ```
 go build main.go
 ```
+
+**Define the location of the plugin:**
+```
+export VACCEL_PLUGINS=/usr/lib/x84_64-linux-gnu/libvaccel-noop.so
+```
+
 **And run:**
 ```
 ./main </path/to/image>
@@ -225,4 +142,4 @@ go build main.go
 Output:  This is a dummy classification tag!
 ```
 ### Conclusion
-The above example shows how to use the `vaccel` package in `Go` to use various vaccel features. As you can see, the example doesn't run an actual image classification operation, since we use the no-op plugin for testing purposes. However, we could use a vaccel backend that performs the operation. [Here](https://github.com/nubificus/go-vaccel/), you can find more vaccel tools and operations that you could possibly use in your `Go` programs. For example, except image classification, you can write [programs that use the exec plugin](https://github.com/nubificus/go-vaccel/blob/main/exec/main.go), which gives you the opportunity to use functions contained in a shared object. Or, finally, you could also use the [`noop` example](https://github.com/nubificus/go-vaccel/blob/main/noop/main.go) if you just want to test the installation of the package.
+The above example shows how to use the `vaccel` package in Go to use various vAccel features. As you can see, the example doesn't run an actual image classification operation, since we use the no-op plugin for testing purposes. However, we could use a vAccel backend that performs the operation. [Here](https://github.com/nubificus/go-vaccel/), you can find more vAccel tools and operations that you could possibly use in your Go programs. For example, except image classification, you can write [programs that use the exec plugin](https://github.com/nubificus/go-vaccel/blob/main/exec/main.go), which gives you the opportunity to use functions contained in a shared object. Or, finally, you could also use the [`noop` example](https://github.com/nubificus/go-vaccel/blob/main/noop/main.go) if you just want to test the installation of the package.
