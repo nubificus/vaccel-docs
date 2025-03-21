@@ -1,0 +1,1471 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../misc_docs/">
+      
+      
+        <link rel="next" href="../tf/">
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
+    
+    
+      
+        <title>Jetson Inference - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jetson-inference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Jetson Inference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quickstart
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user-guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build & Install from source
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/binaries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../language_bindings/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch_bindings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch [WiP]
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vaccel_go/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Bindings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../container_runtimes/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Container runtimes
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Container runtimes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kata_vaccel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../unikernels/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Unikernels
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unikernels
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../unikernels/unikraft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../dev_guide/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Developer Guide
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel User API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../misc_docs/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Useful Docs
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-common-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install common tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-gcc-8-as-the-default-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set gcc-8 as the default compiler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-nvidias-custom-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      setup NVIDIA's custom repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-nvidia-cuda-cudnn-and-tensorrt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install NVIDIA CUDA, CUDNN and TENSORRT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prepare-for-building-jetson-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare for building jetson-inference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-install-jetson-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build &amp; install jetson-inference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-jetson-inference-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a jetson-inference container image
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tf/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tensorflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PyTorch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install prerequisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Install prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-common-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install common tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-gcc-8-as-the-default-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Set gcc-8 as the default compiler
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup-nvidias-custom-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      setup NVIDIA's custom repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-nvidia-cuda-cudnn-and-tensorrt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install NVIDIA CUDA, CUDNN and TENSORRT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prepare-for-building-jetson-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare for building jetson-inference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-install-jetson-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build &amp; install jetson-inference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-jetson-inference-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a jetson-inference container image
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="jetson-inference">Jetson-inference</h1>
+<p>To walk through the requirements for running a vAccel-enabled workload with
+the jetson-inference plugin, we will use a set of NVIDIA GPUs (RTX 2060 SUPER,
+Jetson Nano and Xavier AGX) and a common distribution like Ubuntu. </p>
+<p>The Jetson-inference vAccel plugin is based on
+<a href="https://github.com/dusty-nv/jetson-inference">jetson-inference</a>, a frontend
+for TensorRT, developed by NVIDIA. This intro section will serve as a guide to
+install TensorRT, CUDA and jetson inference on a Ubuntu 20.04 system.</p>
+<h2 id="install-prerequisites">Install prerequisites</h2>
+<p>The first step is to prepare the system for building and installing jetson-inference.</p>
+<h3 id="install-common-tools">Install common tools</h3>
+<pre><code class="language-bash">apt update &amp;&amp; TZ=Etc/UTC apt install -y build-essential \
+        git \
+        cmake \
+        python3 \
+        python3-venv \
+        libpython3-dev \
+        python3-numpy \
+        gcc-8 \
+        g++-8 \
+        lsb-release \
+        wget \
+        software-properties-common &amp;&amp; \
+</code></pre>
+<h3 id="set-gcc-8-as-the-default-compiler">Set gcc-8 as the default compiler</h3>
+<pre><code class="language-bash">update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8 &amp;&amp; \
+update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 8 &amp;&amp; \
+update-alternatives --set gcc /usr/bin/gcc-8
+</code></pre>
+<h3 id="setup-nvidias-custom-repositories">setup NVIDIA's custom repositories</h3>
+<pre><code class="language-bash">export OS=ubuntu2004
+wget http://developer.download.nvidia.com/compute/machine-learning/repos/${OS}/x86_64/nvidia-machine-learning-repo-${OS}_1.0.0-1_amd64.deb
+dpkg -i nvidia-machine-learning-repo-${OS}_1.0.0-1_amd64.deb
+apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/machine-learning/repos/${OS}/x86_64/7fa2af80.pub
+wget https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/cuda-${OS}.pin
+mv cuda-${OS}.pin /etc/apt/preferences.d/cuda-repository-pin-600
+apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/3bf863cc.pub
+add-apt-repository &quot;deb https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/ /&quot;
+</code></pre>
+<h3 id="install-nvidia-cuda-cudnn-and-tensorrt">Install NVIDIA CUDA, CUDNN and TENSORRT</h3>
+<pre><code class="language-bash">apt-get update
+apt-get install -y libcudnn8 libcudnn8-dev tensorrt nvidia-cuda-toolkit
+</code></pre>
+<h2 id="prepare-for-building-jetson-inference">Prepare for building jetson-inference</h2>
+<p>We clone jetson-inference:</p>
+<pre><code>git clone --recursive https://github.com/nubificus/jetson-inference
+cd jetson-inference
+</code></pre>
+<h2 id="build-install-jetson-inference">Build &amp; install jetson-inference</h2>
+<p>We create a build dir, enter it and prepare the Makefiles:</p>
+<pre><code>mkdir build
+cd build
+
+BUILD_DEPS=YES cmake -DBUILD_INTERACTIVE=NO ../
+</code></pre>
+<p>Finally, we issue the build command and we install it to our system:</p>
+<pre><code>make -j$(nproc)
+make install
+</code></pre>
+<p><strong>Note</strong>: <em>For <code>aarch64</code> hosts, this process is slightly different (one would say easier!) as it assumes the Host system is a <code>L4T</code> distro. Just clone the repo and follow the <a href="./#Build-&amp;-install-jetson-inference">Build &amp; install</a> step</em></p>
+<h2 id="build-a-jetson-inference-container-image">Build a jetson-inference container image</h2>
+<p>We use a container file to capture the individual steps to install jetson inference. Assuming the host is debian-based (we tried that on Ubuntu 20.04), and has a recent NVIDIA driver (<code>520.61.05</code>) we follow the steps below:</p>
+<ul>
+<li>clone the container repo:</li>
+</ul>
+<pre><code>git clone https://github.com/nubificus/jetson-inference-container
+</code></pre>
+<ul>
+<li>build the container image:</li>
+</ul>
+<pre><code>docker build -t nubificus/jetson-inference-updated:x86_64 -f Dockerfile .
+</code></pre>
+<p>or just get the one we've built (could take some time, i'ts 12GB...):</p>
+<pre><code>docker pull nubificus/jetson-inference-updated:x86_64
+</code></pre>
+<ul>
+<li>run the <code>jetson-inference</code> example:</li>
+</ul>
+<p>Run the container:</p>
+<pre><code># docker run --gpus all --rm -it -v/data/code:/data/code -w $PWD nubificus/jetson-inference-updated:x86_64 /bin/bash
+root@9f5224cb28cc:/data/code#
+</code></pre>
+<p>Use pre-installed example images and models to do image inference:</p>
+<pre><code>root@9f5224cb28cc:/data/code# ln -s /usr/local/data/images .
+root@9f5224cb28cc:/data/code# ln -s /usr/local/data/networks .
+
+root@9f5224cb28cc:/data/code# imagenet-console images/dog_0.jpg
+[video]  created imageLoader from file:///data/code/images/dog_0.jpg
+------------------------------------------------
+imageLoader video options:
+------------------------------------------------
+  -- URI: file:///data/code/images/dog_0.jpg
+     - protocol:  file
+     - location:  images/dog_0.jpg
+     - extension: jpg
+  -- deviceType: file
+  -- ioType:     input
+  -- codec:      unknown
+  -- width:      0
+  -- height:     0
+  -- frameRate:  0.000000
+  -- bitRate:    0
+  -- numBuffers: 4
+  -- zeroCopy:   true
+  -- flipMethod: none
+  -- loop:       0
+  -- rtspLatency 2000
+------------------------------------------------
+[video]  videoOptions -- failed to parse output resource URI (null)
+[video]  videoOutput -- failed to parse command line options
+imagenet:  failed to create output stream
+
+imageNet -- loading classification network model from:
+         -- prototxt     networks/googlenet.prototxt
+         -- model        networks/bvlc_googlenet.caffemodel
+         -- class_labels networks/ilsvrc12_synset_words.txt
+         -- input_blob   'data'
+         -- output_blob  'prob'
+         -- batch_size   1
+
+[TRT]    TensorRT version 8.5.1
+[TRT]    loading NVIDIA plugins...
+[TRT]    Registered plugin creator - ::BatchedNMSDynamic_TRT version 1
+[TRT]    Registered plugin creator - ::BatchedNMS_TRT version 1
+[TRT]    Registered plugin creator - ::BatchTilePlugin_TRT version 1
+[TRT]    Registered plugin creator - ::Clip_TRT version 1
+[TRT]    Registered plugin creator - ::CoordConvAC version 1
+[TRT]    Registered plugin creator - ::CropAndResizeDynamic version 1
+[TRT]    Registered plugin creator - ::CropAndResize version 1
+[TRT]    Registered plugin creator - ::DecodeBbox3DPlugin version 1
+[TRT]    Registered plugin creator - ::DetectionLayer_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_Explicit_TF_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_Implicit_TF_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_ONNX_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_TRT version 1
+[TRT]    Could not register plugin creator -  ::FlattenConcat_TRT version 1
+[TRT]    Registered plugin creator - ::GenerateDetection_TRT version 1
+[TRT]    Registered plugin creator - ::GridAnchor_TRT version 1
+[TRT]    Registered plugin creator - ::GridAnchorRect_TRT version 1
+[TRT]    Registered plugin creator - ::InstanceNormalization_TRT version 1
+[TRT]    Registered plugin creator - ::InstanceNormalization_TRT version 2
+[TRT]    Registered plugin creator - ::LReLU_TRT version 1
+[TRT]    Registered plugin creator - ::MultilevelCropAndResize_TRT version 1
+[TRT]    Registered plugin creator - ::MultilevelProposeROI_TRT version 1
+[TRT]    Registered plugin creator - ::MultiscaleDeformableAttnPlugin_TRT version 1
+[TRT]    Registered plugin creator - ::NMSDynamic_TRT version 1
+[TRT]    Registered plugin creator - ::NMS_TRT version 1
+[TRT]    Registered plugin creator - ::Normalize_TRT version 1
+[TRT]    Registered plugin creator - ::PillarScatterPlugin version 1
+[TRT]    Registered plugin creator - ::PriorBox_TRT version 1
+[TRT]    Registered plugin creator - ::ProposalDynamic version 1
+[TRT]    Registered plugin creator - ::ProposalLayer_TRT version 1
+[TRT]    Registered plugin creator - ::Proposal version 1
+[TRT]    Registered plugin creator - ::PyramidROIAlign_TRT version 1
+[TRT]    Registered plugin creator - ::Region_TRT version 1
+[TRT]    Registered plugin creator - ::Reorg_TRT version 1
+[TRT]    Registered plugin creator - ::ResizeNearest_TRT version 1
+[TRT]    Registered plugin creator - ::ROIAlign_TRT version 1
+[TRT]    Registered plugin creator - ::RPROI_TRT version 1
+[TRT]    Registered plugin creator - ::ScatterND version 1
+[TRT]    Registered plugin creator - ::SpecialSlice_TRT version 1
+[TRT]    Registered plugin creator - ::Split version 1
+[TRT]    Registered plugin creator - ::VoxelGeneratorPlugin version 1
+[TRT]    detected model format - caffe  (extension '.caffemodel')
+[TRT]    desired precision specified for GPU: FASTEST
+[TRT]    requested fasted precision for device GPU without providing valid calibrator, disabling INT8
+[TRT]    [MemUsageChange] Init CUDA: CPU +298, GPU +0, now: CPU 321, GPU 223 (MiB)
+[TRT]    Trying to load shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    Loaded shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    [MemUsageChange] Init builder kernel library: CPU +262, GPU +76, now: CPU 637, GPU 299 (MiB)
+[TRT]    CUDA lazy loading is not enabled. Enabling it can significantly reduce device memory usage. See `CUDA_MODULE_LOADING` in https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars
+[TRT]    native precisions detected for GPU:  FP32, FP16, INT8
+[TRT]    selecting fastest native precision for GPU:  FP16
+[TRT]    attempting to open engine cache file networks/bvlc_googlenet.caffemodel.1.1.8501.GPU.FP16.engine
+[TRT]    loading network plan from engine cache... networks/bvlc_googlenet.caffemodel.1.1.8501.GPU.FP16.engine
+[TRT]    device GPU, loaded networks/bvlc_googlenet.caffemodel
+[TRT]    Loaded engine size: 15 MiB
+[TRT]    Trying to load shared library libcudnn.so.8
+[TRT]    Loaded shared library libcudnn.so.8
+[TRT]    Using cuDNN as plugin tactic source
+[TRT]    Using cuDNN as core library tactic source
+[TRT]    [MemUsageChange] Init cuDNN: CPU +576, GPU +236, now: CPU 978, GPU 477 (MiB)
+[TRT]    Deserialization required 506628 microseconds.
+[TRT]    [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +0, GPU +13, now: CPU 0, GPU 13 (MiB)
+[TRT]    Trying to load shared library libcudnn.so.8
+[TRT]    Loaded shared library libcudnn.so.8
+[TRT]    Using cuDNN as plugin tactic source
+[TRT]    Using cuDNN as core library tactic source
+[TRT]    [MemUsageChange] Init cuDNN: CPU +1, GPU +8, now: CPU 979, GPU 477 (MiB)
+[TRT]    Total per-runner device persistent memory is 94720
+[TRT]    Total per-runner host persistent memory is 147808
+[TRT]    Allocated activation device memory of size 3612672
+[TRT]    [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +3, now: CPU 0, GPU 16 (MiB)
+[TRT]    CUDA lazy loading is not enabled. Enabling it can significantly reduce device memory usage. See `CUDA_MODULE_LOADING` in https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars
+[TRT]
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       75
+[TRT]       -- maxBatchSize 1
+[TRT]       -- deviceMemory 3612672
+[TRT]       -- bindings     2
+[TRT]       binding 0
+                -- index   0
+                -- name    'data'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3
+                -- dim #1  224
+                -- dim #2  224
+[TRT]       binding 1
+                -- index   1
+                -- name    'prob'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1000
+                -- dim #1  1
+                -- dim #2  1
+[TRT]
+[TRT]    binding to input 0 data  binding index:  0
+[TRT]    binding to input 0 data  dims (b=1 c=3 h=224 w=224) size=602112
+[TRT]    binding to output 0 prob  binding index:  1
+[TRT]    binding to output 0 prob  dims (b=1 c=1000 h=1 w=1) size=4000
+[TRT]
+[TRT]    device GPU, networks/bvlc_googlenet.caffemodel initialized.
+[TRT]    imageNet -- loaded 1000 class info entries
+[TRT]    imageNet -- networks/bvlc_googlenet.caffemodel initialized.
+[image]  loaded 'images/dog_0.jpg'  (500x375, 3 channels)
+class 0248 - 0.229980  (Eskimo dog, husky)
+class 0249 - 0.605469  (malamute, malemute, Alaskan malamute)
+class 0250 - 0.160400  (Siberian husky)
+imagenet:  60.54688% class #249 (malamute, malemute, Alaskan malamute)
+
+[TRT]    ------------------------------------------------
+[TRT]    Timing Report networks/bvlc_googlenet.caffemodel
+[TRT]    ------------------------------------------------
+[TRT]    Pre-Process   CPU   0.02498ms  CUDA   0.21392ms
+[TRT]    Network       CPU   1.04583ms  CUDA   0.86154ms
+[TRT]    Post-Process  CPU   0.02265ms  CUDA   0.02288ms
+[TRT]    Total         CPU   1.09346ms  CUDA   1.09834ms
+[TRT]    ------------------------------------------------
+
+[TRT]    note -- when processing a single image, run 'sudo jetson_clocks' before
+                to disable DVFS for more accurate profiling/timing measurements
+
+[image]  imageLoader -- End of Stream (EOS) has been reached, stream has been closed
+imagenet:  shutting down...
+imagenet:  shutdown complete.
+</code></pre>
+<p><strong>Note</strong>: <em>The first time the engine needs to do some autotuning, so it will take some time and drop output similar to the one below</em>:</p>
+<pre><code>...
+[TRT]    Tactic: 0x89c2d153627e52ba Time: 0.0134678
+[TRT]    loss3/classifier Set Tactic Name: volta_h884cudnn_256x128_ldg8_relu_exp_small_nhwc_tn_v1 Tactic: 0xc110e19c9f5aa36e
+[TRT]    Tactic: 0xc110e19c9f5aa36e Time: 0.0752844
+[TRT]    loss3/classifier Set Tactic Name: turing_h1688cudnn_256x128_ldg8_relu_exp_medium_nhwc_tn_v1 Tactic: 0xdc1c841ef1cd3e8e
+[TRT]    Tactic: 0xdc1c841ef1cd3e8e Time: 0.0422516
+[TRT]    loss3/classifier Set Tactic Name: sm70_xmma_fprop_implicit_gemm_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x64x32_stage1_warpsize2x2x1_g1_tensor8x8x4_t1r1s1 Tactic: 0x4c17dc9d992e6a1d
+[TRT]    Tactic: 0x4c17dc9d992e6a1d Time: 0.0231476
+[TRT]    loss3/classifier Set Tactic Name: sm75_xmma_fprop_implicit_gemm_f16f16_f16f16_f16_nhwckrsc_nhwc_tilesize128x128x64_stage1_warpsize2x2x1_g1_tensor16x8x8_t1r1s1 Tactic: 0xc399fdbffdc34032
+[TRT]    Tactic: 0xc399fdbffdc34032 Time: 0.0262451
+[TRT]    loss3/classifier Set Tactic Name: turing_h1688cudnn_256x64_sliced1x2_ldg8_relu_exp_interior_nhwc_tn_v1 Tactic: 0x105f56cf03ee5549
+[TRT]    Tactic: 0x105f56cf03ee5549 Time: 0.0241811
+[TRT]    Fastest Tactic: 0x017a89ce2d82b850 Time: 0.00878863
+[TRT]    &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Chose Runner Type: CaskGemmConvolution Tactic: 0x0000000000020318
+[TRT]    =============== Computing costs for
+[TRT]    *************** Autotuning format combination: Float(1000,1,1,1) -&gt; Float(1000,1,1,1) ***************
+[TRT]    --------------- Timing Runner: prob (CudaSoftMax)
+[TRT]    Tactic: 0x00000000000003ea Time: 0.00364102
+[TRT]    Fastest Tactic: 0x00000000000003ea Time: 0.00364102
+[TRT]    --------------- Timing Runner: prob (CaskSoftMax)
+[TRT]    CaskSoftMax has no valid tactics for this config, skipping
+[TRT]    &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Chose Runner Type: CudaSoftMax Tactic: 0x00000000000003ea
+[TRT]    *************** Autotuning format combination: Half(1000,1,1,1) -&gt; Half(1000,1,1,1) ***************
+[TRT]    --------------- Timing Runner: prob (CudaSoftMax)
+[TRT]    Tactic: 0x00000000000003ea Time: 0.00370118
+[TRT]    Fastest Tactic: 0x00000000000003ea Time: 0.00370118
+[TRT]    --------------- Timing Runner: prob (CaskSoftMax)
+[TRT]    CaskSoftMax has no valid tactics for this config, skipping
+[TRT]    &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Chose Runner Type: CudaSoftMax Tactic: 0x00000000000003ea
+[TRT]    *************** Autotuning format combination: Half(500,1:2,1,1) -&gt; Half(500,1:2,1,1) ***************
+[TRT]    --------------- Timing Runner: prob (CudaSoftMax)
+[TRT]    Tactic: 0x0000000000000012 Time: 0.00347464
+[TRT]    Fastest Tactic: 0x0000000000000012 Time: 0.00347464
+[TRT]    &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Chose Runner Type: CudaSoftMax Tactic: 0x0000000000000012
+[TRT]    Adding reformat layer: Reformatted Input Tensor 0 to conv1/7x7_s2 + conv1/relu_7x7 (data) from Float(150528,50176,224,1) to Half(100352,50176:2,224,1)
+[TRT]    Adding reformat layer: Reformatted Input Tensor 0 to conv2/3x3_reduce + conv2/relu_3x3_reduce (pool1/norm1) from Half(100352,3136:2,56,1) to Half(25088,1:8,448,8)
+[TRT]    Adding reformat layer: Reformatted Input Tensor 0 to conv2/norm2 (conv2/3x3) from Half(75264,1:8,1344,24) to Half(301056,3136:2,56,1)
+[TRT]    Adding reformat layer: Reformatted Output Tensor 0 to pool2/3x3_s2 (pool2/3x3_s2) from Half(75264,784:2,28,1) to Half(18816,1:8,672,24)
+[TRT]    Adding reformat layer: Reformatted Output Tensor 0 to inception_4a/1x1 + inception_4a/relu_1x1 || inception_4a/3x3_reduce + inception_4a/relu_3x3_reduce || inception_4a/5x5_reduce + inception_4a/relu_5x5_reduce (inception_4a/1x1 + inception_4a/relu_1x1 || inception_4a/3x3_reduce + inception_4a/relu_3x3_reduce || inception_4a/5x5_reduce + inception_4a/relu_5x5_reduce) from Half(7448,1:8,532,38) to Half(29792,196:2,14,1)
+...
+</code></pre>
+<p><strong>Note</strong>: <em>If you want to avoid that everytime you run the container, keep the networks folder outside the container and bind mount it (eg. in the <code>/data/code</code> path). That is, instead of doing <code>ln -s /usr/local/data/networks .</code> do a <code>cp -avf /usr/local/data/networks .</code>. Thus, every time you re-run the example using this folder, the auto-tuned engine will be there.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      
+    
+  </body>
+</html>
