@@ -9,6 +9,12 @@ nav:
     - user-guide/build-run-app.md
     - user-guide/vm-example.md
     - user-guide/remote-example.md
+  - Plugins:
+    - plugins/index.md
+    - Acceleration:
+      - plugins/acceleration/index.md
+      - plugins/acceleration/torch.md
+      - plugins/acceleration/tvm.md
     #- Plugins:
     #  - jetson.md
     #  - virtio.md
