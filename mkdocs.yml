@@ -10,10 +10,16 @@ nav:
     - user-guide/build-run-app.md
     - user-guide/vm-example.md
     - user-guide/remote-example.md
-  #- Plugins:
-  #  - jetson.md
-  #  - virtio.md
-  #  - coral.md
+  - Plugins:
+    - plugins/index.md
+    - Acceleration:
+      - plugins/acceleration/index.md
+      - plugins/acceleration/torch.md
+      - plugins/acceleration/tvm.md
+    #- Plugins:
+    #  - jetson.md
+    #  - virtio.md
+    #  - coral.md
   #- kata-vaccel.md
   #- k8s:
   #  - devmapper.md
