@@ -16,6 +16,7 @@ nav:
       - plugins/acceleration/index.md
       - plugins/acceleration/torch.md
       - plugins/acceleration/tvm.md
+      - plugins/acceleration/tf.md
     #- Plugins:
     #  - jetson.md
     #  - virtio.md
@@ -43,10 +44,11 @@ nav:
     - Python API: python/index.md
     - plugin.md
   - Useful Docs: 
-    - misc_docs.md
-    - Jetson Inference: jetson.md
-    - Tensorflow: tf.md
-    - PyTorch: pytorch.md
+    - useful-docs/index.md
+    - useful-docs/pytorch.md
+    - useful-docs/tvm.md
+    - useful-docs/tf.md
+    - useful-docs/jetson.md
 
 theme:
   name: material

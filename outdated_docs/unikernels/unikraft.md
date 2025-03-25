@@ -155,7 +155,8 @@ To run such an example, we will need:
 
 As long as we have the above dependencies, the only thing we need to change in
 the example we just ran is the plugin.  A comprehensive walk through on
-installing the above dependencies is given in [Jetson-inference](../jetson.md).
+installing the above dependencies is given in
+[Jetson-inference](../useful-docs/jetson.md).
 
 ### Install the jetson-inference vAccel plugin
 

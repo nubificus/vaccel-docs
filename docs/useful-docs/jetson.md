@@ -1,4 +1,4 @@
-# Jetson-inference
+# Build and Install Jetson-inference
 
 To walk through the requirements for running a vAccel-enabled workload with the
 jetson-inference plugin, we will use a set of NVIDIA GPUs (RTX 2060 SUPER,
@@ -68,7 +68,7 @@ git clone --recursive https://github.com/nubificus/jetson-inference
 cd jetson-inference
 ```
 
-## Build & install jetson-inference
+## Build and install jetson-inference
 
 We create a build dir, enter it and prepare the Makefiles:
 
@@ -89,7 +89,7 @@ make install
 **Note**: _For `aarch64` hosts, this process is slightly different (one would
 say easier!) as it assumes the Host system is a `L4T` distro. Just clone the
 repo and follow the
-[Build & install](jetson.md#Build-&-install-jetson-inference) step_
+[Build & install](jetson.md#build-and-install-jetson-inference) step_
 
 ## Build a jetson-inference container image
 
