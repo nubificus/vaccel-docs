@@ -282,11 +282,11 @@ Running with the Jetson inference plugin requires a working
 [jetson-inference](https://github.com/dusty-nv/jetson-inference) installation
 along with the corresponding CUDA environment on the machine. If all is set up 
 correctly you can just skip to
-[Running a Jetson-inference example](#running-a-jeson-inference-example). If
+[Running a Jetson-inference example](#running-a-jetson-inference-example). If
 not, you can follow the steps below to get a working environment.
 
 If a jetson-inference setup is not available you can either follow [this
-guide](jetson.md) to build the vAccel jetson plugin and install the
+guide](useful-docs/jetson.md) to build the vAccel jetson plugin and install the
 prerequisites on your host machine, or you can use a container image, provided
 you can expose an NVIDIA GPU in the container.
 

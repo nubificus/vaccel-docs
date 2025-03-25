@@ -9,6 +9,13 @@ nav:
     - user-guide/build-run-app.md
     - user-guide/vm-example.md
     - user-guide/remote-example.md
+  - Plugins:
+    - plugins/index.md
+    - Acceleration:
+      - plugins/acceleration/index.md
+      - plugins/acceleration/torch.md
+      - plugins/acceleration/tvm.md
+      - plugins/acceleration/tf.md
     #- Plugins:
     #  - jetson.md
     #  - virtio.md
@@ -36,10 +43,11 @@ nav:
     - Python API: python/index.md
     - plugin.md
   - Useful Docs: 
-    - misc_docs.md
-    - Jetson Inference: jetson.md
-    - Tensorflow: tf.md
-    - PyTorch: pytorch.md
+    - useful-docs/index.md
+    - useful-docs/pytorch.md
+    - useful-docs/tvm.md
+    - useful-docs/tf.md
+    - useful-docs/jetson.md
 
 theme:
   name: material
@@ -63,6 +71,13 @@ theme:
         icon: material/eye-outline
         name: Switch to light mode
 
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.expand
+    - navigation.tracking
+    - toc.integrate
+
 #theme:
 #    name: alabaster
     #custom_dir: 
@@ -85,23 +100,17 @@ theme:
 #  extra_nav_links:
 #    Fork me on GitHub: https://github.com/iamale/rock-cli
 
-features:
-  - navigation.instant
-  - navigation.sections
-  - navigation.expand
-  - toc.integrate
-
 markdown_extensions:
   - footnotes
   - attr_list
+  - toc:
+      permalink: ''
 
-toc:
-  - permalink: true
-
-copyright: Copyright &copy; 2018 - 2023 Nubificus LTD
+copyright: Copyright &copy; 2018 - 2025 Nubificus LTD
 
 extra_css:
   - stylesheets/extra.css
+  - stylesheets/gh-style-anchor.css
 gtags:
   - G-X2S0PFR6ZY
 plugins:

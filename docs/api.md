@@ -12,6 +12,9 @@ primitive functions (per operation):
 
 ### Image classification
 
+The image classification operation, that receives an image (in the form of
+bytes) and a an optional model (as a vAccel resource) and returns the
+classification labels:
 ```C
 int vaccel_image_classification(struct vaccel_session *sess, const void *img,
 				unsigned char *out_text, unsigned char *out_imgname,
@@ -306,6 +309,9 @@ int vaccel_tflite_session_delete(struct vaccel_session *session,
 ## Torch operations
 
 ### JIT loading and forwarding
+
+The generic Torch operation, which can be used to run inference on any PyTorch
+model, having tensors as input and output:
 ```C
 int vaccel_torch_jitload_forward(struct vaccel_session *sess,
 				 const struct vaccel_resource *model,
@@ -333,6 +339,8 @@ int vaccel_torch_jitload_forward(struct vaccel_session *sess,
 
 ### Matrix-to-matrix multiplication
 
+An operation that performs the classic single-precision general matrix
+multiplication (SGEMM):
 ```C
 int vaccel_torch_sgemm(struct vaccel_session *sess,
 		       struct vaccel_torch_tensor **in_A,
