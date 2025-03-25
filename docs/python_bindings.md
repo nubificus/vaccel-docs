@@ -347,8 +347,8 @@ above.
 We will need to use a host with an NVIDIA GPU (our's is just an
 `RTX 2060 SUPER`) and jetson-inference installed. To facilitate dependency
 resolving we use a
-[container image](jetson.md#build-a-jetson-inference-container-image) on a host
-with nvidia-container-runtime installed.
+[container image](useful-docs/jetson.md#build-a-jetson-inference-container-image)
+on a host with nvidia-container-runtime installed.
 
 so, assuming our code is in `/data/code` let's spawn our container and see this
 in action:

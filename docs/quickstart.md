@@ -294,9 +294,9 @@ correctly you can just skip to
 not, you can follow the steps below to get a working environment.
 
 If a jetson-inference setup is not available you can either follow
-[this guide](jetson.md) to build the vAccel jetson plugin and install the
-prerequisites on your host machine, or you can use a container image, provided
-you can expose an NVIDIA GPU in the container.
+[this guide](useful-docs/jetson.md) to build the vAccel jetson plugin and
+install the prerequisites on your host machine, or you can use a container
+image, provided you can expose an NVIDIA GPU in the container.
 
 ### Running a Jetson-inference example
 
