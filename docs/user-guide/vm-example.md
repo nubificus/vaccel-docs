@@ -225,16 +225,12 @@ launch a new terminal and go to
 You need the following files to bootstrap a QEMU VM:
 
 ```bash
-# Get the hypervisor
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/qemu-system-x86_64
-
-# Get the firmware
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/bios-256k.bin
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/bios-microvm.bin
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/linuxboot_dma.bin
-
-# Get the kernel
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/bzImage
+# Get the latest release
+mkdir vm-artifacts
+cd vm-artifacts
+wget https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/debug/vaccel-virtio-latest-vm.tar.xz
+tar xvf vaccel-virtio-latest-vm.tar.xz
+for file in virtio-accel-*.tar.xz; do tar -xvf "$file"; done
 ```
 
 The directory structure should be like the following:
@@ -242,133 +238,126 @@ The directory structure should be like the following:
 ```console
 # tree
 .
-├── bios-256k.bin
-├── bios-microvm.bin
-├── bzImage
-├── linuxboot_dma.bin
-└── qemu-system-x86_64
+├── bzImage-6.1.128-amd64
+├── linux-6.1.128-amd64-fc.config
+├── linux-6.1.128-amd64.config
+├── rootfs.img
+├── vaccel-virtio-latest-vm.tar.xz
+├── virtio-accel-0.1.0-16-f87c69ec-fc-linux-image.tar.xz
+├── virtio-accel-0.1.0-16-f87c69ec-linux-image.tar.xz
+└── vmlinux-6.1.128-amd64-fc
 
-0 directories, 5 files
+0 directories, 8 files
 ```
+The folder must contain a rootf.img and a compressed Linux kernel image (bzImage\*) with the virtio-accel module, VirtIO plugin and vAccel pre-installed.
+We will use these images to emulate an entire system with QEMU.
 
-To spawn a QEMU VM, we have two options: PCI and nonPCI.
-
-#### Generic QEMU, PCI devices
-
+To spawn a QEMU VM, we provide a Docker image with QEMU pre-installed.
 ```bash
-qemu-system-x86_64 -nographic -nodefaults -cpu host -enable-kvm \
-        -kernel bzImage \
-        -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
-        -serial stdio \
-        -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
-        -device virtio-blk,drive=rootfs \
-        -device vhost-vsock-pci,id=vhost-vsock-pci0,guest-cid=42
+sudo docker pull harbor.nbfc.io/nubificus/qemu-vaccel:x86_64
 ```
 
-The result of the above command is, again, a login prompt:
+To run the qemu docker image:
+```bash
+cd ..
+sudo docker run  -it --privileged  --rm --mount type=bind,source="$(pwd)",destination=/data \
+	harbor.nbfc.io/nubificus/qemu-vaccel:x86_64 \
+	-r vm-artifacts/rootfs.img -k $(ls vm-artifacts/bzImage*) \
+	--drive-cache -M pc --vcpus $(nproc) \
+	--cpu max -s qemu-$(date +"%Y%m%d-%H%M%S")
+```
+
+The result of the above command is to create a VM under a docker container with pre-installed QEMU:
 
 ```console
-No EFI environment detected.
-early console in extract_kernel
-input_data: 0x00000000029e740d
-input_len: 0x0000000000a4793b
-output: 0x0000000001000000
-output_len: 0x00000000023e9c74
-kernel_total_size: 0x0000000002030000
-needed_size: 0x0000000002400000
-trampoline_32bit: 0x000000000009d000
-Physical KASLR using RDRAND RDTSC...
-Virtual KASLR using RDRAND RDTSC...
+2025.03.24-13:22:16.16 - <debug> Initializing vAccel
+2025.03.24-13:22:16.16 - <info> vAccel 0.6.1-194-19056528
+2025.03.24-13:22:16.16 - <debug> Config:
+2025.03.24-13:22:16.16 - <debug>   plugins = libvaccel-noop.so
+2025.03.24-13:22:16.16 - <debug>   log_level = debug
+2025.03.24-13:22:16.16 - <debug>   log_file = (null)
+2025.03.24-13:22:16.16 - <debug>   profiling_enabled = false
+2025.03.24-13:22:16.16 - <debug>   version_ignore = false
+2025.03.24-13:22:16.16 - <debug> Created top-level rundir: /run/user/0/vaccel/x5HdKV
+2025.03.24-13:22:16.16 - <info> Registered plugin noop 0.6.1-194-19056528
+2025.03.24-13:22:16.16 - <debug> Registered op noop from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op blas_sgemm from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op image_classify from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op image_detect from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op image_segment from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op image_pose from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op image_depth from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op exec from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tf_session_load from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tf_session_run from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tf_session_delete from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op minmax from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op fpga_arraycopy from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op fpga_vectoradd from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op fpga_parallel from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op fpga_mmult from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op exec_with_resource from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op torch_jitload_forward from plugin noo
+2025.03.24-13:22:16.16 - <debug> Registered op torch_sgemm from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op opencv from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_load from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_run from plugin noop
+2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_delete from plugin noo
+2025.03.24-13:22:16.16 - <debug> Loaded plugin noop from libvaccel-noop.so
+```
+The noop plugin is pre-exported. To use a different plugin, ensure you export it before running the application.
 
-Decompressing Linux... Parsing ELF... Performing relocations... done.
-Booting the kernel.
-[    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
-[    0.000000] Command line: console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw
-[...]
-[    1.309501] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELIN)
-[    1.312571] systemd[1]: Detected virtualization kvm.
-[    1.313443] systemd[1]: Detected architecture x86-64.
-
-Welcome to Ubuntu 20.04.2 LTS!
-
-[    1.332457] systemd[1]: Set hostname to <vaccel-guest.nubificus.co.uk>.
-[    1.376221] systemd-debug-g (75) used greatest stack depth: 14088 bytes left
-[    1.395972] systemd-sysv-ge (83) used greatest stack depth: 13976 bytes left
-[...]
-[  OK  ] Started Login Service.
-[  OK  ] Started OpenBSD Secure Shell server.
-[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
-[  OK  ] Started Dispatcher daemon for systemd-networkd.
-[  OK  ] Reached target Multi-User System.
-[  OK  ] Reached target Graphical Interface.
-         Starting Update UTMP about System Runlevel Changes...
-[  OK  ] Finished Update UTMP about System Runlevel Changes.
-
-Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
-
-vaccel-guest login:
+#### Run an application on guest
+To run a vAccel example, we first need to connect to the VM by executing the already running Docker container.
+Open a terminal and copy the \<CONTAINER ID\> the following command returns:
+```bash
+docker ps
 ```
 
-#### QEMU microVM, noPCI
+Run a bash shell inside the container by replacing \<CONTAINER ID\> with the ID the previous command return.
+```bash
+docker exec -it <CONTAINER ID> /bin/bash
+```
+
+Connect to the VM:
+```bash
+ssh localhost -p 60022
+```
+
+Let's try one of the vAccel examples, for instance image classification: `classify`.
+This small program gets an image as an input and the number of
+iterations and returns the classification tag for this image. We run the
+following:
 
 ```bash
-qemu-system-x86_64 -nographic -M microvm -nodefaults -cpu host -enable-kvm \
-        -kernel bzImage \
-        -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
-        -serial stdio \
-        -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
-        -device virtio-blk-device,drive=rootfs \
-        -device vhost-vsock-device,id=vhost-vsock,guest-cid=42
+classify /usr/local/share/vaccel/images/example.jpg 1
 ```
 
-```console
-No EFI environment detected.
-early console in extract_kernel
-input_data: 0x00000000029e740d
-input_len: 0x0000000000a4793b
-output: 0x0000000001000000
-output_len: 0x00000000023e9c74
-kernel_total_size: 0x0000000002030000
-needed_size: 0x0000000002400000
-trampoline_32bit: 0x000000000009d000
-Physical KASLR using RDRAND RDTSC...
-Virtual KASLR using RDRAND RDTSC...
+We see that the operation was successful and we got a the following expected output on guest:
 
-Decompressing Linux... Parsing ELF... Performing relocations... done.
-Booting the kernel.
-[    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
-[    0.000000] Command line: console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw  virtio_mmio.device=512@0xc0000e00:12 virtio_mmio.device=512@0xc0000c00:11
-[...]
-[    1.340120] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELIN)
-[    1.342102] systemd[1]: Detected virtualization kvm.
-[    1.342505] systemd[1]: Detected architecture x86-64.
-
-Welcome to Ubuntu 20.04.2 LTS!
-
-[    1.374255] systemd[1]: Set hostname to <vaccel-guest.nubificus.co.uk>.
-[    1.422933] systemd-veritys (84) used greatest stack depth: 14088 bytes left
-[    1.424285] systemd-cryptse (74) used greatest stack depth: 14024 bytes left
-[    1.432533] systemd-sysv-ge (83) used greatest stack depth: 13976 bytes left
-[...]
-[  OK  ] Started Login Service.
-[  OK  ] Started OpenBSD Secure Shell server.
-[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
-[  OK  ] Started Dispatcher daemon for systemd-networkd.
-[  OK  ] Reached target Multi-User System.
-[  OK  ] Reached target Graphical Interface.
-         Starting Update UTMP about System Runlevel Changes...
-[  OK  ] Finished Update UTMP about System Runlevel Changes.
-
-Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
-
-vaccel-guest login:
+```bash
+Initialized session with id: 1
+classification tags: This is a dummy classification tag!
 ```
 
-In both cases above, as with the previous hypervisors, we log in using the root
-user (user: `root`, no password).
+While on host we see the following output:
+```bash
+2025.03.24-13:26:37.24 - <debug> New rundir for session 1: /run/user/0/vaccel/x5HdKV
+2025.03.24-13:26:37.24 - <debug> Initialized session 1
+2025.03.24-13:26:37.24 - <debug> session:1 Looking for plugin implementing VACCEL_OP
+2025.03.24-13:26:37.24 - <debug> Returning func from hint plugin noop
+2025.03.24-13:26:37.24 - <debug> Found implementation in noop plugin
+2025.03.24-13:26:37.24 - <debug> [noop] Calling Image classification for session 1
+2025.03.24-13:26:37.24 - <debug> [noop] Dumping arguments for Image classification:
+2025.03.24-13:26:37.24 - <debug> [noop] model: (null)
+2025.03.24-13:26:37.24 - <debug> [noop] len_img: 79281
+2025.03.24-13:26:37.24 - <debug> [noop] len_out_text: 512
+2025.03.24-13:26:37.24 - <debug> [noop] len_out_imgname: 512
+2025.03.24-13:26:37.24 - <debug> [noop] will return a dummy result
+2025.03.24-13:26:37.24 - <debug> [noop] will return a dummy result
+2025.03.24-13:26:37.24 - <debug> Released session 1
 
-launch a new terminal and go to
-[Running the application](#running-the-application)
+```
 
 ### DragonBall
 
