@@ -37,25 +37,93 @@ commands via `ttrpc`. So we need to include the path to `libvaccel.so` in the
 `VACCEL_BACKENDS` variable. The agent currently supports three socket types:
 `UNIX`, `VSOCK`, and `TCP`. In this example, we are using the `TCP` socket type.
 
-To run the agent we use the following commands:
+To run the agent on host we use the following commands:
 
 ```bash
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-export VACCEL_AGENT_ENDPOINT=tcp://0.0.0.0:8194
-/usr/local/bin/vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+export VACCEL_PLUGINS=/usr/local/lib/x86_64-linux-gnu/libvaccel-noop.so
+export VACCEL_LOG_LEVEL=4
+export ADDRESS=tcp://127.0.0.1:65500
+
+vaccel-rpc-agent -a "${ADDRESS}"
 ```
 
 You should be presented with the following output:
-
 ```console
-# ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
-vaccel ttRPC server started. address: tcp://0.0.0.0:8194
-Server is running, press Ctrl + C to exit
+2025.03.23-13:06:34.56 - <debug> Initializing vAccel
+2025.03.23-13:06:34.56 - <info> vAccel 0.6.1-194-19056528-dirty
+2025.03.23-13:06:34.56 - <debug> Config:
+2025.03.23-13:06:34.56 - <debug>   plugins = /usr/local/lib/x86_64-linux-gnu/libvaccel-noop.so
+2025.03.23-13:06:34.56 - <debug>   log_level = debug
+2025.03.23-13:06:34.56 - <debug>   log_file = (null)
+2025.03.23-13:06:34.56 - <debug>   profiling_enabled = false
+2025.03.23-13:06:34.56 - <debug>   version_ignore = false
+2025.03.23-13:06:34.56 - <debug> Created top-level rundir: /run/user/1008/vaccel/RAIcDI
+2025.03.23-13:06:34.56 - <info> Registered plugin noop 0.6.1-194-19056528-dirty
+2025.03.23-13:06:34.56 - <debug> Registered op noop from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op blas_sgemm from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op image_classify from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op image_detect from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op image_segment from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op image_pose from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op image_depth from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op exec from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tf_session_load from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tf_session_run from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tf_session_delete from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op minmax from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op fpga_arraycopy from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op fpga_vectoradd from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op fpga_parallel from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op fpga_mmult from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op exec_with_resource from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op torch_jitload_forward from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op torch_sgemm from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op opencv from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tflite_session_load from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tflite_session_run from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op tflite_session_delete from plugin noop
+2025.03.23-13:06:34.56 - <debug> Registered op foo from plugin noop
+2025.03.23-13:06:34.56 - <debug> Loaded plugin noop from /usr/local/lib/x86_64-linux-gnu/libvaccel-noop.so
+[2025-03-23T13:06:34Z INFO  ttrpc::sync::server] server listen started
+[2025-03-23T13:06:34Z INFO  ttrpc::sync::server] server started
+[2025-03-23T13:06:34Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-03-23T13:06:34Z INFO  vaccel_rpc_agent] Listening on 'tcp://127.0.0.1:65500', press Ctrl+C to exit
 ```
 
-We have prepared the Host to receive vAccel API operations via `VSOCK`. Let's
-move to the remote Host console terminal.
+To run an application on guest, open a new terminal:
+```console
+export VACCEL_PLUGINS=/usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+export VACCEL_RPC_ADDRESS=tcp://127.0.0.1:65500
+
+classify /usr/local/share/vaccel/images/example.jpg 1
+```
+The output on guest is:
+```
+Initialized session with id: 1
+classification tags: This is a dummy classification tag!
+```
+
+While on host:
+```
+...
+2025.03.23-13:07:02.97 - <debug> New rundir for session 1: /run/user/1008/vaccel/RAIcDI/session.1
+2025.03.23-13:07:02.97 - <debug> Initialized session 1
+[2025-03-23T13:07:02Z INFO  vaccel_rpc_agent::session] Created session 1
+[2025-03-23T13:07:02Z INFO  vaccel_rpc_agent::ops::genop] Genop session 1
+2025.03.23-13:07:02.97 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
+2025.03.23-13:07:02.97 - <debug> Returning func from hint plugin noop
+2025.03.23-13:07:02.97 - <debug> Found implementation in noop plugin
+2025.03.23-13:07:02.97 - <debug> [noop] Calling Image classification for session 1
+2025.03.23-13:07:02.97 - <debug> [noop] Dumping arguments for Image classification:
+2025.03.23-13:07:02.97 - <debug> [noop] model: (null)
+2025.03.23-13:07:02.97 - <debug> [noop] len_img: 79281
+2025.03.23-13:07:02.97 - <debug> [noop] len_out_text: 512
+2025.03.23-13:07:02.97 - <debug> [noop] len_out_imgname: 512
+2025.03.23-13:07:02.97 - <debug> [noop] will return a dummy result
+2025.03.23-13:07:02.97 - <debug> [noop] will return a dummy result
+2025.03.23-13:07:03.06 - <debug> Released session 1
+[2025-03-23T13:07:03Z INFO  vaccel_rpc_agent::session] Destroyed session 1
+```
 
 ## Running the application in the remote Host
 
