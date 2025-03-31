@@ -1,0 +1,53 @@
+name: "Build and Deploy"
+
+on:
+  workflow_call:
+    inputs:
+      actions-repo:
+        type: string
+        default: 'nubificus/vaccel'
+      actions-rev:
+        type: string
+        default: 'main'
+      deploy:
+        type: boolean
+        default: false
+    secrets:
+      GIT_CLONE_PAT:
+        required: false
+
+jobs:
+  build-and-deploy:
+    name: "Build and Deploy"
+    runs-on: [base-dind-2204-amd64]
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout .github directory
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+          repository: ${{ inputs.actions-repo }}
+          ref: ${{ inputs.actions-rev }}
+
+      - name: Initialize workspace
+        uses: ./.github/actions/initialize-workspace
+        with:
+          submodules: 'false'
+          remote-actions-repo: ${{ inputs.actions-repo }}
+          token: ${{ secrets.GIT_CLONE_PAT || github.token }}
+
+      - name: Install requirements
+        run: sudo pip install -r requirements.txt
+
+      - name: Build mkdocs site
+        run: mkdocs build
+
+      - name: Deploy to Github Pages
+        if: ${{ inputs.deploy == true }}
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./site
+          git-config-name: 'github-actions[bot]'
+          git-config-email: '41898282+github-actions[bot]@users.noreply.github.com'
