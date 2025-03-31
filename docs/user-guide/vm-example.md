@@ -1,10 +1,12 @@
-# Run a vAccel application in a VM
+# Running a vAccel application on a VM
 
 ## Overview
 
-To run our code in a VM, we will have to use a virtual plugin that will handle
-the forwarding of the function call from the VM to the Host system. That said,
-we still need vAccel in the Host system to execute the forwarded call. A visual
+To run a vAccel application on a VM you have to use a suitable transport plugin.
+The plugin components will handle the forwarding of the function call from the
+guest (VM) to the host system. Since a transport plugin will essentially forward
+a vAccel function call from one vAccel instance to another, a valid vAccel
+installation is required for both the guest **and** the host system. A visual
 representation of the execution flow is shown in Figure 1.
 
 <figure>
@@ -13,544 +15,760 @@ representation of the execution flow is shown in Figure 1.
   <figcaption>Figure 1. VM application execution flow</figcaption>
 </figure>
 
-To enable this functionality, we will use the `VSOCK` plugin in the guest, and,
-as previously, the `NOOP` plugin in the Host. To intercept requests originating
-from the guest, we use the vAccel Agent, running on the Host. Section
-[Running the agent](#running-the-vaccel-agent) describes the process to run the
-agent.
+The easiest way to run a vAccel application on a VM is to use the `RPC` plugin.
+This plugin leverages the VirtIO vSock device for guest-host communication
+without requiring any kernel customization. Guest-host communication over vSock
+is handled by the the vAccel `RPC` plugin (guest) and the vAccel RPC agent
+(host). In order to use the `RPC` plugin the following components must be in
+place:
 
-First, let's bootstrap the VM.
+1. _Host:_ The vAccel RPC agent + vAccel + an acceleration plugin, to handle the
+   forwarded calls and perform the actual acceleration
+2. _Guest:_ vAccel + the `RPC` plugin, to forward the application calls
 
-## Bootstrap the VM
+## Preparing the host
 
-To bootstrap a simple VM we have the option of using any hypervisor/VMM that
-supports the `virtio-vsock` device. We have tried:
-[AWS Firecracker](#firecracker), [QEMU](#qemu),
-[Cloud Hypervisor](#cloud-hypervisor), and [Dragonball](#dragonball).
+If you have not already installed vAccel, install it
+[from binaries](binaries.md) or [from source](building.md). The rest of this
+guide assumes vAccel libraries exist in the standard library search paths.
 
-First, we will need an example kernel & rootfs. All `rust-vmm` based VMMs can
-use the same artifacts. For QEMU we will use a different kernel, but the same
-rootfs.
+### Installing vAccel RPC agent
 
-Each section below describes the steps for the respective VMM.
+vAccel RPC agent will handle the RPC requests and forward calls to the host
+vAccel instance. You can find more information on how to install the
+`vaccel-rpc-agent` binary at the
+[relevant section](binaries.md#install-vaccel-agent).
 
-The common file for all cases is the `rootfs` image. You can get it using the
-following command:
+## Preparing the VM artifacts
 
-```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
+To boot a working VM you will need at least a kernel and rootfs image. The
+`VirtIO` plugin artifacts are a good starting point for running a basic
+vAccel-enabled VM. You can get them with:
+
+```sh
+mkdir downloads
+
+# Download the artifacts.
+# You can replace `x86_64` with `aarch64` below for aarch64 VM artifacts
+wget -P downloads \
+    https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/debug/vaccel-virtio-latest-vm.tar.xz
+
+# Extract all of them in the current directory
+tar xfv downloads/vaccel-virtio-latest-vm.tar.xz
+find -name "virtio-accel*.tar.xz" -exec tar xfv {} \;
+rm virtio-accel*.tar.xz
+
+# Optionally, rename files for simplicity in the next steps
+for file in linux-*.config bzImage-* vmlinux-*; do
+    new_name=$(echo "$file" | sed -E 's/-[0-9]+\.[0-9]+\.[0-9]+-/-/')
+    mv "$file" "$new_name"
+done
+mv vmlinux-amd64-fc vmlinux
+mv bzImage-amd64 bzImage
 ```
 
-### Firecracker
+This should leave you with 3 sets of files in the current directory:
 
-You can get the binaries needed for booting a Firecracker VM using the commands
-below:
+- A `rootfs.img` containing Ubuntu with a vAccel installation
+- A `vmlinux` and a `linux-amd64-fc.config` that correspond to a basic
+  (uncompressed) Linux kernel image meant to be used with Firecracker
+- A `bzImage` and a `linux-amd64.config` that correspond to a basic (compressed)
+  Linux kernel image meant to be used with other VMMs
 
-```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config_vsock.json
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
+To use the `rootfs.img` you will need to install the `RPC` plugin:
+
+```sh
+# Mount the image
+mkdir temp
+sudo mount rootfs.img temp
+
+# Download and install the `RPC` plugin binaries.
+# You can replace `x86_64` with `aarch64` below if you used the aarch64 VM
+# artifacts
+wget -P downloads \
+    https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release/vaccel-rpc-latest-bin.tar.gz
+sudo tar xfv downloads/vaccel-rpc-latest-bin.tar.gz \
+    --strip-components=2 -C ./temp/usr/local
+
+# Comment out unnecessary fstab entries
+sudo sed -i '/9p/s/^/#/' ./temp/etc/fstab
+
+sudo umount temp
+rm -r temp
 ```
 
-We should have the following files available:
+Your current directory should look something like:
 
 ```console
-# tree .
+$ tree -L 1
 .
-├── config_vsock.json
-├── firecracker
+├── bzImage
+├── downloads
+├── linux-amd64-fc.config
+├── linux-amd64.config
 ├── rootfs.img
 └── vmlinux
 
-0 directories, 4 files
+1 directory, 5 files
 ```
 
-To launch the VM, all we have to do is run the following command (make sure you
-run as `root`):
+## Booting a vAccel-enabled VM
 
-```bash
-chmod +x firecracker
+With the required artifacts in place, you can run any of the VMMs we have
+tested: [Firecracker](#firecracker), [Cloud Hypervisor](#cloud-hypervisor) or
+[QEMU](#qemu). You will need access to `/dev/kvm` so make sure that your user is
+a member of the `kvm` group or launch the VM as the `root` user.
 
-./firecracker --api-sock fc.sock --config-file config_vsock.json
+### Firecracker
+
+You can get the latest [Firecracker](https://firecracker-microvm.github.io/)
+release from the
+[official repo](https://github.com/firecracker-microvm/firecracker/releases/latest).
+Ie. to download and extract Firecracker v1.11.0 for amd64:
+
+```sh
+wget -P downloads \
+    https://github.com/firecracker-microvm/firecracker/releases/download/v1.11.0/firecracker-v1.11.0-x86_64.tgz
+mkdir firecracker
+tar xfv downloads/firecracker-v1.11.0-x86_64.tgz \
+    --strip-components=1 -C firecracker
+
+# Optionally, link to a common filename to simplify next steps
+ln -s firecracker/firecracker-v1.11.0-x86_64 firecracker/firecracker
 ```
 
-**Note** You have to make sure that `./fc.sock` and `/tmp/vaccel.sock` are
-cleaned up before launching the VM, as firecracker will fail with the following
-errors:
+A json config is needed to boot a VM. You can download a sample config with:
+
+```sh
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config_vsock.json
+```
+
+The updated current directory should look like:
 
 ```console
-[anonymous-instance:fc_api:ERROR:src/firecracker/src/api_server_adapter.rs:163] Failed to open the API socket at: fc.sock. Check that it is not already used.
+$ tree -L 1
+.
+├── bzImage
+├── config_vsock.json
+├── downloads
+├── firecracker
+├── linux-amd64-fc.config
+├── linux-amd64.config
+├── rootfs.img
+└── vmlinux
+
+2 directories, 6 files
+```
+
+**Note** If you have already run `firecracker` or these files exist for some
+reason, ensure that `./fc.sock` and `/tmp/vaccel.sock` are cleaned up before
+trying to launch the VM:
+
+```sh
+rm fc.sock /tmp/vaccel.sock
+```
+
+If you do not, `firecracker` will fail with errors like:
+
+```console
+2025-03-30T17:56:21.871223256 [anonymous-instance:main] Running Firecracker v1.11.0
+2025-03-30T17:56:21.871393598 [anonymous-instance:main] RunWithApiError error: Failed to open the API socket at: fc.sock. Check that it is not already used.
+Error: RunWithApi(FailedToBindSocket("fc.sock"))
+2025-03-30T17:56:21.871438293 [anonymous-instance:main] Firecracker exiting with error. exit_code=1
 ```
 
 or
 
 ```console
-[anonymous-instance:main:ERROR:src/firecracker/src/main.rs:496] Configuration for VMM from one single json failed: Vsock device error: Cannot create backend for vsock device: UnixBind(Os { code: 98, kind: AddrInUse, message: "Address in use" })
+2025-03-30T17:55:39.607508767 [anonymous-instance:main] Running Firecracker v1.11.0
+2025-03-30T17:55:39.608446159 [anonymous-instance:main] RunWithApiError error: Failed to build MicroVM from Json: Configuration for VMM from one single json failed: Vsock device error: Cannot create backend for vsock device: Error binding to the host-side Unix socket: Address in use (os error 98)
+Error: RunWithApi(BuildFromJson(ParseFromJson(VsockDevice(CreateVsockBackend(UnixBind(Os { code: 98, kind: AddrInUse, message: "Address in use" }))))))
+2025-03-30T17:55:39.608572227 [anonymous-instance:main] Firecracker exiting with error. exit_code=1
 ```
 
-So make sure before launching to rm these files:
-`rm fc.sock ; rm /tmp/vaccel.sock`
-
-We should be presented with a login prompt:
+Finally, to launch the VM use:
 
 ```console
-# ./firecracker --api-sock fc.sock --config-file config_vsock.json
-[    0.000000] Linux version 5.10.0 (runner@gh-cloud-pod-t4rjg) (gcc (Ubuntu 8.4.0-3ubuntu2) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1 SMP Tue Mar 22 20:07:37 UTC 2022
-[    0.000000] Command line: console=ttyS0 reboot=k panic=1 pci=off loglevel=8 root=/dev/vda ip=172.42.0.2::172.42.0.1:255.255.255.0::eth0:off random.trust_cpu=on root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6 virtio_mmio.device=4K@0xd0002000:7
+$ ./firecracker/firecracker --api-sock fc.sock --config-file config_vsock.json
+2025-03-30T18:14:06.845979099 [anonymous-instance:main] Running Firecracker v1.11.0
+2025-03-30T18:14:06.866599137 [anonymous-instance:main] Artificially kick devices.
+2025-03-30T18:14:06.866685961 [anonymous-instance:fc_vcpu 0] Received a VcpuEvent::Resume message with immediate_exit enabled. immediate_exit was disabled before proceeding
+2025-03-30T18:14:06.866735354 [anonymous-instance:fc_vcpu 1] Received a VcpuEvent::Resume message with immediate_exit enabled. immediate_exit was disabled before proceeding
+2025-03-30T18:14:06.866773907 [anonymous-instance:main] Successfully started microvm that was configured from one single json
+[    0.000000] Linux version 6.1.132 (root@buildkitsandbox) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #1 SMP PREEMPT_DYNAMIC Sun Mar 30 00:13:16 UTC 2025
+[    0.000000] Command line: console=ttyS0 reboot=k panic=1 pci=off loglevel=8 root=/dev/vda random.trust_cpu=on root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6
 [...]
-[    1.113425] EXT4-fs (vda): mounted filesystem with ordered data mode. Opts: (null)
-[    1.114644] VFS: Mounted root (ext4 filesystem) on device 254:0.
-[    1.115459] devtmpfs: mounted
-[    1.116096] Freeing unused decrypted memory: 2036K
-[    1.116945] Freeing unused kernel image (initmem) memory: 1420K
-[    1.128668] Write protecting the kernel read-only data: 14336k
-[    1.131705] Freeing unused kernel image (text/rodata gap) memory: 2044K
-[    1.133465] Freeing unused kernel image (rodata/data gap) memory: 144K
-[    1.134869] Run /sbin/init as init process
-[    1.135755]   with arguments:
-[    1.136400]     /sbin/init
-[    1.137017]   with environment:
-[    1.137712]     HOME=/
-[    1.138225]     TERM=linux
-[    1.159918] systemd[1]: Failed to find module 'autofs4'
-[    1.163986] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
-[    1.166524] systemd[1]: Detected virtualization kvm.
-[    1.167101] systemd[1]: Detected architecture x86-64.
+[    0.448265] EXT4-fs (vda): mounted filesystem with ordered data mode. Quota mode: none.
+[    0.449018] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    0.450006] devtmpfs: mounted
+[    0.450969] Freeing unused kernel image (initmem) memory: 2476K
+[    0.451506] Write protecting the kernel read-only data: 18432k
+[    0.453970] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    0.457003] Freeing unused kernel image (rodata/data gap) memory: 1564K
+[    0.457615] Run /sbin/init as init process
+[    0.458012]   with arguments:
+[    0.458293]     /sbin/init
+[    0.458548]   with environment:
+[    0.458845]     HOME=/
+[    0.459071]     TERM=linux
+SELinux:  Could not open policy file <= /etc/selinux/targeted/policy/policy.33:  No such file or directory
+[    0.496211] systemd[1]: systemd 255.4-1ubuntu8.5 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    0.499091] systemd[1]: Detected virtualization kvm.
+[    0.499603] systemd[1]: Detected architecture x86-64.
 
-Welcome to Ubuntu 20.04.2 LTS!
+Welcome to Ubuntu 24.04.1 LTS!
 
 [...]
-[  OK  ] Finished Permit User Sessions.
-[  OK  ] Started Getty on tty1.
-[  OK  ] Started Serial Getty on ttyS0.
-[  OK  ] Reached target Login Prompts.
-[  OK  ] Started Network Name Resolution.
-[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
-[  OK  ] Reached target Host and Network Name Lookups.
-[  OK  ] Started OpenBSD Secure Shell server.
-[  OK  ] Started Login Service.
-[  OK  ] Started Dispatcher daemon for systemd-networkd.
-[  OK  ] Reached target Multi-User System.
-[  OK  ] Reached target Graphical Interface.
-         Starting Update UTMP about System Runlevel Changes...
-[  OK  ] Finished Update UTMP about System Runlevel Changes.
+[  OK  ] Started getty@tty1.service - Getty on tty1.
+[  OK  ] Started getty@tty2.service - Getty on tty2.
+[  OK  ] Started getty@tty3.service - Getty on tty3.
+[  OK  ] Started getty@tty4.service - Getty on tty4.
+[  OK  ] Started getty@tty5.service - Getty on tty5.
+[  OK  ] Started getty@tty6.service - Getty on tty6.
+[  OK  ] Started serial-getty@ttyS0.service - Serial Getty on ttyS0.
+[  OK  ] Reached target getty.target - Login Prompts.
+[  OK  ] Reached target multi-user.target - Multi-User System.
+[  OK  ] Reached target graphical.target - Graphical Interface.
+         Starting systemd-update-utmp-runle…- Record Runlevel Change in UTMP...
+[  OK  ] Finished systemd-update-utmp-runle…e - Record Runlevel Change in UTMP.
 
-Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
+Ubuntu 24.04.1 LTS localhost.localdomain ttyS0
 
-vaccel-guest login:
+localhost login:
 ```
 
-Go ahead and log in (user: `root`, no password).
-
-launch a new terminal and go to
-[Running the application](#running-the-application)
+To continue proceed to [Logging In](#logging-in).
 
 ### Cloud hypervisor
 
-For Cloud Hypervisor, the process is almost identical to Firecracker
-(`rust-vmm`-based). You can get the binaries needed for booting a Cloud
-Hypervisor VM using the commands below:
+You can get the latest [Cloud Hypervisor](https://www.cloudhypervisor.org/)
+release from the
+[official repo](https://github.com/cloud-hypervisor/cloud-hypervisor/releases/latest).
+Ie. to download v44.0 for amd64:
 
-```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/clh/cloud-hypervisor
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
+```sh
+wget -O cloud-hypervisor \
+    https://github.com/cloud-hypervisor/cloud-hypervisor/releases/download/v44.0/cloud-hypervisor-static
+chmod u+x cloud-hypervisor
 ```
 
-We should have the following files available:
+The updated current directory should look like:
 
 ```console
-# tree .
+$ tree -L 1
 .
+├── bzImage
 ├── cloud-hypervisor
+├── downloads
+├── linux-amd64-fc.config
+├── linux-amd64.config
 ├── rootfs.img
 └── vmlinux
 
-0 directories, 3 files
+1 directory, 6 files
 ```
 
-We need to make the VMM binary file executable:
-
-```bash
-chmod +x cloud-hypervisor
-```
-
-To launch the VM, all we have to do is run the following command:
-
-```bash
-./cloud-hypervisor --kernel vmlinux --disk path=rootfs.img \
-                     --memory size=1024M --cpus boot=1 \
-                   --cmdline "console=hvc0 root=/dev/vda rw" \
-                   --vsock cid=42,socket=/tmp/vaccel.sock \
-                   --console tty
-```
-
-We should be presented with a login prompt:
+To launch the VM you can use:
 
 ```console
-[    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
-[    0.000000] Command line: console=hvc0 root=/dev/vda rw
+$ ./cloud-hypervisor --kernel bzImage --disk path=rootfs.img \
+      --cpus boot=2 --memory size=4096M \
+      --cmdline "console=ttyS0 root=/dev/vda rw" \
+      --console off --serial tty \
+      --vsock cid=42,socket=/tmp/vaccel.sock
+[    0.000000] Linux version 6.1.132 (root@buildkitsandbox) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #1 SMP PREEMPT_DYNAMIC Sun Mar 30 00:13:19 UTC 2025
+[    0.000000] Command line: console=ttyS0 root=/dev/vda rw
 [...]
-[    0.448586] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
-[    0.448851] systemd[1]: Detected virtualization kvm.
-[    0.448901] systemd[1]: Detected architecture x86-64.
+[    0.582493] EXT4-fs (vda): mounted filesystem with ordered data mode. Quota mode: none.
+[    0.583313] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    0.584241] devtmpfs: mounted
+[    0.585398] Freeing unused kernel image (initmem) memory: 2484K
+[    0.586013] Write protecting the kernel read-only data: 20480k
+[    0.588863] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    0.591116] Freeing unused kernel image (rodata/data gap) memory: 1524K
+[    0.591787] Run /sbin/init as init process
+SELinux:  Could not open policy file <= /etc/selinux/targeted/policy/policy.33:  No such file or directory
+[    0.623287] systemd[1]: systemd 255.4-1ubuntu8.5 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    0.626523] systemd[1]: Detected virtualization kvm.
+[    0.627092] systemd[1]: Detected architecture x86-64.
 
-Welcome to Ubuntu 20.04.2 LTS!
+Welcome to Ubuntu 24.04.1 LTS!
 
-[    0.450357] systemd[1]: Set hostname to <vaccel-guest.nubificus.co.uk>.
-[    0.478414] systemd-fstab-g (79) used greatest stack depth: 14152 bytes left
-[    0.508385] systemd-sysv-ge (86) used greatest stack depth: 13976 bytes left
-[    0.540187] systemd[1]: system-getty.slice: unit configures an IP firewall, but the local system does not support BPF/cgroup firewalling.
 [...]
-[  OK  ] Started OpenBSD Secure Shell server.
-[  OK  ] Started Login Service.
-[  OK  ] Started Dispatcher daemon for systemd-networkd.
-[  OK  ] Reached target Multi-User System.
-[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
-[  OK  ] Reached target Graphical Interface.
-         Starting Update UTMP about System Runlevel Changes...
-[  OK  ] Finished Update UTMP about System Runlevel Changes.
+[  OK  ] Started getty@tty1.service - Getty on tty1.
+[  OK  ] Started getty@tty2.service - Getty on tty2.
+[  OK  ] Started getty@tty3.service - Getty on tty3.
+[  OK  ] Started getty@tty4.service - Getty on tty4.
+[  OK  ] Started getty@tty5.service - Getty on tty5.
+[  OK  ] Started getty@tty6.service - Getty on tty6.
+[  OK  ] Started serial-getty@ttyS0.service - Serial Getty on ttyS0.
+[  OK  ] Reached target getty.target - Login Prompts.
+[  OK  ] Reached target multi-user.target - Multi-User System.
+[  OK  ] Reached target graphical.target - Graphical Interface.
+         Starting systemd-update-utmp-runle…- Record Runlevel Change in UTMP...
+[  OK  ] Finished systemd-update-utmp-runle…e - Record Runlevel Change in UTMP.
 
-Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk hvc0
+Ubuntu 24.04.1 LTS localhost.localdomain ttyS0
 
-vaccel-guest login:
+localhost login:
 ```
 
-Go ahead and log in (user: `root`, no password).
-
-launch a new terminal and go to
-[Running the application](#running-the-application)
+To continue proceed to [Logging In](#logging-in).
 
 ### QEMU
 
-You need the following files to bootstrap a QEMU VM:
-
-```bash
-# Get the latest release
-mkdir vm-artifacts
-cd vm-artifacts
-wget https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/debug/vaccel-virtio-latest-vm.tar.xz
-tar xvf vaccel-virtio-latest-vm.tar.xz
-for file in virtio-accel-*.tar.xz; do tar -xvf "$file"; done
-```
-
-The directory structure should be like the following:
-
-```console
-# tree
-.
-├── bzImage-6.1.128-amd64
-├── linux-6.1.128-amd64-fc.config
-├── linux-6.1.128-amd64.config
-├── rootfs.img
-├── vaccel-virtio-latest-vm.tar.xz
-├── virtio-accel-0.1.0-16-f87c69ec-fc-linux-image.tar.xz
-├── virtio-accel-0.1.0-16-f87c69ec-linux-image.tar.xz
-└── vmlinux-6.1.128-amd64-fc
-
-0 directories, 8 files
-```
-The folder must contain a rootf.img and a compressed Linux kernel image (bzImage\*) with the virtio-accel module, VirtIO plugin and vAccel pre-installed.
-We will use these images to emulate an entire system with QEMU.
-
-To spawn a QEMU VM, we provide a Docker image with QEMU pre-installed.
-```bash
-sudo docker pull harbor.nbfc.io/nubificus/qemu-vaccel:x86_64
-```
-
-To run the qemu docker image:
-```bash
-cd ..
-sudo docker run  -it --privileged  --rm --mount type=bind,source="$(pwd)",destination=/data \
-	harbor.nbfc.io/nubificus/qemu-vaccel:x86_64 \
-	-r vm-artifacts/rootfs.img -k $(ls vm-artifacts/bzImage*) \
-	--drive-cache -M pc --vcpus $(nproc) \
-	--cpu max -s qemu-$(date +"%Y%m%d-%H%M%S")
-```
-
-The result of the above command is to create a VM under a docker container with pre-installed QEMU:
-
-```console
-2025.03.24-13:22:16.16 - <debug> Initializing vAccel
-2025.03.24-13:22:16.16 - <info> vAccel 0.6.1-194-19056528
-2025.03.24-13:22:16.16 - <debug> Config:
-2025.03.24-13:22:16.16 - <debug>   plugins = libvaccel-noop.so
-2025.03.24-13:22:16.16 - <debug>   log_level = debug
-2025.03.24-13:22:16.16 - <debug>   log_file = (null)
-2025.03.24-13:22:16.16 - <debug>   profiling_enabled = false
-2025.03.24-13:22:16.16 - <debug>   version_ignore = false
-2025.03.24-13:22:16.16 - <debug> Created top-level rundir: /run/user/0/vaccel/x5HdKV
-2025.03.24-13:22:16.16 - <info> Registered plugin noop 0.6.1-194-19056528
-2025.03.24-13:22:16.16 - <debug> Registered op noop from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op blas_sgemm from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op image_classify from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op image_detect from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op image_segment from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op image_pose from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op image_depth from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op exec from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tf_session_load from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tf_session_run from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tf_session_delete from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op minmax from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op fpga_arraycopy from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op fpga_vectoradd from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op fpga_parallel from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op fpga_mmult from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op exec_with_resource from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op torch_jitload_forward from plugin noo
-2025.03.24-13:22:16.16 - <debug> Registered op torch_sgemm from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op opencv from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_load from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_run from plugin noop
-2025.03.24-13:22:16.16 - <debug> Registered op tflite_session_delete from plugin noo
-2025.03.24-13:22:16.16 - <debug> Loaded plugin noop from libvaccel-noop.so
-```
-The noop plugin is pre-exported. To use a different plugin, ensure you export it before running the application.
-
-#### Run an application on guest
-To run a vAccel example, we first need to connect to the VM by executing the already running Docker container.
-Open a terminal and copy the \<CONTAINER ID\> the following command returns:
-```bash
-docker ps
-```
-
-Run a bash shell inside the container by replacing \<CONTAINER ID\> with the ID the previous command return.
-```bash
-docker exec -it <CONTAINER ID> /bin/bash
-```
-
-Connect to the VM:
-```bash
-ssh localhost -p 60022
-```
-
-Let's try one of the vAccel examples, for instance image classification: `classify`.
-This small program gets an image as an input and the number of
-iterations and returns the classification tag for this image. We run the
-following:
-
-```bash
-classify /usr/local/share/vaccel/images/example.jpg 1
-```
-
-We see that the operation was successful and we got a the following expected output on guest:
-
-```bash
-Initialized session with id: 1
-classification tags: This is a dummy classification tag!
-```
-
-While on host we see the following output:
-```bash
-2025.03.24-13:26:37.24 - <debug> New rundir for session 1: /run/user/0/vaccel/x5HdKV
-2025.03.24-13:26:37.24 - <debug> Initialized session 1
-2025.03.24-13:26:37.24 - <debug> session:1 Looking for plugin implementing VACCEL_OP
-2025.03.24-13:26:37.24 - <debug> Returning func from hint plugin noop
-2025.03.24-13:26:37.24 - <debug> Found implementation in noop plugin
-2025.03.24-13:26:37.24 - <debug> [noop] Calling Image classification for session 1
-2025.03.24-13:26:37.24 - <debug> [noop] Dumping arguments for Image classification:
-2025.03.24-13:26:37.24 - <debug> [noop] model: (null)
-2025.03.24-13:26:37.24 - <debug> [noop] len_img: 79281
-2025.03.24-13:26:37.24 - <debug> [noop] len_out_text: 512
-2025.03.24-13:26:37.24 - <debug> [noop] len_out_imgname: 512
-2025.03.24-13:26:37.24 - <debug> [noop] will return a dummy result
-2025.03.24-13:26:37.24 - <debug> [noop] will return a dummy result
-2025.03.24-13:26:37.24 - <debug> Released session 1
-
-```
-
-### DragonBall
-
-To launch a Dragonball VM, we will use a nifty
-[tool](https://github.com/openanolis/dbs-cli) developed by the OpenAnolis
-people, `dbs-cli`. This tool provides a CLI to launch the Dragonball hypervisor
-and interact with it.
-
-The files we need are:
-
-```bash
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/dbs/dbs-cli
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
-```
-
-We should have the following directory structure:
-
-```console
-# tree
-.
-├── dbs-cli
-├── rootfs.img
-└── vmlinux
-
-0 directories, 3 files
-```
-
-The command to spawn a Dragonball VM is shown below:
-
-```bash
-# make the VMM binary executable
-chmod +x dbs-cli
-
-# launch the VM
-./dbs-cli --kernel-path vmlinux --rootfs rootfs.img \
-          --boot-args "console=ttyS0 pci=off root=/dev/vda rw" \
-          --vsock /tmp/vaccel.sock
-```
-
-The logs of the VM are similar to the above cases:
-
-```console
-[    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
-[    0.000000] Command line: console=ttyS0 tty0 reboot=k debug panic=1 pci=off root=/dev/vda virtio_mmio.device=8K@0xc0000000:5 virtio_mmio.device=8K@0xc0002000:5
-[...]
-[    1.977652] systemd[1]: Mounting cgroup to /sys/fs/cgroup/cpu,cpuacct of type cgroup with options cpu,cpuacct.
-[    1.978731] systemd[1]: Mounting cgroup to /sys/fs/cgroup/pids of type cgroup with options pids.
-[    1.979455] systemd[1]: Mounting cgroup to /sys/fs/cgroup/memory of type cgroup with options memory.
-[    1.980219] systemd[1]: Mounting cgroup to /sys/fs/cgroup/cpuset of type cgroup with options cpuset.
-
-Welcome to Ubuntu 20.04.2 LTS!
-
-[    2.000846] systemd[1]: Set hostname to <vaccel-guest.nubificus.co.uk>.
-[    2.002803] systemd[1]: Successfully added address 127.0.0.1 to loopback interface
-[    2.004233] systemd[1]: Successfully added address ::1 to loopback interface
-[    2.005430] systemd[1]: Successfully brought loopback interface up
-[...]
-[  OK  ] Started Login Service.
-[  OK  ] Started OpenBSD Secure Shell server.
-[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
-[  OK  ] Started Dispatcher daemon for systemd-networkd.
-[  OK  ] Reached target Multi-User System.
-[  OK  ] Reached target Graphical Interface.
-         Starting Update UTMP about System Runlevel Changes...
-[  OK  ] Finished Update UTMP about System Runlevel Changes.
-
-Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
-
-vaccel-guest login:
-```
-
-Again, as with the previous hypervisors, we log in using the root user (user:
-`root`, no password).
-
-launch a new terminal and go to
-[Running the application](#running-the-application)
-
-### Running the application
-
-To run the application we first need to provide the backend where the vAccel API
-operations will be handled. This is done in the guest via the `VSOCK` plugin and
-in the Host via the `vaccel-agent`. We have setup the guest part above for each
-of the hypervisors supported. Let's now move to the agent part.
-
-#### Running the vAccel agent
-
-The `vaccel-agent` is just another vAccel application. It consumes the vAccel
-API like any other app, with the additional value of being able to receive
-commands via `ttrpc`. So we need to include the path to `libvaccel.so` in the
-`LD_LIBRARY_PATH` variable, and specify the plugin we want to use via the
-`VACCEL_BACKENDS` variable. The agent currently supports three socket types:
-`UNIX`, `VSOCK`, and `TCP`.
-
-##### Installing the vAccel agent
-
-If you haven't already installed the vaccel-agent binary, follow the
-instructions in the [relevant section](binaries.md#install-vaccel-agent).
-
-In short, for `x86_64`:
+To install [QEMU](https://www.qemu.org/) you can use your distribution's package
+manager:
 
 ```sh
-wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb
-dpkg -i vaccelrt-agent-0.3.7-Linux.deb
+sudo apt install qemu
 ```
 
-To run the agent we need to set the plugin using the `VACCEL_BACKENDS` variable
-and the endpoint. Use the following commands:
+QEMU can emulate different machines. We will show how to boot with two common
+machine options.
 
-```bash
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-export VACCEL_AGENT_ENDPOINT=vsock://42:2048
-./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
-```
+#### QEMU with PCI support
 
-You should be presented with the following output:
+If no machine is provided, QEMU will emulate the default machine depending on
+the platform architecture. For x86_64 this is a machine with PCI support.
+
+To launch a QEMU VM with PCI support use:
 
 ```console
-# ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
-vaccel ttRPC server started. address: vsock://40:2048
-Server is running, press Ctrl + C to exit
+$ qemu-system-x86_64 -M pc,accel=kvm -cpu host \
+      -nographic -vga none -nic none \
+      -smp 2 -m 4096 \
+      -kernel bzImage \
+      -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
+      -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
+      -device virtio-blk,drive=rootfs \
+      -device vhost-vsock-pci,id=vhost-vsock-pci0,guest-cid=42
+SeaBIOS (version rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org)
+Booting from ROM..
+early console in extract_kernel
+input_data: 0x00000000024c52c4
+input_len: 0x00000000007949f9
+output: 0x0000000001000000
+output_len: 0x0000000001c1ceb8
+kernel_total_size: 0x0000000001a2c000
+needed_size: 0x0000000001e00000
+trampoline_32bit: 0x0000000000000000
+Physical KASLR using RDRAND RDTSC...
+Virtual KASLR using RDRAND RDTSC...
+
+Decompressing Linux... Parsing ELF... Performing relocations... done.
+Booting the kernel (entry_offset: 0x0000000000000000).
+[    0.000000] Linux version 6.1.132 (root@buildkitsandbox) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #1 SMP PREEMPT_DYNAMIC Sun Mar 30 00:13:19 UTC 2025
+[    0.000000] Command line: console=ttyS0 root=/dev/vda rw
+[...]
+[    0.582493] EXT4-fs (vda): mounted filesystem with ordered data mode. Quota mode: none.
+[    0.583313] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    0.584241] devtmpfs: mounted
+[    0.585398] Freeing unused kernel image (initmem) memory: 2484K
+[    0.586013] Write protecting the kernel read-only data: 20480k
+[    0.588863] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    0.591116] Freeing unused kernel image (rodata/data gap) memory: 1524K
+[    0.591787] Run /sbin/init as init process
+SELinux:  Could not open policy file <= /etc/selinux/targeted/policy/policy.33:  No such file or directory
+[    0.623287] systemd[1]: systemd 255.4-1ubuntu8.5 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 -PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON +UTMP +SYSVINIT default-hierarchy=unified)
+[    0.626523] systemd[1]: Detected virtualization kvm.
+[    0.627092] systemd[1]: Detected architecture x86-64.
+
+Welcome to Ubuntu 24.04.1 LTS!
+
+[...]
+[  OK  ] Started getty@tty1.service - Getty on tty1.
+[  OK  ] Started getty@tty2.service - Getty on tty2.
+[  OK  ] Started getty@tty3.service - Getty on tty3.
+[  OK  ] Started getty@tty4.service - Getty on tty4.
+[  OK  ] Started getty@tty5.service - Getty on tty5.
+[  OK  ] Started getty@tty6.service - Getty on tty6.
+[  OK  ] Started serial-getty@ttyS0.service - Serial Getty on ttyS0.
+[  OK  ] Reached target getty.target - Login Prompts.
+[  OK  ] Reached target multi-user.target - Multi-User System.
+[  OK  ] Reached target graphical.target - Graphical Interface.
+         Starting systemd-update-utmp-runle…- Record Runlevel Change in UTMP...
+[  OK  ] Finished systemd-update-utmp-runle…e - Record Runlevel Change in UTMP.
+
+Ubuntu 24.04.1 LTS localhost.localdomain ttyS0
+
+localhost login:
 ```
 
-You could also enable `debug` by setting the env variable `VACCEL_DEBUG=4`.
+To continue proceed to [Logging In](#logging-in).
 
-**Note**: _Depending on which VM case you consider, you might need to edit
-`$VACCEL_AGENT_ENDPOINT`. For example, for the all `rust-vmm` clones
-(Firecracker, Cloud hypervisor, Dragonball, etc.), the `VACCEL_AGENT_ENDPOINT`
-variable corresponds to the `vsock` socket file specified in the definition of
-the vsock device in `config.json`. In our example this is `/tmp/vaccel.sock`.
-Since the `vsock` implementation of these VMMs assumes the `vsock` port as a
-postfix to the socket file, the value of the variable is:_
+#### QEMU microVM, noPCI
 
-```bash
-VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
-```
+Current versions of QEMU provide a microVM machine with no PCI support, meant to
+be used as a lightweight alternative to the default machine. This target aims to
+provide and experience similar to Firecracker.
 
-We have prepared the Host to receive vAccel API operations via `VSOCK`. Let's
-move to the guest console terminal.
-
-#### Running the application in the guest
-
-In the guest, we will be running a vAccel application; so we need to specify the
-path to `libvaccel.so` and the plugin to be used. In the pre-built rootfs we
-have included the `VSOCK` plugin, at `/opt/vaccel/lib/libvaccel-vsock.so`. All
-the env vars are set, except for the `VACCEL_VSOCK` parameter, which specifies
-the endpoint of the agent. Its default value is `vsock://2:2048`. Since we've
-setup the agent to listen to port `2048`, we're good to go.
-
-**Note**: _The Host's default `vsock_id` is `2`, that's why the guest only needs
-to set up the port (`2048`)._
-
-The vAccel examples are already in the `rootfs` image, installed at
-`/opt/vaccel/bin`. So the only thing needed is to execute the example:
+To launch a QEMU microVM (with no PCI support) use:
 
 ```console
-# /opt/vaccel/bin/classify /opt/vaccel/share/images/dog_1.jpg 1
+$ qemu-system-x86_64 -M microvm,accel=kvm -cpu host \
+      -nographic -vga none -nic none \
+      -smp 2 -m 4096 \
+      -kernel bzImage \
+      -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
+      -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
+      -device virtio-blk-device,drive=rootfs \
+      -device vhost-vsock-device,id=vhost-vsock,guest-cid=42
+SeaBIOS (version rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org)
+Booting from ROM..
+early console in extract_kernel
+input_data: 0x00000000024c52c4
+input_len: 0x00000000007949f9
+output: 0x0000000001000000
+output_len: 0x0000000001c1ceb8
+kernel_total_size: 0x0000000001a2c000
+needed_size: 0x0000000001e00000
+trampoline_32bit: 0x0000000000000000
+Physical KASLR using RDRAND RDTSC...
+Virtual KASLR using RDRAND RDTSC...
+
+Decompressing Linux... Parsing ELF... Performing relocations... done.
+Booting the kernel (entry_offset: 0x0000000000000000).
+[    0.000000] Linux version 6.1.132 (root@buildkitsandbox) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #1 SMP PREEMPT_DYNAMIC Sun Mar 30 00:13:19 UTC 2025
+[    0.000000] Command line: console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw
+[...]
+[    0.203882] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    0.205666] devtmpfs: mounted
+[    0.206459] Freeing unused kernel image (initmem) memory: 2484K
+[    0.207052] Write protecting the kernel read-only data: 20480k
+[    0.208129] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    0.209050] Freeing unused kernel image (rodata/data gap) memory: 1524K
+[    0.209702] Run /sbin/init as init process
+SELinux:  Could not open policy file <= /etc/selinux/targeted/policy/policy.33:  No such file or directory
+[    0.316715] systemd[1]: systemd 255.4-1ubuntu8.5 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMAC)
+[    0.319763] systemd[1]: Detected virtualization kvm.
+[    0.320270] systemd[1]: Detected architecture x86-64.
+
+Welcome to Ubuntu 24.04.1 LTS!
+
+[...]
+[  OK  ] Started getty@tty1.service - Getty on tty1.
+[  OK  ] Started getty@tty2.service - Getty on tty2.
+[  OK  ] Started getty@tty3.service - Getty on tty3.
+[  OK  ] Started getty@tty4.service - Getty on tty4.
+[  OK  ] Started getty@tty5.service - Getty on tty5.
+[  OK  ] Started getty@tty6.service - Getty on tty6.
+[  OK  ] Started serial-getty@ttyS0.service - Serial Getty on ttyS0.
+[  OK  ] Reached target getty.target - Login Prompts.
+[  OK  ] Reached target multi-user.target - Multi-User System.
+[  OK  ] Reached target graphical.target - Graphical Interface.
+         Starting systemd-update-utmp-runle…- Record Runlevel Change in UTMP...
+[  OK  ] Finished systemd-update-utmp-runle…e - Record Runlevel Change in UTMP.
+
+Ubuntu 24.04.1 LTS localhost.localdomain ttyS0
+
+localhost login:
+```
+
+### Logging in
+
+Since the provided image is meant for testing purposes the default user is
+`root`. To log in use `root` (no password required). You should be greeted with:
+
+```console
+Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.1.132 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+root@localhost:~#
+```
+
+You can verify all required libraries are installed by looking at
+`/usr/local/lib/x86_64-linux-gnu`:
+
+```console
+# ls /usr/local/lib/x86_64-linux-gnu/
+libmytestlib.so            libvaccel-noop.so.0        libvaccel-virtio.so
+libvaccel-exec.so          libvaccel-noop.so.0.6.1    libvaccel-virtio.so.0
+libvaccel-exec.so.0        libvaccel-python.so        libvaccel-virtio.so.0.1.0
+libvaccel-exec.so.0.6.1    libvaccel-python.so.0      libvaccel.so
+libvaccel-mbench.so        libvaccel-python.so.0.6.1  libvaccel.so.0
+libvaccel-mbench.so.0      libvaccel-rpc.so           libvaccel.so.0.6.1
+libvaccel-mbench.so.0.6.1  libvaccel-rpc.so.0         pkgconfig
+libvaccel-noop.so          libvaccel-rpc.so.0.1.0
+```
+
+## Running the vAccel RPC agent
+
+Before running a vAccel application on the guest, you need to first start the
+vAccel RPC agent. Since the VM console should be open in the current terminal by
+now, you will have to open a new terminal to execute the agent.
+
+Depending on the VMM being used, you have to set a valid RPC address for the
+agent. Firecracker and Cloud Hypervisor use a "hybrid" `unix` socket for vSock
+communication, while QEMU expects a proper `vsock` socket.
+
+To use `vaccel-rpc-agent` for the above Firecracker/Cloud Hypervisor setups use:
+
+```sh
+export VACCEL_RPC_ADDRESS="unix:///tmp/vaccel.sock_2048"
+```
+
+where `/tmp/vaccel.sock` is the VMM's vsock socket we have configured in the
+previous steps.
+
+For QEMU, the variable should be set to:
+
+```sh
+export VACCEL_RPC_ADDRESS="vsock://2:2048"
+```
+
+where `2` is the well-known vSock address of the host.
+
+For both cases, `2048` is the port number we have configured in the previous
+steps for the VMM.
+
+Since the agent will instantiate the host vAccel, you also need to configure
+vAccel in this step. You can configure vAccel by setting the related environment
+variables - as you would do for a plugin - or you can use the
+`vaccel-rpc-agent`'s CLI (preferred).
+
+Since the 'NoOp' plugin is included with vAccel, we will use this as the
+acceleration plugin for demonstration purposes.
+
+To start a `vaccel-rpc-agent` with the vAccel `NoOp` plugin use:
+
+```console
+$ VACCEL_BOOTSTRAP_ENABLED=0 vaccel-rpc-agent \
+      -a "${VACCEL_RPC_ADDRESS}" \
+      --vaccel-config "plugins=libvaccel-noop.so,log_level=4"
+2025.04.08-19:34:05.40 - <debug> Initializing vAccel
+2025.04.08-19:34:05.40 - <info> vAccel 0.6.1-194-19056528
+2025.04.08-19:34:05.40 - <debug> Config:
+2025.04.08-19:34:05.40 - <debug>   plugins = libvaccel-noop.so
+2025.04.08-19:34:05.40 - <debug>   log_level = debug
+2025.04.08-19:34:05.40 - <debug>   log_file = (null)
+2025.04.08-19:34:05.40 - <debug>   profiling_enabled = false
+2025.04.08-19:34:05.40 - <debug>   version_ignore = false
+2025.04.08-19:34:05.40 - <debug> Created top-level rundir: /run/user/1002/vaccel/j1Kwrv
+2025.04.08-19:34:05.40 - <info> Registered plugin noop 0.6.1-194-19056528
+2025.04.08-19:34:05.40 - <debug> Registered op noop from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op blas_sgemm from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op image_classify from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op image_detect from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op image_segment from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op image_pose from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op image_depth from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op exec from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tf_session_load from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tf_session_run from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tf_session_delete from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op minmax from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op fpga_arraycopy from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op fpga_vectoradd from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op fpga_parallel from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op fpga_mmult from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op exec_with_resource from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op torch_jitload_forward from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op torch_sgemm from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op opencv from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tflite_session_load from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tflite_session_run from plugin noop
+2025.04.08-19:34:05.40 - <debug> Registered op tflite_session_delete from plugin noop
+2025.04.08-19:34:05.40 - <debug> Loaded plugin noop from libvaccel-noop.so
+[2025-04-08T19:34:05Z INFO  ttrpc::sync::server] server listen started
+[2025-04-08T19:34:05Z INFO  ttrpc::sync::server] server started
+[2025-04-08T19:34:05Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-04-08T19:34:05Z INFO  vaccel_rpc_agent] Listening on 'vsock://2:2048', press Ctrl+C to exit
+```
+
+## Running the application on the guest
+
+With the vAccel RPC agent running, you are ready to execute the application in
+the VM.
+
+Switching back to the initial terminal, you need to first configure the RPC
+address that will be used by the plugin:
+
+```sh
+export VACCEL_RPC_ADDRESS="vsock://2:2048"
+```
+
+where `2` is the well-known vSock address of the host and this address is common
+for all the VMMs we have setup above.
+
+Next, you have to configure vAccel to use the plugin:
+
+```sh
+export VACCEL_PLUGINS=libvaccel-rpc.so
+```
+
+Optionally, to get debug output:
+
+```sh
+export VACCEL_LOG_LEVEL=4
+```
+
+Finally, you can run an image classification example with:
+
+```console
+# classify /usr/local/share/vaccel/images/example.jpg 1
+2025.04.08-19:34:48.28 - <debug> Initializing vAccel
+2025.04.08-19:34:48.28 - <info> vAccel 0.6.1-194-19056528
+2025.04.08-19:34:48.28 - <debug> Config:
+2025.04.08-19:34:48.28 - <debug>   plugins = libvaccel-rpc.so
+2025.04.08-19:34:48.28 - <debug>   log_level = debug
+2025.04.08-19:34:48.28 - <debug>   log_file = (null)
+2025.04.08-19:34:48.28 - <debug>   profiling_enabled = false
+2025.04.08-19:34:48.28 - <debug>   version_ignore = false
+2025.04.08-19:34:48.28 - <debug> Created top-level rundir: /run/user/0/vaccel/JE4UiS
+2025.04.08-19:34:48.30 - <info> Registered plugin rpc 0.1.0-36-bbffdae6
+2025.04.08-19:34:48.30 - <debug> rpc is a VirtIO module
+2025.04.08-19:34:48.30 - <debug> Registered op blas_sgemm from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op image_classify from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op image_detect from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op image_segment from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op image_depth from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op image_pose from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tflite_session_load from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tflite_session_delete from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tflite_session_run from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op minmax from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op fpga_arraycopy from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op fpga_mmult from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op fpga_vectoradd from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op fpga_parallel from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op exec from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op exec_with_resource from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op torch_jitload_forward from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op opencv from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tf_session_load from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tf_session_delete from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Registered op tf_session_run from plugin rpc
+2025.04.08-19:34:48.30 - <debug> Loaded plugin rpc from libvaccel-rpc.so
+2025.04.08-19:34:48.31 - <debug> [rpc] Initializing new remote session
+2025.04.08-19:34:48.34 - <debug> [rpc] Initialized remote session 1
+2025.04.08-19:34:48.34 - <debug> New rundir for session 1: /run/user/0/vaccel/JE4UiS/session.1
+2025.04.08-19:34:48.34 - <debug> Initialized session 1 with remote (id: 1)
 Initialized session with id: 1
-Image size: 54372B
+2025.04.08-19:34:48.34 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
+2025.04.08-19:34:48.34 - <debug> Returning func from hint plugin rpc
+2025.04.08-19:34:48.34 - <debug> Found implementation in rpc plugin
 classification tags: This is a dummy classification tag!
+classification imagename: This is a dummy imgname!
+2025.04.08-19:34:48.35 - <debug> [rpc] Releasing remote session 1
+2025.04.08-19:34:48.35 - <debug> Released session 1
+2025.04.08-19:34:48.35 - <debug> Cleaning up vAccel
+2025.04.08-19:34:48.35 - <debug> Cleaning up sessions
+2025.04.08-19:34:48.35 - <debug> Cleaning up resources
+2025.04.08-19:34:48.35 - <debug> Cleaning up plugins
+2025.04.08-19:34:48.35 - <debug> Unregistered plugin rpc
 ```
 
-We got the same output as with the
-[native execution case](build-run-app.md#running-a-vaccel-application). Well,
-almost the same; what we missed is the plugin output. See the native execution
-case below:
+In the other terminal, where the vAccel RPC agent is running, you should also
+see the corresponding host vAccel output:
 
 ```console
-$ /opt/vaccel/bin/classify images/example.jpg 1
+2025.04.08-19:34:48.36 - <debug> New rundir for session 1: /run/user/1002/vaccel/j1Kwrv/session.1
+2025.04.08-19:34:48.36 - <debug> Initialized session 1
+[2025-04-08T19:34:48Z INFO  vaccel_rpc_agent::session] Created session 1
+[2025-04-08T19:34:48Z INFO  vaccel_rpc_agent::ops::genop] Genop session 1
+2025.04.08-19:34:48.37 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
+2025.04.08-19:34:48.37 - <debug> Returning func from hint plugin noop
+2025.04.08-19:34:48.37 - <debug> Found implementation in noop plugin
+2025.04.08-19:34:48.37 - <debug> [noop] Calling Image classification for session 1
+2025.04.08-19:34:48.37 - <debug> [noop] Dumping arguments for Image classification:
+2025.04.08-19:34:48.37 - <debug> [noop] model: (null)
+2025.04.08-19:34:48.37 - <debug> [noop] len_img: 79281
+2025.04.08-19:34:48.37 - <debug> [noop] len_out_text: 512
+2025.04.08-19:34:48.37 - <debug> [noop] len_out_imgname: 512
+2025.04.08-19:34:48.37 - <debug> [noop] will return a dummy result
+2025.04.08-19:34:48.37 - <debug> [noop] will return a dummy result
+2025.04.08-19:34:48.38 - <debug> Released session 1
+[2025-04-08T19:34:48Z INFO  vaccel_rpc_agent::session] Destroyed session 1
+```
+
+If you compare the application output with the
+[native execution case](build-run-app.md#running-a-vaccel-application) ignoring
+the vAccel log messages, you will notice that it is identical:
+
+```console
+# classify /usr/local/share/vaccel/images/example.jpg 1
+...
 Initialized session with id: 1
-Image size: 79281B
-[noop] Calling Image classification for session 1
-[noop] Dumping arguments for Image classification:
-[noop] len_img: 79281
-[noop] will return a dummy result
+...
 classification tags: This is a dummy classification tag!
+classification imagename: This is a dummy imgname!
+...
 ```
 
-The `[noop]` lines are not present when running from the VM. This is because the
-plugin is executing in the host. We only get the `classification tags:` result
-back. If you look at the other terminal, where the agent is running, you should
-see the following:
+The debug log messages reveal that in the native execution case the `NoOp`
+plugin is used directly:
 
 ```console
-Created session 1
-session:VaccelId { inner: Some(1) } Image classification
-[noop] Calling Image classification for session 1
-[noop] Dumping arguments for Image classification:
-[noop] len_img: 54372
-[noop] will return a dummy result
-Destroying session VaccelId { inner: Some(1) }
-Destroyed session 1
+# FIXME
 ```
 
-Aha! the plugin output is there (which is expected, since the plugin is running
-on the Host).
+whereas in the VM case, the `RPC` plugin is used on the guest:
+
+```console
+# classify /usr/local/share/vaccel/images/example.jpg 1
+2025.04.08-19:34:48.28 - <debug> Initializing vAccel
+2025.04.08-19:34:48.28 - <info> vAccel 0.6.1-194-19056528
+2025.04.08-19:34:48.28 - <debug> Config:
+2025.04.08-19:34:48.28 - <debug>   plugins = libvaccel-rpc.so
+2025.04.08-19:34:48.28 - <debug>   log_level = debug
+2025.04.08-19:34:48.28 - <debug>   log_file = (null)
+2025.04.08-19:34:48.28 - <debug>   profiling_enabled = false
+2025.04.08-19:34:48.28 - <debug>   version_ignore = false
+2025.04.08-19:34:48.28 - <debug> Created top-level rundir: /run/user/0/vaccel/JE4UiS
+2025.04.08-19:34:48.30 - <info> Registered plugin rpc 0.1.0-36-bbffdae6
+...
+2025.04.08-19:34:48.30 - <debug> Loaded plugin rpc from libvaccel-rpc.so
+2025.04.08-19:34:48.31 - <debug> [rpc] Initializing new remote session
+2025.04.08-19:34:48.34 - <debug> [rpc] Initialized remote session 1
+...
+2025.04.08-19:34:48.34 - <debug> Returning func from hint plugin rpc
+2025.04.08-19:34:48.34 - <debug> Found implementation in rpc plugin
+...
+2025.04.08-19:34:48.35 - <debug> [rpc] Releasing remote session 1
+...
+```
+
+while the `NoOp` plugin is used on the host:
+
+```console
+2025.04.08-19:34:05.40 - <debug> Initializing vAccel
+2025.04.08-19:34:05.40 - <info> vAccel 0.6.1-194-19056528
+2025.04.08-19:34:05.40 - <debug> Config:
+2025.04.08-19:34:05.40 - <debug>   plugins = libvaccel-noop.so
+2025.04.08-19:34:05.40 - <debug>   log_level = debug
+2025.04.08-19:34:05.40 - <debug>   log_file = (null)
+2025.04.08-19:34:05.40 - <debug>   profiling_enabled = false
+2025.04.08-19:34:05.40 - <debug>   version_ignore = false
+2025.04.08-19:34:05.40 - <debug> Created top-level rundir: /run/user/1002/vaccel/j1Kwrv
+2025.04.08-19:34:05.40 - <info> Registered plugin noop 0.6.1-194-19056528
+...
+2025.04.08-19:34:05.40 - <debug> Loaded plugin noop from libvaccel-noop.so
+...
+2025.04.08-19:34:48.37 - <debug> Returning func from hint plugin noop
+2025.04.08-19:34:48.37 - <debug> Found implementation in noop plugin
+2025.04.08-19:34:48.37 - <debug> [noop] Calling Image classification for session 1
+2025.04.08-19:34:48.37 - <debug> [noop] Dumping arguments for Image classification:
+2025.04.08-19:34:48.37 - <debug> [noop] model: (null)
+2025.04.08-19:34:48.37 - <debug> [noop] len_img: 79281
+2025.04.08-19:34:48.37 - <debug> [noop] len_out_text: 512
+2025.04.08-19:34:48.37 - <debug> [noop] len_out_imgname: 512
+2025.04.08-19:34:48.37 - <debug> [noop] will return a dummy result
+2025.04.08-19:34:48.37 - <debug> [noop] will return a dummy result
+...
+```
