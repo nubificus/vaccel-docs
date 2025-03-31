@@ -1,0 +1,39 @@
+name: Build and Verify
+
+on:
+  pull_request:
+    branches: ["main"]
+    types: [synchronize, labeled]
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-build:
+    name: Verify Build
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'ok-to-test') }}
+    uses: ./.github/workflows/verify-build.yml
+    secrets: inherit
+
+  verify-links:
+    name: Verify Markdown Links
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'ok-to-test') }}
+    uses: ./.github/workflows/verify-links.yml
+    secrets: inherit
+
+  validate-files-and-commits:
+    name: Validate Files and Commits
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'ok-to-test') }}
+    uses: nubificus/vaccel/.github/workflows/validate-files-and-commits.yml@main
+    secrets: inherit
+
+  # Dummy job for setting required checks
+  jobs-completed:
+    needs: [verify-build, verify-links, validate-files-and-commits]
+    name: Jobs Completed
+    runs-on: base-2204-amd64
+    steps:
+      - run: exit 0

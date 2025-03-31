@@ -1,0 +1,41 @@
+name: "Verify Links"
+
+on:
+  workflow_call:
+    inputs:
+      actions-repo:
+        type: string
+        default: 'nubificus/vaccel'
+      actions-rev:
+        type: string
+        default: 'main'
+    secrets:
+      GIT_CLONE_PAT:
+        required: false
+
+jobs:
+  verify-links:
+    name: Verify Markdown Links
+    runs-on: [base-dind-2204-amd64]
+
+    steps:
+      - name: Checkout .github directory
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+          repository: ${{ inputs.actions-repo }}
+          ref: ${{ inputs.actions-rev }}
+
+      - name: Initialize workspace
+        uses: ./.github/actions/initialize-workspace
+        with:
+          submodules: 'false'
+          remote-actions-repo: ${{ inputs.actions-repo }}
+          token: ${{ secrets.GIT_CLONE_PAT || github.token }}
+
+      - name: Check links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          folder-path: 'docs'
