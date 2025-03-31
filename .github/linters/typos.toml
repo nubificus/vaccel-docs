@@ -1,2 +1,5 @@
 [default.extend-identifiers]
 ScatterND = "ScatterND"
+
+[files]
+extend-exclude = ["docs/python/**"]
