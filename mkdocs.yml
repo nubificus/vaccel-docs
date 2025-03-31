@@ -1,4 +1,5 @@
 site_name: vAccel
+site_url: https://docs.vaccel.org
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
