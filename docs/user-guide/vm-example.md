@@ -8,23 +8,25 @@ we still need vAccel in the Host system to execute the forwarded call. A visual
 representation of the execution flow is shown in Figure 1.
 
 <figure>
-  <img src="/img/vaccel-vm-flow.png" width="800" align=left />
+  <img src="/img/vaccel-vm-flow.png" width="800" align=left
+    alt="VM application execution flow" />
   <figcaption>Figure 1. VM application execution flow</figcaption>
 </figure>
 
 To enable this functionality, we will use the `VSOCK` plugin in the guest, and,
 as previously, the `NOOP` plugin in the Host. To intercept requests originating
 from the guest, we use the vAccel Agent, running on the Host. Section
-[Running the agent](#running-the-vaccel-agent) describes the process to run the agent.
+[Running the agent](#running-the-vaccel-agent) describes the process to run the
+agent.
 
 First, let's bootstrap the VM.
 
 ## Bootstrap the VM
 
 To bootstrap a simple VM we have the option of using any hypervisor/VMM that
-supports the `virtio-vsock` device. We have tried: [AWS
-Firecracker](#firecracker), [QEMU](#qemu), [Cloud
-Hypervisor](#cloud-hypervisor), and [Dragonball](#dragonball).
+supports the `virtio-vsock` device. We have tried:
+[AWS Firecracker](#firecracker), [QEMU](#qemu),
+[Cloud Hypervisor](#cloud-hypervisor), and [Dragonball](#dragonball).
 
 First, we will need an example kernel & rootfs. All `rust-vmm` based VMMs can
 use the same artifacts. For QEMU we will use a different kernel, but the same
@@ -32,7 +34,8 @@ rootfs.
 
 Each section below describes the steps for the respective VMM.
 
-The common file for all cases is the `rootfs` image. You can get it using the following command:
+The common file for all cases is the `rootfs` image. You can get it using the
+following command:
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
@@ -40,7 +43,8 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
 
 ### Firecracker
 
-You can get the binaries needed for booting a Firecracker VM using the commands below:
+You can get the binaries needed for booting a Firecracker VM using the commands
+below:
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
@@ -61,7 +65,8 @@ We should have the following files available:
 0 directories, 4 files
 ```
 
-To launch the VM, all we have to do is run the following command (make sure you run as `root`):
+To launch the VM, all we have to do is run the following command (make sure you
+run as `root`):
 
 ```bash
 chmod +x firecracker
@@ -69,20 +74,22 @@ chmod +x firecracker
 ./firecracker --api-sock fc.sock --config-file config_vsock.json
 ```
 
-**Note** You have to make sure that `./fc.sock` and `/tmp/vaccel.sock` are cleaned up
-before launching the VM, as firecracker will fail with the following errors:
+**Note** You have to make sure that `./fc.sock` and `/tmp/vaccel.sock` are
+cleaned up before launching the VM, as firecracker will fail with the following
+errors:
 
 ```console
 [anonymous-instance:fc_api:ERROR:src/firecracker/src/api_server_adapter.rs:163] Failed to open the API socket at: fc.sock. Check that it is not already used.
 ```
 
-or 
+or
 
 ```console
 [anonymous-instance:main:ERROR:src/firecracker/src/main.rs:496] Configuration for VMM from one single json failed: Vsock device error: Cannot create backend for vsock device: UnixBind(Os { code: 98, kind: AddrInUse, message: "Address in use" })
 ```
 
-So make sure before launching to rm these files: `rm fc.sock ; rm /tmp/vaccel.sock`
+So make sure before launching to rm these files:
+`rm fc.sock ; rm /tmp/vaccel.sock`
 
 We should be presented with a login prompt:
 
@@ -135,13 +142,14 @@ vaccel-guest login:
 
 Go ahead and log in (user: `root`, no password).
 
-launch a new terminal and go to [Running the application](#running-the-application)
+launch a new terminal and go to
+[Running the application](#running-the-application)
 
 ### Cloud hypervisor
 
 For Cloud Hypervisor, the process is almost identical to Firecracker
-(`rust-vmm`-based). You can get the binaries needed for booting a Cloud Hypervisor
-VM using the commands below:
+(`rust-vmm`-based). You can get the binaries needed for booting a Cloud
+Hypervisor VM using the commands below:
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/clh/cloud-hypervisor
@@ -162,7 +170,7 @@ We should have the following files available:
 
 We need to make the VMM binary file executable:
 
-```
+```bash
 chmod +x cloud-hypervisor
 ```
 
@@ -170,14 +178,13 @@ To launch the VM, all we have to do is run the following command:
 
 ```bash
 ./cloud-hypervisor --kernel vmlinux --disk path=rootfs.img \
-  		   --memory size=1024M --cpus boot=1 \
-		   --cmdline "console=hvc0 root=/dev/vda rw" \
-		   --vsock cid=42,socket=/tmp/vaccel.sock \
-		   --console tty
+                     --memory size=1024M --cpus boot=1 \
+                   --cmdline "console=hvc0 root=/dev/vda rw" \
+                   --vsock cid=42,socket=/tmp/vaccel.sock \
+                   --console tty
 ```
 
 We should be presented with a login prompt:
-
 
 ```console
 [    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
@@ -210,8 +217,8 @@ vaccel-guest login:
 
 Go ahead and log in (user: `root`, no password).
 
-launch a new terminal and go to [Running the application](#running-the-application)
-
+launch a new terminal and go to
+[Running the application](#running-the-application)
 
 ### QEMU
 
@@ -233,7 +240,7 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/qemu/bzImage
 The directory structure should be like the following:
 
 ```console
-# tree 
+# tree
 .
 ├── bios-256k.bin
 ├── bios-microvm.bin
@@ -246,16 +253,16 @@ The directory structure should be like the following:
 
 To spawn a QEMU VM, we have two options: PCI and nonPCI.
 
-#### Generic QEMU, PCI devices:
+#### Generic QEMU, PCI devices
 
 ```bash
 qemu-system-x86_64 -nographic -nodefaults -cpu host -enable-kvm \
-	-kernel bzImage \
-	-append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
-	-serial stdio \
-	-drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
-	-device virtio-blk,drive=rootfs \
-	-device vhost-vsock-pci,id=vhost-vsock-pci0,guest-cid=42
+        -kernel bzImage \
+        -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
+        -serial stdio \
+        -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
+        -device virtio-blk,drive=rootfs \
+        -device vhost-vsock-pci,id=vhost-vsock-pci0,guest-cid=42
 ```
 
 The result of the above command is, again, a login prompt:
@@ -302,18 +309,17 @@ Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
 vaccel-guest login:
 ```
 
-#### QEMU microVM, noPCI:
+#### QEMU microVM, noPCI
 
 ```bash
 qemu-system-x86_64 -nographic -M microvm -nodefaults -cpu host -enable-kvm \
-	-kernel bzImage \
-	-append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
+        -kernel bzImage \
+        -append "console=ttyS0 earlyprintk=ttyS0 root=/dev/vda rw " \
         -serial stdio \
         -drive if=none,id=rootfs,file=rootfs.img,format=raw,cache=none \
         -device virtio-blk-device,drive=rootfs \
         -device vhost-vsock-device,id=vhost-vsock,guest-cid=42
 ```
-
 
 ```console
 No EFI environment detected.
@@ -361,7 +367,8 @@ vaccel-guest login:
 In both cases above, as with the previous hypervisors, we log in using the root
 user (user: `root`, no password).
 
-launch a new terminal and go to [Running the application](#running-the-application)
+launch a new terminal and go to
+[Running the application](#running-the-application)
 
 ### DragonBall
 
@@ -380,7 +387,7 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/v
 We should have the following directory structure:
 
 ```console
-# tree 
+# tree
 .
 ├── dbs-cli
 ├── rootfs.img
@@ -397,8 +404,8 @@ chmod +x dbs-cli
 
 # launch the VM
 ./dbs-cli --kernel-path vmlinux --rootfs rootfs.img \
-	  --boot-args "console=ttyS0 pci=off root=/dev/vda rw" \
-	  --vsock /tmp/vaccel.sock
+          --boot-args "console=ttyS0 pci=off root=/dev/vda rw" \
+          --vsock /tmp/vaccel.sock
 ```
 
 The logs of the VM are similar to the above cases:
@@ -436,15 +443,15 @@ vaccel-guest login:
 Again, as with the previous hypervisors, we log in using the root user (user:
 `root`, no password).
 
-launch a new terminal and go to [Running the application](#running-the-application)
-
+launch a new terminal and go to
+[Running the application](#running-the-application)
 
 ### Running the application
 
-To run the application we first need to provide the backend where the vAccel
-API operations will be handled. This is done in the guest via the `VSOCK`
-plugin and in the Host via the `vaccel-agent`. We have setup the guest part
-above for each of the hypervisors supported. Let's now move to the agent part.
+To run the application we first need to provide the backend where the vAccel API
+operations will be handled. This is done in the guest via the `VSOCK` plugin and
+in the Host via the `vaccel-agent`. We have setup the guest part above for each
+of the hypervisors supported. Let's now move to the agent part.
 
 #### Running the vAccel agent
 
@@ -460,7 +467,7 @@ commands via `ttrpc`. So we need to include the path to `libvaccel.so` in the
 If you haven't already installed the vaccel-agent binary, follow the
 instructions in the [relevant section](binaries.md#install-vaccel-agent).
 
-In short, for `x86_64`: 
+In short, for `x86_64`:
 
 ```sh
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb
@@ -492,10 +499,10 @@ You could also enable `debug` by setting the env variable `VACCEL_DEBUG=4`.
 (Firecracker, Cloud hypervisor, Dragonball, etc.), the `VACCEL_AGENT_ENDPOINT`
 variable corresponds to the `vsock` socket file specified in the definition of
 the vsock device in `config.json`. In our example this is `/tmp/vaccel.sock`.
-Since the `vsock ` implementation of these VMMs assumes the `vsock` port as a
+Since the `vsock` implementation of these VMMs assumes the `vsock` port as a
 postfix to the socket file, the value of the variable is:_
 
-```
+```bash
 VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
 ```
 
@@ -504,15 +511,15 @@ move to the guest console terminal.
 
 #### Running the application in the guest
 
-In the guest, we will be running a vAccel application; so we need to specify
-the path to `libvaccel.so` and the plugin to be used. In the pre-built rootfs
-we have included the `VSOCK` plugin, at `/opt/vaccel/lib/libvaccel-vsock.so`.
-All the env vars are set, except for the `VACCEL_VSOCK` parameter, which
-specifies the endpoint of the agent. Its default value is `vsock://2:2048`.
-Since we've setup the agent to listen to port `2048`, we're good to go.
+In the guest, we will be running a vAccel application; so we need to specify the
+path to `libvaccel.so` and the plugin to be used. In the pre-built rootfs we
+have included the `VSOCK` plugin, at `/opt/vaccel/lib/libvaccel-vsock.so`. All
+the env vars are set, except for the `VACCEL_VSOCK` parameter, which specifies
+the endpoint of the agent. Its default value is `vsock://2:2048`. Since we've
+setup the agent to listen to port `2048`, we're good to go.
 
-**Note**: _The Host's default `vsock_id` is `2`, that's why the guest only
-needs to set up the port (`2048`)._
+**Note**: _The Host's default `vsock_id` is `2`, that's why the guest only needs
+to set up the port (`2048`)._
 
 The vAccel examples are already in the `rootfs` image, installed at
 `/opt/vaccel/bin`. So the only thing needed is to execute the example:
@@ -524,9 +531,10 @@ Image size: 54372B
 classification tags: This is a dummy classification tag!
 ```
 
-We got the same output as with the [native execution
-case](build-run-app.md#running-a-vaccel-application). Well, almost the same;
-what we missed is the plugin output. See the native execution case below:
+We got the same output as with the
+[native execution case](build-run-app.md#running-a-vaccel-application). Well,
+almost the same; what we missed is the plugin output. See the native execution
+case below:
 
 ```console
 $ /opt/vaccel/bin/classify images/example.jpg 1
@@ -539,10 +547,10 @@ Image size: 79281B
 classification tags: This is a dummy classification tag!
 ```
 
-The `[noop]` lines are not present when running from the VM. This is because
-the plugin is executing in the host. We only get the `classification tags:`
-result back. If you look at the other terminal, where the agent is running,
-you should see the following:
+The `[noop]` lines are not present when running from the VM. This is because the
+plugin is executing in the host. We only get the `classification tags:` result
+back. If you look at the other terminal, where the agent is running, you should
+see the following:
 
 ```console
 Created session 1

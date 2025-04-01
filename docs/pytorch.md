@@ -1,7 +1,9 @@
+# PyTorch
 
-### Install requirements
+## Install requirements
 
-Assuming cuda (v11.6) and cudnn (v8) are installed on a Ubuntu 20.04 system, we need the following packages for pytorch:
+Assuming cuda (v11.6) and cudnn (v8) are installed on a Ubuntu 20.04 system, we
+need the following packages for pytorch:
 
 ```sh
 apt-get install -y build-essential \
@@ -25,11 +27,12 @@ apt-get install -y build-essential \
          opencl-headers \
          ocl-icd-opencl-dev \
          libviennacl-dev \
-	 unzip \
-	 libcanberra-gtk-module
+         unzip \
+         libcanberra-gtk-module
 ```
 
-Make sure you have a recent version of cmake (`v3.10` and newer). If not, upgrade through the official repo:
+Make sure you have a recent version of cmake (`v3.10` and newer). If not,
+upgrade through the official repo:
 
 ```sh
 wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - && \
@@ -44,7 +47,7 @@ Optionally install OpenCV python bindings:
 apt-get install -y libopencv-dev python3-opencv
 ```
 
-### Setup the python environment
+## Setup the python environment
 
 ```sh
 apt-get install python-is-python3
@@ -52,7 +55,7 @@ python3 -m pip install pip --upgrade
 python3 -m pip install numpy scikit-build
 ```
 
-### Get pytorch shared libraries
+## Get pytorch shared libraries
 
 Get the shared libraries needed:
 
@@ -68,4 +71,3 @@ unzip libtorch-shared-with-deps-1.12.1+cu116.zip
 mv libtorch torch
 sudo mv torch /opt/
 ```
-

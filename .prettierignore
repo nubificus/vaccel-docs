@@ -1,0 +1,7 @@
+/.github
+/docs/python/
+/outdated_docs/
+/source/
+*.yml
+*.yaml
+*.css

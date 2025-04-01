@@ -1,17 +1,18 @@
 # Jetson-inference
 
-To walk through the requirements for running a vAccel-enabled workload with
-the jetson-inference plugin, we will use a set of NVIDIA GPUs (RTX 2060 SUPER,
-Jetson Nano and Xavier AGX) and a common distribution like Ubuntu. 
+To walk through the requirements for running a vAccel-enabled workload with the
+jetson-inference plugin, we will use a set of NVIDIA GPUs (RTX 2060 SUPER,
+Jetson Nano and Xavier AGX) and a common distribution like Ubuntu.
 
 The Jetson-inference vAccel plugin is based on
-[jetson-inference](https://github.com/dusty-nv/jetson-inference), a frontend
-for TensorRT, developed by NVIDIA. This intro section will serve as a guide to
+[jetson-inference](https://github.com/dusty-nv/jetson-inference), a frontend for
+TensorRT, developed by NVIDIA. This intro section will serve as a guide to
 install TensorRT, CUDA and jetson inference on a Ubuntu 20.04 system.
 
 ## Install prerequisites
 
-The first step is to prepare the system for building and installing jetson-inference.
+The first step is to prepare the system for building and installing
+jetson-inference.
 
 ### Install common tools
 
@@ -40,8 +41,6 @@ update-alternatives --set gcc /usr/bin/gcc-8
 
 ### setup NVIDIA's custom repositories
 
-
-
 ```bash
 export OS=ubuntu2004
 wget http://developer.download.nvidia.com/compute/machine-learning/repos/${OS}/x86_64/nvidia-machine-learning-repo-${OS}_1.0.0-1_amd64.deb
@@ -60,13 +59,11 @@ apt-get update
 apt-get install -y libcudnn8 libcudnn8-dev tensorrt nvidia-cuda-toolkit
 ```
 
-
-
 ## Prepare for building jetson-inference
 
 We clone jetson-inference:
 
-```
+```bash
 git clone --recursive https://github.com/nubificus/jetson-inference
 cd jetson-inference
 ```
@@ -75,7 +72,7 @@ cd jetson-inference
 
 We create a build dir, enter it and prepare the Makefiles:
 
-```
+```bash
 mkdir build
 cd build
 
@@ -84,43 +81,52 @@ BUILD_DEPS=YES cmake -DBUILD_INTERACTIVE=NO ../
 
 Finally, we issue the build command and we install it to our system:
 
-```
+```bash
 make -j$(nproc)
 make install
 ```
 
-**Note**: _For `aarch64` hosts, this process is slightly different (one would say easier!) as it assumes the Host system is a `L4T` distro. Just clone the repo and follow the [Build & install](jetson.md#Build-&-install-jetson-inference) step_
-
+**Note**: _For `aarch64` hosts, this process is slightly different (one would
+say easier!) as it assumes the Host system is a `L4T` distro. Just clone the
+repo and follow the
+[Build & install](jetson.md#Build-&-install-jetson-inference) step_
 
 ## Build a jetson-inference container image
 
-We use a container file to capture the individual steps to install jetson inference. Assuming the host is debian-based (we tried that on Ubuntu 20.04), and has a recent NVIDIA driver (`520.61.05`) we follow the steps below:
+We use a container file to capture the individual steps to install jetson
+inference. Assuming the host is debian-based (we tried that on Ubuntu 20.04),
+and has a recent NVIDIA driver (`520.61.05`) we follow the steps below:
 
 - clone the container repo:
-```
+
+```bash
 git clone https://github.com/nubificus/jetson-inference-container
 ```
+
 - build the container image:
-```
+
+```bash
 docker build -t nubificus/jetson-inference-updated:x86_64 -f Dockerfile .
 ```
+
 or just get the one we've built (could take some time, i'ts 12GB...):
 
-```
+```bash
 docker pull nubificus/jetson-inference-updated:x86_64
 ```
+
 - run the `jetson-inference` example:
 
 Run the container:
 
-```
+```bash
 # docker run --gpus all --rm -it -v/data/code:/data/code -w $PWD nubificus/jetson-inference-updated:x86_64 /bin/bash
 root@9f5224cb28cc:/data/code#
 ```
+
 Use pre-installed example images and models to do image inference:
 
-
-```
+```console
 root@9f5224cb28cc:/data/code# ln -s /usr/local/data/images .
 root@9f5224cb28cc:/data/code# ln -s /usr/local/data/networks .
 
@@ -288,8 +294,10 @@ imagenet:  shutting down...
 imagenet:  shutdown complete.
 ```
 
-**Note**: _The first time the engine needs to do some autotuning, so it will take some time and drop output similar to the one below_:
-```
+**Note**: _The first time the engine needs to do some autotuning, so it will
+take some time and drop output similar to the one below_:
+
+```console
 ...
 [TRT]    Tactic: 0x89c2d153627e52ba Time: 0.0134678
 [TRT]    loss3/classifier Set Tactic Name: volta_h884cudnn_256x128_ldg8_relu_exp_small_nhwc_tn_v1 Tactic: 0xc110e19c9f5aa36e
@@ -332,6 +340,8 @@ imagenet:  shutdown complete.
 ...
 ```
 
-**Note**: _If you want to avoid that everytime you run the container, keep the networks folder outside the container and bind mount it (eg. in the `/data/code` path). That is, instead of doing `ln -s /usr/local/data/networks .` do a `cp -avf /usr/local/data/networks .`. Thus, every time you re-run the example using this folder, the auto-tuned engine will be there._
-
-
+**Note**: _If you want to avoid that everytime you run the container, keep the
+networks folder outside the container and bind mount it (eg. in the `/data/code`
+path). That is, instead of doing `ln -s /usr/local/data/networks .` do a
+`cp -avf /usr/local/data/networks .`. Thus, every time you re-run the example
+using this folder, the auto-tuned engine will be there._

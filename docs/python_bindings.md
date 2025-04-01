@@ -1,6 +1,6 @@
 # Python bindings
 
-### TL;DR
+## TL;DR
 
 ```sh
 # install vAccel
@@ -26,16 +26,16 @@ if __name__=="__main__":
     main()
 EOF
 wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 export LD_LIBRARY_PATH=/usr/local/lib
 #export PYTHONPATH=.
 python3 cat.py
 
 ```
 
-### Initial Setup
+## Initial Setup
 
-#### Install vAccel
+### Install vAccel
 
 In order to build the python bindings for vAccel, we first need a vAccel
 installation. We can either [build it from source](user-guide/building.md), or
@@ -50,7 +50,7 @@ wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/`uname -m`/Release-deb/
 sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
-#### Install Python
+### Install Python
 
 To build and use the Python bindings, we need to have Python3 installed.
 
@@ -73,7 +73,7 @@ pip3 install vaccel-python-0.0.1.tar.gz
 You should be presented with the following output:
 
 ```console
-$ pip3 install vaccel-python-0.0.1.tar.gz 
+$ pip3 install vaccel-python-0.0.1.tar.gz
 Processing ./vaccel-python-0.0.1.tar.gz
   Installing build dependencies ... done
   Getting requirements to build wheel ... done
@@ -96,12 +96,12 @@ Successfully installed vaccel-python-0.0.1
 
 Go ahead and run an [example](#simple-example)!
 
-
 ## Build from Source
 
 ### Prerequisites
 
-In Debian-based systems, you need to have the following packages to build the python bindings for vAccel:
+In Debian-based systems, you need to have the following packages to build the
+python bindings for vAccel:
 
 - cmake
 - build-essential
@@ -129,6 +129,7 @@ and install the required packages:
 ```sh
 pip3 install datestamp cffi wheel setuptools cmake_build_extension
 ```
+
 ### Get the source code
 
 Get the source code for **python-vaccel**:
@@ -142,7 +143,8 @@ cd python-vaccel
 
 ### Build the Python package
 
-We will create a virtual environment to install the **python-vaccel** package inside the root directory of **python-vaccel**.
+We will create a virtual environment to install the **python-vaccel** package
+inside the root directory of **python-vaccel**.
 
 ```bash
 python3 -m venv venv
@@ -166,7 +168,7 @@ python3 -m pip install flake8 build setuptools \
 Now let's build the package:
 
 ```bash
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 export LD_LIBRARY_PATH=/usr/local/lib
 export PYTHONPATH=.
 python3 builder.py
@@ -184,16 +186,16 @@ python3 -m pytest
 To run the tests:
 
 ```bash
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
-export LD_LIBRARY_PATH=/usr/local/lib 
-export PYTHONPATH=$PYTHONPATH:. 
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export LD_LIBRARY_PATH=/usr/local/lib
+export PYTHONPATH=$PYTHONPATH:.
 pytest
 
 
 # Test coverage
-export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
-export LD_LIBRARY_PATH=/usr/local/lib 
-export PYTHONPATH=$PYTHONPATH:. 
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export LD_LIBRARY_PATH=/usr/local/lib
+export PYTHONPATH=$PYTHONPATH:.
 pytest --cov=vaccel tests/
 ```
 
@@ -205,7 +207,7 @@ $ pytest --cov=vaccel tests
 platform linux -- Python 3.10.7, pytest-7.2.0, pluggy-1.0.0
 rootdir: /home/ananos.linux/develop/python-vaccel
 plugins: cov-4.0.0
-collected 13 items                                                                                                        
+collected 13 items
 
 tests/test_general.py ..                                                                                            [ 15%]
 tests/test_image.py .....                                                                                           [ 53%]
@@ -269,12 +271,12 @@ Loaded plugin noop from /usr/local/lib/libvaccel-noop.so
 [noop] len_img: 79281
 [noop] Run options -> (nil), 0
 [noop] Number of inputs: 1
-[noop] 	Node 0: serving_default_input_1:0
-[noop] 	#dims: 2 -> {1 30}
-[noop] 	Data type: 1
-[noop] 	Data -> 0xaaaaf5135600, 120
+[noop] Node 0: serving_default_input_1:0
+[noop]  #dims: 2 -> {1 30}
+[noop]  Data type: 1
+[noop]  Data -> 0xaaaaf5135600, 120
 [noop] Number of outputs: 1
-[noop] 	Node 0: StatefulPartitionedCall:0
+[noop]  Node 0: StatefulPartitionedCall:0
 Shutting down vAccel
 ```
 
@@ -310,10 +312,11 @@ if __name__=="__main__":
     main()
 ```
 
-Now, when you run that python file, you can see the dummy classification tag for that image:
+Now, when you run that python file, you can see the dummy classification tag for
+that image:
 
 ```console
-$ export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so 
+$ export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 $ export LD_LIBRARY_PATH=/usr/local/lib
 $ export PYTHONPATH=.
 $ python3 cat.py
@@ -332,23 +335,30 @@ Shutting down vAccel
 
 ### Jetson example
 
-To use vAccel on a more real-life example we'll use the jetson-inference framework. This way we will be able to perform image inference on a GPU and get something more useful than a dummy classification tag ;-)
+To use vAccel on a more real-life example we'll use the jetson-inference
+framework. This way we will be able to perform image inference on a GPU and get
+something more useful than a dummy classification tag ;-)
 
-Let's re-use the python program from the [simple example](#simple-example) above.
+Let's re-use the python program from the [simple example](#simple-example)
+above.
 
 #### `x86_64`
 
-We will need to use a host with an NVIDIA GPU (our's is just an `RTX 2060
-SUPER`) and jetson-inference installed. To facilitate dependency resolving we
-use a [container image](jetson.md#build-a-jetson-inference-container-image) on a host with nvidia-container-runtime installed.
+We will need to use a host with an NVIDIA GPU (our's is just an
+`RTX 2060 SUPER`) and jetson-inference installed. To facilitate dependency
+resolving we use a
+[container image](jetson.md#build-a-jetson-inference-container-image) on a host
+with nvidia-container-runtime installed.
 
-so, assuming our code is in `/data/code` let's spawn our container and see this in action:
+so, assuming our code is in `/data/code` let's spawn our container and see this
+in action:
 
 ```sh
 docker run --gpus 0 --rm -it -v/data/code:/data/ -w /data nubificus/jetson-inference-updated:x86_64 /bin/bash
 ```
 
-Afterwards, the steps are more or less the same as above. Install the vAccel package:
+Afterwards, the steps are more or less the same as above. Install the vAccel
+package:
 
 ```console
 root@32e90efe86b9:/data/code# wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
@@ -415,10 +425,9 @@ Installing collected packages: pycparser, cffi, vaccel
 Successfully installed cffi-1.15.1 pycparser-2.21 vaccel-python-0.0.1
 ```
 
-
 Now let's go ahead and run the example!
 
-```
+```console
 root@32e90efe86b9:/data/code# export LD_LIBRARY_PATH=/usr/local/lib/
 root@32e90efe86b9:/data/code# export VACCEL_BACKENDS=/usr/local/lib/libvaccel-jetson.so
 root@32e90efe86b9:/data/code# export VACCEL_IMAGENET_NETWORKS=/data/code/networks
@@ -557,21 +566,21 @@ imagenet: shutting down...
 Shutting down vAccel
 ```
 
-
 #### `aarch64`
 
 For aarch64 things are more or less the same. We run the example on a Jetson
 Xavier AGX, so jetson-inference and the nvidia stack is included in the Jetson
 Linux variant (L4T).
 
-The steps to take only refer to installing jetson-inference libs, vAccel and
-the python bindings so assuming there's a Jetson Linux distro with Jetpack
+The steps to take only refer to installing jetson-inference libs, vAccel and the
+python bindings so assuming there's a Jetson Linux distro with Jetpack
 installed:
 
 - install jetson-inference:
-```
+
+```sh
 git clone --recursive https://github.com/dusty-nv/jetson-inference
-cd jetson-inference 
+cd jetson-inference
 mkdir build
 cd build
 cmake ../
@@ -580,27 +589,28 @@ make install
 
 - install vAccel:
 
-```
+```sh
 wget https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/main/aarch64/Release-deb/vaccel-0.6.0-Linux.deb
 dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
 - install the jetson plugin:
 
-```
+```sh
 wget https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/jetson_inference/master/aarch64/vaccelrt-plugin-jetson-0.1-Linux.deb
 dpkg -i vaccelrt-plugin-jetson-0.1-Linux.deb
 ```
 
 - install python bindings in a virtual env:
-```
+
+```sh
 python3 -m venv .vaccel-venv
 .vaccel-venv/bin/pip3 install https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/aarch64/vaccel-python-0.0.1.tar.gz
 ```
 
 - run the example:
 
-```
+```console
 # .vaccel-venv/bin/python3 cat.py
 Loading libvaccel
 2022.11.05-20:25:12.79 - <debug> Initializing vAccel
@@ -738,5 +748,3 @@ Shutting down vAccel
 2022.11.05-20:25:16.45 - <debug> Cleaning up plugins
 2022.11.05-20:25:16.45 - <debug> Unregistered plugin jetson-inference
 ```
-
-

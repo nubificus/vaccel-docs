@@ -4,11 +4,11 @@ In this post, we will be going through the steps to build our downstream branch
 for kata-containers with vAccel from source, both for amd64 and arm64
 architectures.
 
-** Note **
-_This is a lengthy process. A TL;DR script (highly experimental!) is available
-[here](https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/build.sh).
-We have tried the steps below on Ubuntu 20.04 and 22.04 `x86_64` & `aarch64`.
-This process takes approximately 30-40 minutes._
+**Note** _This is a lengthy process. A TL;DR script (highly experimental!) is
+available
+[here](https://s3.nubificus.co.uk/nbfc-assets/kata-vaccel/scripts/build.sh). We
+have tried the steps below on Ubuntu 20.04 and 22.04 `x86_64` & `aarch64`. This
+process takes approximately 30-40 minutes._
 
 _Additionally, we provide pre-built binaries for `x86_64` & `aarch64` and the
 respective installation script
@@ -18,16 +18,17 @@ which should take less than a minute (~200MB artifacts)._
 _The process is highly experimental and for showcase purposes -- please don't
 use these scripts on a production machine ;-)_
 
-### Install requirements
+## Install requirements
 
-To build Kata Containers we need to install Rust v1.58.1, Go v1.18.0, Docker
-and some apt/snap packages. The specific versions may change, so make sure to
-check the [versions
-database](https://github.com/kata-containers/kata-containers/blob/main/versions.yaml).
+To build Kata Containers we need to install Rust v1.58.1, Go v1.18.0, Docker and
+some apt/snap packages. The specific versions may change, so make sure to check
+the
+[versions database](https://github.com/kata-containers/kata-containers/blob/main/versions.yaml).
 
-#### Apt/Snap Packages
+### Apt/Snap Packages
 
-We need to install `gcc`, `make` and `yq v3`. `containerd` and `runc` are installed by the Docker install script, in the following steps.
+We need to install `gcc`, `make` and `yq v3`. `containerd` and `runc` are
+installed by the Docker install script, in the following steps.
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -35,7 +36,7 @@ sudo apt install gcc make snapd bc -y
 sudo snap install yq --channel=v3/stable
 ```
 
-#### Rust (version 1.58.1)
+### Rust (version 1.58.1)
 
 We will use `rustup` to install and set Rust 1.58.1 as our default toolchain:
 
@@ -50,9 +51,10 @@ popd
 rm -rf $down_dir
 ```
 
-#### Go (version 1.18)
+### Go (version 1.18)
 
-We will download the appropriate Go binaries and add them to the `PATH` environment variable:
+We will download the appropriate Go binaries and add them to the `PATH`
+environment variable:
 
 ```bash
 down_dir=$(mktemp -d)
@@ -66,7 +68,7 @@ popd
 rm -rf $down_dir
 ```
 
-#### Docker
+### Docker
 
 We will install Docker using the provided convenience script:
 
@@ -81,9 +83,9 @@ popd
 rm -rf $down_dir
 ```
 
-### Build Kata components
+## Build Kata components
 
-#### Build kata-runtime
+### Build kata-runtime
 
 First, we need to set the correct Go environment variables:
 
@@ -140,7 +142,7 @@ sudo ln -s /opt/kata/bin/kata-runtime /usr/local/bin
 sudo ln -s /opt/kata/bin/containerd-shim-kata-v2 /usr/local/bin
 ```
 
-#### Create a rootfs
+### Create a rootfs
 
 We can use either a rootfs or initrd image to launch Kata Containers with QEMU.
 However, AWS Firecracker does not work with initrd images, so we will be using a
@@ -157,9 +159,10 @@ script -fec 'sudo -E GOPATH=$GOPATH AGENT_INIT=yes USE_DOCKER=true ./rootfs.sh u
 
 **Note for arm64**:
 
-We noticed that in some instances the kata-agent compilation failed.
-A possible workaround was to remove the USE_DOCKER variable. This requires `qemu-img` command to be available on your system.
-You can install it with `sudo apt install -y qemu-utils`.
+We noticed that in some instances the kata-agent compilation failed. A possible
+workaround was to remove the USE_DOCKER variable. This requires `qemu-img`
+command to be available on your system. You can install it with
+`sudo apt install -y qemu-utils`.
 
 ```bash
 export ROOTFS_DIR="${GOPATH}/src/github.com/kata-containers/kata-containers/tools/osbuilder/rootfs-builder/rootfs-ubuntu"
@@ -186,7 +189,7 @@ commit=$(git log --format=%h -1 HEAD) && \
   (cd $PREFIX/share/kata-containers && sudo ln -sf "$image" kata-containers.img)
 ```
 
-#### Build Kata Containers kernel
+### Build Kata Containers kernel
 
 First, we need some additional packages to build the kernel:
 
@@ -216,7 +219,10 @@ sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d install
 
 **Note**:
 
-We noticed that in some instances the installation or build process failed with the following error: `ERROR: path to kernel does not exist, use build-kernel.sh setup`. We mitigated this problem by specifying the version:
+We noticed that in some instances the installation or build process failed with
+the following error:
+`ERROR: path to kernel does not exist, use build-kernel.sh setup`. We mitigated
+this problem by specifying the version:
 
 ```bash
 ./build-kernel.sh -d -v 5.15.26 build
@@ -224,7 +230,8 @@ export PREFIX=/opt/kata
 sudo -E PATH=$PATH -E PREFIX=$PREFIX ./build-kernel.sh -d -v 5.15.26 install
 ```
 
-At this point we have successfully built all the Kata components. All the binaries we built are stored under the `/opt/kata/bin` dir:
+At this point we have successfully built all the Kata components. All the
+binaries we built are stored under the `/opt/kata/bin` dir:
 
 ```bash
 $ ls -l /opt/kata/bin/
@@ -235,7 +242,8 @@ total 142296
 -rwxr-xr-x 1 root root 52673784 Mar  25 15:32 kata-runtime
 ```
 
-The rootfs image, the initrd image and the kernel are stored under the `/opt/kata/share/defaults/kata-containers` dir:
+The rootfs image, the initrd image and the kernel are stored under the
+`/opt/kata/share/defaults/kata-containers` dir:
 
 ```bash
 $ ls -l /opt/kata/share/kata-containers/
@@ -252,7 +260,8 @@ lrwxrwxrwx 1 root root        18 Μαρ  25 15:51 vmlinux.container -> vmlinux-5
 lrwxrwxrwx 1 root root        18 Μαρ  25 15:51 vmlinuz.container -> vmlinuz-5.15.26-90
 ```
 
-The configuration files are stored under the `/opt/kata/share/defaults/kata-containers` dir:
+The configuration files are stored under the
+`/opt/kata/share/defaults/kata-containers` dir:
 
 ```bash
 ls -l /opt/kata/share/defaults/kata-containers
@@ -264,7 +273,7 @@ total 72
 lrwxrwxrwx 1 root root    23 Μαρ  25 15:32 configuration.toml -> configuration-qemu.toml
 ```
 
-#### Build Firecracker
+### Build Firecracker
 
 Kata Containers support AWS Firecracker v1.1.0. To build Firecracker, we will
 clone the Github repo and checkout to the 1.1.0 version:
@@ -287,9 +296,11 @@ sudo cp build/cargo_target/${toolchain}/release/firecracker /opt/kata/bin/firecr
 sudo cp build/cargo_target/${toolchain}/release/jailer /opt/kata/bin/jailer
 ```
 
-#### devmapper snapshotter
+### devmapper snapshotter
 
-AWS Firecracker requires a block device as the backing store for a VM. To interact with containerd and kata we use the devmapper snapshotter. To check support for your containerd installation, you can run:
+AWS Firecracker requires a block device as the backing store for a VM. To
+interact with containerd and kata we use the devmapper snapshotter. To check
+support for your containerd installation, you can run:
 
 ```bash
 ctr plugins ls |grep devmapper
@@ -301,7 +312,8 @@ if the output of the above command is:
 io.containerd.snapshotter.v1    devmapper                linux/amd64    ok
 ```
 
-then you can skip this section and move on to [Configure Kata Containers to use Firecracker](#configure-kata-containers-to-use-firecracker)
+then you can skip this section and move on to
+[Configure Kata Containers to use Firecracker](#configure-kata-containers-to-use-firecracker)
 
 If the output of the above command is:
 
@@ -309,8 +321,8 @@ If the output of the above command is:
 io.containerd.snapshotter.v1    devmapper                linux/amd64    error
 ```
 
-then we need to setup devmapper snapshotter. Based on a [very useful
-guide](https://docs.docker.com/storage/storagedriver/device-mapper-driver/)
+then we need to setup devmapper snapshotter. Based on a
+[very useful guide](https://docs.docker.com/storage/storagedriver/device-mapper-driver/)
 from docker, we can set it up using the following scripts:
 
 ```bash
@@ -367,13 +379,15 @@ sudo chmod +x ~/scripts/devmapper/create.sh && \
   sudo ./create.sh
 ```
 
-Now, we can add the devmapper configuration provided from the script to `/etc/containerd/config.toml` and restart containerd.
+Now, we can add the devmapper configuration provided from the script to
+`/etc/containerd/config.toml` and restart containerd.
 
 ```bash
 sudo systemctl restart containerd
 ```
 
-We can use `dmsetup` to verify that the thin-pool was created successfully. We should also check that devmapper is registered and running:
+We can use `dmsetup` to verify that the thin-pool was created successfully. We
+should also check that devmapper is registered and running:
 
 ```bash
 sudo dmsetup ls
@@ -382,7 +396,11 @@ sudo ctr plugins ls | grep devmapper
 # io.containerd.snapshotter.v1    devmapper                linux/amd64    ok
 ```
 
-This script needs to be run only once, while setting up the devmapper snapshotter for containerd. Afterwards, make sure that on each reboot, the thin-pool is initialized from the same data dir. Otherwise, all the fetched containers (or the ones that you’ve created) will be re-initialized. A simple script that re-creates the thin-pool from the same data dir is shown below:
+This script needs to be run only once, while setting up the devmapper
+snapshotter for containerd. Afterwards, make sure that on each reboot, the
+thin-pool is initialized from the same data dir. Otherwise, all the fetched
+containers (or the ones that you’ve created) will be re-initialized. A simple
+script that re-creates the thin-pool from the same data dir is shown below:
 
 ```bash
 #!/bin/bash
@@ -435,11 +453,11 @@ sudo systemctl enable devmapper_reload.service
 sudo systemctl start devmapper_reload.service
 ```
 
-#### Configure Kata Containers to use Firecracker
+### Configure Kata Containers to use Firecracker
 
 Next, we need to install the Kata Containers-Firecracker configuration file. We
-will use this file to configure Kata Containers to use the rootfs image we
-built [previously](#create-a-rootfs).
+will use this file to configure Kata Containers to use the rootfs image we built
+[previously](#create-a-rootfs).
 
 ```bash
 sudo mkdir -p /opt/kata/configs
@@ -449,15 +467,17 @@ sudo sed -i 's/^\(initrd =.*\)/# \1/g' /opt/kata/configs/configuration-fc-vaccel
 sudo sed -i '/^disable_guest_seccomp/ s/true/false/' /opt/kata/configs/configuration-fc-vaccel.toml
 ```
 
-Make sure that /opt/kata/configs/configuration-fc-vaccel.toml has an image entry pointing to the rootfs we created:
+Make sure that /opt/kata/configs/configuration-fc-vaccel.toml has an image entry
+pointing to the rootfs we created:
 
 ```bash
 17   | image = "/opt/kata/share/kata-containers/kata-containers.img"
 ```
 
-#### Configure containerd
+### Configure containerd
 
-Next, we need to configure containerd. Add a file in your path (eg. `/usr/local/bin/containerd-shim-kata-fc-vaccel-v2`) with the following contents:
+Next, we need to configure containerd. Add a file in your path (eg.
+`/usr/local/bin/containerd-shim-kata-fc-vaccel-v2`) with the following contents:
 
 ```bash
 #!/bin/bash
@@ -470,7 +490,8 @@ Make it executable:
 sudo chmod +x /usr/local/bin/containerd-shim-kata-fc-vaccel-v2
 ```
 
-Add the relevant section in containerd’s config.toml file (`/etc/containerd/config.toml`):
+Add the relevant section in containerd’s config.toml file
+(`/etc/containerd/config.toml`):
 
 ```toml
 [plugins.cri.containerd.runtimes]
@@ -484,9 +505,10 @@ Restart containerd:
 sudo systemctl restart containerd
 ```
 
-#### Verify the installation
+### Verify the installation
 
-We are now ready to launch a container using Kata-vaccel with Firecracker to verify that everything worked:
+We are now ready to launch a container using Kata-vaccel with Firecracker to
+verify that everything worked:
 
 ```bash
 sudo ctr images pull --snapshotter devmapper docker.io/library/ubuntu:latest
@@ -495,9 +517,10 @@ sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.
 
 You should see the `vaccelrt-agent` running alongside the containerd process.
 
-### Install vAccel components
+## Install vAccel components
 
-Before we proceed to run our first vAccel enabled kata container, we need to install the required vAccel components:
+Before we proceed to run our first vAccel enabled kata container, we need to
+install the required vAccel components:
 
 ```bash
 down_dir=$(mktemp -d)
@@ -510,10 +533,10 @@ popd
 rm -rf $down_dir
 ```
 
-### Run a vAccel-enabled kata container
+## Run a vAccel-enabled kata container
 
-To run a vAccel enabled kata container, first, you have to get a container
-image with vaccel installed. We built one with docker, based on the following
+To run a vAccel enabled kata container, first, you have to get a container image
+with vaccel installed. We built one with docker, based on the following
 container image file:
 
 ```Dockerfile
@@ -531,7 +554,7 @@ RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/$(u
 
 # Set some env variables
 ENV LD_LIBRARY_PATH=/usr/local/lib
-ENV VACCEL_BACKENDS=/usr/local/lib/libvaccel-vsock.so 
+ENV VACCEL_BACKENDS=/usr/local/lib/libvaccel-vsock.so
 
 # This is the default value, no need to set it
 # Also, this value is passed on from the Kata runtime
@@ -547,20 +570,20 @@ Build it, or pull a pre-built one:
 
 ```console
 $ sudo ctr image pull --snapshotter devmapper docker.io/nubificus/vaccel-app-container:$(uname -m)
-docker.io/nubificus/vaccel-app-container:x86_64:                                  resolved       |++++++++++++++++++++++++++++++++++++++| 
-manifest-sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed: done           |++++++++++++++++++++++++++++++++++++++| 
-config-sha256:1bf757ff35444f01a96f9481b61cf82a0ced9afe53e37e2a04e1f3d943b4d241:   done           |++++++++++++++++++++++++++++++++++++++| 
-layer-sha256:7a8454f39a31d19d7b1b497aa5dea0f717605b93fc5e9d10405f1a04cecb6a88:    exists         |++++++++++++++++++++++++++++++++++++++| 
-layer-sha256:db0a0fb32697f17998cf1e72c2d38a41d13c79effa25ee9a4cac3870bc4980c0:    exists         |++++++++++++++++++++++++++++++++++++++| 
-layer-sha256:45dd8fb4f524a0182c1b79769dd6a2ee05eaee8b095b4af343f324c699848fb7:    exists         |++++++++++++++++++++++++++++++++++++++| 
-layer-sha256:846c0b181fff0c667d9444f8378e8fcfa13116da8d308bf21673f7e4bea8d580:    exists         |++++++++++++++++++++++++++++++++++++++| 
-elapsed: 2.7 s                                                                    total:  1.1 Ki (430.0 B/s)                                       
+docker.io/nubificus/vaccel-app-container:x86_64:                                  resolved       |++++++++++++++++++++++++++++++++++++++|
+manifest-sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed: done           |++++++++++++++++++++++++++++++++++++++|
+config-sha256:1bf757ff35444f01a96f9481b61cf82a0ced9afe53e37e2a04e1f3d943b4d241:   done           |++++++++++++++++++++++++++++++++++++++|
+layer-sha256:7a8454f39a31d19d7b1b497aa5dea0f717605b93fc5e9d10405f1a04cecb6a88:    exists         |++++++++++++++++++++++++++++++++++++++|
+layer-sha256:db0a0fb32697f17998cf1e72c2d38a41d13c79effa25ee9a4cac3870bc4980c0:    exists         |++++++++++++++++++++++++++++++++++++++|
+layer-sha256:45dd8fb4f524a0182c1b79769dd6a2ee05eaee8b095b4af343f324c699848fb7:    exists         |++++++++++++++++++++++++++++++++++++++|
+layer-sha256:846c0b181fff0c667d9444f8378e8fcfa13116da8d308bf21673f7e4bea8d580:    exists         |++++++++++++++++++++++++++++++++++++++|
+elapsed: 2.7 s                                                                    total:  1.1 Ki (430.0 B/s)
 unpacking linux/amd64 sha256:60c94495bfdf0bdcceaab4fe20fa1b427df25ddb5e6ad107d249e91a948a7bed...
 done
 ```
 
-Finally, run the container with the `kata-fc-vaccel` runtime using the
-following command:
+Finally, run the container with the `kata-fc-vaccel` runtime using the following
+command:
 
 ```sh
 sudo ctr run --snapshotter devmapper --runtime io.containerd.run.kata-fc-vaccel.v2 -t --rm docker.io/nubificus/vaccel-app-container:$(uname -m) ubuntu-kata-fc-vaccel /bin/bash
@@ -583,7 +606,8 @@ Image size: 79281B
 classification tags: 99.902% banana
 ```
 
-If you inspect the host while the container is running, you can see the vAccelrt agent running, bound to the specific container instance:
+If you inspect the host while the container is running, you can see the vAccelrt
+agent running, bound to the specific container instance:
 
 ```console
 $ ps -fe |grep ubuntu-kata-fc

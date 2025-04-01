@@ -1,7 +1,9 @@
+# Tensorflow
 
-### Install requirements
+## Install requirements
 
-Assuming cuda (v11.6) and cudnn (v8) are installed on a Ubuntu 20.04 system, we need the following packages for tensorflow:
+Assuming cuda (v11.6) and cudnn (v8) are installed on a Ubuntu 20.04 system, we
+need the following packages for tensorflow:
 
 ```sh
 apt-get install -y build-essential \
@@ -30,7 +32,8 @@ apt-get install -y build-essential \
          libcanberra-gtk-module
 ```
 
-Make sure you have a recent version of cmake (`v3.10` and newer). If not, upgrade through the official repo:
+Make sure you have a recent version of cmake (`v3.10` and newer). If not,
+upgrade through the official repo:
 
 ```sh
 wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - && \
@@ -45,7 +48,7 @@ Optionally install OpenCV python bindings:
 apt-get install -y libopencv-dev python3-opencv
 ```
 
-### Setup the python environment
+## Setup the python environment
 
 ```sh
 apt-get install python-is-python3
@@ -53,7 +56,7 @@ python3 -m pip install pip --upgrade
 python3 -m pip install numpy scikit-build
 ```
 
-### Install Bazel
+## Install Bazel
 
 ```sh
 curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
@@ -64,7 +67,7 @@ ln -s /usr/bin/bazel-5.3.0 /usr/bin/bazel
 ldconfig
 ```
 
-### Get and build Protobuf
+## Get and build Protobuf
 
 ```sh
 mkdir /protocol_buffers
@@ -151,4 +154,3 @@ wget https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/c
 wget https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/core/framework/op_gen_lib.h \
      -O /opt/tensorflow/lib/include/tensorflow/core/framework/op_gen_lib.h
 ```
-
