@@ -72,7 +72,7 @@ application that runs on baremetal with an Nvidia GPU can run *as is* inside
 a VM using our appropriate *VirtIO* backend plugin. 
 
 We have implemented the necessary parts for our VirtIO driver in our forks of
-[QEMU](https://github.com/cloudkernels/qemu-vaccel/tree/vaccelrt) and
+[QEMU](https://github.com/nubificus/qemu-vaccel/tree/master+vaccel) and
 [Firecracker](https://github.com/cloudkernels/firecracker/tree/vaccel-0.23) hypervisors.
 
 Additionally, we have designed the above transport protocol over sockets,

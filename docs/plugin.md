@@ -115,7 +115,7 @@ The plugin registers `my_noop_function()` to serve as the implementation of the
 
 Before building a vAccel plugin, we need to install the main vAccel library.
 Instructions on how to build vAccel can be found
-[here](/quickstart).
+[here](quickstart.md).
 
 We also need some packages to build the plugin itself:
 ```bash
@@ -150,5 +150,5 @@ To be used as a plugin, we need to select it using the environment variable
 (ie. `VACCEL_PLUGINS=/path/to/libvaccel-template.so`).
 
 See [Running a vAccel
-application](/user-guide/build-run-app/#running-a-vaccel-application)
+application](user-guide/build-run-app.md#running-a-vaccel-application)
 for more info.
