@@ -2,4 +2,4 @@
 ScatterND = "ScatterND"
 
 [files]
-extend-exclude = ["docs/python/**"]
+extend-exclude = ["docs/python/**", "outdated_docs/**"]
