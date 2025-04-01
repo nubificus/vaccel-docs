@@ -3,12 +3,13 @@
 To execute TF applications using vAccel, The first thing we need to do is
 install tensorflow on the machine we plan to run the plugin. This is a lengthy
 operation, as we need the C/C++ libraries which are not available from the
-official tensorflow repo as binaries. To build from source, follow the guide below.
+official tensorflow repo as binaries. To build from source, follow the guide
+below.
 
 Alternatively you can use a container image we have already built, so feel free
 to skip to [Running in a container](#running-in-a-container).
 
-### Get & Build the TF C/C++ API files
+## Get & Build the TF C/C++ API files
 
 Building the TF libraries can be a lengthy process. For instance, on a 4-core
 machine with 16GB of memory the command below took ~2.5h.
@@ -47,7 +48,7 @@ LD_LIBRARY_PATH=/opt/tensorflow/lib:$LD_LIBRARY_PATH
 ldconfig
 ```
 
-### Running in a container
+## Running in a container
 
 If you want to avoid the burden (effort & time) to build the TF C/C++ libraries
 from source, you can use a ready-made container image. Just run:
@@ -58,14 +59,14 @@ docker run --rm -it -v$PWD:/data -w /data harbor.nbfc.io/nubificus/tensorflow-ba
 
 and perform the steps below inside the container.
 
-### Install vAccel on the host
+## Install vAccel on the host
 
 ```sh
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
 sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
 
-### Get the Tensorflow plugin & bindings
+## Get the Tensorflow plugin & bindings
 
 ```sh
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccel-tensorflow-0.1.0-Linux.deb
@@ -74,22 +75,24 @@ dpkg -i vaccel-tensorflow-0.1.0-Linux.deb
 
 There should be two `.so` files installed in `/usr/local/lib`:
 
-```
+```console
 $ find /usr/local/lib -name "libvaccel-tf*.so"
 libvaccel-tf-bindings.so
 libvaccel-tf.so
 ```
 
-Alternatively, get the binary artifacts manually from the [binaries](user-guide/binaries.md#binaries) table and install them to /usr/local/lib:
+Alternatively, get the binary artifacts manually from the
+[binaries](user-guide/binaries.md#binaries) table and install them to
+/usr/local/lib:
 
-```
+```sh
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf.so
 wget https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf-bindings.so
 cp libvaccel-tf-bindings.so /usr/local//lib
 cp libvaccel-tf.so /usr/local/lib
 ```
 
-#### Run a simple vAccel test (vAccel TF API)
+### Run a simple vAccel test (vAccel TF API)
 
 To test the vAccel TF API we'll need a TF model. You can get a dir with the
 necessary files from our s3 repo:
@@ -112,7 +115,7 @@ we can run the three examples:
 `tf_model` (just loads a pb model)
 
 ```console
-$ /usr/local/bin/tf_model lstm2/saved_model.pb 
+$ /usr/local/bin/tf_model lstm2/saved_model.pb
 2023.01.30-14:49:24.05 - <debug> Initializing vAccel
 2023.01.30-14:49:24.05 - <debug> Created top-level rundir: /run/user/0/vaccel.XkutVJ
 2023.01.30-14:49:24.10 - <debug> Registered plugin tf
@@ -134,8 +137,8 @@ $ /usr/local/bin/tf_model lstm2/saved_model.pb
 
 `tf_saved_model` (loads a saved model)
 
-```
-$ /usr/local/bin/tf_saved_model lstm2 
+```console
+$ /usr/local/bin/tf_saved_model lstm2
 2023.01.30-14:50:10.65 - <debug> Initializing vAccel
 2023.01.30-14:50:10.65 - <debug> Created top-level rundir: /run/user/0/vaccel.eAMXnP
 2023.01.30-14:50:10.71 - <debug> Registered plugin tf
@@ -190,7 +193,7 @@ $ /usr/local/bin/tf_saved_model lstm2
 `tf_inference` (performs inference on a saved model)
 
 ```sh
-$ /usr/local/bin/tf_inference lstm2 
+$ /usr/local/bin/tf_inference lstm2
 2023.01.30-14:50:44.04 - <debug> Initializing vAccel
 2023.01.30-14:50:44.04 - <debug> Created top-level rundir: /run/user/0/vaccel.3qjD7J
 2023.01.30-14:50:44.09 - <debug> Registered plugin tf
@@ -244,14 +247,16 @@ Result Tensor :
 2023.01.30-14:50:45.37 - <debug> Unregistered plugin tf
 ```
 
-### Build a tensorflow example application
+## Build a tensorflow example application
 
 ```sh
 git clone https://github.com/AmirulOm/tensorflow_capi_sample
 cd tensorflow_capi_sample
 gcc -I/opt/tensorflow/lib/include/ -L/opt/tensorflow/lib main.c -ltensorflow -o main.out
 ```
-Make sure the [saved model](https://s3.nbfc.io/tensorflow/lstm2.tar.gz) is present:
+
+Make sure the [saved model](https://s3.nbfc.io/tensorflow/lstm2.tar.gz) is
+present:
 
 ```sh
 wget https://s3.nbfc.io/tensorflow/lstm2.tar.gz
@@ -266,7 +271,7 @@ export LD_LIBRARY_PATH=/opt/tensorflow/lib:$LD_LIBRARY_PATH
 
 we can run:
 
-```
+```console
 $ ./main.out
 2022-08-04 18:03:52.615232: I tensorflow/cc/saved_model/reader.cc:38] Reading SavedModel from: lstm2/
 2022-08-04 18:03:52.668118: I tensorflow/cc/saved_model/reader.cc:90] Reading meta graph with tags { serve }
@@ -292,11 +297,11 @@ Result Tensor :
 0.016283
 ```
 
-This is a generic TF execution example. To run with vAccel, apart from the
-above env parameters, we'll need to specify the bindings:
+This is a generic TF execution example. To run with vAccel, apart from the above
+env parameters, we'll need to specify the bindings:
 
 ```sh
-$ LD_PRELOAD=/usr/local/lib/libvaccel-tf-bindings.so ./main.out 
+$ LD_PRELOAD=/usr/local/lib/libvaccel-tf-bindings.so ./main.out
 2023.01.30-14:54:38.23 - <debug> Initializing vAccel
 2023.01.30-14:54:38.23 - <debug> Created top-level rundir: /run/user/0/vaccel.Ldk8YE
 2023.01.30-14:54:38.25 - <debug> Registered plugin tf

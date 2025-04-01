@@ -1,14 +1,18 @@
 # Quickstart
 
-This is a quick start guide for running a simple vAccel application. 
+This is a quick start guide for running a simple vAccel application.
 
-- [Build from Source](#build-from-source) or [get the binary packages](#binary-packages) [currently only for Debian/Ubuntu variants]
+- [Build from Source](#build-from-source) or
+  [get the binary packages](#binary-packages) [currently only for Debian/Ubuntu
+  variants]
 - Run a [simple example](#simple-example) [using the `noop` plugin]
 - Run the same example [in a VM](#vm-example) [same code in a VM]
-- Run a more [elaborate example](#jetson-example) [same scenario, using the `jetson-inference` plugin]
+- Run a more [elaborate example](#jetson-example) [same scenario, using the
+  `jetson-inference` plugin]
 - For the legacy version of instructions using CMake, follow [here](legacy.md)
 
 <hr>
+
 ## Binary packages
 
 We provide release debs of the vAccel library, along with an example, debug
@@ -18,7 +22,7 @@ plugin (`noop`), and a hardware plugin (`jetson-inference`).
 
 You can install vAccel (in `/usr/local`) using the following commands:
 
-```
+```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccel/main/x86_64/release-deb/vaccel-0.6.0-Linux.deb
 sudo dpkg -i vaccel-0.6.0-Linux.deb
 ```
@@ -27,12 +31,13 @@ sudo dpkg -i vaccel-0.6.0-Linux.deb
 
 You can install the `jetson-inference` plugin using the following commands:
 
-```
+```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/master/x86_64/vaccelrt-plugin-jetson-0.1-Linux.deb
 dpkg -i vaccelrt-plugin-jetson-0.1-Linux.deb
 ```
 
-You can now go ahead and run a [simple example](#simple-example) using the `noop` plugin.
+You can now go ahead and run a [simple example](#simple-example) using the
+`noop` plugin.
 
 <hr>
 
@@ -40,7 +45,8 @@ You can now go ahead and run a [simple example](#simple-example) using the `noop
 
 ### Prerequisites
 
-In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
+In Ubuntu-based systems, you need to have the following packages to build
+`vaccel`:
 
 - build-essential
 - meson
@@ -49,7 +55,7 @@ In Ubuntu-based systems, you need to have the following packages to build `vacce
 You can install them using the following command:
 
 ```bash
-apt-get install build-essential ninja-build pkg-config python3-pip 
+apt-get install build-essential ninja-build pkg-config python3-pip
 pip install meson
 ```
 
@@ -89,8 +95,8 @@ Download an adorable kitten photo:
 wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
 ```
 
-
-Try one of our examples, available at `/usr/local/bin/classify` or `/usr/local/bin/classify_generic`:
+Try one of our examples, available at `/usr/local/bin/classify` or
+`/usr/local/bin/classify_generic`:
 
 ```bash
 # set some env variables to specify where to find libvaccel.so
@@ -104,7 +110,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 The output should be something like the following:
 
-```
+```bash
 # /usr/local/bin/classify_generic cat.jpeg 1
 Initialized session with id: 1
 Image size: 54372B
@@ -123,7 +129,8 @@ we still need vAccel in the Host system to execute the forwarded call. A visual
 representation of the execution flow is shown in Figure 1.
 
 <figure>
-  <img src="/img/vaccel-vm-flow.png" width="800" align=left />
+  <img src="/img/vaccel-vm-flow.png" width="800" align=left
+    alt="VM application execution flow" />
   <figcaption>Figure 1. VM application execution flow</figcaption>
 </figure>
 
@@ -135,9 +142,9 @@ First, let's bootstrap the VM.
 ### VM setup
 
 To bootstrap a simple VM we will use AWS firecracker and an example kernel &
-rootfs. In [Run a vAccel application in a VM](user-guide/vm-example.md) we provide more
-examples of the various hypervisors/VMMs we have tested and support. You can
-get the binaries using the commands below:
+rootfs. In [Run a vAccel application in a VM](user-guide/vm-example.md) we
+provide more examples of the various hypervisors/VMMs we have tested and
+support. You can get the binaries using the commands below:
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
@@ -221,8 +228,9 @@ vaccel-guest login:
 
 Go ahead and log in (user: `root`, no password).
 
-
-Now, open another terminal to run the vAccel Agent. A detailed walkthrough of the execution flow with the agent is shown in [Running the vAccel Agent](user-guide/vm-example.md#running-the-vaccel-agent).
+Now, open another terminal to run the vAccel Agent. A detailed walkthrough of
+the execution flow with the agent is shown in
+[Running the vAccel Agent](user-guide/vm-example.md#running-the-vaccel-agent).
 
 First get the binary:
 
@@ -236,7 +244,7 @@ Then, go ahead and run the binary with the `noop` plugin:
 ```bash
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-### Listen to port 2048 on the socket exposed by the 
+### Listen to port 2048 on the socket exposed by the
 ### VM (specified in config_vsock.json)
 export VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
 ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
@@ -280,13 +288,13 @@ Destroyed session 1
 
 Running with the Jetson inference plugin requires a working
 [jetson-inference](https://github.com/dusty-nv/jetson-inference) installation
-along with the corresponding CUDA environment on the machine. If all is set up 
+along with the corresponding CUDA environment on the machine. If all is set up
 correctly you can just skip to
-[Running a Jetson-inference example](#running-a-jeson-inference-example). If
+[Running a Jetson-inference example](#running-a-jetson-inference-example). If
 not, you can follow the steps below to get a working environment.
 
-If a jetson-inference setup is not available you can either follow [this
-guide](jetson.md) to build the vAccel jetson plugin and install the
+If a jetson-inference setup is not available you can either follow
+[this guide](jetson.md) to build the vAccel jetson plugin and install the
 prerequisites on your host machine, or you can use a container image, provided
 you can expose an NVIDIA GPU in the container.
 
@@ -380,10 +388,11 @@ imagenet:  shutting down...
 imagenet:  shutdown complete.
 ```
 
-and you can get the classification tag: `imagenet:  48.26662% class #285
-(Egyptian cat)`.
+and you can get the classification tag:
+`imagenet:  48.26662% class #285 (Egyptian cat)`.
 
-What we've built using the `jetson-inference` plugin, and the vAccel image classification API operation, is a mechanism to run this over vAccel.
+What we've built using the `jetson-inference` plugin, and the vAccel image
+classification API operation, is a mechanism to run this over vAccel.
 
 #### Native execution (Running on the Host)
 
@@ -466,16 +475,16 @@ imagenet: shutting down...
 classification tags: 48.211% Egyptian cat
 ```
 
-The first two and the last line are output from the classify example (the
-vAccel application), whereas the rest is similar (if not identical) to the
-native jetson execution, since we run on the Host.
+The first two and the last line are output from the classify example (the vAccel
+application), whereas the rest is similar (if not identical) to the native
+jetson execution, since we run on the Host.
 
-**Note**: The first time your run a classification with a model
-jetson-inference is performing some JIT steps to optimize the classification
-result, so you can expect increased execution time. The output of this
-operation is cached for subsequent executions in the networks folder.
+**Note**: The first time your run a classification with a model jetson-inference
+is performing some JIT steps to optimize the classification result, so you can
+expect increased execution time. The output of this operation is cached for
+subsequent executions in the networks folder.
 
-#### Running in a Firecracker VM 
+#### Running in a Firecracker VM
 
 In similar fashion as before, we launch the VM & the agent:
 
@@ -536,7 +545,8 @@ Last login: Mon Nov 14 19:00:02 UTC 2022 on ttyS0
 root@vaccel-guest:~#
 ```
 
-Once, in the prompt of the guest we check if the environment is set up correctly:
+Once, in the prompt of the guest we check if the environment is set up
+correctly:
 
 ```console
 root@vaccel-guest:~# env |grep -i vaccel
@@ -561,7 +571,8 @@ Image size: 54372B
 classification tags: 48.211% Egyptian cat
 ```
 
-We see that the classification tag is accurate (at least in par with the native execution). And we see the output we expect in the agent terminal:\
+We see that the classification tag is accurate (at least in par with the native
+execution). And we see the output we expect in the agent terminal:\
 
 ```console
 Created session 1

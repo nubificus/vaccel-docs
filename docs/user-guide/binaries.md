@@ -5,39 +5,44 @@ binaries for the various components and produce `deb` packages. The available
 binary components are:
 
 - vAccel core: runtime library,
-- plugins: Jetson, PYNQ, VSOCK, VIRTIO, TF, PYTORCH [WiP], 
+- plugins: Jetson, PYNQ, VSOCK, VIRTIO, TF, PYTORCH [WiP],
 - vAccel Agent: the user-space agent that services vAccel API requests on the
   host,
-- vAccel Python bindings: the necessary files to consume the vAccel API from a python program.
+- vAccel Python bindings: the necessary files to consume the vAccel API from a
+  python program.
 
 ## Download binaries
 
 Download the relevant binaries (`deb` or artifacts) using the links in the
 [table](#binaries) below.
 
-#### Binaries
+### Binaries
 
-Component     | Version |  Package | Binary Artifact
-------------- | --------| -------- | -------------
-vAccel core | v0.6.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-deb/vaccel-0.6.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-deb/vaccel-0.6.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-tar/vaccel-0.6.0-Linux.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-tar/vaccel-0.6.0-Linux.tar.gz) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-tar/vaccel-0.6.0-Linux.tar.gz)
-vAccel agent  | v0.3.7  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release-deb/vaccelrt-agent-0.3.7-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release/vaccel-agent) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release/vaccel-agent) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release/vaccel-agent)
-Jetson plugin | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release/libvaccel-jetson.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release/libvaccel-jetson.so)
-Tensorflow plugin | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release/libvaccel-tf.so)
-PYNQ plugin   | v0.1.1  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/x86_64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/armv7l/Release-deb/vaccelrt-plugin-pynq-0.1-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/x86_64/Release/libvaccel-pynq.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release/libvaccel-pynq.so) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/armv7l/Release/libvaccel-pynq.so)
-VSOCK plugin   | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/x86_64/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/aarch64/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/armv7l/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/x86_64/Release/libvaccel-vsock.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/aarch64/Release/libvaccel-vsock.so) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/armv7l/Release/libvaccel-vsock.so)
-VIRTIO plugin   | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/x86_64/Release-deb/vaccelrt-plugin-virtio-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/aarch64/Release-deb/vaccelrt-plugin-virtio-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/x86_64/Release/libvaccel-virtio.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/aarch64/Release/libvaccel-virtio.so)
-TORCH plugin   | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/x86_64/Release-deb/vaccelrt-plugin-torch-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/aarch64/Release-deb/vaccelrt-plugin-torch-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/x86_64/Release/libvaccel-torch.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/aarch64/Release/libvaccel-torch.so)
-Python bindings | v0.0.1 | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/aarch64/vaccel-python-0.0.1.tar.gz) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/aarch64/vaccel-python-0.0.1.tar.gz)
-TF bindings | v0.0.1 | [`x86_64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccel-tensorflow-0.1.0-Linux.deb) [`arm64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release-deb/vaccel-tensorflow-0.1.0-Linux.deb) | [`x86_64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf-bindings.so) [`arm64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release/libvaccel-tf-bindings.so)
+<!-- markdownlint-disable line-length -->
+
+| Component         | Version | Package                                                                                                                                                                                                                                                                                                                                                                                                                 | Binary Artifact                                                                                                                                                                                                                                                                                                                                    |
+| ----------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| vAccel core       | v0.6.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-deb/vaccel-0.6.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-deb/vaccel-0.6.0-Linux.deb)                                                                                              | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-tar/vaccel-0.6.0-Linux.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/aarch64/Release-tar/vaccel-0.6.0-Linux.tar.gz) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/armv7l/Release-tar/vaccel-0.6.0-Linux.tar.gz)                |
+| vAccel agent      | v0.3.7  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release-deb/vaccelrt-agent-0.3.7-Linux.deb)                                                    | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release/vaccel-agent) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/aarch64/Release/vaccel-agent) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/armv7l/Release/vaccel-agent)                                                 |
+| Jetson plugin     | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release-deb/vaccelrt-plugin-jetson-0.1.0-Linux.deb)                                                                                                                   | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release/libvaccel-jetson.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/aarch64/Release/libvaccel-jetson.so)                                                                                            |
+| Tensorflow plugin | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release-deb/vaccelrt-plugin-tf-0.1.0-Linux.deb)                                                                                                                                       | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release/libvaccel-tf.so)                                                                                                                |
+| PYNQ plugin       | v0.1.1  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/x86_64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/armv7l/Release-deb/vaccelrt-plugin-pynq-0.1-Linux.deb)               | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/x86_64/Release/libvaccel-pynq.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release/libvaccel-pynq.so) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/armv7l/Release/libvaccel-pynq.so)             |
+| VSOCK plugin      | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/x86_64/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/aarch64/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/armv7l/Release-deb/vaccelrt-plugin-vsock-0.1.0-Linux.deb) | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/x86_64/Release/libvaccel-vsock.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/aarch64/Release/libvaccel-vsock.so) [`arm`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/vsock/master/armv7l/Release/libvaccel-vsock.so) |
+| VIRTIO plugin     | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/x86_64/Release-deb/vaccelrt-plugin-virtio-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/aarch64/Release-deb/vaccelrt-plugin-virtio-0.1.0-Linux.deb)                                                                                                                                       | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/x86_64/Release/libvaccel-virtio.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/virtio/main/aarch64/Release/libvaccel-virtio.so)                                                                                                                |
+| TORCH plugin      | v0.1.0  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/x86_64/Release-deb/vaccelrt-plugin-torch-0.1.0-Linux.deb) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/aarch64/Release-deb/vaccelrt-plugin-torch-0.1.0-Linux.deb)                                                                                                                                           | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/x86_64/Release/libvaccel-torch.so) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/torch/main/aarch64/Release/libvaccel-torch.so)                                                                                                                    |
+| Python bindings   | v0.0.1  | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/aarch64/vaccel-python-0.0.1.tar.gz)                                                                                                                                                                                                           | [`x86_64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/x86_64/vaccel-python-0.0.1.tar.gz) [`arm64`](https://s3.nbfc.io/nbfc-assets/github/python-vaccel/main/aarch64/vaccel-python-0.0.1.tar.gz)                                                                                                                                      |
+| TF bindings       | v0.0.1  | [`x86_64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release-deb/vaccel-tensorflow-0.1.0-Linux.deb) [`arm64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release-deb/vaccel-tensorflow-0.1.0-Linux.deb)                                                                                                                         | [`x86_64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/x86_64/Release/libvaccel-tf-bindings.so) [`arm64`](https://s3.nubificus.co.uk/nbfc-assets/github/vaccelrt/plugins/tensorflow/main/aarch64/Release/libvaccel-tf-bindings.so)                                                                              |
+
+<!-- markdownlint-restore -->
 
 In addition to the `deb` packages, we provide:
 
-- `tar` archives for vAccel core, holding shared objects, include files, and examples
+- `tar` archives for vAccel core, holding shared objects, include files, and
+  examples
 - shared objects (`.so`) for the various plugins
 - an executable for the vAccel agent
 
 ## Install
-
 
 ### Install vAccel core library
 
@@ -48,7 +53,7 @@ system.
 
 For example, to install the vAccel core library for an `x86_64` host, do:
 
-```
+```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
 dpkg -i vaccel-0.6.0-Linux.deb
 ```
@@ -75,6 +80,7 @@ Preparing to unpack vaccel-0.6.0-Linux.deb ...
 Unpacking vaccel (0.6.0) ...
 Setting up vaccel (0.6.0) ...
 ```
+
 The core runtime library package contains the following:
 
 - `libvaccel.so`: the main dispatcher
@@ -149,7 +155,8 @@ The core runtime library package contains the following:
 
 #### tar archive
 
-Alternatively, you can install the vAccel core runtime library using the tar artifact. Use the commands below to install it to `/usr/local/`:
+Alternatively, you can install the vAccel core runtime library using the tar
+artifact. Use the commands below to install it to `/usr/local/`:
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-tar/vaccel-0.6.0-Linux.tar.gz
@@ -161,7 +168,7 @@ tar -zxvf /vaccel-0.6.0-Linux.tar.gz  --strip-components=1 -C /
 #### `deb` package
 
 To install a plugin, download the relevant `deb` package for the host
-architecture and install it. 
+architecture and install it.
 
 For example, to install the `pynq` plugin on an aarch64 host do the following:
 
@@ -171,6 +178,7 @@ dpkg -i vaccelrt-plugin-pynq-0.1.1-Linux.deb
 ```
 
 The output should be something like the following:
+
 ```console
 # wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb
 --2022-11-08 21:42:41--  https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/pynq/main/aarch64/Release-deb/vaccelrt-plugin-pynq-0.1.1-Linux.deb
@@ -211,17 +219,16 @@ and `libvaccel-pynq.so` should appear in `/usr/local/lib`:
 
 Alternatively, you can grab the shared object directly from the
 [table](#binaries) above and set the environment variable `VACCEL_BACKENDS` to
-the full path of the file. See [Running a vAccel
-application](build-run-app.md#running-a-vaccel-application) for more info on
-how to specify the plugin(s) for a vAccel application.
-
+the full path of the file. See
+[Running a vAccel application](build-run-app.md#running-a-vaccel-application)
+for more info on how to specify the plugin(s) for a vAccel application.
 
 ### Install vAccel agent
 
 #### `deb` package
 
 To install the agent, download the relevant `deb` package for the host
-architecture and install it. 
+architecture and install it.
 
 ```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release-deb/vaccelrt-agent-0.3.7-Linux.deb
@@ -265,10 +272,9 @@ and you should see the binary in `/usr/local/bin`:
 
 Alternatively, you can grab the binary directly and make it executable:
 
-```
+```bash
 wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/Release/vaccel-agent
-# We will need to make it executable as file permissions are not preserved 
+# We will need to make it executable as file permissions are not preserved
 chmod +x ./vaccel-agent
 mv ./vaccel-agent /usr/local/bin
 ```
-

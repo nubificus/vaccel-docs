@@ -1,10 +1,13 @@
-## Build and Install using CMake
+# Build and Install using CMake
 
-Here are the instructions using the old legacy version of building, vaccel - using CMake. Do note that these instructions may be out of date and it is recommended to use Meson where possible.
+Here are the instructions using the old legacy version of building, vaccel -
+using CMake. Do note that these instructions may be out of date and it is
+recommended to use Meson where possible.
 
-### Prerequisites
+## Prerequisites
 
-In Ubuntu-based systems, you need to have the following packages to build `vaccelrt`:
+In Ubuntu-based systems, you need to have the following packages to build
+`vaccelrt`:
 
 - cmake
 - build-essential
@@ -15,8 +18,7 @@ You can install them using the following command:
 sudo apt-get install -y cmake build-essential
 ```
 
-
-### Get the source code
+## Get the source code
 
 Get the source code for **vaccelrt**:
 
@@ -24,7 +26,7 @@ Get the source code for **vaccelrt**:
 git clone https://github.com/cloudkernels/vaccelrt --recursive
 ```
 
-### Build and install vaccelrt
+## Build and install vaccelrt
 
 Build vaccelrt and install it in `/usr/local`:
 

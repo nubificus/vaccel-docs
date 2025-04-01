@@ -9,14 +9,15 @@ linked as a vAccel plugin, are the following:
 
 - An `init()` function, called upon plugin initialization
 
-```C
+```c
 static int init(void) {
 
 }
 ```
 
 - A `fini()` function, called before unloading the plugin
-```C
+
+```c
 static int fini(void) {
 
 }
@@ -30,7 +31,8 @@ static int fini(void) {
   - `.init` : The function to call upon plugin initialization (eg. `init()`)
   - `.fini` : The function to call before unloading the plugin (eg. on program
     exit, `fini()`)
-```C
+
+```c
 VACCEL_PLUGIN(
     .name = "vAccel template plugin",
     .version = "0.9",
@@ -44,15 +46,18 @@ At initialization, the plugin needs to register the vAccel operations that it
 implements. To do that, we use an array of `struct vaccel_op`s, that map each
 function implementation to the respective API operation. An operation array
 could look like the following:
-```C
+
+```c
 static struct vaccel_op ops[] = {
     VACCEL_OP_INIT(ops[0], VACCEL_OP_NOOP, my_noop_function),
     [...]
 };
 ```
+
 where `VACCEL_OP_NOOP` is the operation `type` and `my_noop_function` is the
 `func`tion implementation:
-```C
+
+```c
 struct vaccel_op {
     /* operation type */
     vaccel_op_type_t type;
@@ -72,7 +77,7 @@ This repo is a good start for developing a vAccel plugin in C.
 
 Let's look into `src/vaccel.c` from the template repo:
 
-```C
+```c
 #include <inttypes.h>
 #include <stdio.h>
 #include <vaccel.h> /* header with vAccel API */
@@ -114,10 +119,10 @@ The plugin registers `my_noop_function()` to serve as the implementation of the
 ## Install requirements
 
 Before building a vAccel plugin, we need to install the main vAccel library.
-Instructions on how to build vAccel can be found
-[here](quickstart.md).
+Instructions on how to build vAccel can be found [here](quickstart.md).
 
 We also need some packages to build the plugin itself:
+
 ```bash
 sudo apt-get install build-essential ninja-build pkg-config python3-pip
 sudo pip install meson
@@ -129,26 +134,30 @@ Now we can build the vAccel plugin template that implements the `NOOP` user API
 operation with our own custom function.
 
 First clone the repo:
+
 ```bash
 git clone https://github.com/nubificus/vaccel-plugin-template
 cd vaccel-plugin-template
 ```
 
 Use `meson` to prepare the `build` directory:
+
 ```bash
 meson setup build
 ```
 
 an build the plugin with:
+
 ```bash
 meson compile -C build
 ```
+
 This should output a shared object (`libvaccel-template.so`) in `./build/src/`.
 
 To be used as a plugin, we need to select it using the environment variable
-`VACCEL_PLUGINS` when running our vAccel application
-(ie. `VACCEL_PLUGINS=/path/to/libvaccel-template.so`).
+`VACCEL_PLUGINS` when running our vAccel application (ie.
+`VACCEL_PLUGINS=/path/to/libvaccel-template.so`).
 
-See [Running a vAccel
-application](user-guide/build-run-app.md#running-a-vaccel-application)
+See
+[Running a vAccel application](user-guide/build-run-app.md#running-a-vaccel-application)
 for more info.

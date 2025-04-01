@@ -1,27 +1,32 @@
 # Build and run a vAccel application
 
-Assuming we have an installation of vAccel, either by [building from
-source](building.md) or by installing the [binary packages](binaries.md), we
-will walk through the process of running a simple vAccel application
+Assuming we have an installation of vAccel, either by
+[building from source](building.md) or by installing the
+[binary packages](binaries.md), we will walk through the process of running a
+simple vAccel application
 
 ## Building a vaccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/nubificus/vaccel/tree/main/examples) folder of this project.
+[examples](https://github.com/nubificus/vaccel/tree/main/examples) folder of
+this project.
 
 If you haven't already done so, get the code and change to the cloned directory:
+
 ```bash
 git clone https://github.com/nubificus/vaccel
 cd vaccel
 ```
 
 You can then build the example using:
+
 ```bash
 meson setup -Dexamples=enabled build
 meson compile -C build
 ```
 
 A number of example binaries have been built:
+
 ```console
 $ ls build/examples
 classify          detect          exec_generic     minmax          pose             pynq_parallel    segment_generic  tf_inference
@@ -43,28 +48,28 @@ $
 $ cd examples
 $ gcc classify.c -o classify -Wall -Wextra $(pkg-config --cflags --libs vaccel)
 $ ls classify.c classify
-classify.c  classify  
+classify.c  classify
 ```
 
 ## Running a vaccel application
 
-Having built our `classify` example, we need to prepare the vaccel environment for it to run:
+Having built our `classify` example, we need to prepare the vaccel environment
+for it to run.
 
-1. Define the path to `libvaccel.so` (if not in the default search path):
+Define the path to `libvaccel.so` (if not in the default search path):
 
 ```bash
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ```
 
-2. Define the backend plugin to use for our application.
-
-In this example, we will use the noop plugin:
+Define the backend plugin to use for our application. In this example, we will
+use the noop plugin:
 
 ```bash
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 ```
 
-3. Finally, you can do:
+Finally, you can do:
 
 ```bash
 ./classify images/example.jpg 1
@@ -82,6 +87,7 @@ Image size: 79281B
 [noop] will return a dummy result
 classification tags: This is a dummy classification tag!
 ```
+
 Alternatively from the build directory:
 
 ```console
@@ -97,6 +103,7 @@ classification tags: This is a dummy classification tag!
 ```
 
 For debug level output:
-```
+
+```bash
 export VACCEL_DEBUG_LEVEL=4
 ```

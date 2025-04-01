@@ -1,7 +1,7 @@
 # Build & Install from source
 
-To build the components of vAccel we need the vAccel core library and a
-backend plugin that implements the operation we want to execute.
+To build the components of vAccel we need the vAccel core library and a backend
+plugin that implements the operation we want to execute.
 
 ## Build vAccel
 
@@ -10,7 +10,8 @@ system, the `exec` backend plugin and a debug plugin for testing (`noop`).
 
 ### 1. Cloning and preparing the build directory
 
-In Ubuntu-based systems, you need to have the following packages to build `vaccel`:
+In Ubuntu-based systems, you need to have the following packages to build
+`vaccel`:
 
 - build-essential
 - ninja-build
@@ -20,7 +21,7 @@ In Ubuntu-based systems, you need to have the following packages to build `vacce
 You can install them using the following command:
 
 ```bash
-apt-get install build-essential ninja-build pkg-config python3-pip 
+apt-get install build-essential ninja-build pkg-config python3-pip
 pip install meson
 ```
 
@@ -52,11 +53,13 @@ Building the plugins is disabled, by default. You can enable building one or
 more plugins at configuration time by setting the corresponding options.
 
 For example, replacing:
+
 ```bash
 meson setup --buildtype=release build
 ```
 
 with:
+
 ```bash
 meson setup --buildtype=release -Dplugin-noop=enabled build
 ```
@@ -66,11 +69,13 @@ the noop backend plugin.
 
 You can also configure a plugin after the initial configuration of your build
 directory by using:
+
 ```bash
 meson setup --reconfigure -Dplugin-noop=enabled build
 ```
 
 To view all available plugins and options/values you an run:
+
 ```bash
 meson setup --buildtype=release build
 meson configure build
@@ -81,15 +86,18 @@ vAccel specific options can be found in the `Project Options` section.
 ## Building a vAccel application
 
 We will use an example of image classification which can be found under the
-[examples](https://github.com/nubificus/vaccel/tree/main/examples) folder of this project.
+[examples](https://github.com/nubificus/vaccel/tree/main/examples) folder of
+this project.
 
 You can build the example using:
+
 ```bash
 meson setup --reconfigure -Dexamples=enabled build
 meson compile -C build
 ```
 
 A number of example binaries have been built:
+
 ```console
 $ ls examples
 classify          detect          exec_generic     minmax          pose             pynq_parallel    segment_generic  tf_inference
@@ -111,28 +119,28 @@ $
 $ cd examples
 $ gcc classify.c -o classify -Wall -Wextra $(pkg-config --cflags --libs vaccel)
 $ ls classify.c classify
-classify.c  classify  
+classify.c  classify
 ```
 
 ## Running a vAccel application
 
-Having built our `classify` example, we need to prepare the vaccel environment for it to run:
+Having built our `classify` example, we need to prepare the vaccel environment
+for it to run.
 
-1. Define the path to `libvaccel.so` (if not in the default search path):
+Define the path to `libvaccel.so` (if not in the default search path):
 
 ```bash
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ```
 
-2. Define the backend plugin to use for our application.
-
-In this example, we will use the noop plugin:
+Define the backend plugin to use for our application. In this example, we will
+use the noop plugin:
 
 ```bash
 export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
 ```
 
-3. Finally, you can do:
+Finally, you can do:
 
 ```bash
 ./classify images/example.jpg 1
@@ -150,6 +158,7 @@ Image size: 79281B
 [noop] will return a dummy result
 classification tags: This is a dummy classification tag!
 ```
+
 Alternatively from the build directory:
 
 ```console
@@ -165,6 +174,7 @@ classification tags: This is a dummy classification tag!
 ```
 
 For debug level output:
-```
+
+```bash
 export VACCEL_DEBUG_LEVEL=4
 ```
