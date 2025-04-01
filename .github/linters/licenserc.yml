@@ -34,5 +34,6 @@ header:
     - 'NOTICE'
     - 'source/conf.py'
     - 'docs'
+    - 'outdated_docs'
 
   comment: on-failure

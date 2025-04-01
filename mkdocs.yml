@@ -10,10 +10,10 @@ nav:
     - user-guide/build-run-app.md
     - user-guide/vm-example.md
     - user-guide/remote-example.md
-    #- Plugins:
-    #  - jetson.md
-    #  - virtio.md
-    #  - coral.md
+  #- Plugins:
+  #  - jetson.md
+  #  - virtio.md
+  #  - coral.md
   #- kata-vaccel.md
   #- k8s:
   #  - devmapper.md
@@ -23,14 +23,14 @@ nav:
     - language_bindings.md
     - python_bindings.md
     - Tensorflow: tensorflow_bindings.md
-    - pytorch_bindings.md
+  #  - pytorch_bindings.md
     - Go Bindings: vaccel_go.md  
-  - Container runtimes:
-    - container_runtimes.md
-    - kata_vaccel.md
-  - Unikernels:
-    - unikernels/index.md
-    - unikernels/unikraft.md
+  #- Container runtimes:
+  #  - container_runtimes.md
+  #  - kata_vaccel.md
+  #- Unikernels:
+  #  - unikernels/index.md
+  #  - unikernels/unikraft.md
   - Developer Guide:
     - dev_guide.md
     - api.md
