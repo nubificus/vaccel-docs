@@ -1,0 +1,1728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.vaccel.org/main/quickstart/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../user-guide/">
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>Quickstart - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quickstart" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quickstart
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Quickstart
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quickstart
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binary-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary packages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-vaccel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get vAccel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-jetson-inference-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the jetson-inference plugin
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build from Source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build from Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the source code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-install-vaccel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build and install vaccel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VM example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vm-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jetson-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jetson example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Jetson example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-a-jetson-inference-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running a Jetson-inference example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running a Jetson-inference example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#native-execution-running-on-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native execution (Running on the Host)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-in-a-firecracker-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running in a Firecracker VM
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/building/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build &amp; Install from source
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/binaries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python_bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python bindings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensorflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vaccel_go/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Go Bindings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Developer Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vAccel User API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Useful Docs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jetson/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensorflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PyTorch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#binary-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Binary packages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-vaccel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get vAccel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-jetson-inference-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the jetson-inference plugin
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build from Source
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build from Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-the-source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get the source code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-and-install-vaccel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build and install vaccel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vm-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="VM example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vm-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jetson-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jetson example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Jetson example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-a-jetson-inference-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running a Jetson-inference example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running a Jetson-inference example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#native-execution-running-on-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Native execution (Running on the Host)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-in-a-firecracker-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running in a Firecracker VM
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="quickstart">Quickstart</h1>
+<p>This is a quick start guide for running a simple vAccel application.</p>
+<ul>
+<li><a href="#build-from-source">Build from Source</a> or
+  <a href="#binary-packages">get the binary packages</a> [currently only for Debian/Ubuntu
+  variants]</li>
+<li>Run a <a href="#simple-example">simple example</a> [using the <code>noop</code> plugin]</li>
+<li>Run the same example <a href="#vm-example">in a VM</a> [same code in a VM]</li>
+<li>Run a more <a href="#jetson-example">elaborate example</a> [same scenario, using the
+  <code>jetson-inference</code> plugin]</li>
+<li>For the legacy version of instructions using CMake, follow <a href="../legacy/">here</a></li>
+</ul>
+<hr>
+
+<h2 id="binary-packages">Binary packages</h2>
+<p>We provide release debs of the vAccel library, along with an example, debug
+plugin (<code>noop</code>), and a hardware plugin (<code>jetson-inference</code>).</p>
+<h3 id="get-vaccel">Get vAccel</h3>
+<p>You can install vAccel (in <code>/usr/local</code>) using the following commands:</p>
+<pre><code class="language-bash">wget https://s3.nbfc.io/nbfc-assets/github/vaccel/main/x86_64/release-deb/vaccel-0.6.0-Linux.deb
+sudo dpkg -i vaccel-0.6.0-Linux.deb
+</code></pre>
+<h3 id="get-the-jetson-inference-plugin">Get the <code>jetson-inference</code> plugin</h3>
+<p>You can install the <code>jetson-inference</code> plugin using the following commands:</p>
+<pre><code class="language-bash">wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/master/x86_64/vaccelrt-plugin-jetson-0.1-Linux.deb
+dpkg -i vaccelrt-plugin-jetson-0.1-Linux.deb
+</code></pre>
+<p>You can now go ahead and run a <a href="#simple-example">simple example</a> using the
+<code>noop</code> plugin.</p>
+<hr>
+
+<h2 id="build-from-source">Build from Source</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>In Ubuntu-based systems, you need to have the following packages to build
+<code>vaccel</code>:</p>
+<ul>
+<li>build-essential</li>
+<li>meson</li>
+<li>ninja-build</li>
+</ul>
+<p>You can install them using the following command:</p>
+<pre><code class="language-bash">apt-get install build-essential ninja-build pkg-config python3-pip
+pip install meson
+</code></pre>
+<h3 id="get-the-source-code">Get the source code</h3>
+<p>Get the source code for <strong>vaccel</strong>:</p>
+<pre><code class="language-bash">git clone https://github.com/nubificus/vaccel --recursive
+</code></pre>
+<h3 id="build-and-install-vaccel">Build and install vaccel</h3>
+<p>Build vaccel and install</p>
+<pre><code class="language-bash">cd vaccel
+
+# Configure the build directory with the default options and set build
+# type to 'release'.
+meson setup --buildtype=release build
+
+# Compile the project
+meson compile -C build
+
+# Install the project
+meson install -C build
+</code></pre>
+<hr>
+
+<h2 id="simple-example">Simple Example</h2>
+<p>Download an adorable kitten photo:</p>
+<pre><code class="language-bash">wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
+</code></pre>
+<p>Try one of our examples, available at <code>/usr/local/bin/classify</code> or
+<code>/usr/local/bin/classify_generic</code>:</p>
+<pre><code class="language-bash"># set some env variables to specify where to find libvaccel.so
+# and the backend plugin (noop)
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+# execute the operation
+/usr/local/bin/classify_generic cat.jpeg 1
+</code></pre>
+<p>The output should be something like the following:</p>
+<pre><code class="language-bash"># /usr/local/bin/classify_generic cat.jpeg 1
+Initialized session with id: 1
+Image size: 54372B
+[noop] Calling Image classification for session 1
+[noop] Dumping arguments for Image classification:
+[noop] len_img: 54372
+[noop] will return a dummy result
+classification tags: This is a dummy classification tag!
+</code></pre>
+<h2 id="vm-example">VM example</h2>
+<p>To run our code in a VM, we will have to use a virtual plugin that will handle
+the forwarding of the function call from the VM to the Host system. That said,
+we still need vAccel in the Host system to execute the forwarded call. A visual
+representation of the execution flow is shown in Figure 1.</p>
+<figure>
+  <img src="/img/vaccel-vm-flow.png" width="800" align=left
+    alt="VM application execution flow" />
+  <figcaption>Figure 1. VM application execution flow</figcaption>
+</figure>
+
+<p>To enable this functionality, we will use the <code>VSOCK</code> plugin in the guest, and,
+still, the <code>NOOP</code> plugin in the Host.</p>
+<p>First, let's bootstrap the VM.</p>
+<h3 id="vm-setup">VM setup</h3>
+<p>To bootstrap a simple VM we will use AWS firecracker and an example kernel &amp;
+rootfs. In <a href="../user-guide/vm-example/">Run a vAccel application in a VM</a> we
+provide more examples of the various hypervisors/VMMs we have tested and
+support. You can get the binaries using the commands below:</p>
+<pre><code class="language-bash">wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/firecracker
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config.json
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/fc/config_vsock.json
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rust-vmm/vmlinux
+wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/vm-example/x86_64/rootfs.img
+</code></pre>
+<p>We should have the following files available:</p>
+<pre><code class="language-console"># tree .
+.
+├── config_vsock.json
+├── firecracker
+├── rootfs.img
+└── vmlinux
+
+0 directories, 4 files
+</code></pre>
+<p>To launch the VM, all we have to do is run the following command:</p>
+<pre><code class="language-bash"># make the firecracker binary executable
+chmod +x firecracker
+
+# launch the VM
+./firecracker --api-sock fc.sock --config-file config_vsock.json
+</code></pre>
+<p>We should be presented with a login prompt:</p>
+<pre><code class="language-console"># ./firecracker --api-sock fc.sock --config-file config_vsock.json
+[    0.000000] Linux version 5.10.0 (runner@gh-cloud-pod-t4rjg) (gcc (Ubuntu 8.4.0-3ubuntu2) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1 SMP Tue Mar 22 20:07:37 UTC 2022
+[    0.000000] Command line: console=ttyS0 reboot=k panic=1 pci=off loglevel=8 root=/dev/vda ip=172.42.0.2::172.42.0.1:255.255.255.0::eth0:off random.trust_cpu=on root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6 virtio_mmio.device=4K@0xd0002000:7
+[...]
+[    1.113425] EXT4-fs (vda): mounted filesystem with ordered data mode. Opts: (null)
+[    1.114644] VFS: Mounted root (ext4 filesystem) on device 254:0.
+[    1.115459] devtmpfs: mounted
+[    1.116096] Freeing unused decrypted memory: 2036K
+[    1.116945] Freeing unused kernel image (initmem) memory: 1420K
+[    1.128668] Write protecting the kernel read-only data: 14336k
+[    1.131705] Freeing unused kernel image (text/rodata gap) memory: 2044K
+[    1.133465] Freeing unused kernel image (rodata/data gap) memory: 144K
+[    1.134869] Run /sbin/init as init process
+[    1.135755]   with arguments:
+[    1.136400]     /sbin/init
+[    1.137017]   with environment:
+[    1.137712]     HOME=/
+[    1.138225]     TERM=linux
+[    1.159918] systemd[1]: Failed to find module 'autofs4'
+[    1.163986] systemd[1]: systemd 245.4-4ubuntu3.11 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
+[    1.166524] systemd[1]: Detected virtualization kvm.
+[    1.167101] systemd[1]: Detected architecture x86-64.
+
+Welcome to Ubuntu 20.04.2 LTS!
+
+[...]
+[  OK  ] Finished Permit User Sessions.
+[  OK  ] Started Getty on tty1.
+[  OK  ] Started Serial Getty on ttyS0.
+[  OK  ] Reached target Login Prompts.
+[  OK  ] Started Network Name Resolution.
+[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
+[  OK  ] Reached target Host and Network Name Lookups.
+[  OK  ] Started OpenBSD Secure Shell server.
+[  OK  ] Started Login Service.
+[  OK  ] Started Dispatcher daemon for systemd-networkd.
+[  OK  ] Reached target Multi-User System.
+[  OK  ] Reached target Graphical Interface.
+         Starting Update UTMP about System Runlevel Changes...
+[  OK  ] Finished Update UTMP about System Runlevel Changes.
+
+Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
+
+vaccel-guest login:
+</code></pre>
+<p>Go ahead and log in (user: <code>root</code>, no password).</p>
+<p>Now, open another terminal to run the vAccel Agent. A detailed walkthrough of
+the execution flow with the agent is shown in
+<a href="../user-guide/vm-example/#running-the-vaccel-agent">Running the vAccel Agent</a>.</p>
+<p>First get the binary:</p>
+<pre><code class="language-bash">wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/agent/main/x86_64/release/vaccel-agent
+chmod +x vaccel-agent
+</code></pre>
+<p>Then, go ahead and run the binary with the <code>noop</code> plugin:</p>
+<pre><code class="language-bash">export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+### Listen to port 2048 on the socket exposed by the
+### VM (specified in config_vsock.json)
+export VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
+./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+</code></pre>
+<p>You should be presented with the following output:</p>
+<pre><code class="language-console"># ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+vaccel ttRPC server started. address: unix:///tmp/vaccel.sock_2048
+Server is running, press Ctrl + C to exit
+</code></pre>
+<p>Now, on the VM terminal, go ahead and run the example application:</p>
+<pre><code class="language-console">Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
+
+vaccel-guest login: root
+
+# /opt/vaccel/bin/classify /opt/vaccel/share/images/dog_1.jpg 1
+Initialized session with id: 1
+Image size: 54372B
+classification tags: This is a dummy classification tag!
+</code></pre>
+<p>and the terminal that the agent is running should produce the following output:</p>
+<pre><code class="language-console">Created session 1
+session:VaccelId { inner: Some(1) } Image classification
+[noop] Calling Image classification for session 1
+[noop] Dumping arguments for Image classification:
+[noop] len_img: 54372
+[noop] will return a dummy result
+Destroying session VaccelId { inner: Some(1) }
+Destroyed session 1
+</code></pre>
+<h2 id="jetson-example">Jetson example</h2>
+<p>Running with the Jetson inference plugin requires a working
+<a href="https://github.com/dusty-nv/jetson-inference">jetson-inference</a> installation
+along with the corresponding CUDA environment on the machine. If all is set up
+correctly you can just skip to
+<a href="#running-a-jetson-inference-example">Running a Jetson-inference example</a>. If
+not, you can follow the steps below to get a working environment.</p>
+<p>If a jetson-inference setup is not available you can either follow
+<a href="../jetson/">this guide</a> to build the vAccel jetson plugin and install the
+prerequisites on your host machine, or you can use a container image, provided
+you can expose an NVIDIA GPU in the container.</p>
+<h3 id="running-a-jetson-inference-example">Running a Jetson-inference example</h3>
+<p>A simple jetson-inference operation is image classification using <code>imagenet</code>.
+You can simply run:</p>
+<pre><code class="language-console">$ imagenet-console cat.jpeg
+[video]  created imageLoader from cat.jpeg
+------------------------------------------------
+imageLoader video options:
+------------------------------------------------
+  -- URI: cat.jpeg
+     - protocol:  file
+     - location:  cat.jpeg
+     - extension: jpeg
+  -- deviceType: file
+  -- ioType:     input
+[...]
+
+imageNet -- loading classification network model from:
+         -- prototxt     networks/googlenet.prototxt
+         -- model        networks/bvlc_googlenet.caffemodel
+         -- class_labels networks/ilsvrc12_synset_words.txt
+         -- input_blob   'data'
+         -- output_blob  'prob'
+         -- batch_size   1
+
+[TRT]    TensorRT version 8.5.1
+[...]
+[TRT]    [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +4, now: CPU 0, GPU 17 (MiB)
+[...]
+[TRT]
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       74
+[TRT]       -- maxBatchSize 1
+[TRT]       -- deviceMemory 3619328
+[TRT]       -- bindings     2
+[TRT]       binding 0
+                -- index   0
+                -- name    'data'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3
+                -- dim #1  224
+                -- dim #2  224
+[TRT]       binding 1
+                -- index   1
+                -- name    'prob'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1000
+                -- dim #1  1
+                -- dim #2  1
+[TRT]
+[TRT]    binding to input 0 data  binding index:  0
+[TRT]    binding to input 0 data  dims (b=1 c=3 h=224 w=224) size=602112
+[TRT]    binding to output 0 prob  binding index:  1
+[TRT]    binding to output 0 prob  dims (b=1 c=1000 h=1 w=1) size=4000
+[TRT]
+
+[...]
+[TRT]    device GPU, networks/bvlc_googlenet.caffemodel initialized.
+[TRT]    imageNet -- loaded 1000 class info entries
+[TRT]    imageNet -- networks/bvlc_googlenet.caffemodel initialized.
+[image]  loaded 'cat.jpeg'  (640x427, 3 channels)
+class 0281 - 0.220981  (tabby, tabby cat)
+class 0282 - 0.062819  (tiger cat)
+class 0283 - 0.017998  (Persian cat)
+class 0284 - 0.017858  (Siamese cat, Siamese)
+class 0285 - 0.482666  (Egyptian cat)
+class 0287 - 0.180359  (lynx, catamount)
+imagenet:  48.26662% class #285 (Egyptian cat)
+
+[TRT]    ------------------------------------------------
+[TRT]    Timing Report networks/bvlc_googlenet.caffemodel
+[TRT]    ------------------------------------------------
+[TRT]    Pre-Process   CPU   0.02268ms  CUDA   0.22272ms
+[TRT]    Network       CPU   1.79966ms  CUDA   1.60173ms
+[TRT]    Post-Process  CPU   0.02573ms  CUDA   0.02646ms
+[TRT]    Total         CPU   1.84807ms  CUDA   1.85091ms
+[TRT]    ------------------------------------------------
+
+[...]
+[image]  imageLoader -- End of Stream (EOS) has been reached, stream has been closed
+imagenet:  shutting down...
+imagenet:  shutdown complete.
+</code></pre>
+<p>and you can get the classification tag:
+<code>imagenet:  48.26662% class #285 (Egyptian cat)</code>.</p>
+<p>What we've built using the <code>jetson-inference</code> plugin, and the vAccel image
+classification API operation, is a mechanism to run this over vAccel.</p>
+<h4 id="native-execution-running-on-the-host">Native execution (Running on the Host)</h4>
+<p>To run the above example using vAccel we can simply execute:</p>
+<pre><code class="language-sh">export LD_LIBRARY_PATH=/usr/local/lib
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-jetson.so
+export VACCEL_IMAGENET_NETWORKS=/usr/local/share/networks
+/usr/local/bin/classify cat.jpeg 1
+</code></pre>
+<p>The output should be something like the following:</p>
+<pre><code class="language-console">classify cat.jpeg 1
+Initialized session with id: 1
+Image size: 54372B
+
+imageNet -- loading classification network model from:
+         -- prototxt     networks/googlenet.prototxt
+         -- model        data/networks/bvlc_googlenet.caffemodel
+         -- class_labels networks/ilsvrc12_synset_words.txt
+         -- input_blob   'data'
+         -- output_blob  'prob'
+         -- batch_size   1
+
+[TRT]    TensorRT version 8.5.1
+[TRT]    loading NVIDIA plugins...
+[...]
+[TRT]    detected model format - caffe  (extension '.caffemodel')
+[TRT]    desired precision specified for GPU: FASTEST
+[TRT]    requested fasted precision for device GPU without providing valid calibrator, disabling INT8
+[TRT]    [MemUsageChange] Init CUDA: CPU +307, GPU +0, now: CPU 318, GPU 223 (MiB)
+[TRT]    Trying to load shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    Loaded shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    [MemUsageChange] Init builder kernel library: CPU +261, GPU +74, now: CPU 634, GPU 297 (MiB)
+[...]
+[TRT]    [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +0, GPU +13, now: CPU 0, GPU 13 (MiB)
+[...]
+[TRT]    [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +4, now: CPU 0, GPU 17 (MiB)
+[...]
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       78
+[TRT]       -- maxBatchSize 1
+[TRT]       -- deviceMemory 3619840
+[TRT]       -- bindings     2
+[TRT]       binding 0
+                -- index   0
+                -- name    'data'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3
+                -- dim #1  224
+                -- dim #2  224
+[TRT]       binding 1
+                -- index   1
+                -- name    'prob'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1000
+                -- dim #1  1
+                -- dim #2  1
+[...]
+[TRT]    device GPU, networks/bvlc_googlenet.caffemodel initialized.
+[TRT]    imageNet -- loaded 1000 class info entries
+[TRT]    imageNet -- networks/bvlc_googlenet.caffemodel initialized.
+class 0281 - 0.219007  (tabby, tabby cat)
+class 0282 - 0.062747  (tiger cat)
+class 0283 - 0.017977  (Persian cat)
+class 0284 - 0.017837  (Siamese cat, Siamese)
+class 0285 - 0.482107  (Egyptian cat)
+class 0287 - 0.182987  (lynx, catamount)
+imagenet: 48.21070% class #285 (Egyptian cat)
+imagenet: attempting to save output image
+imagenet: completed saving
+imagenet: shutting down...
+classification tags: 48.211% Egyptian cat
+</code></pre>
+<p>The first two and the last line are output from the classify example (the vAccel
+application), whereas the rest is similar (if not identical) to the native
+jetson execution, since we run on the Host.</p>
+<p><strong>Note</strong>: The first time your run a classification with a model jetson-inference
+is performing some JIT steps to optimize the classification result, so you can
+expect increased execution time. The output of this operation is cached for
+subsequent executions in the networks folder.</p>
+<h4 id="running-in-a-firecracker-vm">Running in a Firecracker VM</h4>
+<p>In similar fashion as before, we launch the VM &amp; the agent:</p>
+<pre><code class="language-bash"># Launch the Firecracker VM
+./firecracker --api-sock fc.sock --config-file config_vsock.json
+</code></pre>
+<pre><code class="language-bash">### Run the Agent on a separate terminal
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-jetson.so
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+### Listen to port 2048 on the socket exposed by the
+### VM (specified in config_vsock.json)
+export VACCEL_AGENT_ENDPOINT=unix:///tmp/vaccel.sock_2048
+./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+</code></pre>
+<p>Similarly, we login as root (no password).</p>
+<pre><code class="language-console"># ./firecracker --api-sock fc.sock --config-file config_vsock.json
+[    0.000000] Linux version 6.0.0 (ananos@dell00) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #14 SMP PREEMPT_DYNAMIC Mon Nov 14 15:52:14 UTC 2022
+[    0.000000] Command line: console=ttyS0 reboot=k panic=1 pci=off loglevel=8 root=/dev/vda random.trust_cpu=on root=/dev/vda rw virtio_mmio.device=4K@0xd0000000:5 virtio_mmio.device=4K@0xd0001000:6
+[...]
+[    2.842908] systemd[1]: Detected virtualization kvm.
+[    2.843885] systemd[1]: Detected architecture x86-64.
+
+Welcome to Ubuntu 20.04.2 LTS!
+
+[    2.860233] systemd[1]: Set hostname to &lt;vaccel-guest.nubificus.co.uk&gt;.
+[    2.948752] systemd-fstab-g (77) used greatest stack depth: 14152 bytes left
+[    2.964256] systemd-sysv-ge (84) used greatest stack depth: 13976 bytes left
+[...]
+[  OK  ] Started Login Service.
+[  OK  ] Started OpenBSD Secure Shell server.
+[  OK  ] Finished Remove Stale Onli…ext4 Metadata Check Snapshots.
+[  OK  ] Started Dispatcher daemon for systemd-networkd.
+[  OK  ] Reached target Multi-User System.
+[  OK  ] Reached target Graphical Interface.
+         Starting Update UTMP about System Runlevel Changes...
+[  OK  ] Finished Update UTMP about System Runlevel Changes.
+
+Ubuntu 20.04.2 LTS vaccel-guest.nubificus.co.uk ttyS0
+
+vaccel-guest login: root
+Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 6.0.0 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+This system has been minimized by removing packages and content that are
+not required on a system that users do not log into.
+
+To restore this content, you can run the 'unminimize' command.
+Last login: Mon Nov 14 19:00:02 UTC 2022 on ttyS0
+root@vaccel-guest:~#
+</code></pre>
+<p>Once, in the prompt of the guest we check if the environment is set up
+correctly:</p>
+<pre><code class="language-console">root@vaccel-guest:~# env |grep -i vaccel
+VACCEL_DEBUG_LEVEL=0
+VACCEL_BACKENDS=/opt/vaccel/lib/libvaccel-vsock.so
+</code></pre>
+<p>and we make sure the agent is running on the separate terminal:</p>
+<pre><code class="language-console"># /opt/vaccel-v0.4.0/bin/vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+vaccel ttRPC server started. address: unix:///tmp/vaccel.sock_2048
+Server is running, press Ctrl + C to exit
+</code></pre>
+<p>On the VM terminal, we run the classification operation:</p>
+<pre><code class="language-console">root@vaccel-guest:~# /opt/vaccel/bin/classify cat.jpeg 1
+Initialized session with id: 1
+Image size: 54372B
+classification tags: 48.211% Egyptian cat
+</code></pre>
+<p>We see that the classification tag is accurate (at least in par with the native
+execution). And we see the output we expect in the agent terminal:\</p>
+<pre><code class="language-console">Created session 1
+session:VaccelId { inner: Some(1) } Image classification
+
+imageNet -- loading classification network model from:
+         -- prototxt     networks/googlenet.prototxt
+         -- model        networks/bvlc_googlenet.caffemodel
+         -- class_labels networks/ilsvrc12_synset_words.txt
+         -- input_blob   'data'
+         -- output_blob  'prob'
+         -- batch_size   1
+
+[TRT]    TensorRT version 8.5.1
+[TRT]    loading NVIDIA plugins...
+[...]
+[TRT]    requested fasted precision for device GPU without providing valid calibrator, disabling INT8
+[TRT]    [MemUsageChange] Init CUDA: CPU +306, GPU +0, now: CPU 318, GPU 223 (MiB)
+[TRT]    Trying to load shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    Loaded shared library libnvinfer_builder_resource.so.8.5.1
+[TRT]    [MemUsageChange] Init builder kernel library: CPU +262, GPU +74, now: CPU 635, GPU 297 (MiB)
+[...]
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       78
+[TRT]       -- maxBatchSize 1
+[TRT]       -- deviceMemory 3619840
+[TRT]       -- bindings     2
+[TRT]       binding 0
+                -- index   0
+                -- name    'data'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3
+                -- dim #1  224
+                -- dim #2  224
+[TRT]       binding 1
+                -- index   1
+                -- name    'prob'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1000
+                -- dim #1  1
+                -- dim #2  1
+[TRT]
+[TRT]    binding to input 0 data  binding index:  0
+[TRT]    binding to input 0 data  dims (b=1 c=3 h=224 w=224) size=602112
+[TRT]    binding to output 0 prob  binding index:  1
+[TRT]    binding to output 0 prob  dims (b=1 c=1000 h=1 w=1) size=4000
+[TRT]
+[TRT]    device GPU, data/networks/bvlc_googlenet.caffemodel initialized.
+[TRT]    imageNet -- loaded 1000 class info entries
+[TRT]    imageNet -- networks/bvlc_googlenet.caffemodel initialized.
+class 0281 - 0.219007  (tabby, tabby cat)
+class 0282 - 0.062747  (tiger cat)
+class 0283 - 0.017977  (Persian cat)
+class 0284 - 0.017837  (Siamese cat, Siamese)
+class 0285 - 0.482107  (Egyptian cat)
+class 0287 - 0.182987  (lynx, catamount)
+imagenet: 48.21070% class #285 (Egyptian cat)
+imagenet: attempting to save output image
+imagenet: completed saving
+imagenet: shutting down...
+Destroying session VaccelId { inner: Some(1) }
+Destroyed session 1
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
