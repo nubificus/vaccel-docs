@@ -1,0 +1,1522 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Instructions to use vAccel in Unikraft">
+      
+      
+        <meta name="author" content="Charalampos Mainas">
+      
+      
+        <link rel="canonical" href="https://docs.vaccel.org/v0.6.1/unikernels/unikraft/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../../dev_guide/">
+      
+      
+      <link rel="icon" href="../../img/vaccel-img-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>How to run a vAccel application using Unikraft - vAccel</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#build-a-vaccel-enabled-qemu" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            vAccel
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to run a vAccel application using Unikraft
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 1 3 3 3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0 9.821 9.821 0 0 0-17.64 0"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+      
+  <img src="../../img/vaccel-logo-full.svg" alt="logo">
+
+    </a>
+    vAccel
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quickstart
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/building/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build &amp; Install from source
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/binaries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install from binary packages
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/build-run-app/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build and run a vAccel application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/vm-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run a vAccel application in a VM
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/remote-example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Run a vAccel application remotely
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Framework & Language bindings
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Framework & Language bindings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python_bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python bindings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tensorflow_bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensorflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PyTorch [WiP]
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vaccel_go/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Go Bindings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Container runtimes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Container runtimes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kata_vaccel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kata-containers with vAccel
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Unikernels
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unikernels
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to run a vAccel application using Unikraft
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-vaccel-enabled-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a vAccel-enabled QEMU
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-vaccel-app-in-unikraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a vAccel app in Unikraft
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-vaccel-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install vAccel dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run the application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run the application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare the environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spawn-the-unikernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spawn the Unikernel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-host-for-gpu-acceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup the host for GPU acceleration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-the-jetson-inference-vaccel-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install the jetson-inference vAccel plugin
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Developer Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Developer Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vAccel User API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Python API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    vAccel plugin API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Useful Docs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Useful Docs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jetson/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Jetson Inference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensorflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PyTorch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-vaccel-enabled-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a vAccel-enabled QEMU
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-a-vaccel-app-in-unikraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build a vAccel app in Unikraft
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-vaccel-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install vAccel dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run the application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run the application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prepare-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare the environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spawn-the-unikernel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spawn the Unikernel
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-the-host-for-gpu-acceleration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup the host for GPU acceleration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install-the-jetson-inference-vaccel-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install the jetson-inference vAccel plugin
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>How to run a vAccel application using Unikraft</h1>
+
+<p>Consuming the vAccel API from the Unikraft Unikernel can be a challenge! In
+what follows we will walk through the steps of the integration and show a
+simple example application running on Unikraft using the vAccel API.</p>
+<h3 id="build-a-vaccel-enabled-qemu">Build a vAccel-enabled QEMU</h3>
+<p>First, we treat unikraft as a single application OS kernel -- so, essentially,
+we bundle a vAccel application in a Unikraft binary and run this as a Virtual
+Machine. We use QEMU/KVM as the hypervisor.</p>
+<p>For now, only the <code>virtio</code> plugin is supported on Unikraft, so we will have to
+use our <a href="https://github.com/cloudkernels/qemu-vaccel/tree/unikraft_vaccelrt">downstream
+QEMU</a> port,
+with the vAccel virtio backend built in.</p>
+<p>To get the code &amp; build it, we can use the following commands:</p>
+<pre><code class="language-sh">git clone --recursive https://github.com/cloudkernels/qemu-vaccel.git -b unikraft_vaccelrt
+export QEMU_SOURCE=$PWD/qemu-vaccel
+cd qemu-vaccel
+mkdir build &amp;&amp; cd build
+../configure --extra-cflags=&quot;-I /usr/local/include&quot; --extra-ldflags=&quot;-L/usr/local/lib&quot; --target-list=x86_64-softmmu --enable-virtfs &amp;&amp; make -j $(nproc)
+</code></pre>
+<p>Now the QEMU binary is at <code>$QEMU_SOURCE/build/x86_64-softmmu/qemu-system-x86_64</code>. Save this path:</p>
+<pre><code class="language-sh">export QEMU_BINARY=&quot;$QEMU_SOURCE/build/x86_64-softmmu/qemu-system-x86_64&quot;
+cd ../../
+</code></pre>
+<h3 id="build-a-vaccel-app-in-unikraft">Build a vAccel app in Unikraft</h3>
+<p>We will follow the instructions from <a href="https://unikraft.org/docs/usage/make_build/">Unikraft's
+documentation</a> with a minor
+change. We will not use the official Unikraft repo but our fork. </p>
+<pre><code>mkdir unikraft_dev &amp;&amp; cd unikraft_dev
+git clone https://github.com/cloudkernels/unikraft.git -b vaccelrt_rel010
+mkdir apps/ &amp;&amp; mkdir libs 
+cd libs &amp;&amp; git clone https://github.com/unikraft/lib-newlib &amp;&amp; cd ..
+cd apps
+git clone https://github.com/cloudkernels/unikraft_vaccel_examples
+cd unikraft_vaccel_examples
+</code></pre>
+<p>Our examples repo has a config which enables vAccel support for Unikraft and a
+lot of debug messages. You can use that config or you can make your own config,
+but make sure you select vaccelrt under library configuration inside
+menuconfig. Also, make sure you choose one application (eg. Image
+Classification).</p>
+<pre><code>cp vaccel_config .config &amp;&amp; make olddefconfig
+make menuconfig
+## Choose Image classification, exit &amp; save
+make
+</code></pre>
+<p>You should be presented with a binary: <code>build/unikraft_vaccel_examples_kvm-x86_64</code></p>
+<p>save this in an env variable:</p>
+<pre><code class="language-sh">export UNIKRAFT_BINARY=$PWD/build/unikraft_vaccel_examples_kvm-x86_64
+</code></pre>
+<h3 id="install-vaccel-dependencies">Install vAccel dependencies</h3>
+<p>Now, we need to install the vAccel core library and a plugin. Follow the
+instructions from the
+<a href="../../user-guide/binaries/#install-vaccelrt-core-library">docs</a>. Bundled
+with the core library is the <code>noop</code> plugin which we will use as the example.</p>
+<p><em>TL;DR</em></p>
+<pre><code class="language-sh">wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/main/x86_64/Release-deb/vaccel-0.6.0-Linux.deb
+dpkg -i vaccel-0.6.0-Linux.deb
+</code></pre>
+<h3 id="run-the-application">Run the application</h3>
+<p>To execute the application we have all the binaries we need; we just need to set some env variables and fire-up the unikernel.</p>
+<h4 id="prepare-the-environment">Prepare the environment</h4>
+<p>Set the <code>LD_LIBRARY_PATH</code> and the plugin (<code>VACCEL_BACKENDS</code>)</p>
+<pre><code class="language-sh">export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
+</code></pre>
+<p>set the path in host we will share:</p>
+<pre><code class="language-sh">export DATA=/usr/local/share/images
+</code></pre>
+<p>set the arguments for the application</p>
+<pre><code class="language-sh">export ARGS=&quot;example.jpg 1&quot;
+</code></pre>
+<h4 id="spawn-the-unikernel">Spawn the Unikernel</h4>
+<p>the QEMU spawn command is a bit bulky, so we will walk it through:</p>
+<pre><code class="language-sh">$QEMU_BINARY -cpu host \
+                -m 4 \
+                -enable-kvm \
+                -nographic -vga none \
+                -fsdev local,id=myid,path=$DATA,security_model=none \
+                -device virtio-9p-pci,fsdev=myid,mount_tag=data,disable-modern=on,disable-legacy=off \
+                -object acceldev-backend-vaccelrt,id=gen0 \
+                -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on \
+                -kernel $UNIKRAFT_BINARY \
+                -append &quot;vfs.rootdev=data -- $ARGS&quot;
+</code></pre>
+<ul>
+<li><code>-cpu host</code>:  # CPU mode, copy the host's CPU arch</li>
+<li><code>-m 4</code>: Memory, yes, we only need 4 MBs of memory!</li>
+<li><code>-enable-kvm</code>: Enable hardware virtualization support</li>
+<li><code>-nographic -vga none</code>: we don't need any graphics support</li>
+<li><code>-fsdev local,id=myid,path=$DATA,security_model=none</code>: Folder where input files are stored</li>
+<li><code>-device virtio-9p-pci,fsdev=myid,mount_tag=data,disable-modern=on,disable-legacy=off</code>: device for virtio-9p fs</li>
+<li><code>-object acceldev-backend-vaccelrt,id=gen0</code>: the vAccel virtio backend device file</li>
+<li><code>-device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on</code>: the vAccel virtio device</li>
+<li><code>-kernel $UNIKRAFT_BINARY</code>: our unikernel Image</li>
+<li><code>-append "vfs.rootdev=data -- $ARGS"</code>: our command line arguments</li>
+</ul>
+<h3 id="setup-the-host-for-gpu-acceleration">Setup the host for GPU acceleration</h3>
+<p>To run a more realistic scenario (i.e. the above example with a hardware
+plugin), we could use jetson-inference, a simple AI framework from NVIDIA that
+exposes Image inference operations through a simple, intuitive API.</p>
+<p>To run such an example, we will need:</p>
+<ul>
+<li>an NVIDIA GPU which supports CUDA and TensorRT</li>
+<li>the appropriate device drivers (nvidia-drivers-460+)</li>
+<li>the <a href="https://github.com/dusty-nv/jetson-inference">jetson-inference</a> framework</li>
+</ul>
+<p>As long as we have the above dependencies, the only thing we need to change in
+the example we just ran is the plugin.  A comprehensive walk through on
+installing the above dependencies is given in <a href="../../jetson/">Jetson-inference</a>.</p>
+<h3 id="install-the-jetson-inference-vaccel-plugin">Install the jetson-inference vAccel plugin</h3>
+<p>Given we have a working jetson-inference installation, we need to get the
+vAccel jetson-inference plugin. Have a look at <a href="../../user-guide/binaries/#install plugins">how we install plugins for
+vAccel</a> and pick-up the jetson-inference
+binary from the <a href="../../user-guide/binaries/#binaries">binaries</a> table.</p>
+<p>TL;DR</p>
+<pre><code class="language-sh">wget https://s3.nbfc.io/nbfc-assets/github/vaccelrt/plugins/jetson_inference/main/x86_64/Release-deb/vaccelrt-plugin-jetson-0.1-Linux.deb
+dpkg -i vaccelrt-plugin-jetson-0.1-Linux.deb
+</code></pre>
+<p>Having the same env variables set as above, we need to change the plugin:</p>
+<pre><code class="language-sh">export VACCEL_BACKENDS=/usr/local/lib/libvaccel-jetson.so
+</code></pre>
+<p>and if we re-run the QEMU command above, we will get a real response for Image
+classification, from the GPU.</p>
+<pre><code class="language-console"># $QEMU_BINARY -cpu host \
+                -m 4 \
+                -enable-kvm \
+                -nographic -vga none \
+                -fsdev local,id=myid,path=$DATA,security_model=none \
+                -device virtio-9p-pci,fsdev=myid,mount_tag=data,disable-modern=on,disable-legacy=off \
+                -object acceldev-backend-vaccelrt,id=gen0 \
+                -device virtio-accel-pci,id=accl0,runtime=gen0,disable-legacy=off,disable-modern=on \
+                -kernel $UNIKRAFT_BINARY \
+                -append &quot;vfs.rootdev=data -- $ARGS&quot;
+Booting from ROM..[    0.000000] Info: [libkvmplat] &lt;setup.c @  468&gt; Entering from KVM (x86)...
+[    0.000000] Info: [libkvmplat] &lt;setup.c @  469&gt;      multiboot: 0x9500
+[    0.000000] Info: [libkvmplat] &lt;setup.c @  487&gt;     heap start: 0x170000
+[    0.000000] Info: [libkvmplat] &lt;setup.c @  492&gt;      stack top: 0x3d0000
+[    0.000000] Info: [libkvmplat] &lt;setup.c @  519&gt; Switch from bootstrap stack to stack @0x3e0000
+[    0.000000] Info: [libukboot] &lt;boot.c @  200&gt; Unikraft constructor table at 0x13c000 - 0x13c040
+[    0.000000] Info: [libuklibparam] &lt;param.c @  113&gt; libname: vfs, 96
+[    0.000000] Info: [libuklibparam] &lt;param.c @  655&gt; Parsed 1 args
+[    0.000000] Info: [libukboot] &lt;boot.c @  213&gt; Found 2 library args
+[    0.000000] Info: [libukboot] &lt;boot.c @  221&gt; Initialize memory allocator...
+[    0.000000] Info: [libukallocbbuddy] &lt;bbuddy.c @  516&gt; Initialize binary buddy allocator 170000
+[    0.000000] Info: [libukboot] &lt;boot.c @  264&gt; Initialize IRQ subsystem...
+[    0.000000] Info: [libukboot] &lt;boot.c @  271&gt; Initialize platform time...
+[    0.000000] Info: [libkvmplat] &lt;tscclock.c @  253&gt; Calibrating TSC clock against i8254 timer
+[    0.100002] Info: [libkvmplat] &lt;tscclock.c @  275&gt; Clock source: TSC, frequency estimate is 3400051000 Hz
+[    0.103194] Info: [libukschedcoop] &lt;schedcoop.c @  232&gt; Initializing cooperative scheduler
+[    0.105880] Info: [libuksched] &lt;thread.c @  181&gt; Thread &quot;Idle&quot;: pointer: 0x173060, stack: 0x390000, tls: 0x174020
+[    0.109225] Info: [libuksched] &lt;thread.c @  181&gt; Thread &quot;main&quot;: pointer: 0x176010, stack: 0x310000, tls: 0x177020
+[    0.112698] Info: [libukboot] &lt;boot.c @   96&gt; Init Table @ 0x13c040 - 0x13c060
+[    0.115131] Info: [libukbus] &lt;bus.c @  134&gt; Initialize bus handlers...
+[    0.117423] Info: [libuk9p] &lt;9pdev_trans.c @   59&gt; Registered transport virtio
+[    0.119917] Info: [libukbus] &lt;bus.c @  136&gt; Probe buses...
+[    0.121811] Info: [libkvmpci] &lt;pci_bus_x86.c @  164&gt; PCI 00:00.00 (0600 8086:1237): &lt;no driver&gt;
+[    0.124901] Info: [libkvmpci] &lt;pci_bus_x86.c @  164&gt; PCI 00:01.00 (0600 8086:7000): &lt;no driver&gt;
+[    0.128151] Info: [libkvmpci] &lt;pci_bus_x86.c @  164&gt; PCI 00:02.00 (0200 8086:100e): &lt;no driver&gt;
+[    0.131345] Info: [libkvmpci] &lt;pci_bus_x86.c @  164&gt; PCI 00:03.00 (0000 1af4:1009): driver 0x1430a0
+[    0.134400] Info: [libkvmvirtio] &lt;virtio_pci.c @  380&gt; Added virtio-pci device 1009
+[    0.136950] Info: [libkvmvirtio] &lt;virtio_pci.c @  382&gt; Added virtio-pci subsystem_device_id 0009
+[    0.140147] Info: [libkvmvirtio] &lt;virtio_bus.c @  127&gt; Virtio device 0x17a010 initialized
+[    0.143132] Info: [libkvmvirtio9p] &lt;virtio_9p.c @  405&gt; virtio-9p: Configured: features=0x1 tag=data
+[    0.146458] Info: [libkvmvirtio9p] &lt;virtio_9p.c @  418&gt; virtio-9p: data started
+[    0.149328] Info: [libkvmpci] &lt;pci_bus_x86.c @  164&gt; PCI 00:04.00 (0000 1af4:1015): driver 0x1430a0
+[    0.152823] Info: [libkvmvirtio] &lt;virtio_pci.c @  380&gt; Added virtio-pci device 1015
+[    0.155504] Info: [libkvmvirtio] &lt;virtio_pci.c @  382&gt; Added virtio-pci subsystem_device_id 0015
+[    0.158626] Info: [libkvmvirtio] &lt;virtio_bus.c @  127&gt; Virtio device 0x17f010 initialized
+[    0.161435] Info: [libkvmvirtioaccel] &lt;accel.c @   95&gt; Register 'accel' to devfs
+[    0.164312] Info: [libkvmvirtioaccel] &lt;virtio_accel-core.c @  369&gt; Accelerator is ready
+[    0.167155] Info: [libkvmvirtioaccel] &lt;virtio_accel-core.c @  377&gt; vaccel: started
+[    0.170185] Info: [libvfscore] &lt;rootfs.c @  120&gt; Mount 9pfs to /...
+[    0.172484] Info: [libvfscore] &lt;mount.c @  122&gt; VFS: mounting 9pfs at /
+[    0.175120] Info: [libdevfs] &lt;devfs_vnops.c @  309&gt; Mount devfs to /dev...VFS: mounting devfs at /dev
+Powered by
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+                 Phoebe 0.10.0~f7d1c557
+[    0.186934] Info: [libukboot] &lt;boot.c @  126&gt; Pre-init table at 0x142238 - 0x142238
+[    0.189672] Info: [libukboot] &lt;boot.c @  137&gt; Constructor table at 0x142238 - 0x142238
+[    0.192617] Info: [libukboot] &lt;boot.c @  146&gt; Calling main(3, ['unikraft-testbed/unikraft_dev/apps/unikraft_vaccel_examples/build/unikraft_vaccel_examples_kvm-x86_64', 'example.jpg', '1'])
+Initialized session with id: 1
+Image size: 79281B
+
+imageNet -- loading classification network model from:
+         -- prototxt     networks/googlenet.prototxt
+         -- model        networks/bvlc_googlenet.caffemodel
+         -- class_labels networks/ilsvrc12_synset_words.txt
+         -- input_blob   'data'
+         -- output_blob  'prob'
+         -- batch_size   1
+
+[TRT]    TensorRT version 8.5.2
+[TRT]    loading NVIDIA plugins...
+[TRT]    Registered plugin creator - ::BatchedNMSDynamic_TRT version 1
+[TRT]    Registered plugin creator - ::BatchedNMS_TRT version 1
+[TRT]    Registered plugin creator - ::BatchTilePlugin_TRT version 1
+[TRT]    Registered plugin creator - ::Clip_TRT version 1
+[TRT]    Registered plugin creator - ::CoordConvAC version 1
+[TRT]    Registered plugin creator - ::CropAndResizeDynamic version 1
+[TRT]    Registered plugin creator - ::CropAndResize version 1
+[TRT]    Registered plugin creator - ::DecodeBbox3DPlugin version 1
+[TRT]    Registered plugin creator - ::DetectionLayer_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_Explicit_TF_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_Implicit_TF_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_ONNX_TRT version 1
+[TRT]    Registered plugin creator - ::EfficientNMS_TRT version 1
+[TRT]    Could not register plugin creator -  ::FlattenConcat_TRT version 1
+[TRT]    Registered plugin creator - ::fMHA_V2 version 1
+[TRT]    Registered plugin creator - ::fMHCA version 1
+[TRT]    Registered plugin creator - ::GenerateDetection_TRT version 1
+[TRT]    Registered plugin creator - ::GridAnchor_TRT version 1
+[TRT]    Registered plugin creator - ::GridAnchorRect_TRT version 1
+[TRT]    Registered plugin creator - ::GroupNorm version 1
+[TRT]    Registered plugin creator - ::InstanceNormalization_TRT version 1
+[TRT]    Registered plugin creator - ::InstanceNormalization_TRT version 2
+[TRT]    Registered plugin creator - ::LayerNorm version 1
+[TRT]    Registered plugin creator - ::LReLU_TRT version 1
+[TRT]    Registered plugin creator - ::MultilevelCropAndResize_TRT version 1
+[TRT]    Registered plugin creator - ::MultilevelProposeROI_TRT version 1
+[TRT]    Registered plugin creator - ::MultiscaleDeformableAttnPlugin_TRT version 1
+[TRT]    Registered plugin creator - ::NMSDynamic_TRT version 1
+[TRT]    Registered plugin creator - ::NMS_TRT version 1
+[TRT]    Registered plugin creator - ::Normalize_TRT version 1
+[TRT]    Registered plugin creator - ::PillarScatterPlugin version 1
+[TRT]    Registered plugin creator - ::PriorBox_TRT version 1
+[TRT]    Registered plugin creator - ::ProposalDynamic version 1
+[TRT]    Registered plugin creator - ::ProposalLayer_TRT version 1
+[TRT]    Registered plugin creator - ::Proposal version 1
+[TRT]    Registered plugin creator - ::PyramidROIAlign_TRT version 1
+[TRT]    Registered plugin creator - ::Region_TRT version 1
+[TRT]    Registered plugin creator - ::Reorg_TRT version 1
+[TRT]    Registered plugin creator - ::ResizeNearest_TRT version 1
+[TRT]    Registered plugin creator - ::ROIAlign_TRT version 1
+[TRT]    Registered plugin creator - ::RPROI_TRT version 1
+[TRT]    Registered plugin creator - ::ScatterND version 1
+[TRT]    Registered plugin creator - ::SeqLen2Spatial version 1
+[TRT]    Registered plugin creator - ::SpecialSlice_TRT version 1
+[TRT]    Registered plugin creator - ::SplitGeLU version 1
+[TRT]    Registered plugin creator - ::Split version 1
+[TRT]    Registered plugin creator - ::VoxelGeneratorPlugin version 1
+[TRT]    detected model format - caffe  (extension '.caffemodel')
+[TRT]    desired precision specified for GPU: FASTEST
+[TRT]    requested fasted precision for device GPU without providing valid calibrator, disabling INT8
+[TRT]    [MemUsageChange] Init CUDA: CPU +307, GPU +0, now: CPU 326, GPU 223 (MiB)
+[TRT]    Trying to load shared library libnvinfer_builder_resource.so.8.5.2
+[TRT]    Loaded shared library libnvinfer_builder_resource.so.8.5.2
+[TRT]    [MemUsageChange] Init builder kernel library: CPU +262, GPU +74, now: CPU 642, GPU 297 (MiB)
+[TRT]    CUDA lazy loading is not enabled. Enabling it can significantly reduce device memory usage. See `CUDA_MODULE_LOADING` in https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars
+[TRT]    native precisions detected for GPU:  FP32, FP16, INT8
+[TRT]    selecting fastest native precision for GPU:  FP16
+[TRT]    found engine cache file networks/bvlc_googlenet.caffemodel.1.1.8502.GPU.FP16.engine
+[TRT]    found model checksum networks/bvlc_googlenet.caffemodel.sha256sum
+[TRT]    echo &quot;$(cat networks/bvlc_googlenet.caffemodel.sha256sum) networks/bvlc_googlenet.caffemodel&quot; | sha256sum --check --status
+[TRT]    model matched checksum networks/bvlc_googlenet.caffemodel.sha256sum
+[TRT]    loading network plan from engine cache... networks/bvlc_googlenet.caffemodel.1.1.8502.GPU.FP16.engine
+[TRT]    device GPU, loaded networks/bvlc_googlenet.caffemodel
+[TRT]    Loaded engine size: 15 MiB
+[TRT]    Deserialization required 8816 microseconds.
+[TRT]    [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +0, GPU +13, now: CPU 0, GPU 13 (MiB)
+[TRT]    Total per-runner device persistent memory is 94720
+[TRT]    Total per-runner host persistent memory is 149856
+[TRT]    Allocated activation device memory of size 3612672
+[TRT]    [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +0, GPU +3, now: CPU 0, GPU 16 (MiB)
+[TRT]    CUDA lazy loading is not enabled. Enabling it can significantly reduce device memory usage. See `CUDA_MODULE_LOADING` in https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#env-vars
+[TRT]    
+[TRT]    CUDA engine context initialized on device GPU:
+[TRT]       -- layers       72
+[TRT]       -- maxBatchSize 1
+[TRT]       -- deviceMemory 3612672
+[TRT]       -- bindings     2
+[TRT]       binding 0
+                -- index   0
+                -- name    'data'
+                -- type    FP32
+                -- in/out  INPUT
+                -- # dims  3
+                -- dim #0  3
+                -- dim #1  224
+                -- dim #2  224
+[TRT]       binding 1
+                -- index   1
+                -- name    'prob'
+                -- type    FP32
+                -- in/out  OUTPUT
+                -- # dims  3
+                -- dim #0  1000
+                -- dim #1  1
+                -- dim #2  1
+[TRT]    
+[TRT]    binding to input 0 data  binding index:  0
+[TRT]    binding to input 0 data  dims (b=1 c=3 h=224 w=224) size=602112
+[TRT]    binding to output 0 prob  binding index:  1
+[TRT]    binding to output 0 prob  dims (b=1 c=1000 h=1 w=1) size=4000
+[TRT]    
+[TRT]    device GPU, networks/bvlc_googlenet.caffemodel initialized.
+[TRT]    loaded 1000 class labels
+[TRT]    imageNet -- networks/bvlc_googlenet.caffemodel initialized.
+class 0954 - 0.999023  (banana)
+imagenet: 99.90234% class #954 (banana)
+imagenet: attempting to save output image
+imagenet: completed saving
+imagenet: shutting down...
+classification tags: 99.902% banana
+[    2.994096] Info: [libukboot] &lt;boot.c @  155&gt; main returned 0, halting system
+[    2.999903] Info: [libkvmplat] &lt;shutdown.c @   35&gt; Unikraft halted
+</code></pre>
+<p><strong>Note</strong>
+We need to get the model which will be used for the image classification. We
+will use a script which is already provided by jetson-inference (normally under
+<code>/usr/local/share/jetson-inference</code>. Also we need to point vAccel's jetson
+plugin the path to that model. The jetson-inference installation handles that
+just fine using the <a href="https://github.com/dusty-nv/jetson-inference/blob/master/tools/download-models.sh"><code>download_models.sh</code></a> script.</p>
+<p>For the vAccel <code>jetson-inference</code> plugin, you can specify the path
+to the <code>networks</code> folder using the <code>VACCEL_IMAGENET_NETWORKS</code> environment
+variable.</p>
+<p>e.g.:</p>
+<pre><code class="language-sh">export VACCEL_IMAGENET_NETWORKS=/jetson-inference/data/networks
+</code></pre>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2018 - 2023 Nubificus LTD
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
