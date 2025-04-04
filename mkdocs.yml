@@ -73,18 +73,10 @@ theme:
 #        accent: indigo
  
 
-#extra:
-#  logo: img/vaccel-logo.png
-#  logo_title: "Rocketbank logo"
-#  include_toc: yes
-#  sidebars:
-#    - about
-#    - navigation
-#    - related
-#    - search
-#
-#  extra_nav_links:
-#    Fork me on GitHub: https://github.com/iamale/rock-cli
+extra:
+  version:
+    provider: mike
+    alias: true
 
 features:
   - navigation.instant
