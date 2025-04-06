@@ -13,19 +13,11 @@
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/jetson/</loc>
-         <lastmod>2025-04-06</lastmod>
-    </url>
-    <url>
          <loc>https://docs.vaccel.org/main/language_bindings/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/legacy/</loc>
-         <lastmod>2025-04-06</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.vaccel.org/main/misc_docs/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
@@ -37,10 +29,6 @@
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/pytorch/</loc>
-         <lastmod>2025-04-06</lastmod>
-    </url>
-    <url>
          <loc>https://docs.vaccel.org/main/quickstart/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
@@ -49,11 +37,27 @@
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/tf/</loc>
+         <loc>https://docs.vaccel.org/main/vaccel_go/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/vaccel_go/</loc>
+         <loc>https://docs.vaccel.org/main/plugins/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/plugins/acceleration/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/plugins/acceleration/tf/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/plugins/acceleration/torch/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/plugins/acceleration/tvm/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>
@@ -122,6 +126,26 @@
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/test/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/useful-docs/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/useful-docs/jetson/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/useful-docs/pytorch/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/useful-docs/tf/</loc>
+         <lastmod>2025-04-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/useful-docs/tvm/</loc>
          <lastmod>2025-04-06</lastmod>
     </url>
     <url>

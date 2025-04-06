@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://docs.vaccel.org/main/python/session/">
+        <link rel="canonical" href="https://docs.vaccel.org/main/useful-docs/tvm/">
       
       
+        <link rel="prev" href="../pytorch/">
+      
+      
+        <link rel="next" href="../tf/">
       
       
       <link rel="icon" href="../../img/vaccel-img-logo.png">
@@ -18,7 +22,7 @@
     
     
       
-        <title>Session - vAccel</title>
+        <title>Build and Install TVM - vAccel</title>
       
     
     
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#module-session" class="md-skip">
+        <a href="#build-and-install-tvm" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Session
+              Build and Install TVM
             
           </span>
         </div>
@@ -802,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../python/" class="md-nav__link">
         
   
   
@@ -852,8 +856,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -864,17 +870,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../useful-docs/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -893,7 +897,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Useful Docs
@@ -907,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/pytorch/" class="md-nav__link">
+      <a href="../pytorch/" class="md-nav__link">
         
   
   
@@ -927,10 +931,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../useful-docs/tvm/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Build and Install TVM
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -941,6 +967,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Install dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-tvm-cc-api-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build TVM C/C++ API files
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -953,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/tf/" class="md-nav__link">
+      <a href="../tf/" class="md-nav__link">
         
   
   
@@ -976,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/jetson/" class="md-nav__link">
+      <a href="../jetson/" class="md-nav__link">
         
   
   
@@ -1015,40 +1079,53 @@
 
 
 
-<!-- markdownlint-disable -->
+<h1 id="build-and-install-tvm">Build and Install TVM<a class="headerlink" href="#build-and-install-tvm" title="Permanent link"></a></h1>
+<p>Official instructions for building and installing <a href="https://tvm.apache.org">TVM</a>
+can be found <a href="https://tvm.apache.org/docs/install/from_source.html">here</a>.</p>
+<p>In the sections below we provide a short version that can be used to build and
+install TVM C/C++ API files for use with vAccel.</p>
+<h2 id="install-dependencies">Install dependencies<a class="headerlink" href="#install-dependencies" title="Permanent link"></a></h2>
+<p>Install the required dependencies:</p>
+<pre><code class="language-sh">sudo apt update &amp;&amp; sudo apt install -y cmake git python3 python3-pip \
+    libtinfo-dev zlib1g-dev libedit-dev
 
-<h1 id="module-session">module <code>session</code><a class="headerlink" href="#module-session" title="Permanent link"></a></h1>
-<h2 id="global-variables"><strong>Global Variables</strong><a class="headerlink" href="#global-variables" title="Permanent link"></a></h2>
-<ul>
-<li><strong>ffi</strong></li>
-</ul>
-<hr />
-<h2 id="class-session">class <code>Session</code><a class="headerlink" href="#class-session" title="Permanent link"></a></h2>
-<h3 id="method-__init__">method <code>__init__</code><a class="headerlink" href="#method-__init__" title="Permanent link"></a></h3>
-<pre><code class="language-python">__init__(flags)
+# Optional, for CUDA builds
+sudo apt install libllvm15 and libllvm15-dev
 </code></pre>
-<p>Create a new vAccel session </p>
-<hr />
-<h3 id="method-has_resource">method <code>has_resource</code><a class="headerlink" href="#method-has_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">has_resource(resource)
+<h2 id="build-tvm-cc-api-files">Build TVM C/C++ API files<a class="headerlink" href="#build-tvm-cc-api-files" title="Permanent link"></a></h2>
+<p>Clone the repo, adjusting <code>TVM_VERSION</code> to the desired version:</p>
+<pre><code class="language-sh">TVM_VERSION=&quot;v0.19.0&quot;
+git clone https://github.com/apache/tvm --depth 1 --recursive \
+    -b &quot;${TVM_VERSION}&quot;
+cd tvm
 </code></pre>
-<p>Returns true if the resource is registered with the session </p>
-<hr />
-<h3 id="method-id">method <code>id</code><a class="headerlink" href="#method-id" title="Permanent link"></a></h3>
-<pre><code class="language-python">id()
+<p>Build source code and install:</p>
+<pre><code class="language-sh"># Replace this with the desired installation directory
+cd /opt
+
+# Configure build
+cmake -S . -B build
+cp cmake/config.cmake build/
+echo &gt;&gt; build/config.cmake
+echo &quot;set(CMAKE_BUILD_TYPE RelWithDebInfo)&quot; &gt;&gt; build/config.cmake
+echo &quot;set(USE_LLVM \&quot;llvm-config --ignore-libllvm --link-static\&quot;)&quot; \
+    &gt;&gt; build/config.cmake
+echo &quot;set(HIDE_PRIVATE_SYMBOLS ON)&quot; &gt;&gt; build/config.cmake
+
+# Optionally, enable CUDA
+echo &quot;set(USE_CUDA   ON)&quot; &gt;&gt; build/config.cmake
+
+# Build C/C++ files
+cmake --build build --parallel &quot;$(nproc)&quot;
+
+# Install python files
+export TVM_LIBRARY_PATH=/opt/tvm/build
+pip install -e /opt/tvm/python
 </code></pre>
-<p>Get the session id </p>
-<hr />
-<h3 id="method-register_resource">method <code>register_resource</code><a class="headerlink" href="#method-register_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">register_resource(resource)
+<p>For convenience, the TVM library path can be added to system paths:</p>
+<pre><code class="language-sh">echo &quot;/opt/tvm/build&quot; &gt;&gt; /etc/ld.so.conf.d/tvm.conf
+ldconfig
 </code></pre>
-<p>Register a vAccel resource with the session </p>
-<hr />
-<h3 id="method-unregister_resource">method <code>unregister_resource</code><a class="headerlink" href="#method-unregister_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">unregister_resource(resource)
-</code></pre>
-<p>Unregister a vAccel resource from the session </p>
-<hr />
 
 
 

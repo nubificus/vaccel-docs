@@ -8,24 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://docs.vaccel.org/main/python/session/">
+        <link rel="canonical" href="https://docs.vaccel.org/main/plugins/">
       
       
+        <link rel="prev" href="../user-guide/remote-example/">
       
       
-      <link rel="icon" href="../../img/vaccel-img-logo.png">
+        <link rel="next" href="acceleration/">
+      
+      
+      <link rel="icon" href="../img/vaccel-img-logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
     
     
       
-        <title>Session - vAccel</title>
+        <title>Plugins - vAccel</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -44,11 +48,11 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-      <link rel="stylesheet" href="../../stylesheets/gh-style-anchor.css">
+      <link rel="stylesheet" href="../stylesheets/gh-style-anchor.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#module-session" class="md-skip">
+        <a href="#plugins" class="md-skip">
           Skip to content
         </a>
       
@@ -94,9 +98,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
+    <a href=".." title="vAccel" class="md-header__button md-logo" aria-label="vAccel" data-md-component="logo">
       
-  <img src="../../img/vaccel-logo-full.svg" alt="logo">
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -113,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Session
+              Plugins
             
           </span>
         </div>
@@ -179,9 +183,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
+    <a href=".." title="vAccel" class="md-nav__button md-logo" aria-label="vAccel" data-md-component="logo">
       
-  <img src="../../img/vaccel-logo-full.svg" alt="logo">
+  <img src="../img/vaccel-logo-full.svg" alt="logo">
 
     </a>
     vAccel
@@ -196,7 +200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -218,7 +222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../quickstart/" class="md-nav__link">
+      <a href="../quickstart/" class="md-nav__link">
         
   
   
@@ -259,7 +263,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../user-guide/" class="md-nav__link ">
+            <a href="../user-guide/" class="md-nav__link ">
               
   
   
@@ -292,7 +296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/building/" class="md-nav__link">
+      <a href="../user-guide/building/" class="md-nav__link">
         
   
   
@@ -315,7 +319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/binaries/" class="md-nav__link">
+      <a href="../user-guide/binaries/" class="md-nav__link">
         
   
   
@@ -338,7 +342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/build-run-app/" class="md-nav__link">
+      <a href="../user-guide/build-run-app/" class="md-nav__link">
         
   
   
@@ -361,7 +365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/vm-example/" class="md-nav__link">
+      <a href="../user-guide/vm-example/" class="md-nav__link">
         
   
   
@@ -384,7 +388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-guide/remote-example/" class="md-nav__link">
+      <a href="../user-guide/remote-example/" class="md-nav__link">
         
   
   
@@ -411,8 +415,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -423,17 +429,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../plugins/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -446,13 +450,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Plugins
@@ -482,7 +486,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../plugins/acceleration/" class="md-nav__link ">
+            <a href="acceleration/" class="md-nav__link ">
               
   
   
@@ -515,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/torch/" class="md-nav__link">
+      <a href="acceleration/torch/" class="md-nav__link">
         
   
   
@@ -538,7 +542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/tvm/" class="md-nav__link">
+      <a href="acceleration/tvm/" class="md-nav__link">
         
   
   
@@ -561,7 +565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/tf/" class="md-nav__link">
+      <a href="acceleration/tf/" class="md-nav__link">
         
   
   
@@ -618,7 +622,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../language_bindings/" class="md-nav__link ">
+            <a href="../language_bindings/" class="md-nav__link ">
               
   
   
@@ -651,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../python_bindings/" class="md-nav__link">
+      <a href="../python_bindings/" class="md-nav__link">
         
   
   
@@ -674,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tensorflow_bindings/" class="md-nav__link">
+      <a href="../tensorflow_bindings/" class="md-nav__link">
         
   
   
@@ -697,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vaccel_go/" class="md-nav__link">
+      <a href="../vaccel_go/" class="md-nav__link">
         
   
   
@@ -746,7 +750,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../dev_guide/" class="md-nav__link ">
+            <a href="../dev_guide/" class="md-nav__link ">
               
   
   
@@ -779,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         
   
   
@@ -802,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../python/" class="md-nav__link">
         
   
   
@@ -825,7 +829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugin/" class="md-nav__link">
+      <a href="../plugin/" class="md-nav__link">
         
   
   
@@ -874,7 +878,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../useful-docs/" class="md-nav__link ">
+            <a href="../useful-docs/" class="md-nav__link ">
               
   
   
@@ -907,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/pytorch/" class="md-nav__link">
+      <a href="../useful-docs/pytorch/" class="md-nav__link">
         
   
   
@@ -930,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/tvm/" class="md-nav__link">
+      <a href="../useful-docs/tvm/" class="md-nav__link">
         
   
   
@@ -953,7 +957,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/tf/" class="md-nav__link">
+      <a href="../useful-docs/tf/" class="md-nav__link">
         
   
   
@@ -976,7 +980,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../useful-docs/jetson/" class="md-nav__link">
+      <a href="../useful-docs/jetson/" class="md-nav__link">
         
   
   
@@ -1015,40 +1019,15 @@
 
 
 
-<!-- markdownlint-disable -->
-
-<h1 id="module-session">module <code>session</code><a class="headerlink" href="#module-session" title="Permanent link"></a></h1>
-<h2 id="global-variables"><strong>Global Variables</strong><a class="headerlink" href="#global-variables" title="Permanent link"></a></h2>
+<h1 id="plugins">Plugins<a class="headerlink" href="#plugins" title="Permanent link"></a></h1>
+<p>vAccel plugins implement the operations of the vAccel User API.</p>
+<p>There are two types of plugins:</p>
 <ul>
-<li><strong>ffi</strong></li>
+<li><a href="acceleration/">Acceleration plugins</a> that provide
+  hardware-accelerated implementations of vAccel operations</li>
+<li>Transport plugins that implement transport mechanisms for vAccel (ie. for
+  remote execution)</li>
 </ul>
-<hr />
-<h2 id="class-session">class <code>Session</code><a class="headerlink" href="#class-session" title="Permanent link"></a></h2>
-<h3 id="method-__init__">method <code>__init__</code><a class="headerlink" href="#method-__init__" title="Permanent link"></a></h3>
-<pre><code class="language-python">__init__(flags)
-</code></pre>
-<p>Create a new vAccel session </p>
-<hr />
-<h3 id="method-has_resource">method <code>has_resource</code><a class="headerlink" href="#method-has_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">has_resource(resource)
-</code></pre>
-<p>Returns true if the resource is registered with the session </p>
-<hr />
-<h3 id="method-id">method <code>id</code><a class="headerlink" href="#method-id" title="Permanent link"></a></h3>
-<pre><code class="language-python">id()
-</code></pre>
-<p>Get the session id </p>
-<hr />
-<h3 id="method-register_resource">method <code>register_resource</code><a class="headerlink" href="#method-register_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">register_resource(resource)
-</code></pre>
-<p>Register a vAccel resource with the session </p>
-<hr />
-<h3 id="method-unregister_resource">method <code>unregister_resource</code><a class="headerlink" href="#method-unregister_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">unregister_resource(resource)
-</code></pre>
-<p>Unregister a vAccel resource from the session </p>
-<hr />
 
 
 
@@ -1101,10 +1080,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.tracking", "toc.integrate"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "navigation.tracking", "toc.integrate"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

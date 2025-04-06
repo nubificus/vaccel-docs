@@ -8,9 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://docs.vaccel.org/main/python/session/">
+        <link rel="canonical" href="https://docs.vaccel.org/main/plugins/acceleration/">
       
       
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="torch/">
       
       
       <link rel="icon" href="../../img/vaccel-img-logo.png">
@@ -18,7 +22,7 @@
     
     
       
-        <title>Session - vAccel</title>
+        <title>Acceleration - vAccel</title>
       
     
     
@@ -74,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#module-session" class="md-skip">
+        <a href="#acceleration-plugins" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Session
+              Acceleration
             
           </span>
         </div>
@@ -411,8 +415,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -423,17 +429,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../plugins/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -452,7 +456,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Plugins
@@ -463,6 +467,8 @@
                 
   
   
+    
+  
   
   
     
@@ -472,17 +478,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../plugins/acceleration/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -495,13 +499,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             Acceleration
@@ -515,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/torch/" class="md-nav__link">
+      <a href="torch/" class="md-nav__link">
         
   
   
@@ -538,7 +542,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/tvm/" class="md-nav__link">
+      <a href="tvm/" class="md-nav__link">
         
   
   
@@ -561,7 +565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../plugins/acceleration/tf/" class="md-nav__link">
+      <a href="tf/" class="md-nav__link">
         
   
   
@@ -802,7 +806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../python/" class="md-nav__link">
         
   
   
@@ -1015,40 +1019,13 @@
 
 
 
-<!-- markdownlint-disable -->
-
-<h1 id="module-session">module <code>session</code><a class="headerlink" href="#module-session" title="Permanent link"></a></h1>
-<h2 id="global-variables"><strong>Global Variables</strong><a class="headerlink" href="#global-variables" title="Permanent link"></a></h2>
+<h1 id="acceleration-plugins">Acceleration Plugins<a class="headerlink" href="#acceleration-plugins" title="Permanent link"></a></h1>
+<p>Acceleration plugins provide implementations of vAccel operations leveraging
+common acceleration frameworks:</p>
 <ul>
-<li><strong>ffi</strong></li>
+<li><a href="torch/">Torch plugin</a></li>
+<li><a href="tvm/">TVM plugin</a></li>
 </ul>
-<hr />
-<h2 id="class-session">class <code>Session</code><a class="headerlink" href="#class-session" title="Permanent link"></a></h2>
-<h3 id="method-__init__">method <code>__init__</code><a class="headerlink" href="#method-__init__" title="Permanent link"></a></h3>
-<pre><code class="language-python">__init__(flags)
-</code></pre>
-<p>Create a new vAccel session </p>
-<hr />
-<h3 id="method-has_resource">method <code>has_resource</code><a class="headerlink" href="#method-has_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">has_resource(resource)
-</code></pre>
-<p>Returns true if the resource is registered with the session </p>
-<hr />
-<h3 id="method-id">method <code>id</code><a class="headerlink" href="#method-id" title="Permanent link"></a></h3>
-<pre><code class="language-python">id()
-</code></pre>
-<p>Get the session id </p>
-<hr />
-<h3 id="method-register_resource">method <code>register_resource</code><a class="headerlink" href="#method-register_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">register_resource(resource)
-</code></pre>
-<p>Register a vAccel resource with the session </p>
-<hr />
-<h3 id="method-unregister_resource">method <code>unregister_resource</code><a class="headerlink" href="#method-unregister_resource" title="Permanent link"></a></h3>
-<pre><code class="language-python">unregister_resource(resource)
-</code></pre>
-<p>Unregister a vAccel resource from the session </p>
-<hr />
 
 
 
