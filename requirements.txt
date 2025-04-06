@@ -1,4 +1,6 @@
 mkdocs
 mkdocs-material
 mkdocs-section-index
+mkdocs-awesome-nav
+pymdown-extensions
 mike

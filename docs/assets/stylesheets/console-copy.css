@@ -1,0 +1,6 @@
+/* Make '$' non-copyable */
+.language-console span.gp {
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
