@@ -1,10 +1,6 @@
 # Plugins
 
-vAccel plugins implement the operations of the vAccel User API.
+Discover the available plugins and their usage.
 
-There are two types of plugins:
-
-- [Acceleration plugins](acceleration/index.md) that provide
-  hardware-accelerated implementations of vAccel operations
-- Transport plugins that implement transport mechanisms for vAccel (ie. for
-  remote execution)
+- [About plugins](about-plugins.md)
+- [Available plugins](available-plugins/index.md)

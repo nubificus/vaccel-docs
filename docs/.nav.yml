@@ -1,0 +1,61 @@
+nav:
+  - Home: index.md
+  - Getting started:
+    - getting-started/index.md
+    - getting-started/*
+  - configuration.md
+  - Plugins:
+    - plugins/index.md
+    - plugins/about-plugins.md
+    - Available plugins:
+      - plugins/available-plugins/index.md
+      - Bundled plugins:
+        - plugins/available-plugins/bundled-plugins/index.md
+        - plugins/available-plugins/bundled-plugins/*
+      - Acceleration plugins:
+        - plugins/available-plugins/acceleration-plugins/index.md
+        - plugins/available-plugins/acceleration-plugins/*
+      - Transport plugins:
+        - plugins/available-plugins/transport-plugins/index.md
+        - plugins/available-plugins/transport-plugins/*
+  - API:
+    - api/index.md
+    - API guide:
+      - api/api-guide/index.md
+      - api/api-guide/operations.md
+    - API reference:
+      - api/api-reference/index.md
+      - api/api-reference/operations.md
+  - Language bindings:
+    - language-bindings/index.md
+    - Python bindings:
+      - language-bindings/python-bindings/index.md
+      - language-bindings/python-bindings/installation.md
+      - language-bindings/python-bindings/running-a-simple-vaccel-python-application.md
+      - API reference:
+        - language-bindings/python-bindings/api-reference/index.md
+        - language-bindings/python-bindings/api-reference/*
+    - Go bindings:
+      - language-bindings/go-bindings/index.md
+      - language-bindings/go-bindings/usage.md
+      - language-bindings/go-bindings/writing-a-simple-vaccel-go-application.md
+      - API reference: https://pkg.go.dev/github.com/nubificus/go-vaccel/vaccel
+  - Framework bindings:
+    - framework-bindings/tensorflow-bindings.md
+  #- Container runtimes:
+  #  - container_runtimes.md
+  #  - kata_vaccel.md
+  #- Unikernels:
+  #  - unikernels/index.md
+  #  - unikernels/unikraft.md
+  #- kata-vaccel.md
+  #- k8s:
+  #  - devmapper.md
+  #  - k8s/kata.md
+  #- usecases.md
+  - Tutorials:
+    - tutorials/index.md
+    - tutorials/*
+  - Useful docs:
+    - useful-docs/index.md
+    - useful-docs/*
