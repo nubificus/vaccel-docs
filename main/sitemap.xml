@@ -2,154 +2,154 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.vaccel.org/main/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/dev_guide/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/jetson/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language_bindings/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/legacy/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/misc_docs/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugin/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python_bindings/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/pytorch/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/quickstart/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tensorflow_bindings/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tf/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/vaccel_go/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/error/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/exec/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/genop/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/image/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/image_genop/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/minmax/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/noop/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/pynq_array_copy/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/pynq_parallel/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/pynq_vector_add/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/resource/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/session/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/sgemm/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/shared_object/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/tensorflow/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/python/test/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/binaries/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/build-run-app/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/building-legacy/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/building/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/remote-example/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/user-guide/vm-example/</loc>
-         <lastmod>2025-04-04</lastmod>
+         <lastmod>2025-04-06</lastmod>
     </url>
 </urlset>
