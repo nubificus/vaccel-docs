@@ -35,5 +35,6 @@ header:
     - 'source/conf.py'
     - 'docs'
     - 'outdated_docs'
+    - 'overrides'
 
   comment: on-failure

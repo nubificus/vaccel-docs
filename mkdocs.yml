@@ -5,62 +5,13 @@ site_author: Nubificus LTD
 repo_url: https://github.com/nubificus/vaccel
 repo_name: nubificus/vaccel
 
-copyright_start: 2018
-
-nav:
-  - Home: index.md
-  - Quickstart: quickstart.md
-  - User Guide: 
-    - user-guide/index.md
-    - user-guide/building.md
-    - user-guide/binaries.md
-    - user-guide/build-run-app.md
-    - user-guide/vm-example.md
-    - user-guide/remote-example.md
-  - Plugins:
-    - plugins/index.md
-    - Acceleration:
-      - plugins/acceleration/index.md
-      - plugins/acceleration/torch.md
-      - plugins/acceleration/tvm.md
-      - plugins/acceleration/tf.md
-    #- Plugins:
-    #  - jetson.md
-    #  - virtio.md
-    #  - coral.md
-  #- kata-vaccel.md
-  #- k8s:
-  #  - devmapper.md
-  #  - k8s/kata.md
-  #- usecases.md
-  - Framework & Language bindings:
-    - language_bindings.md
-    - python_bindings.md
-    - Tensorflow: tensorflow_bindings.md
-  #  - pytorch_bindings.md
-    - Go Bindings: vaccel_go.md  
-  #- Container runtimes:
-  #  - container_runtimes.md
-  #  - kata_vaccel.md
-  #- Unikernels:
-  #  - unikernels/index.md
-  #  - unikernels/unikraft.md
-  - Developer Guide:
-    - dev_guide.md
-    - api.md
-    - Python API: python/index.md
-    - plugin.md
-  - Useful Docs: 
-    - useful-docs/index.md
-    - useful-docs/pytorch.md
-    - useful-docs/tvm.md
-    - useful-docs/tf.md
-    - useful-docs/jetson.md
+# We use a custom `copyright` plugin, so only set the starting year
+copyright: "2018"
 
 theme:
   name: material
-  favicon: img/vaccel-logo-favicon.svg
-  logo: img/vaccel-logo-dark.svg
+  favicon: assets/images/vaccel-logo-favicon.svg
+  logo: assets/images/vaccel-logo-dark.svg
   custom_dir: overrides
   palette: 
     # Palette toggle for automatic mode
@@ -100,8 +51,9 @@ theme:
     - content.tabs.link
 
 extra_css:
-  - stylesheets/extra.css
-  - stylesheets/gh-style-anchor.css
+  - assets/stylesheets/theme.css
+extra_javascript:
+  - assets/javascripts/console-copy.js
 
 extra:
   version:
@@ -112,14 +64,55 @@ extra:
     property: G-X2S0PFR6ZY
 
 markdown_extensions:
+  - admonition
   - attr_list
   - footnotes
   - md_in_html
   - toc:
       permalink: ''
+  - pymdownx.blocks.tab:
+      alternate_style: True
+      combine_header_slug: True
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        # exclude '$' from copying
+        - name: console
+          class: console
+          validator: ^.*
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
   - section-index
+  - awesome-nav
+  - macros:
+      include_yaml: [variables/versions.yml]
+      j2_block_start_string: "[%"
+      j2_block_end_string: "%]"
+      j2_variable_start_string: "[["
+      j2_variable_end_string: "]]"
+      j2_comment_start_string: '[#'
+      j2_comment_end_string: '#]'
+  - minify:
+      minify_html: true
+      minify_css: true
+      minify_js: true
+      htmlmin_opts:
+          remove_comments: true
+      cache_safe: true
+      css_files:
+          - assets/stylesheets/theme.css
+      js_files:
+          - assets/javascripts/console-copy.js
 
 hooks:
   - hooks/copyright.py

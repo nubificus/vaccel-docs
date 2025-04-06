@@ -1,0 +1,10 @@
+versions:
+  bindings:
+    python: 0.0.2
+  plugins:
+    rpc: 0.2.0
+    tf: 0.2.0
+    torch: 0.2.0
+    tvm: 0.2.0
+    virtio: 0.2.0
+  vaccel: 0.7.0
