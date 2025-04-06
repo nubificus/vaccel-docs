@@ -1,0 +1,121 @@
+/*
+ * Main theme
+ */
+
+[data-md-color-scheme="vaccel"] {
+  --md-primary-fg-color: #841a6b;
+  --md-primary-fg-color--light: #a62b89;
+  --md-primary-fg-color--dark: #5e0d4f;
+
+  /*--md-accent-fg-color: #f96e3e;*/
+  --md-accent-fg-color: hsla(15, 94%, 61%, 1);
+  --md-accent-fg-color--transparent: hsla(15, 94%, 61%, 0.1);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #5e0d4f;
+  --md-primary-fg-color--light: #841a6b;
+  --md-primary-fg-color--dark: #410635;
+
+  /*--md-accent-fg-color: #f96e3e;*/
+  --md-accent-fg-color: hsla(15, 94%, 61%, 1);
+  --md-accent-fg-color--transparent: hsla(15, 94%, 61%, 0.1);
+
+  /*--md-hue: 311; *//* [0, 360] */
+}
+
+/*
+@media screen {
+  [data-md-color-scheme="slate"][data-md-color-primary="purple"] {
+    --md-typeset-a-color: #d661be;
+  }
+}
+*/
+
+.md-nav__title .md-nav__button.md-logo img {
+  height: 2rem;
+}
+
+/*
+ * Breadcrumb
+ */
+
+:root {
+  --md-path-icon:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>')
+}
+
+.md-path {
+  font-size:.7rem;
+  margin:0 .8rem;
+  overflow:auto;
+  padding-top:1.2rem
+}
+
+.md-path:not([hidden]) {
+  display:block
+}
+
+@media screen and (min-width:76.25em) {
+  .md-path {
+    margin:0 1.2rem
+  }
+}
+
+.md-path__list {
+  align-items:center;
+  display:flex;
+  gap:.2rem;
+  list-style:none;
+  margin:0;
+  padding:0
+}
+
+.md-path__item:not(:first-child) {
+  display:inline-flex;
+  gap:.2rem;
+  white-space:nowrap
+}
+
+.md-path__item:not(:first-child):before {
+  background-color:var(--md-default-fg-color--lighter);
+  content:"";
+  display:inline;
+  height:.8rem;
+  -webkit-mask-image:var(--md-path-icon);
+  mask-image:var(--md-path-icon);
+  width:.8rem;
+}
+
+.md-path__link {
+  align-items:center;
+  color:var(--md-default-fg-color--light);
+  display:flex
+}
+
+.md-path__link:focus,
+.md-path__link:hover {
+  color:var(--md-accent-fg-color)
+}
+
+/*
+ * Permalink anchor
+ */
+
+/* Replace the default symbol with a GitHub-style link icon */
+.md-typeset .headerlink::before {
+   content: "🔗";
+   font-size: 16px;
+   vertical-align: middle;
+   display: inline-block;
+}
+
+/*
+ * Code blocks: console
+ */
+
+/* Make '$' non-copyable */
+.language-console span.gp {
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
