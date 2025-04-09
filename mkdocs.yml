@@ -1,5 +1,12 @@
-site_name: vAccel
-site_url: https://docs.vaccel.org
+site_name: vAccel Documentation
+site_url: https://docs.vaccel.org/
+site_author: Nubificus LTD
+
+repo_url: https://github.com/nubificus/vaccel
+repo_name: nubificus/vaccel
+
+copyright_start: 2018
+
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
@@ -52,59 +59,67 @@ nav:
 
 theme:
   name: material
-  favicon: img/vaccel-img-logo.png
-  logo: img/vaccel-logo-full.svg
+  favicon: img/vaccel-logo-favicon.svg
+  logo: img/vaccel-logo-dark.svg
+  custom_dir: overrides
   palette: 
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
 
     # Palette toggle for light mode
-    - scheme: default
-      primary: white
-      accent: indigo
+    - media: "(prefers-color-scheme: light)"
+      scheme: vaccel
+      primary: purple
+      accent: purple
       toggle:
-        icon: material/eye
+        icon: material/brightness-7
         name: Switch to dark mode
 
     # Palette toggle for dark mode
-    - scheme: slate
-      primary: black
-      accent: light blue
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: purple
+      accent: purple
+      #primary: black
+      #accent: light blue
       toggle:
-        icon: material/eye-outline
+        icon: material/brightness-4
         name: Switch to light mode
 
   features:
     - navigation.instant
-    - navigation.sections
-    - navigation.expand
+    - navigation.instant.progress
+    - navigation.indexes
     - navigation.tracking
-    - toc.integrate
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.tabs.link
 
-#theme:
-#    name: alabaster
-    #custom_dir: 
-#    logo: img/vaccel-logo.png
-#    palette:
-#        scheme: slate
-#        accent: indigo
- 
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/gh-style-anchor.css
 
 extra:
   version:
     provider: mike
     alias: true
+  analytics:
+    provider: google
+    property: G-X2S0PFR6ZY
 
 markdown_extensions:
-  - footnotes
   - attr_list
+  - footnotes
+  - md_in_html
   - toc:
       permalink: ''
 
-copyright: Copyright &copy; 2018 - 2025 Nubificus LTD
-
-extra_css:
-  - stylesheets/extra.css
-  - stylesheets/gh-style-anchor.css
-gtags:
-  - G-X2S0PFR6ZY
 plugins:
   - section-index
+
+hooks:
+  - hooks/copyright.py
