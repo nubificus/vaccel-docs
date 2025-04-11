@@ -370,7 +370,7 @@
   
   
   <span class="md-ellipsis">
-    Run a vAccel application in a VM
+    Running a vAccel application on a VM
     
   </span>
   
@@ -447,18 +447,66 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-the-vaccel-agent" class="md-nav__link">
+  <a href="#preparing-the-host" class="md-nav__link">
     <span class="md-ellipsis">
-      Running the vAccel agent
+      Preparing the host
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing the host">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-vaccel-rpc-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing vAccel RPC agent
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preparing-the-remote-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing the remote host
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing the remote host">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-rpc-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installing the RPC plugin
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-vaccel-rpc-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the vAccel RPC agent
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-the-application-in-the-remote-host" class="md-nav__link">
+  <a href="#running-the-application-on-the-remote-host" class="md-nav__link">
     <span class="md-ellipsis">
-      Running the application in the remote Host
+      Running the application on the remote host
     </span>
   </a>
   
@@ -1090,93 +1138,253 @@
 
 <h1 id="run-a-vaccel-application-remotely">Run a vAccel application remotely<a class="headerlink" href="#run-a-vaccel-application-remotely" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>As with the <a href="../vm-example/">VM case</a>, using the <code>vsock</code> plugin, allows us to run
-vAccel applications in remote Hosts. Figure 1 shows the execution flow: Our code
-resides in the <code>Remote Host</code>, and uses the <code>libvaccel-vsock.so</code> plugin,
-specifying the Host and Port parameters of the vAccel agent, running on the Host
-where the hardware accelerator resides; the vAccel agent, intercepts vAccel API
-operations, and issues calls to the vAccel library, that, in turn, translates
-these calls to the relevant, user-specified plugin.</p>
+<p>As with the <a href="../vm-example/">VM case</a>, you can use the <code>RPC</code> plugin to run a
+vAccel application remotely. In this scenario, the plugin forwards function
+calls to a remote system. Figure 1 shows the execution flow:</p>
 <figure>
   <img src="/img/vaccel-remote-flow.png" width="800" align=left
     alt="Remote application execution flow" />
   <figcaption>Figure 1. Remote application execution flow</figcaption>
 </figure>
 
-<p>Section <a href="#running-the-vaccel-agent">Running the agent</a> describes the process to
-run the agent.</p>
-<p>To proceed with this example, we need to install the
-<a href="../binaries/#install-vaccel-core-library">vAccel core library</a> in both machines,
-and:</p>
-<ul>
-<li>the <a href="../binaries/#install-vaccel-agent">vAccel agent</a> in the Host machine that
-  holds the hardware accelerator,</li>
-<li>the <a href="../binaries/#install-plugins">VSOCK plugin</a> in the remote Host machine
-  that we want to run our vAccel application.</li>
-</ul>
-<h2 id="running-the-vaccel-agent">Running the vAccel agent<a class="headerlink" href="#running-the-vaccel-agent" title="Permanent link"></a></h2>
-<p>The <code>vaccel-agent</code> is just another vAccel application. It consumes the vAccel
-API like any other app, with the additional value of being able to receive
-commands via <code>ttrpc</code>. So we need to include the path to <code>libvaccel.so</code> in the
-<code>LD_LIBRARY_PATH</code> variable, and specify the plugin we want to use via the
-<code>VACCEL_BACKENDS</code> variable. The agent currently supports three socket types:
-<code>UNIX</code>, <code>VSOCK</code>, and <code>TCP</code>. In this example, we are using the <code>TCP</code> socket type.</p>
-<p>To run the agent we use the following commands:</p>
-<pre><code class="language-bash">export VACCEL_BACKENDS=/usr/local/lib/libvaccel-noop.so
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-export VACCEL_AGENT_ENDPOINT=tcp://0.0.0.0:8194
-/usr/local/bin/vaccel-agent -a $VACCEL_AGENT_ENDPOINT
+<p>The application runs on the <code>Remote Host</code> and uses the <code>RPC</code> plugin, while
+vAccel RPC agent runs on the host with hardware acceleration support and uses
+vAccel with an acceleration plugin.</p>
+<p>Similarly to executing an application <a href="../vm-example/">from a VM</a>, the following
+components must be in place to use the <code>RPC</code> plugin:</p>
+<ol>
+<li><em>Host:</em> The vAccel RPC agent + vAccel + an acceleration plugin, to handle the
+   forwarded calls and perform the actual acceleration</li>
+<li><em>Remote host:</em> vAccel + the <code>RPC</code> plugin, to forward the application calls</li>
+</ol>
+<h2 id="preparing-the-host">Preparing the host<a class="headerlink" href="#preparing-the-host" title="Permanent link"></a></h2>
+<p>If you have not already installed vAccel, install it
+<a href="../binaries/">from binaries</a> or <a href="../building/">from source</a>. The rest of this
+guide assumes vAccel libraries exist in the standard library search paths.</p>
+<h3 id="installing-vaccel-rpc-agent">Installing vAccel RPC agent<a class="headerlink" href="#installing-vaccel-rpc-agent" title="Permanent link"></a></h3>
+<p>vAccel RPC agent will handle the RPC requests and forward calls to the host
+vAccel instance. You can find more information on how to install the
+<code>vaccel-rpc-agent</code> binary at the
+<a href="../binaries/#install-vaccel-agent">relevant section</a>.</p>
+<h2 id="preparing-the-remote-host">Preparing the remote host<a class="headerlink" href="#preparing-the-remote-host" title="Permanent link"></a></h2>
+<p>As with the <a href="#preparing-the-host">host</a> above, the remote host should also have
+vAccel installed and the libraries should be in the standard library search
+paths.</p>
+<h3 id="installing-the-rpc-plugin">Installing the <code>RPC</code> plugin<a class="headerlink" href="#installing-the-rpc-plugin" title="Permanent link"></a></h3>
+<p>You can find instructions on how to install the <code>RPC</code> plugin in the
+<a href="../binaries/#install-plugins">relevant section</a>. The rest of this guide assumes
+the plugin exists in the standard library search paths.</p>
+<h2 id="running-the-vaccel-rpc-agent">Running the vAccel RPC agent<a class="headerlink" href="#running-the-vaccel-rpc-agent" title="Permanent link"></a></h2>
+<p>Before executing the remote application, the agent must be running on the host.
+The first thing to set is the address <code>vaccel-rpc-agent</code> will listen on:</p>
+<pre><code class="language-sh">export VACCEL_RPC_ADDRESS=&quot;tcp://0.0.0.0:65500&quot;
 </code></pre>
-<p>You should be presented with the following output:</p>
-<pre><code class="language-console"># ./vaccel-agent -a $VACCEL_AGENT_ENDPOINT
-vaccel ttRPC server started. address: tcp://0.0.0.0:8194
-Server is running, press Ctrl + C to exit
+<p>This configures the agent to listen on the <code>65500</code> TCP port and all IPv4
+addresses. You can replace the IP and the port above with the desired ones.</p>
+<p>Since the agent will instantiate the host vAccel, you also need to configure
+vAccel in this step. You can configure vAccel by setting the related environment
+variables - as you would do for a plugin - or you can use the
+<code>vaccel-rpc-agent</code>'s CLI (preferred).</p>
+<p>Since the 'NoOp' plugin is included with vAccel, we will use this as the
+acceleration plugin for demonstration purposes.</p>
+<p>To start a <code>vaccel-rpc-agent</code> with the vAccel <code>NoOp</code> plugin use:</p>
+<pre><code class="language-console">$ VACCEL_BOOTSTRAP_ENABLED=0 vaccel-rpc-agent \
+      -a &quot;${VACCEL_RPC_ADDRESS}&quot; \
+      --vaccel-config &quot;plugins=libvaccel-noop.so,log_level=4&quot;
+2025.04.07-17:19:53.56 - &lt;debug&gt; Initializing vAccel
+2025.04.07-17:19:53.56 - &lt;info&gt; vAccel 0.6.1-194-19056528
+2025.04.07-17:19:53.56 - &lt;debug&gt; Config:
+2025.04.07-17:19:53.56 - &lt;debug&gt;   plugins = libvaccel-noop.so
+2025.04.07-17:19:53.56 - &lt;debug&gt;   log_level = debug
+2025.04.07-17:19:53.56 - &lt;debug&gt;   log_file = (null)
+2025.04.07-17:19:53.56 - &lt;debug&gt;   profiling_enabled = false
+2025.04.07-17:19:53.56 - &lt;debug&gt;   version_ignore = false
+2025.04.07-17:19:53.56 - &lt;debug&gt; Created top-level rundir: /run/user/1002/vaccel/YvIPeM
+2025.04.07-17:19:53.56 - &lt;info&gt; Registered plugin noop 0.6.1-194-19056528
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op noop from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op blas_sgemm from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op image_classify from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op image_detect from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op image_segment from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op image_pose from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op image_depth from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op exec from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tf_session_load from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tf_session_run from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tf_session_delete from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op minmax from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op fpga_arraycopy from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op fpga_vectoradd from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op fpga_parallel from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op fpga_mmult from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op exec_with_resource from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op torch_jitload_forward from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op torch_sgemm from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op opencv from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tflite_session_load from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tflite_session_run from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Registered op tflite_session_delete from plugin noop
+2025.04.07-17:19:53.56 - &lt;debug&gt; Loaded plugin noop from libvaccel-noop.so
+[2025-04-07T17:19:53Z INFO  ttrpc::sync::server] server listen started
+[2025-04-07T17:19:53Z INFO  ttrpc::sync::server] server started
+[2025-04-07T17:19:53Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-04-07T17:19:53Z INFO  vaccel_rpc_agent] Listening on 'tcp://0.0.0.0:65500', press Ctrl+C to exit
 </code></pre>
-<p>We have prepared the Host to receive vAccel API operations via <code>VSOCK</code>. Let's
-move to the remote Host console terminal.</p>
-<h2 id="running-the-application-in-the-remote-host">Running the application in the remote Host<a class="headerlink" href="#running-the-application-in-the-remote-host" title="Permanent link"></a></h2>
-<p>In the remote Host, we will be running a vAccel application; so we need to
-specify the path to <code>libvaccel.so</code> and the plugin to be used. We need to set the
-paths to the vAccel core library and the <code>VSOCK</code> plugin. Additionally, we need
-to set <code>VACCEL_VSOCK</code>, to point to the remote endpoint.</p>
-<p>The vAccel examples are included in the vAccel core library installation at
-<code>/usr/local/bin</code>. So, assuming the agent is running in the Host machine, the
-only thing needed is to set the paths and execute the example:</p>
-<pre><code class="language-console">### Set the library path and the plugin
-$ export LD_LIBRARY_PATH=/usr/local/lib
-$ export VACCEL_BACKENDS=/usr/local/lib/libvaccel-vsock.so
-
-### Set the remote endpoint
-### no DNS resolving for now, just use IP Addresses
-$ export VACCEL_VSOCK=tcp://192.168.254.1:8194
-
-### Get an image:
-### eg. wget https://i.imgur.com/aSuOWgU.jpeg -O cat.jpeg
-### and run the example
-$ /usr/local/bin/classify cat.jpeg 1
+<h2 id="running-the-application-on-the-remote-host">Running the application on the remote host<a class="headerlink" href="#running-the-application-on-the-remote-host" title="Permanent link"></a></h2>
+<p>With the vAccel RPC agent running, you are ready to execute the application in
+the remote host.</p>
+<p>On the remote host, you need to first configure the RPC address that will be
+used by the plugin - replace <code>192.0.2.1</code> with the IP address of the host running
+the vAccel RPC agent:</p>
+<pre><code class="language-sh">export VACCEL_RPC_ADDRESS=&quot;tcp://192.0.2.1:65500&quot;
+</code></pre>
+<p>The port must be the same port you have used for starting the agent.</p>
+<p>Next, configure vAccel to use the <code>RPC</code> plugin:</p>
+<pre><code class="language-console">export VACCEL_PLUGINS=libvaccel-rpc.so
+</code></pre>
+<p>Optionally, to get debug output:</p>
+<pre><code class="language-sh">export VACCEL_LOG_LEVEL=4
+</code></pre>
+<p>Finally, you can run an image classification example with:</p>
+<pre><code class="language-console">$ classify /usr/local/share/vaccel/images/example.jpg 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; Initializing vAccel
+2025.04.07-17:23:51.51 - &lt;info&gt; vAccel 0.6.1-194-19056528
+2025.04.07-17:23:51.51 - &lt;debug&gt; Config:
+2025.04.07-17:23:51.51 - &lt;debug&gt;   plugins = /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2025.04.07-17:23:51.51 - &lt;debug&gt;   log_level = debug
+2025.04.07-17:23:51.51 - &lt;debug&gt;   log_file = (null)
+2025.04.07-17:23:51.51 - &lt;debug&gt;   profiling_enabled = false
+2025.04.07-17:23:51.51 - &lt;debug&gt;   version_ignore = false
+2025.04.07-17:23:51.51 - &lt;debug&gt; Created top-level rundir: /run/user/1002/vaccel/2Qc6ZB
+2025.04.07-17:23:51.51 - &lt;info&gt; Registered plugin rpc 0.1.0-36-bbffdae6
+2025.04.07-17:23:51.51 - &lt;debug&gt; rpc is a VirtIO module
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op blas_sgemm from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op image_classify from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op image_detect from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op image_segment from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op image_depth from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op image_pose from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tflite_session_load from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tflite_session_delete from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tflite_session_run from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op minmax from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op fpga_arraycopy from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op fpga_mmult from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op fpga_vectoradd from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op fpga_parallel from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op exec from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op exec_with_resource from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op torch_jitload_forward from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op opencv from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tf_session_load from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tf_session_delete from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Registered op tf_session_run from plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Loaded plugin rpc from /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2025.04.07-17:23:51.51 - &lt;debug&gt; [rpc] Initializing new remote session
+2025.04.07-17:23:51.51 - &lt;debug&gt; [rpc] Initialized remote session 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; New rundir for session 1: /run/user/1002/vaccel/2Qc6ZB/session.1
+2025.04.07-17:23:51.51 - &lt;debug&gt; Initialized session 1 with remote (id: 1)
 Initialized session with id: 1
-Image size: 54372B
+2025.04.07-17:23:51.51 - &lt;debug&gt; session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
+2025.04.07-17:23:51.51 - &lt;debug&gt; Returning func from hint plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Found implementation in rpc plugin
 classification tags: This is a dummy classification tag!
+classification imagename: This is a dummy imgname!
+2025.04.07-17:23:51.55 - &lt;debug&gt; [rpc] Releasing remote session 1
+2025.04.07-17:23:51.64 - &lt;debug&gt; Released session 1
+2025.04.07-17:23:51.64 - &lt;debug&gt; Cleaning up vAccel
+2025.04.07-17:23:51.64 - &lt;debug&gt; Cleaning up sessions
+2025.04.07-17:23:51.64 - &lt;debug&gt; Cleaning up resources
+2025.04.07-17:23:51.64 - &lt;debug&gt; Cleaning up plugins
+2025.04.07-17:23:51.64 - &lt;debug&gt; Unregistered plugin rpc
 </code></pre>
-<p>We got the same output as with the
-<a href="../build-run-app/#running-a-vaccel-application">native execution case</a>. Well,
-almost the same; what we missed is the plugin output. See the native execution
-case below:</p>
-<p>The <code>[noop]</code> lines are not present when running from the remote machine. This is
-because the plugin is executing in the remote Host. We only get the
-<code>classification tags:</code> result back. If you look at the other terminal, where the
-agent is running, you should see the following:</p>
-<pre><code class="language-console">Created session 1
-session:VaccelId { inner: Some(1) } Image classification
-[noop] Calling Image classification for session 1
-[noop] Dumping arguments for Image classification:
-[noop] len_img: 54372
-[noop] will return a dummy result
-Destroying session VaccelId { inner: Some(1) }
-Destroyed session 1
+<p>In the host terminal, where the vAccel RPC agent is running, you should also see
+the corresponding host vAccel output:</p>
+<pre><code class="language-console">2025.04.07-17:23:51.51 - &lt;debug&gt; New rundir for session 1: /run/user/1002/vaccel/YvIPeM/session.1
+2025.04.07-17:23:51.51 - &lt;debug&gt; Initialized session 1
+[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::session] Created session 1
+[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::ops::genop] Genop session 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
+2025.04.07-17:23:51.51 - &lt;debug&gt; Returning func from hint plugin noop
+2025.04.07-17:23:51.51 - &lt;debug&gt; Found implementation in noop plugin
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] Calling Image classification for session 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] Dumping arguments for Image classification:
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] model: (null)
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_img: 79281
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_out_text: 512
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_out_imgname: 512
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] will return a dummy result
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] will return a dummy result
+2025.04.07-17:23:51.60 - &lt;debug&gt; Released session 1
+[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::session] Destroyed session 1
 </code></pre>
-<p>Aha! the plugin output is there (which is expected, since the plugin is running
-on the Host).</p>
+<p>If you compare the application output with the
+<a href="../build-run-app/#running-a-vaccel-application">native execution case</a> ignoring
+the vAccel log messages, you will notice that it is identical:</p>
+<pre><code class="language-console"># classify /usr/local/share/vaccel/images/example.jpg 1
+...
+Initialized session with id: 1
+...
+classification tags: This is a dummy classification tag!
+classification imagename: This is a dummy imgname!
+...
+</code></pre>
+<p>The debug log messages reveal that in the native execution case the <code>NoOp</code>
+plugin is used directly:</p>
+<pre><code class="language-console"># FIXME
+</code></pre>
+<p>whereas in the the remote execution case, the <code>RPC</code> plugin is used on the remote
+host:</p>
+<pre><code class="language-console">$ classify /usr/local/share/vaccel/images/example.jpg 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; Initializing vAccel
+2025.04.07-17:23:51.51 - &lt;info&gt; vAccel 0.6.1-194-19056528
+2025.04.07-17:23:51.51 - &lt;debug&gt; Config:
+2025.04.07-17:23:51.51 - &lt;debug&gt;   plugins = /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2025.04.07-17:23:51.51 - &lt;debug&gt;   log_level = debug
+2025.04.07-17:23:51.51 - &lt;debug&gt;   log_file = (null)
+2025.04.07-17:23:51.51 - &lt;debug&gt;   profiling_enabled = false
+2025.04.07-17:23:51.51 - &lt;debug&gt;   version_ignore = false
+2025.04.07-17:23:51.51 - &lt;debug&gt; Created top-level rundir: /run/user/1002/vaccel/2Qc6ZB
+2025.04.07-17:23:51.51 - &lt;info&gt; Registered plugin rpc 0.1.0-36-bbffdae6
+2025.04.07-17:23:51.51 - &lt;debug&gt; rpc is a VirtIO module
+...
+2025.04.07-17:23:51.51 - &lt;debug&gt; Loaded plugin rpc from /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2025.04.07-17:23:51.51 - &lt;debug&gt; [rpc] Initializing new remote session
+2025.04.07-17:23:51.51 - &lt;debug&gt; [rpc] Initialized remote session 1
+...
+2025.04.07-17:23:51.51 - &lt;debug&gt; Returning func from hint plugin rpc
+2025.04.07-17:23:51.51 - &lt;debug&gt; Found implementation in rpc plugin
+...
+2025.04.07-17:23:51.55 - &lt;debug&gt; [rpc] Releasing remote session 1
+</code></pre>
+<p>while the <code>NoOp</code> plugin is used on the host:</p>
+<pre><code class="language-console">$ VACCEL_BOOTSTRAP_ENABLED=0 vaccel-rpc-agent \
+      -a &quot;${VACCEL_RPC_ADDRESS}&quot; \
+      --vaccel-config &quot;plugins=libvaccel-noop.so,log_level=4&quot;
+2025.04.07-17:19:53.56 - &lt;debug&gt; Initializing vAccel
+2025.04.07-17:19:53.56 - &lt;info&gt; vAccel 0.6.1-194-19056528
+2025.04.07-17:19:53.56 - &lt;debug&gt; Config:
+2025.04.07-17:19:53.56 - &lt;debug&gt;   plugins = libvaccel-noop.so
+2025.04.07-17:19:53.56 - &lt;debug&gt;   log_level = debug
+2025.04.07-17:19:53.56 - &lt;debug&gt;   log_file = (null)
+2025.04.07-17:19:53.56 - &lt;debug&gt;   profiling_enabled = false
+2025.04.07-17:19:53.56 - &lt;debug&gt;   version_ignore = false
+2025.04.07-17:19:53.56 - &lt;debug&gt; Created top-level rundir: /run/user/1002/vaccel/YvIPeM
+2025.04.07-17:19:53.56 - &lt;info&gt; Registered plugin noop 0.6.1-194-19056528
+...
+2025.04.07-17:19:53.56 - &lt;debug&gt; Loaded plugin noop from libvaccel-noop.so
+...
+2025.04.07-17:23:51.51 - &lt;debug&gt; Returning func from hint plugin noop
+2025.04.07-17:23:51.51 - &lt;debug&gt; Found implementation in noop plugin
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] Calling Image classification for session 1
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] Dumping arguments for Image classification:
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] model: (null)
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_img: 79281
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_out_text: 512
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] len_out_imgname: 512
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] will return a dummy result
+2025.04.07-17:23:51.51 - &lt;debug&gt; [noop] will return a dummy result
+</code></pre>
 
 
 
