@@ -40,6 +40,10 @@ nav:
       - language-bindings/go-bindings/usage.md
       - language-bindings/go-bindings/writing-a-simple-vaccel-go-application.md
       - API reference: https://pkg.go.dev/github.com/nubificus/go-vaccel/vaccel
+    - Rust bindings:
+      - language-bindings/rust-bindings/index.md
+      - language-bindings/rust-bindings/usage.md
+      - language-bindings/rust-bindings/writing-a-simple-vaccel-rust-application.md
   - Framework bindings:
     - framework-bindings/tensorflow-bindings.md
   #- Container runtimes:
@@ -53,9 +57,17 @@ nav:
   #  - devmapper.md
   #  - k8s/kata.md
   #- usecases.md
+  - Design:
+    - design/index.md
+    - design/*
   - Tutorials:
     - tutorials/index.md
     - tutorials/*
+  - Performance:
+    - benchmarks/index.md
+    - benchmarks/measure.md
+    - benchmarks/testbed.md
+    - benchmarks/results.md
   - Useful docs:
     - useful-docs/index.md
     - useful-docs/*
