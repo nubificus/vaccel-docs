@@ -53,6 +53,9 @@ nav:
   #  - devmapper.md
   #  - k8s/kata.md
   #- usecases.md
+  - Design:
+    - design/index.md
+    - design/*
   - Tutorials:
     - tutorials/index.md
     - tutorials/*

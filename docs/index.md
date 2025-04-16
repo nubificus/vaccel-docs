@@ -1,111 +1,112 @@
 # Welcome to vAccel Documentation
 
-This website contains documentation for vAccel, a framework that semantically
-exposes hardware acceleration functionality to isolated workloads running on VM
-sandboxes.
+vAccel is a lightweight, modular framework designed to expose hardware
+acceleration functionality to workloads running in virtualized or otherwise
+isolated environments. It enables transparent offloading of compute-intensive
+operations to acceleration backends, abstracting away platform-specific details
+through a unified API and plugin interface.
 
-vAccel enables workloads to enjoy hardware acceleration while running on
-environments that do not have direct (physical) access to acceleration devices.
-
-The design goals of vAccel are:
-
-1. **portability**: vAccel applications can be deployed in machines with
-   different hardware accelerators without re-writing or re-compilation.
-2. **security**: A vAccel application can be deployed, _as is_, in a VM to
-   ensure isolation in multi-tenant environments. [QEMU](https://www.qemu.org),
-   [Firecracker](https://firecracker-microvm.github.io/) and
-   [Cloud Hypervisor](https://www.cloudhypervisor.org/) are currently supported
-3. **compatibility**: vAccel supports the OCI container format through
-   integration with the [Kata containers](https://katacontainers.io/) framework
-   [downstream].
-4. **low-overhead**: vAccel uses a very efficient transport layer for offloading
-   "accelerate-able" functions from inside the VM to the host, incurring minimum
-   overhead.
-5. **scalability**: Integration with k8s allows the deployment of vAccel
-   applications at scale.
-
-## vAccel design
+vAccel decouples applications from hardware-specific logic, enabling binary
+portability across diverse hardware platforms and system configurations,
+including deployments where accelerators are not directly accessible from the
+application context.
 
 <figure>
-  <!--<img src="assets/images/vaccel-overview.svg" width="600" align=left />-->
-  <img src="assets/images/vaccel-overview-updated2.png" width="800" align=left
+  <!--<img src="img/vaccel-overview.svg" width="600" align=left />-->
+  <img src="/assets/images/vaccel-stack.png" width="800" align=center
     alt="vAccel software stack"/>
   <figcaption>Figure 1. vAccel software stack</figcaption>
 </figure>
 
-The core component of vAccel is the runtime library. vAccel runtime library is
-designed in a modular way: the core runtime exposes the vAccel API to user
-applications and dispatches requests to one of many _backend plugins_, which
-implement the glue code between the vAccel API operations on a particular
-hardware accelerator.
+## Core Design Principles
 
-The user application links against the core runtime library and the plugin
-modules are loaded at runtime. This workflow decouples the application from the
-hardware accelerator-specific parts of the stack, allowing for seamless
-migration of the same binary to different platforms with different accelerator
-capabilities, without the need to recompile user code.
+- Portability: Applications built with vAccel can be deployed across systems
+  with differing accelerator types and configurations without requiring source
+  changes or recompilation.
 
-The backend plugins conform to a simple _plugin API_. At the moment we have
-support for:
+- Security: Supports hardware-accelerated execution within strong isolation
+  boundaries, including KVM-based VMs (eg., QEMU, Firecracker, Cloud
+  Hypervisor).
 
-1. [Jetson inference](https://github.com/dusty-nv/jetson-inference) framework,
-   for acceleration of ML operation on Nvidia GPUs.
-2. [Google Coral TPU](https://www.coral.ai/), for acceleration on Coral TPUs.
-3. [OpenVINO inference](https://github.com/openvinotoolkit/openvino) framework,
-   for image inference on OpenCL-compatible accelerators (Intel CPU/GPUs,
-   MyriadX chips etc.).
-4. [Tensorflow](https://github.com/tensorflow/tensorflow), with a limited number
-   of operations and API calls supported.
-5. [PyTorch](https://github.com/pytorch/pytorch), with a limited number of
-   operations and API calls supported.
-6. [Xilinx PYNQ](https://github.com/xilinx/PYNQ), with a limited number of
-   example programs supported.
+- Modularity: vAccel supports a plugin-based architecture for backend
+  accelerators, allowing hardware-specific implementations to be developed and
+  maintained independently.
 
-### Hardware acceleration in Virtual Machines
+- Efficiency: Communication between guest and host is handled through
+  low-overhead transports such as `VirtIO`, `VSOCK`, or `TCP`, minimizing
+  performance loss.
 
-Hardware acceleration for virtualized guests is, still, a real challenge.
-Typical solutions involve device pass-through or paravirtual drivers that expose
-hardware semantics inside the guest. vAccel differentiates itself from these
-approaches by exposing coarse-grain "accelerate-able" functions in the guest
-over a generic transport layer.
+- Scalability: vAccel integrates natively with Kubernetes to support large-scale,
+  multi-tenant deployments of acceleration-enabled workloads.
 
-The semantics of the transport layer are hidden from the programmer. A vAccel
-application that runs on baremetal with an Nvidia GPU can run _as is_ inside a
-VM using our appropriate _VirtIO_ backend plugin.
+## Key Features
 
-We have implemented the necessary parts for our VirtIO driver in our forks of
-[QEMU](https://github.com/nubificus/qemu-vaccel/tree/master+vaccel) and
-[Firecracker](https://github.com/cloudkernels/firecracker/tree/vaccel-0.23)
-hypervisors.
+- Rich Architecture Support: Native support for amd64, arm, and arm64
+  platforms, including cross-compiled deployments and heterogeneous cluster
+  environments.
 
-Additionally, we have designed the above transport protocol over sockets,
-allowing vAccel applications to use any backend, as long as there is a socket
-interface installed between the two peers. Existing implementations include
-VSOCK and TCP sockets. Any hypervisor supporting `virtio-vsock` can support
-vAccel. See the
-[relevant page](tutorials/running-a-vaccel-application-on-a-vm.md) for more
-information.
+- CI-Driven Development: An end-to-end CI pipeline validates functionality
+  across multiple backends, host/guest combinations, and transport modes. All
+  core components and language bindings are continuously tested for correctness
+  and performance.
+
+- Dynamic Model Inference: Enhanced support for frameworks like PyTorch (via
+  `jitload_forward`) and TensorFlow, enabling runtime-loaded model execution
+  inside isolated environments.
+
+- Language Bindings: Native bindings available for Go and Python, enabling
+  rapid prototyping and integration into existing ML/AI pipelines and
+  cloud-native workflows.
+
+## vAccel Architecture
+
+At its core, vAccel consists of:
+
+- A core library, exposing the vAccel API to applications.
+
+- A plugin system, where backend modules handle calls to specific accelerator
+  runtimes.
+
+This layered design allows applications to remain agnostic of the underlying accelerator or transport mechanism.
+
+Refer to the [Architecture Overview](/design/architecture) for a detailed breakdown.
+
+## Virtualization and Transport
+
+vAccel is designed to operate seamlessly in virtualized environments. Instead
+of relying on device pass-through or vendor-specific drivers, vAccel exposes
+coarse-grained acceleration operations to guest workloads over generic,
+extensible transports. Implementations include:
+
+- VirtIO (with QEMU and Firecracker support)
+
+- RPC (VSOCK, TCP and UNIX sockets)
+
+These transports allow flexible deployment across a range of hypervisors and system configurations.
+
+More details are available in the [Transport Plugin](/plugins/available-plugins/transport-plugins) documentation.
 
 ## Performance
 
-<figure>
-  <img src="assets/images/perf_bm.png" width="600" align=left
-    alt="vAccel virtio and jetson-inference VM vs bare-metal" />
-  <figcaption>Figure 2. vAccel performance overhead of VM execution with virtio
-    and jetson-inference compared to bare-metal on x86_64</figcaption>
-</figure>
+vAccel introduces minimal overhead compared to native execution. Benchmarks
+across real-world inference tasks and varied payload sizes consistently
+demonstrate near-native performance, with less than 5% overhead in most
+configurations.
 
-Figure 2 depicts a performance comparison of the image classification operation
-of a vAccel application running inside a Firecracker VM using the
-Jetson-inference plugin compared to the execution of the same operation using
-the Jetson-inference framework natively, running directly on the host.
+Refer to the [Performance Analysis](/benchmarks) section for detailed results and benchmarking methodology.
 
-The performance overhead of our stack is less that 5% of the native execution
-time across a range of image sizes.
+## Getting Started
 
-<figure>
-  <img src="assets/images/vaccel-inference-performance.png" width="800" align=left
-    alt="vAccel plugins VM vs bare-metal on x86_64 and aaarch64" />
-  <figcaption>Figure 3. vAccel performance overhead of VM execution, on various
-    backend plugins compared to bare-metal on x86_64 and aarch64</figcaption>
-</figure>
+Explore the following sections to begin integrating vAccel into your stack:
+
+[Quickstart Guide](/getting-started/)
+
+[Core API Documentation](/api/)
+
+[Language Bindings](/language-bindings/)
+
+[Plugin Development](/tutorials/writing-your-first-plugin/)
+
+[CI and Testing Infrastructure](/ci)
+
+For the full documentation tree, browse the sidebar navigation.
