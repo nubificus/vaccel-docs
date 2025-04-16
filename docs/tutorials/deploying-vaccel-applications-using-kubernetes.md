@@ -1,21 +1,21 @@
 # Deploying vAccel applications using Kubernetes
 
-This guide describes how to deploy the **vAccel framework** with Torch
-acceleration using Kubernetes. It includes:
+This guide describes how to deploy a **vAccel**-enabled application, alongside
+the **vAccel Agent** with the Torch plugin using Kubernetes. It includes:
 
 - Full explanation of the deployment architecture
 - Sidecar-based co-location of client and agent
 - Split deployment with remote agent access
 - Dockerfiles for both client and agent
-- Mermaid diagram for visual reference
+- Simple block diagram for visual reference
 
 ## Architecture Overview
 
 The deployment includes:
 
-- A **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or TCP
-  endpoint.
-- A **vAccel Client** compiled with the RPC plugin and `libtorch`, which
+- The **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or
+  TCP endpoint.
+- The **vAccel**-enabled Application, packaged with the RPC plugin, which
   connects to the agent.
 - A sidecar option to colocate both agent and client in one pod for
   latency-sensitive workloads.
@@ -45,104 +45,130 @@ flowchart TD
   A1 -->|Unix socket| A2
 ```
 
-## Dockerfiles
+We have gathered all necessary files in a
+[Github repository](https://github.com/nubificus/vaccel-torch-bert-k8s-example).
+Its file structure is as follows:
 
-### Agent Dockerfile
-
-```dockerfile
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
-USER root
-
-# Python, pip, numpy
-RUN apt-get update &&   apt-get install -y --no-install-recommends   python3-dev python3-pip python3-setuptools python3-wheel   python3-yaml python3-typing-extensions python3-numpy &&   apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Dependencies + build tools
-RUN apt-get update && apt-get install -y --no-install-recommends   unzip libopenblas-dev libjpeg-dev libpng-dev libtiff-dev   libavcodec-dev libavformat-dev libswscale-dev libv4l-dev   libxvidcore-dev libx264-dev libatlas-base-dev gfortran libffi-dev   wget cmake gcc g++ make libssl-dev git build-essential   pkg-config libcurl4-openssl-dev rsync &&   apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install vAccel core
-RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/release/vaccel_latest_amd64.deb &&     dpkg -i vaccel_latest_amd64.deb && rm vaccel_latest_amd64.deb && ldconfig
-
-# Install libtorch
-ARG PYTORCH_CUDA="cpu"
-ENV PYTORCH_CUDA=${PYTORCH_CUDA}
-RUN if [ "${PYTORCH_CUDA}" = "cpu" ]; then     wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.5.1%2Bcpu.zip &&     unzip libtorch-cxx11-abi-shared-with-deps-2.5.1+cpu.zip &&     rsync -a libtorch/ /usr/local/ && rm -rf libtorch*;   else     wget https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.5.1%2Bcu118.zip &&     unzip libtorch-cxx11-abi-shared-with-deps-2.5.1+cu118.zip &&     rsync -a libtorch/ /usr/local/ && rm -rf libtorch*;   fi
-
-# Install vaccel-agent and plugin
-RUN wget --no-check-certificate https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/x86_64/release/vaccel-rpc-agent_latest_amd64.deb &&     dpkg -i vaccel-rpc-agent_latest_amd64.deb && rm vaccel-rpc-agent_latest_amd64.deb
-
-RUN wget --no-check-certificate https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/x86_64/release/vaccel-torch-latest-bin.tar.gz &&     tar -zxvf vaccel-torch-latest-bin.tar.gz --strip-components=1 -C / && rm vaccel-torch-latest-bin.tar.gz
-
-RUN pip install ninja meson
-ARG GITHUB_PAT
-ENV GITHUB_TOKEN=${GITHUB_PAT}
-RUN git clone https://${GITHUB_PAT}@github.com/nubificus/vaccel-plugin-torch &&     cd vaccel-plugin-torch && meson setup build && meson compile -C build && meson install -C build
-
-ENV VACCEL_BACKENDS=/usr/local/lib/x86_64-linux-gnu/libvaccel-torch.so
-ENTRYPOINT ["/usr/bin/vaccel-rpc-agent", "-a", "unix:///var/run/vaccel/vaccel.sock"]
+```console
+├── docker
+│   ├── Dockerfile
+│   └── Dockerfile.agent
+├── manifests
+│   ├── client.yaml
+│   ├── daemonset-agent.yaml
+│   └── sidecar.yaml
+└── README.md
 ```
 
-### Client Dockerfile
+In the `docker` folder we include two `Dockerfiles`, one for the client
+application and one for the vaccel agent. Feel free to build on the client
+`Dockerfile` to create your own. To showcase our example we have already
+included our application binary in an example container image:
+`harbor.nbfc.io/nubificus/vaccel-torch-bert-example:x86_64`.
 
-```dockerfile
-FROM ubuntu:latest
-USER root
+The `manifests` folder contains YAML files to deploy this example in both modes
+of operation.
 
-# Python, pip, numpy
-RUN apt-get update &&   apt-get install -y --no-install-recommends   python3-dev python3-pip python3-setuptools python3-wheel   python3-yaml python3-typing-extensions python3-numpy &&   apt-get clean && rm -rf /var/lib/apt/lists/*
+### vAccel Agent as a **sidecar** container
 
-# Build + runtime dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends   unzip libopenblas-dev libjpeg-dev libpng-dev libtiff-dev   libavcodec-dev libavformat-dev libswscale-dev libv4l-dev   libxvidcore-dev libx264-dev libatlas-base-dev gfortran libffi-dev   wget cmake gcc g++ make libssl-dev &&   apt-get clean && rm -rf /var/lib/apt/lists/*
+The agent runs alongside the client application, in a single pod
+(`sidecar.yaml`). Since this mode implicitly assumes that both containers share
+the same mount namespaces, we can use the `UNIX` socket RPC transport. See the
+following snippet from the YAML file:
 
-# Install vAccel core
-RUN wget https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/release/vaccel_latest_amd64.deb &&     dpkg -i vaccel_latest_amd64.deb && rm vaccel_latest_amd64.deb && ldconfig
-
-# Install libtorch
-ARG PYTORCH_CUDA="cpu"
-ENV PYTORCH_CUDA=${PYTORCH_CUDA}
-RUN if [ "${PYTORCH_CUDA}" = "cpu" ]; then     wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.5.1%2Bcpu.zip &&     unzip libtorch-cxx11-abi-shared-with-deps-2.5.1+cpu.zip &&     mv libtorch /opt/pytorch && rm -rf libtorch*;   else     wget https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.5.1%2Bcu118.zip &&     unzip libtorch-cxx11-abi-shared-with-deps-2.5.1+cu118.zip &&     mv libtorch /opt/pytorch && rm -rf libtorch*;   fi
-
-# Install RPC plugin
-RUN wget --no-check-certificate https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release/vaccel-rpc_latest_amd64.deb &&     dpkg -i vaccel-rpc_latest_amd64.deb && rm vaccel-rpc_latest_amd64.deb
-
-# Build example application
-COPY . /app
-WORKDIR /app
-RUN mkdir build && cd build && cmake ../ -DCMAKE_PREFIX_PATH=/opt/pytorch && make
-
-ENV VACCEL_BACKENDS=libvaccel-rpc.so
-```
-
-## Sidecar Deployment (Single Pod)
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-    name: vaccel-sidecar-pod
-spec:
+```YAML
     containers:
         - name: vaccel-agent
-          image: vaccel/agent:latest
           volumeMounts:
               - name: vaccel-sock
                 mountPath: /var/run/vaccel
-
+...
         - name: vaccel-client
-          image: vaccel/client:latest
+...
           volumeMounts:
               - name: vaccel-sock
                 mountPath: /var/run/vaccel
-
+...
     volumes:
         - name: vaccel-sock
           emptyDir: {}
 ```
 
-## Split Deployment
+> Note: The `ENTRYPOINT` of the Agent's Dockerfile is the following:
 
-### Agent DaemonSet
+```Dockerfile
+ENTRYPOINT ["vaccel-rpc-agent", "-a", "unix:///var/run/vaccel/vaccel.sock"]
+```
 
-```yaml
+> and the env var that points to the vAccel endpoint in the Client's Dockerfile
+> is:
+
+```Dockerfile
+ENV VACCEL_RPC_ADDRESS="unix:///var/run/vaccel/vaccel.sock"
+```
+
+Logs from an example deployment are shown below.
+
+Agent logs, before the client start:
+
+```console
+$ kubectl logs vaccel-sidecar-pod -c vaccel-agent
+[2025-06-22T22:30:03Z INFO  ttrpc::sync::server] server listen started
+[2025-06-22T22:30:03Z INFO  ttrpc::sync::server] server started
+[2025-06-22T22:30:03Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-06-22T22:30:03Z INFO  vaccel_rpc_agent] Listening on 'unix:///var/run/vaccel/vaccel.sock', press Ctrl+C to exit
+```
+
+Client logs:
+
+```console
+$ kubectl logs vaccel-sidecar-pod -c vaccel-client
+2025.06.22-22:30:03.73 - <info> vAccel 0.7.0-7-e67e52b6
+2025.06.22-22:30:03.73 - <info> Registered plugin rpc 0.2.0-1-eca9e440
+Processing 26954 lines from: /data/tweets.txt
+== [Vocab Loaded] ==
+2025.06.22-22:30:03.78 - <warn> Path does not seem to have a `<prefix>://`
+2025.06.22-22:30:03.78 - <warn> Assuming cnn_trace.pt is a local path
+vaccel_resource_new(): Time Taken: 68500 nanoseconds
+Created new model resource 1
+Initialized vAccel session 1
+Line 1: Duration: 497.627 ms Prediction: neither
+Line 2: Duration: 198.996 ms Prediction: offensive-language
+Line 3: Duration: 359.865 ms Prediction: offensive-language
+Line 4: Duration: 69.7109 ms Prediction: offensive-language
+...
+```
+
+Agent logs, after client initial connection:
+
+```console
+$ kubectl logs vaccel-sidecar-pod -c vaccel-agent
+[2025-06-22T22:30:03Z INFO  ttrpc::sync::server] server listen started
+[2025-06-22T22:30:03Z INFO  ttrpc::sync::server] server started
+[2025-06-22T22:30:03Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-06-22T22:30:03Z INFO  vaccel_rpc_agent] Listening on 'unix:///var/run/vaccel/vaccel.sock', press Ctrl+C to exit
+[2025-06-22T22:30:03Z INFO  vaccel_rpc_agent::session] Created session 1
+[2025-06-22T22:30:05Z INFO  vaccel_rpc_agent::resource] Creating new resource
+[2025-06-22T22:30:05Z INFO  vaccel_rpc_agent::resource] Registering resource 1 with session 1
+[2025-06-22T22:30:06Z INFO  vaccel_rpc_agent::ops::torch] session:1 PyTorch jitload forward
+[2025-06-22T22:30:06Z INFO  vaccel_rpc_agent::ops::torch] session:1 PyTorch jitload forward
+[2025-06-22T22:30:06Z INFO  vaccel_rpc_agent::ops::torch] session:1 PyTorch jitload forward
+...
+```
+
+### vAccel Agent as a **daemonset**
+
+The Agent runs as a daemonset providing a service to the k8s cluster, available
+via a hostname and port. This mode offers a lot more flexibility, as it allows
+multiple agent deployments, on heterogeneous nodes, with diverse hardware
+characteristics. In our example we use a single `x86_64` node, but more complex
+scenarios can be supported, with multiple GPUs/FPGAs or custom acceleration
+nodes. In this mode of operation we have two YAML files:
+
+(a) one for the agent daemonset (`daemoneset-agent.yaml`) that includes the
+service:
+
+```YAML
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -158,15 +184,38 @@ spec:
         spec:
             containers:
                 - name: vaccel-agent
-                  image: vaccel/agent:latest
+                  image: harbor.nbfc.io/nubificus/vaccel-torch-bert-example-agent:x86_64
+                  command: ["vaccel-rpc-agent"]
+                  args: ["-a", "tcp://0.0.0.0:8888"]
                   ports:
                       - containerPort: 8888
                         name: rpc
 ```
 
-### Client Pod
+and the service:
 
-```yaml
+```YAML
+apiVersion: v1
+kind: Service
+metadata:
+  name: vaccel-agent
+  labels:
+    app: vaccel-agent
+spec:
+  ports:
+  - name: vaccel-agent
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    app: vaccel-agent
+  sessionAffinity: None
+```
+
+(b) one for the client application (`client.yaml`) that points to the respective
+vAccel agent service:
+
+```YAML
 apiVersion: v1
 kind: Pod
 metadata:
@@ -174,13 +223,71 @@ metadata:
 spec:
     containers:
         - name: vaccel-client
-          image: vaccel/client:latest
+          image: harbor.nbfc.io/nubificus/vaccel-torch-bert-example:x86_64
+          command: ["./build/classifier"]
+          args: ["-m", "cnn_trace.pt", "-v", "bert_cased_vocab.txt", "-f", "/data/tweets.txt"]
           env:
-              - name: VACCEL_RPC_ADDR
-                value: "tcp://vaccel-agent-service:8888"
+              - name: VACCEL_RPC_ADDRESS
+                value: "tcp://vaccel-agent:8888"
+          volumeMounts:
+              - name: tweets
+                mountPath: /data
+    volumes:
+        - name: tweets
+          hostPath:
+            path: /tmp/data
 ```
 
----
+Deployment logs are shown below.
+
+Agent & service instantiation:
+
+```console
+$ kubectl apply -f daemonset-agent.yaml
+daemonset.apps/vaccel-agent created
+service/vaccel-agent created
+$ kubectl get pods -o wide
+NAME                             READY   STATUS         RESTARTS       AGE    IP              NODE      NOMINATED NODE   READINESS GATES
+vaccel-agent-p4zxg               1/1     Running        0              15s    10.244.43.21    node1     <none>           <none>
+$ kubectl logs vaccel-agent-p4zxg
+[2025-06-22T22:34:34Z INFO  ttrpc::sync::server] server listen started
+[2025-06-22T22:34:34Z INFO  ttrpc::sync::server] server started
+[2025-06-22T22:34:34Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2025-06-22T22:34:34Z INFO  vaccel_rpc_agent] Listening on 'tcp://0.0.0.0:8888', press Ctrl+C to exit
+```
+
+```console
+$ kubectl get svc -o wide
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE    SELECTOR
+vaccel-agent       ClusterIP   10.244.21.70   <none>        8888/TCP   64s    app=vaccel-agent
+```
+
+Client spawn:
+
+```console
+$ kubectl apply -f client.yaml
+pod/vaccel-client created
+$ kubectl get pods -o wide
+NAME                             READY   STATUS             RESTARTS       AGE    IP              NODE      NOMINATED NODE   READINESS GATES
+vaccel-agent-p4zxg               1/1     Running            0              2m9s   10.244.43.21    node1     <none>           <none>
+vaccel-client                    1/1     Running            0              11s    10.244.43.1     node1     <none>           <none>
+$ kubectl logs vaccel-client
+2025.06.22-22:36:32.01 - <info> vAccel 0.7.0-7-e67e52b6
+2025.06.22-22:36:32.02 - <info> Registered plugin rpc 0.2.0-1-eca9e440
+Processing 26954 lines from: /data/tweets.txt
+== [Vocab Loaded] ==
+2025.06.22-22:36:32.07 - <warn> Path does not seem to have a `<prefix>://`
+2025.06.22-22:36:32.07 - <warn> Assuming cnn_trace.pt is a local path
+vaccel_resource_new(): Time Taken: 67057 nanoseconds
+Created new model resource 1
+Initialized vAccel session 1
+Line 1: Duration: 551.823 ms Prediction: neither
+Line 2: Duration: 279.833 ms Prediction: offensive-language
+Line 3: Duration: 413.417 ms Prediction: offensive-language
+Line 4: Duration: 120.675 ms Prediction: offensive-language
+Line 5: Duration: 185.506 ms Prediction: neither
+...
+```
 
 ## Next Steps
 
