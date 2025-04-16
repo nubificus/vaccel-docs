@@ -7,3 +7,4 @@ from other popular programming languages through the provided bindings:
 
 - [Python bindings](python-bindings/index.md)
 - [Go bindings](go-bindings/index.md)
+- [Rust bindings](rust-bindings/index.md)
