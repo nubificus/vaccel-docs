@@ -8,11 +8,11 @@ vAccel can be configured at runtime using environment variables.
 
 | Variable Name              | Description                                   | Expected Values                                | Default |
 | -------------------------- | --------------------------------------------- | ---------------------------------------------- | ------- |
-| `VACCEL_PLUGINS`           | Path(s) or filename(s) of backend plugin(s)   | Absolute path, filename, or `:`-separated list |         |
+| `VACCEL_PLUGINS`           | Path(s) / filename(s) of plugin(s)   | Absolute path, filename, or `:`-separated list |         |
 | `VACCEL_LOG_LEVEL`         | Controls log verbosity                        | `1`, `2`, `3`, `4`                             | `1`     |
 | `VACCEL_LOG_FILE`          | Filename of a log file                        | Filename (without extension)                   |         |
 | `VACCEL_PROFILING_ENABLED` | Enables or disables profiling                 | `1`, `0`                                       | `0`     |
-| `VACCEL_VERSION_IGNORE`    | If set, ignores plugin/lib version mismatches | `1`, `0`                                       | `0`     |
+| `VACCEL_VERSION_IGNORE`    | If set, ignores plugin/lib version mismatch | `1`, `0`                                       | `0`     |
 
 <!-- markdownlint-restore -->
 
