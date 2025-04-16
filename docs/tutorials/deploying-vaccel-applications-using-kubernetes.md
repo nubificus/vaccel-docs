@@ -1,21 +1,21 @@
 # Deploying vAccel applications using Kubernetes
 
-This guide describes how to deploy the **vAccel framework** with Torch
-acceleration using Kubernetes. It includes:
+This guide describes how to deploy a **vAccel**-enabled application, alongside
+the **vAccel Agent** with the Torch plugin using Kubernetes. It includes:
 
 - Full explanation of the deployment architecture
 - Sidecar-based co-location of client and agent
 - Split deployment with remote agent access
 - Dockerfiles for both client and agent
-- Mermaid diagram for visual reference
+- Simple block diagram for visual reference
 
 ## Architecture Overview
 
 The deployment includes:
 
-- A **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or TCP
+- The **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or TCP
   endpoint.
-- A **vAccel Client** compiled with the RPC plugin and `libtorch`, which
+- The **vAccel**-enabled Application, packaged with the RPC plugin, which
   connects to the agent.
 - A sidecar option to colocate both agent and client in one pod for
   latency-sensitive workloads.

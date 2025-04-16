@@ -170,7 +170,7 @@ infrastructure:
 vAccel's architecture encourages third-party contributions for:
 
 - Plugin Development: Polish / Enhance / Extend existing
-  [plugins](../plugins/available-plugins/bundled-plugins) or provide additional
+  [plugins](../plugins/available-plugins/bundled-plugins/index.md) or provide additional
   [plugins](../plugins/available-plugins/acceleration-plugins/index.md) for existing [API
   operations](../api/api-guide/operations.md)
 
