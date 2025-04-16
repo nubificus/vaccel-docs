@@ -93,6 +93,10 @@ markdown_extensions:
           class: console
           validator: ^.*
           format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
 
 plugins:
   - section-index
