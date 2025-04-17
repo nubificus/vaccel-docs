@@ -135,7 +135,7 @@ A key enabler of robustness and portability is vAccel's integrated CI infrastruc
 
 - Ensures conformance of Python and Go bindings with the C runtime
 
-More on [CI Infrastructure](TODO).
+More on [CI Infrastructure](/design/ci).
 
 ## Extending vAccel
 
