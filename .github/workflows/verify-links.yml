@@ -33,9 +33,19 @@ jobs:
           remote-actions-repo: ${{ inputs.actions-repo }}
           token: ${{ secrets.GIT_CLONE_PAT || github.token }}
 
-      - name: Check links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - name: Build docs (strict)
+        run: |
+          sudo pip install -r requirements.txt
+          mkdocs build --strict
+          site_url_esc=$(sed 's/[.[\()*+?^${}|\&\/]/\\&/g' docs/CNAME)
+          echo "SITE_URL_ESC=${site_url_esc}" >> "$GITHUB_ENV"
+
+      - name: Check markdown links w/o macros
+        uses: lycheeverse/lychee-action@v2
         with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          folder-path: 'docs'
+          args: --exclude '\[\[\s*.*?\s*\]\]' docs
+
+      - name: Check external links in HTML
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --root-dir $(pwd)/site --exclude ^https://${{ env.SITE_URL_ESC }} site
