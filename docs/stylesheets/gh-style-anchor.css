@@ -1,8 +1,0 @@
-/* Replace the default symbol with a GitHub-style link icon */
-.md-typeset .headerlink::before {
-    content: "🔗";
-    font-size: 16px;
-    vertical-align: middle;
-    display: inline-block;
-}
-

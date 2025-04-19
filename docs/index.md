@@ -1,8 +1,8 @@
-# Welcome to vAccel Docs
+# Welcome to vAccel Documentation
 
-This website contains documentation for vAccel, a set of software tools that
-semantically expose hardware acceleration functionality to isolated workloads
-running on VM sandboxes.
+This website contains documentation for vAccel, a framework that semantically
+exposes hardware acceleration functionality to isolated workloads running on VM
+sandboxes.
 
 vAccel enables workloads to enjoy hardware acceleration while running on
 environments that do not have direct (physical) access to acceleration devices.
@@ -13,7 +13,7 @@ The design goals of vAccel are:
    different hardware accelerators without re-writing or re-compilation.
 2. **security**: A vAccel application can be deployed, _as is_, in a VM to
    ensure isolation in multi-tenant environments. [QEMU](https://www.qemu.org),
-   [AWS Firecracker](https://firecracker-microvm.github.io/) and
+   [Firecracker](https://firecracker-microvm.github.io/) and
    [Cloud Hypervisor](https://www.cloudhypervisor.org/) are currently supported
 3. **compatibility**: vAccel supports the OCI container format through
    integration with the [Kata containers](https://katacontainers.io/) framework
@@ -27,8 +27,8 @@ The design goals of vAccel are:
 ## vAccel design
 
 <figure>
-  <!--<img src="img/vaccel-overview.svg" width="600" align=left />-->
-  <img src="img/vaccel-overview-updated2.png" width="800" align=left
+  <!--<img src="assets/images/vaccel-overview.svg" width="600" align=left />-->
+  <img src="assets/images/vaccel-overview-updated2.png" width="800" align=left
     alt="vAccel software stack"/>
   <figcaption>Figure 1. vAccel software stack</figcaption>
 </figure>
@@ -82,13 +82,14 @@ Additionally, we have designed the above transport protocol over sockets,
 allowing vAccel applications to use any backend, as long as there is a socket
 interface installed between the two peers. Existing implementations include
 VSOCK and TCP sockets. Any hypervisor supporting `virtio-vsock` can support
-vAccel. See the [relevant page](user-guide/vm-example.md#bootstrap-the-vm) for
-more information.
+vAccel. See the
+[relevant page](tutorials/running-a-vaccel-application-on-a-vm.md) for more
+information.
 
 ## Performance
 
 <figure>
-  <img src="img/perf_bm.png" width="600" align=left
+  <img src="assets/images/perf_bm.png" width="600" align=left
     alt="vAccel virtio and jetson-inference VM vs bare-metal" />
   <figcaption>Figure 2. vAccel performance overhead of VM execution with virtio
     and jetson-inference compared to bare-metal on x86_64</figcaption>
@@ -103,7 +104,7 @@ The performance overhead of our stack is less that 5% of the native execution
 time across a range of image sizes.
 
 <figure>
-  <img src="img/vaccel-inference-performance.png" width="800" align=left
+  <img src="assets/images/vaccel-inference-performance.png" width="800" align=left
     alt="vAccel plugins VM vs bare-metal on x86_64 and aaarch64" />
   <figcaption>Figure 3. vAccel performance overhead of VM execution, on various
     backend plugins compared to bare-metal on x86_64 and aarch64</figcaption>
