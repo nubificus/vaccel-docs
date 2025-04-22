@@ -1,7 +1,7 @@
-
 # vAccel Kubernetes Deployment Guide
 
-This guide describes how to deploy the **vAccel framework** with Torch acceleration using Kubernetes. It includes:
+This guide describes how to deploy the **vAccel framework** with Torch
+acceleration using Kubernetes. It includes:
 
 - Full explanation of the deployment architecture
 - Sidecar-based co-location of client and agent
@@ -13,9 +13,12 @@ This guide describes how to deploy the **vAccel framework** with Torch accelerat
 
 The deployment includes:
 
-- A **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or TCP endpoint.
-- A **vAccel Client** compiled with the RPC plugin and `libtorch`, which connects to the agent.
-- A sidecar option to colocate both agent and client in one pod for latency-sensitive workloads.
+- A **vAccel Agent** (running `vaccel-rpc-agent`) exposing a Unix socket or TCP
+  endpoint.
+- A **vAccel Client** compiled with the RPC plugin and `libtorch`, which
+  connects to the agent.
+- A sidecar option to colocate both agent and client in one pod for
+  latency-sensitive workloads.
 - A split deployment option where the agent runs as a standalone DaemonSet.
 
 ## Deployment Graph
@@ -118,21 +121,21 @@ metadata:
   name: vaccel-sidecar-pod
 spec:
   containers:
-  - name: vaccel-agent
-    image: vaccel/agent:latest
-    volumeMounts:
-    - name: vaccel-sock
-      mountPath: /var/run/vaccel
+    - name: vaccel-agent
+      image: vaccel/agent:latest
+      volumeMounts:
+        - name: vaccel-sock
+          mountPath: /var/run/vaccel
 
-  - name: vaccel-client
-    image: vaccel/client:latest
-    volumeMounts:
-    - name: vaccel-sock
-      mountPath: /var/run/vaccel
+    - name: vaccel-client
+      image: vaccel/client:latest
+      volumeMounts:
+        - name: vaccel-sock
+          mountPath: /var/run/vaccel
 
   volumes:
-  - name: vaccel-sock
-    emptyDir: {}
+    - name: vaccel-sock
+      emptyDir: {}
 ```
 
 ## Split Deployment
@@ -154,11 +157,11 @@ spec:
         app: vaccel-agent
     spec:
       containers:
-      - name: vaccel-agent
-        image: vaccel/agent:latest
-        ports:
-        - containerPort: 8888
-          name: rpc
+        - name: vaccel-agent
+          image: vaccel/agent:latest
+          ports:
+            - containerPort: 8888
+              name: rpc
 ```
 
 ### Client Pod
@@ -170,11 +173,11 @@ metadata:
   name: vaccel-client
 spec:
   containers:
-  - name: vaccel-client
-    image: vaccel/client:latest
-    env:
-    - name: VACCEL_RPC_ADDR
-      value: "tcp://vaccel-agent-service:8888"
+    - name: vaccel-client
+      image: vaccel/client:latest
+      env:
+        - name: VACCEL_RPC_ADDR
+          value: "tcp://vaccel-agent-service:8888"
 ```
 
 ---
@@ -184,4 +187,3 @@ spec:
 - Customize your Torch model or plugin inside the client image
 - Test workloads in the sidecar first for simplified debugging
 - Scale via Deployment/Job or integrate with KNative
-

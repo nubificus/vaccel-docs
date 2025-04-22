@@ -8,4 +8,3 @@ architecture and its deployment options, from local to remote execution.
 - [Benchmark Methodology](/benchmarks/measure)
 - [Testbed](/benchmarks/testbed)
 - [Results](/benchmarks/results)
-

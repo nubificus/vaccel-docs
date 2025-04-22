@@ -1,12 +1,12 @@
 # Usage
 
-The Rust bindings are implemented in the `vaccel` Rust crate and feature a large 
+The Rust bindings are implemented in the `vaccel` Rust crate and feature a large
 subset of the vAccel operations.
 
 ## Requirements
 
-- To use the `vaccel` Rust crate you need a working vAccel installation. You
-  can find more information on how to install vAccel in the
+- To use the `vaccel` Rust crate you need a working vAccel installation. You can
+  find more information on how to install vAccel in the
   [Installation](../../getting-started/installation.md) page.
 
 <!-- markdownlint-disable blanks-around-fences -->
@@ -33,18 +33,19 @@ vaccel = { git = "https://github.com/nubificus/vaccel-rust" }
 
 !!! warning
 
-    To include a crate from a rust workspace repo, you need to specify 
+    To include a crate from a rust workspace repo, you need to specify
     the name of crate as the dependency.
 
 ## Running the examples
 
 You can find examples in the
-[examples](https://github.com/nubificus/vaccel-rust/tree/main/vaccel-bindings/examples) directory
-of the repository. The provided examples are similar to the
+[examples](https://github.com/nubificus/vaccel-rust/tree/main/vaccel-bindings/examples)
+directory of the repository. The provided examples are similar to the
 [C examples](../../getting-started/running-the-examples.md) and you must
 configure vAccel in order to use them.
 
-To run a simple session init/release, like the C `noop` example, clone the bindings repo:
+To run a simple session init/release, like the C `noop` example, clone the
+bindings repo:
 
 ```sh
 git clone https://github.com/nubificus/vaccel-rust
@@ -76,10 +77,10 @@ note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.ht
     Finished dev [unoptimized + debuginfo] target(s) in 24.59s
 ```
 
-If all went well, the examples' binaries should be available in `../target/debug/examples`.
+If all went well, the examples' binaries should be available in
+`../target/debug/examples`.
 
-!!! warning
-    The directory is one level up, in the `vaccel-rust` workspace.
+!!! warning The directory is one level up, in the `vaccel-rust` workspace.
 
 Set the config environment variables:
 
@@ -156,4 +157,3 @@ $ ../target/debug/examples/session
 2025.04.16-14:43:15.99 - <debug> Cleaning up plugins
 2025.04.16-14:43:15.99 - <debug> Unregistered plugin noop
 ```
-
