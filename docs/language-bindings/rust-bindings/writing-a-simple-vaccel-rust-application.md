@@ -14,7 +14,7 @@ cargo init
 
 You should get the following file/directory structure:
 
-```
+```console
 rust-vaccel-classify
 ├── Cargo.toml
 └── src
@@ -166,6 +166,7 @@ export VACCEL_LOG_LEVEL=4
 ```
 
 and run with:
+
 ```console
 $ cargo run /usr/share/vaccel/images/example.jpg
     Finished dev [unoptimized + debuginfo] target(s) in 0.07s
@@ -237,4 +238,3 @@ Annotated image: This is a dummy imgname!
 2025.04.16-14:39:45.13 - <debug> Cleaning up plugins
 2025.04.16-14:39:45.13 - <debug> Unregistered plugin noop
 ```
-

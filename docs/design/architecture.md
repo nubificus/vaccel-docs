@@ -1,17 +1,17 @@
 # vAccel Architecture
 
 The vAccel framework is designed to enable transparent and secure offloading of
-hardware-accelerated operations from sandboxed workloads (eg., VMs,
-containers) to the host. Its architecture is centered on a unified,
-plugin-based model that abstracts execution, allowing for portability,
-flexibility, and minimal runtime overhead.
+hardware-accelerated operations from sandboxed workloads (eg., VMs, containers)
+to the host. Its architecture is centered on a unified, plugin-based model that
+abstracts execution, allowing for portability, flexibility, and minimal runtime
+overhead.
 
 ## System Overview
 
 At a high level, vAccel consists of:
 
 - the core library that:
-  - exposes the API and is linked into user-space applications, 
+  - exposes the API and is linked into user-space applications,
   - matches API operations to the underlying plugins
 - plugins that handle the execution of operations:
   - a set of transport plugins, which facilitate communication between hosts
@@ -59,9 +59,11 @@ decoupled from specific transport mechanisms.
 
 Examples include:
 
-- `virtio`: Paravirtualized transport using memory-mapped buffers (via patched QEMU or Firecracker)
+- `virtio`: Paravirtualized transport using memory-mapped buffers (via patched
+  QEMU or Firecracker)
 
-- `rpc`: Generic socket-based plugin with support for `VSOCK`, `TCP`, and `UNIX` sockets
+- `rpc`: Generic socket-based plugin with support for `VSOCK`, `TCP`, and `UNIX`
+  sockets
 
 These are configured at runtime, allowing per-deployment customization.
 
@@ -77,9 +79,10 @@ They must:
 
 - Register capabilities during initialization
 
-- Handle requests from the core libary (via the dispatch layer)
+- Handle requests from the core library (via the dispatch layer)
 
-Each plugin is isolated from others and loaded only when required, minimizing resource footprint and improving security.
+Each plugin is isolated from others and loaded only when required, minimizing
+resource footprint and improving security.
 
 ## Execution Model
 
@@ -108,26 +111,28 @@ heterogeneity is abstracted away.
   <figcaption>Figure 1. vAccel execution flow</figcaption>
 </figure>
 
-
 ## Multi-Architecture Support
 
 vAccel is fully portable and supports:
 
 - `amd64`: Main development and reference architecture
 
-- `arm64`: Optimized for edge and embedded devices (eg., NVIDIA Jetsons, Raspberry Pi variants etc.)
+- `arm64`: Optimized for edge and embedded devices (eg., NVIDIA Jetsons,
+  Raspberry Pi variants etc.)
 
 - `arm`: Deeply embedded environments (eg. Switch ASICs, FPGAs etc.)
 
-Cross-compilation is supported via Meson and platform-specific build
-toolchains. CI workflows validate plugin compatibility and API coverage across
+Cross-compilation is supported via Meson and platform-specific build toolchains.
+CI workflows validate plugin compatibility and API coverage across
 architectures.
 
 ## Continuous Integration and Testing
 
-A key enabler of robustness and portability is vAccel's integrated CI infrastructure:
+A key enabler of robustness and portability is vAccel's integrated CI
+infrastructure:
 
-- Builds and tests all components (core, plugins) on `amd64`, `arm64`, and `arm`.
+- Builds and tests all components (core, plugins) on `amd64`, `arm64`, and
+  `arm`.
 
 - Runs automated functional and integration tests for all supported transports
 
