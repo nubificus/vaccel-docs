@@ -36,14 +36,13 @@ application context.
   low-overhead transports such as `VirtIO`, `VSOCK`, or `TCP`, minimizing
   performance loss.
 
-- Scalability: vAccel integrates natively with Kubernetes to support large-scale,
-  multi-tenant deployments of acceleration-enabled workloads.
+- Scalability: vAccel integrates natively with Kubernetes to support
+  large-scale, multi-tenant deployments of acceleration-enabled workloads.
 
 ## Key Features
 
-- Rich Architecture Support: Native support for amd64, arm, and arm64
-  platforms, including cross-compiled deployments and heterogeneous cluster
-  environments.
+- Rich Architecture Support: Native support for amd64, arm, and arm64 platforms,
+  including cross-compiled deployments and heterogeneous cluster environments.
 
 - CI-Driven Development: An end-to-end CI pipeline validates functionality
   across multiple backends, host/guest combinations, and transport modes. All
@@ -54,9 +53,9 @@ application context.
   `jitload_forward`) and TensorFlow, enabling runtime-loaded model execution
   inside isolated environments.
 
-- Language Bindings: Native bindings available for Go and Python, enabling
-  rapid prototyping and integration into existing ML/AI pipelines and
-  cloud-native workflows.
+- Language Bindings: Native bindings available for Go and Python, enabling rapid
+  prototyping and integration into existing ML/AI pipelines and cloud-native
+  workflows.
 
 ## vAccel Architecture
 
@@ -67,14 +66,16 @@ At its core, vAccel consists of:
 - A plugin system, where backend modules handle calls to specific accelerator
   runtimes.
 
-This layered design allows applications to remain agnostic of the underlying accelerator or transport mechanism.
+This layered design allows applications to remain agnostic of the underlying
+accelerator or transport mechanism.
 
-Refer to the [Architecture Overview](/design/architecture) for a detailed breakdown.
+Refer to the [Architecture Overview](/design/architecture) for a detailed
+breakdown.
 
 ## Virtualization and Transport
 
-vAccel is designed to operate seamlessly in virtualized environments. Instead
-of relying on device pass-through or vendor-specific drivers, vAccel exposes
+vAccel is designed to operate seamlessly in virtualized environments. Instead of
+relying on device pass-through or vendor-specific drivers, vAccel exposes
 coarse-grained acceleration operations to guest workloads over generic,
 extensible transports. Implementations include:
 
@@ -82,9 +83,11 @@ extensible transports. Implementations include:
 
 - RPC (VSOCK, TCP and UNIX sockets)
 
-These transports allow flexible deployment across a range of hypervisors and system configurations.
+These transports allow flexible deployment across a range of hypervisors and
+system configurations.
 
-More details are available in the [Transport Plugin](/plugins/available-plugins/transport-plugins) documentation.
+More details are available in the
+[Transport Plugin](/plugins/available-plugins/transport-plugins) documentation.
 
 ## Performance
 
@@ -93,7 +96,8 @@ across real-world inference tasks and varied payload sizes consistently
 demonstrate near-native performance, with less than 5% overhead in most
 configurations.
 
-Refer to the [Performance Analysis](/benchmarks) section for detailed results and benchmarking methodology.
+Refer to the [Performance Analysis](/benchmarks) section for detailed results
+and benchmarking methodology.
 
 ## Getting Started
 

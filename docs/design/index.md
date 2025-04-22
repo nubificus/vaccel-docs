@@ -2,5 +2,5 @@
 
 This section contains info on the vAccel Architecture.
 
-- [vAccel Architecture](architecture)
-- [CI Infrastructure](ci)
+- [vAccel Architecture](architecture.md)
+- [CI Infrastructure](ci.md)
