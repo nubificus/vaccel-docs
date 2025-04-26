@@ -11,12 +11,12 @@ portability across diverse hardware platforms and system configurations,
 including deployments where accelerators are not directly accessible from the
 application context.
 
-<figure>
-  <!--<img src="img/vaccel-overview.svg" width="600" align=left />-->
-  <img src="/assets/images/vaccel-stack.png" width="800" align=center
-    alt="vAccel software stack"/>
-  <figcaption>Figure 1. vAccel software stack</figcaption>
-</figure>
+![vAccel software stack](/assets/images/vaccel-stack-light.svg#only-light){width="800"}
+![vAccel software stack](/assets/images/vaccel-stack-dark.svg#only-dark){width="800"}
+
+/// caption  
+Figure 1. vAccel software stack  
+///
 
 ## Core Design Principles
 

@@ -9,11 +9,12 @@ a vAccel function call from one vAccel instance to another, a valid vAccel
 installation is required for both the guest **and** the host system. A visual
 representation of the execution flow is shown in Figure 1.
 
-<figure>
-  <img src="/assets/images/vaccel-vm-flow.png" width="800" align=left
-    alt="VM application execution flow" />
-  <figcaption>Figure 1. VM application execution flow</figcaption>
-</figure>
+![vAccel VM execution flow](/assets/images/vaccel-vm-light.svg#only-light){width="800"}
+![vAccel VM execution flow](/assets/images/vaccel-vm-dark.svg#only-dark){width="800"}
+
+/// caption  
+Figure 1. vAccel VM execution flow  
+///
 
 The easiest way to run a vAccel application on a VM is to use the `RPC` plugin.
 This plugin leverages the VirtIO vSock device for guest-host communication

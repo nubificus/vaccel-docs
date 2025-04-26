@@ -32,8 +32,17 @@
 }
 */
 
+[data-md-color-scheme="vaccel"] img[src$="#only-dark"],
+[data-md-color-scheme="custom-light"] img[src$="#gh-dark-mode-only"] {
+  display: none;
+}
+
 .md-nav__title .md-nav__button.md-logo img {
   height: 2rem;
+}
+
+.md-typeset figure {
+  margin: 2em auto;
 }
 
 /*
