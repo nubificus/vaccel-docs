@@ -28,18 +28,24 @@ jobs:
           repository: ${{ env.ACTIONS_REPO }}
           ref: ${{ env.ACTIONS_REV }}
 
-      - name: Initialize workspace
-        uses: ./.github/actions/initialize-workspace
-        with:
-          remote-actions-repo: ${{ env.ACTIONS_REPO }}
-          token: ${{ secrets.GIT_CLONE_PAT || github.token }}
-
       - name: Generate vaccel-bot token
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ vars.VACCEL_BOT_APP_ID }}
           private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          permission-contents: read
+          permission-pull-requests: write
+
+      - name: Initialize workspace
+        uses: ./.github/actions/initialize-workspace
+        with:
+          submodules: 'true'
+          remote-actions-repo: ${{ env.ACTIONS_REPO }}
+          token: >-
+            ${{ steps.generate-token.outputs.token ||
+              secrets.GIT_CLONE_PAT || github.token }}
 
       - name: Trigger checks
         uses: ./.github/actions/readd-issue-label
