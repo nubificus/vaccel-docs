@@ -12,6 +12,8 @@ on:
     secrets:
       GIT_CLONE_PAT:
         required: false
+      VACCEL_BOT_PRIVATE_KEY:
+        required: true
 
 jobs:
   linter-super-linter:
@@ -30,12 +32,24 @@ jobs:
           repository: ${{ inputs.actions-repo }}
           ref: ${{ inputs.actions-rev }}
 
+      - name: Generate vaccel-bot token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.VACCEL_BOT_APP_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          permission-contents: read
+
       - name: Initialize workspace
         uses: ./.github/actions/initialize-workspace
         with:
-          fetch-depth: 0
+          submodules: 'true'
           remote-actions-repo: ${{ inputs.actions-repo }}
-          token: ${{ secrets.GIT_CLONE_PAT || github.token }}
+          token: >-
+            ${{ steps.generate-token.outputs.token ||
+              secrets.GIT_CLONE_PAT || github.token }}
+          fetch-depth: 0
 
       - name: Run super-linter
         uses: super-linter/super-linter/slim@v7
