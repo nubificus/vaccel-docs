@@ -6,8 +6,8 @@ As with the [VM case](running-a-vaccel-application-on-a-vm.md), you can use the
 `RPC` plugin to run a vAccel application remotely. In this scenario, the plugin
 forwards function calls to a remote system. Figure 1 shows the execution flow:
 
-![vAccel remote execution flow](/assets/images/vaccel-remote-light.svg#only-light){width="800"}
-![vAccel remote execution flow](/assets/images/vaccel-remote-dark.svg#only-dark){width="800"}
+![vAccel remote execution flow](../assets/images/vaccel-remote-light.svg#only-light){width="800"}
+![vAccel remote execution flow](../assets/images/vaccel-remote-dark.svg#only-dark){width="800"}
 
 /// caption  
 Figure 1. vAccel remote execution flow  
