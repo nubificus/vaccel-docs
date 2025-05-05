@@ -140,7 +140,7 @@ infrastructure:
 
 - Ensures conformance of Python and Go bindings with the C runtime
 
-More on [CI Infrastructure](/design/ci).
+More on [CI Infrastructure](ci.md).
 
 ## Extending vAccel
 
@@ -159,8 +159,8 @@ frameworks).
 
 ## Further Reading
 
-[Runtime API Reference](/api/api-reference/operations)
+[Runtime API Reference](../api/api-reference/operations.md)
 
-[Supported Plugins](/plugins)
+[Supported Plugins](../plugins/index.md)
 
-[Tutorials](/tutorials)
+[Tutorials](../tutorials/index.md)
