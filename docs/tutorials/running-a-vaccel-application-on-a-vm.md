@@ -9,8 +9,8 @@ a vAccel function call from one vAccel instance to another, a valid vAccel
 installation is required for both the guest **and** the host system. A visual
 representation of the execution flow is shown in Figure 1.
 
-![vAccel VM execution flow](/assets/images/vaccel-vm-light.svg#only-light){width="800"}
-![vAccel VM execution flow](/assets/images/vaccel-vm-dark.svg#only-dark){width="800"}
+![vAccel VM execution flow](../assets/images/vaccel-vm-light.svg#only-light){width="800"}
+![vAccel VM execution flow](../assets/images/vaccel-vm-dark.svg#only-dark){width="800"}
 
 /// caption  
 Figure 1. vAccel VM execution flow  

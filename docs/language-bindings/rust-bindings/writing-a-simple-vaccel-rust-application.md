@@ -2,7 +2,7 @@
 
 For a simple example of using the `vaccel` Rust crate, you can replicate in Rust
 an image classification application similar to the image classification example
-from [Running the examples](/getting-started/running-the-examples).
+from [Running the examples](../../getting-started/running-the-examples.md).
 
 Initialize a new `rust-vaccel-classify` project and module:
 
