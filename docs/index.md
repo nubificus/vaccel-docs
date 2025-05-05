@@ -11,8 +11,8 @@ portability across diverse hardware platforms and system configurations,
 including deployments where accelerators are not directly accessible from the
 application context.
 
-![vAccel software stack](/assets/images/vaccel-stack-light.svg#only-light){width="800"}
-![vAccel software stack](/assets/images/vaccel-stack-dark.svg#only-dark){width="800"}
+![vAccel software stack](assets/images/vaccel-stack-light.svg#only-light){width="800"}
+![vAccel software stack](assets/images/vaccel-stack-dark.svg#only-dark){width="800"}
 
 /// caption  
 Figure 1. vAccel software stack  
@@ -69,7 +69,7 @@ At its core, vAccel consists of:
 This layered design allows applications to remain agnostic of the underlying
 accelerator or transport mechanism.
 
-Refer to the [Architecture Overview](/design/architecture) for a detailed
+Refer to the [Architecture Overview](design/architecture.md) for a detailed
 breakdown.
 
 ## Virtualization and Transport
@@ -87,7 +87,8 @@ These transports allow flexible deployment across a range of hypervisors and
 system configurations.
 
 More details are available in the
-[Transport Plugin](/plugins/available-plugins/transport-plugins) documentation.
+[Transport Plugin](plugins/available-plugins/transport-plugins/index.md)
+documentation.
 
 ## Performance
 
@@ -96,21 +97,21 @@ across real-world inference tasks and varied payload sizes consistently
 demonstrate near-native performance, with less than 5% overhead in most
 configurations.
 
-Refer to the [Performance Analysis](/benchmarks) section for detailed results
-and benchmarking methodology.
+Refer to the [Performance Analysis](benchmarks/index.md) section for detailed
+results and benchmarking methodology.
 
 ## Getting Started
 
 Explore the following sections to begin integrating vAccel into your stack:
 
-[Quickstart Guide](/getting-started/)
+[Quickstart Guide](getting-started/index.md)
 
-[Core API Documentation](/api/)
+[Core API Documentation](api/index.md)
 
-[Language Bindings](/language-bindings/)
+[Language Bindings](language-bindings/index.md)
 
-[Plugin Development](/tutorials/writing-your-first-plugin/)
+[Plugin Development](tutorials/writing-your-first-plugin.md)
 
-[CI and Testing Infrastructure](/ci)
+[CI and Testing Infrastructure](design/ci.md)
 
 For the full documentation tree, browse the sidebar navigation.
