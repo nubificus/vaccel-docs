@@ -13,6 +13,8 @@ vAccel can be configured at runtime using environment variables.
 | `VACCEL_LOG_FILE`          | Filename of a log file                        | Filename (without extension)                   |         |
 | `VACCEL_PROFILING_ENABLED` | Enables or disables profiling                 | `1`, `0`                                       | `0`     |
 | `VACCEL_VERSION_IGNORE`    | If set, ignores plugin/lib version mismatches | `1`, `0`                                       | `0`     |
+| `VACCEL_BOOTSTRAP_ENABLED` | Enables or disables lib auto-bootstrap        | `1`, `0`                                       | `1`     |
+| `VACCEL_CLEANUP_ENABLED`   | Enables or disables lib auto-cleanup          | `1`, `0`                                       | `1`     |
 
 <!-- markdownlint-restore -->
 
@@ -77,3 +79,28 @@ core vAccel library version.
 - `0` – Do not ignore version mismatch
 
 **Default:** `0`
+
+### `VACCEL_BOOTSTRAP_ENABLED`
+
+Controls whether to bootstrap the vAccel components upon loading the library.
+Useful when setting `vaccel_config` programmatically, so the library can be
+configured before bootstrapping the components.
+
+**Expected values:**
+
+- `1` – Bootstrap components on library load
+- `0` – Do not bootstrap components on library load
+
+**Default:** `1`
+
+### `VACCEL_CLEANUP_ENABLED`
+
+Controls whether to automatically cleanup the allocated objects upon unloading
+the vAccel library.
+
+**Expected values:**
+
+- `1` – Cleanup components on library unload
+- `0` – Do not cleanup components on library unload
+
+**Default:** `1`
