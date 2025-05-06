@@ -35,6 +35,8 @@ To install the TAR binary package of the latest Tensorflow plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -45,6 +47,8 @@ tar xfv vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz --strip-components=2 -C
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///

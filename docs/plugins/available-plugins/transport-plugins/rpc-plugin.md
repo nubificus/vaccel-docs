@@ -94,6 +94,8 @@ To install the TAR binary package of the latest RPC plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -104,6 +106,8 @@ tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -114,6 +118,8 @@ tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
