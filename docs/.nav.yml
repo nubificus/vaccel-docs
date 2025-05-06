@@ -31,7 +31,7 @@ nav:
     - Python bindings:
       - language-bindings/python-bindings/index.md
       - language-bindings/python-bindings/installation.md
-      - language-bindings/python-bindings/running-a-simple-vaccel-python-application.md
+      - language-bindings/python-bindings/writing-a-simple-vaccel-python-application.md
       - API reference:
         - glob: language-bindings/python-bindings/api-reference/*
           preserve_directory_names: true
