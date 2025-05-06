@@ -25,13 +25,13 @@ WiP, supporting a subset of the vAccel operations.
 You can use the package in your Go code like any other Go package with:
 
 ```go
-import "github.com/nubificus/go-vaccel/vaccel"
+import "github.com/nubificus/vaccel-go/vaccel"
 ```
 
 ## Running the examples
 
 You can find examples in the
-[examples](https://github.com/nubificus/go-vaccel/tree/main/examples) directory
+[examples](https://github.com/nubificus/vaccel-go/tree/main/examples) directory
 of the repository. The provided examples are similar to the
 [C examples](../../getting-started/running-the-examples.md) and you must
 configure vAccel in order to use them.
@@ -45,7 +45,7 @@ export VACCEL_PLUGINS=libvaccel-noop.so
 and, assuming vAccel is installed at `/usr/local`, run with:
 
 ```console
-$ go run github.com/nubificus/go-vaccel/examples/classify \
+$ go run github.com/nubificus/vaccel-go/examples/classify \
       /usr/local/share/vaccel/images/example.jpg
 Output(1):  This is a dummy classification tag!
 Output(2):  This is a dummy classification tag!
@@ -62,7 +62,7 @@ you can see the verbose vAccel output, very similar to the
 output:
 
 ```console
-$ go run github.com/nubificus/go-vaccel/examples/classify \
+$ go run github.com/nubificus/vaccel-go/examples/classify \
       /usr/local/share/vaccel/images/example.jpg
 2025.04.15-16:51:03.74 - <debug> Initializing vAccel
 2025.04.15-16:51:03.74 - <info> vAccel 0.6.1-194-19056528
@@ -133,7 +133,7 @@ If you want to install an example for local use, you can use `go install`. For
 example:
 
 ```sh
-go install github.com/nubificus/go-vaccel/examples/classify
+go install github.com/nubificus/vaccel-go/examples/classify
 ```
 
 will install the `classify` example in your local Go binary path.
@@ -143,8 +143,8 @@ will install the `classify` example in your local Go binary path.
 You can also clone the repository locally to build the examples:
 
 ```sh
-git clone https://github.com/nubificus/go-vaccel.git
-cd go-vaccel
+git clone https://github.com/nubificus/vaccel-go.git
+cd vaccel-go
 make
 ```
 
