@@ -133,6 +133,15 @@ fn main() {
 }
 ```
 
+<!-- markdownlint-disable code-block-style -->
+
+!!! note
+
+    You can omit `sess.release()` if you don't need custom error handling. The
+    session will be released when the object is dropped.
+
+<!-- markdownlint-restore -->
+
 Build it:
 
 ```console
@@ -238,3 +247,7 @@ Annotated image: This is a dummy imgname!
 2025.04.16-14:39:45.13 - <debug> Cleaning up plugins
 2025.04.16-14:39:45.13 - <debug> Unregistered plugin noop
 ```
+
+The vAccel output of
+[`classify`](../../getting-started/running-the-examples.md#classify-noop-debug)
+and `rust-vaccel-classify` should be almost identical.
