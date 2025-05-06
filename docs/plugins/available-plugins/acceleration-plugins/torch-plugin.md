@@ -31,6 +31,8 @@ To install the TAR binary package of the latest Torch plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -41,6 +43,8 @@ tar xfv vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz --strip-component
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
