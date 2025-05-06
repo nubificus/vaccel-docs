@@ -31,10 +31,12 @@ vaccel = { git = "https://github.com/nubificus/vaccel-rust" }
 
 <!-- markdownlint-disable code-block-style -->
 
-!!! warning
+!!! info
 
     To include a crate from a rust workspace repo, you need to specify
-    the name of crate as the dependency.
+    the name of the crate as the dependency.
+
+<!-- markdownlint-restore -->
 
 ## Running the examples
 
@@ -80,7 +82,13 @@ note: for more details see https://doc.rust-lang.org/cargo/reference/resolver.ht
 If all went well, the examples' binaries should be available in
 `../target/debug/examples`.
 
-!!! warning The directory is one level up, in the `vaccel-rust` workspace.
+<!-- markdownlint-disable code-block-style -->
+
+!!! note
+
+    The directory is one level up, in the `vaccel-rust` workspace.
+
+<!-- markdownlint-restore -->
 
 Set the config environment variables:
 
