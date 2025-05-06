@@ -91,6 +91,8 @@ To install the TAR binary package of the latest VirtIO plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -101,6 +103,8 @@ tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz --strip-compone
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -111,6 +115,8 @@ tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz --strip-compone
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
