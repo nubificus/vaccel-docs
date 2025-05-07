@@ -21,6 +21,15 @@ You can get the latest Torch plugin binary release from the
 [Releases](https://github.com/nubificus/vaccel/releases) page of the vAccel
 repository. Releases include binaries for x86_64/aarch64 Ubuntu-based systems.
 
+### Requirements
+
+The prebuilt Torch plugin binaries depend on
+[libstb](https://github.com/nothings/stb/). You can install it with:
+
+```sh
+sudo apt install libstb0
+```
+
 ### TAR
 
 To install the TAR binary package of the latest Torch plugin release:

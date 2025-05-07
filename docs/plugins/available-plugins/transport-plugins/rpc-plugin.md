@@ -438,7 +438,13 @@ classification imagename: This is a dummy imgname!
 2025.04.11-20:08:15.83 - <debug> Unregistered plugin rpc
 ```
 
-You can find detailed tutorials on how to run a vAccel application
-[on a VM](../../../tutorials/running-a-vaccel-application-on-a-vm.md) and
-[remotely](../../../tutorials/running-a-vaccel-application-remotely.md) in the
-[Tutorials](../../../tutorials/index.md) section.
+<!-- markdownlint-disable code-block-style -->
+
+!!! info
+
+    You can find detailed tutorials on how to run a vAccel application
+    [on a VM](../../../tutorials/running-a-vaccel-application-on-a-vm.md) and
+    [remotely](../../../tutorials/running-a-vaccel-application-remotely.md) in the
+    [Tutorials](../../../tutorials/index.md) section.
+
+<!-- markdownlint-restore -->

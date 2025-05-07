@@ -13,11 +13,11 @@ with `pip` by using the provided Wheels or from source.
 <!-- markdownlint-disable blanks-around-fences -->
 
 - This package requires Python 3.10 or newer. Verify your Python version with:
-  ```sh
-  python3 --version
-  ```
-  and update Python as needed using the
-  [official instructions](https://docs.python.org/3/using/index.html)
+    ```sh
+    python3 --version
+    ```
+    and update Python as needed using the
+    [official instructions](https://docs.python.org/3/using/index.html)
 
 <!-- markdownlint-restore -->
 

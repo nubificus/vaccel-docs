@@ -12,11 +12,11 @@ subset of the vAccel operations.
 <!-- markdownlint-disable blanks-around-fences -->
 
 - This package requires Rust 1.70 or newer. Verify your Rust version with:
-  ```sh
-  rustc version
-  ```
-  and update Rust as needed using the
-  [official instructions](https://www.rust-lang.org/tools/install).
+    ```sh
+    rustc version
+    ```
+    and update Rust as needed using the
+    [official instructions](https://www.rust-lang.org/tools/install).
 
 <!-- markdownlint-restore -->
 
