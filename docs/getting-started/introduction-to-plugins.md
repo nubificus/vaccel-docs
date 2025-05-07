@@ -60,20 +60,22 @@ standard library search paths for ease of use (ie. `/usr/lib`, `/usr/local/lib`
 etc.). If this is not possible or desirable there are two ways to use the
 plugins:
 
+<!-- markdownlint-disable blanks-around-fences -->
+
 - Assuming vAccel is installed in a standard path, use the full path to specify
   the plugin. For example, if the `NoOp` plugin is installed in `/opt/noop/lib`:
+    ```sh
+    export VACCEL_PLUGINS=/opt/noop/lib/libvaccel-noop.so
+    ```
 
-  ```sh
-  export VACCEL_PLUGINS=/opt/noop/lib/libvaccel-noop.so
-  ```
-
-  or,
+or,
 
 - Add the vAccel/plugin library paths to the library search paths and specify
   the plugin as usual. For example, if vAccel and the `NoOp` plugin are
   installed in `/opt/vaccel/lib`:
+    ```sh
+    export LD_LIBRARY_PATH=/opt/vaccel/lib:$LD_LIBRARY_PATH
+    export VACCEL_PLUGINS=libvaccel-noop.so
+    ```
 
-  ```sh
-  export LD_LIBRARY_PATH=/opt/vaccel/lib:$LD_LIBRARY_PATH
-  export VACCEL_PLUGINS=libvaccel-noop.so
-  ```
+<!-- markdownlint-restore -->

@@ -1,4 +1,4 @@
-# Performance Analysis
+# Performance
 
 This section presents the methodology and results of benchmarking vAccel across
 different configurations and transport mechanisms. The goal is to provide

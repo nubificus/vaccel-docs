@@ -7,30 +7,35 @@ programming language that can generate it.
 The required operations that need to be implemented for a shared object to be
 linked as a vAccel plugin, are the following:
 
+<!-- markdownlint-disable blanks-around-fences -->
+<!-- prettier-ignore-start -->
+
 - An `init()` function, called upon plugin initialization
-
-```c
-static int init(void) {
-
-}
-```
+  ```c
+  static int init(void) {
+  ...
+  }
+  ```
 
 - A `fini()` function, called before unloading the plugin
+  ```c
+  static int fini(void) {
+  ...
+  }
+  ```
 
-```c
-static int fini(void) {
-
-}
-```
+<!-- prettier-ignore-end -->
+<!-- markdownlint-restore -->
 
 - A definition of the `VACCEL_PLUGIN` with:
-  - `.name` : The name of the plugin
-  - `.version` : The version of the plugin
-  - `.vaccel_version` : The vAccel library version that the plugin was built
-    against
-  - `.init` : The function to call upon plugin initialization (eg. `init()`)
-  - `.fini` : The function to call before unloading the plugin (eg. on program
-    exit, `fini()`)
+
+    - `.name` : The name of the plugin
+    - `.version` : The version of the plugin
+    - `.vaccel_version` : The vAccel library version that the plugin was built
+      against
+    - `.init` : The function to call upon plugin initialization (eg. `init()`)
+    - `.fini` : The function to call before unloading the plugin (eg. on program
+      exit, `fini()`)
 
 ```c
 VACCEL_PLUGIN(
@@ -118,11 +123,11 @@ The plugin registers `my_noop_function()` to serve as the implementation of the
 
 ## Install requirements
 
-Before building a vAccel plugin, we need to install the main vAccel library.
+Before building a vAccel plugin, you need to install the main vAccel library.
 Instructions on how to build vAccel can be found
 [here](../getting-started/installation.md).
 
-We also need some packages to build the plugin itself:
+You also need some packages to build the plugin itself:
 
 ```bash
 sudo apt-get install build-essential ninja-build pkg-config python3-pip
@@ -131,8 +136,8 @@ sudo pip install meson
 
 ## Build the plugin
 
-Now we can build the vAccel plugin template that implements the `NOOP` user API
-operation with our own custom function.
+Now you can build the vAccel plugin template that implements the `NOOP` user API
+operation with your own custom function.
 
 First clone the repo:
 
@@ -155,9 +160,15 @@ meson compile -C build
 
 This should output a shared object (`libvaccel-template.so`) in `./build/src/`.
 
-To be used as a plugin, we need to select it using the environment variable
-`VACCEL_PLUGINS` when running our vAccel application (ie.
-`VACCEL_PLUGINS=/path/to/libvaccel-template.so`).
+<!-- markdownlint-disable code-block-style -->
 
-See [Running the examples](../getting-started/running-the-examples.md) for more
-info.
+!!! info
+
+    To use this plugin with vAccel, you need to select it using the environment
+    variable `VACCEL_PLUGINS` when running our vAccel application (ie.
+    `VACCEL_PLUGINS=/path/to/libvaccel-template.so`).
+
+    See [Running the examples](../getting-started/running-the-examples.md) for
+    more information.
+
+<!-- markdownlint-restore -->
