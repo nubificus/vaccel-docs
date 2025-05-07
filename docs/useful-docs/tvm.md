@@ -23,6 +23,9 @@ sudo apt install libllvm15 and libllvm15-dev
 Clone the repo, adjusting `TVM_VERSION` to the desired version:
 
 ```sh
+# Replace this with the desired installation directory
+cd /opt
+
 TVM_VERSION="v0.19.0"
 git clone https://github.com/apache/tvm --depth 1 --recursive \
     -b "${TVM_VERSION}"
@@ -32,9 +35,6 @@ cd tvm
 Build source code and install:
 
 ```sh
-# Replace this with the desired installation directory
-cd /opt
-
 # Configure build
 cmake -S . -B build
 cp cmake/config.cmake build/

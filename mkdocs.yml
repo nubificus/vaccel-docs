@@ -8,6 +8,11 @@ repo_name: nubificus/vaccel
 # We use a custom `copyright` plugin, so only set the starting year
 copyright: "2018"
 
+not_in_nav: /index.md
+
+draft_docs: |
+  performance/
+
 theme:
   name: material
   favicon: assets/images/vaccel-logo-favicon.svg
@@ -46,6 +51,7 @@ theme:
     - navigation.indexes
     - navigation.tracking
     - navigation.top
+    - navigation.footer
     - toc.follow
     - content.code.copy
     - content.tabs.link
@@ -100,7 +106,9 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 plugins:
   - search

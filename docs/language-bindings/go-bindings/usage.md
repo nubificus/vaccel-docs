@@ -12,11 +12,11 @@ WiP, supporting a subset of the vAccel operations.
 <!-- markdownlint-disable blanks-around-fences -->
 
 - This package requires Go 1.20 or newer. Verify your Go version with:
-  ```sh
-  go version
-  ```
-  and update Go as needed using the
-  [official instructions](https://go.dev/doc/install).
+    ```sh
+    go version
+    ```
+    and update Go as needed using the
+    [official instructions](https://go.dev/doc/install).
 
 <!-- markdownlint-restore -->
 

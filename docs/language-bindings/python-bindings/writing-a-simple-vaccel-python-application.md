@@ -116,7 +116,13 @@ The vAccel output of
 [`classify`](../../getting-started/running-the-examples.md#classify-noop-debug)
 and `classify.py` should be almost identical.
 
-For a full example with near identical functionality to the C `classify` you can
-look at the
-[image classification example](https://github.com/nubificus/vaccel-python/blob/main/examples/classify.py)
-of the `vaccel-python` repository,
+<!-- markdownlint-disable code-block-style -->
+
+!!! info
+
+    For a full example with near identical functionality to the C `classify` you can
+    look at the
+    [image classification example](https://github.com/nubificus/vaccel-python/blob/main/examples/classify.py)
+    of the `vaccel-python` repository,
+
+<!-- markdownlint-restore -->

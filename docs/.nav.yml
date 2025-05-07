@@ -1,5 +1,5 @@
 nav:
-  - Home: index.md
+  - Overview: overview.md
   - Getting started:
     - getting-started/index.md
     - getting-started/*
@@ -57,17 +57,18 @@ nav:
   #  - devmapper.md
   #  - k8s/kata.md
   #- usecases.md
-  - Design:
-    - design/index.md
-    - design/*
   - Tutorials:
     - tutorials/index.md
     - tutorials/*
-  - Performance:
-    - benchmarks/index.md
-    - benchmarks/measure.md
-    - benchmarks/testbed.md
-    - benchmarks/results.md
+    - tutorials/deploying-vaccel-applications-using-kubernetes.md
+  - Development:
+    - development/index.md
+    - development/*
+  #- Performance:
+  #  - performance/index.md
+  #  - performance/measure.md
+  #  - performance/testbed.md
+  #  - performance/results.md
   - Useful docs:
     - useful-docs/index.md
     - useful-docs/*
