@@ -146,3 +146,28 @@
   -webkit-user-select: none;
   pointer-events: none;
 }
+
+/*
+ * Home page customization
+ */
+
+.md-typeset .grid {
+  grid-template-columns: repeat(auto-fit,minmax(min(100%,14rem),1fr));
+  margin: 2em 0;
+}
+
+.md-typeset .grid.cards > ol > li,
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%
+}
+
+.md-typeset .grid.cards > ul > li > hr {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.md-typeset .grid.cards > ul > li > p:last-of-type {
+  margin-top: auto;
+}

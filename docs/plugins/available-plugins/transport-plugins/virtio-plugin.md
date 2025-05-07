@@ -47,8 +47,13 @@ implementation of the virtio-accel backend.
 
 You can get the latest VirtIO plugin binary release from the
 [Releases](https://github.com/nubificus/vaccel/releases) page of the vAccel
-repository. Releases include DEB packages and binaries for x86_64/aarch64/armv7l
+repository. Releases include DEB packages for x86_64/aarch64 Ubuntu-based
+systems.
+
+<!--
+Releases include DEB packages and binaries for x86_64/aarch64/armv7l
 Ubuntu-based systems.
+-->
 
 ### DEB
 
@@ -72,6 +77,8 @@ sudo dpkg -i vaccel-virtio_[[ versions.plugins.virtio ]]-1_arm64.deb
 
 ///
 
+<!-- markdownlint-disable line-length -->
+<!--
 /// tab | ARM (32-bit)
 
 ```sh
@@ -80,7 +87,9 @@ sudo dpkg -i vaccel-virtio_[[ versions.plugins.virtio ]]-1_armhf.deb
 ```
 
 ///
+-->
 
+<!--
 ### TAR
 
 To install the TAR binary package of the latest VirtIO plugin release:
@@ -120,11 +129,32 @@ find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/l
 ```
 
 ///
+-->
+<!-- markdownlint-restore -->
 
 ### Latest artifacts
 
 You can also find prebuilt artifacts of the latest VirtIO plugin revision at:
 
+/// tab | x86
+
+```sh
+# DEB
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio_latest_amd64.deb
+```
+
+///
+
+/// tab | ARM (64-bit)
+
+```sh
+# DEB
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio_latest_arm64.deb
+```
+
+///
+
+<!--
 /// tab | x86
 
 ```sh
@@ -139,9 +169,10 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/rele
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz
-# Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# DEB
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio_latest_arm64.deb
+# TAR
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio-latest-bin.tar.gz
 ```
 
 ///
@@ -149,12 +180,14 @@ tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz --strip-compone
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz
-# Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+# DEB
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/armv7l/release/vaccel-virtio_latest_armhf.deb
+# TAR
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/armv7l/release/vaccel-virtio-latest-bin.tar.gz
 ```
 
 ///
+-->
 
 ## Getting the prebuilt VM artifacts
 
