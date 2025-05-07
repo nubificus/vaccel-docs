@@ -1,4 +1,4 @@
-# vAccel Kubernetes Deployment Guide
+# Deploying vAccel applications using Kubernetes
 
 This guide describes how to deploy the **vAccel framework** with Torch
 acceleration using Kubernetes. It includes:
@@ -118,24 +118,24 @@ ENV VACCEL_BACKENDS=libvaccel-rpc.so
 apiVersion: v1
 kind: Pod
 metadata:
-  name: vaccel-sidecar-pod
+    name: vaccel-sidecar-pod
 spec:
-  containers:
-    - name: vaccel-agent
-      image: vaccel/agent:latest
-      volumeMounts:
-        - name: vaccel-sock
-          mountPath: /var/run/vaccel
+    containers:
+        - name: vaccel-agent
+          image: vaccel/agent:latest
+          volumeMounts:
+              - name: vaccel-sock
+                mountPath: /var/run/vaccel
 
-    - name: vaccel-client
-      image: vaccel/client:latest
-      volumeMounts:
-        - name: vaccel-sock
-          mountPath: /var/run/vaccel
+        - name: vaccel-client
+          image: vaccel/client:latest
+          volumeMounts:
+              - name: vaccel-sock
+                mountPath: /var/run/vaccel
 
-  volumes:
-    - name: vaccel-sock
-      emptyDir: {}
+    volumes:
+        - name: vaccel-sock
+          emptyDir: {}
 ```
 
 ## Split Deployment
@@ -146,22 +146,22 @@ spec:
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: vaccel-agent
+    name: vaccel-agent
 spec:
-  selector:
-    matchLabels:
-      app: vaccel-agent
-  template:
-    metadata:
-      labels:
-        app: vaccel-agent
-    spec:
-      containers:
-        - name: vaccel-agent
-          image: vaccel/agent:latest
-          ports:
-            - containerPort: 8888
-              name: rpc
+    selector:
+        matchLabels:
+            app: vaccel-agent
+    template:
+        metadata:
+            labels:
+                app: vaccel-agent
+        spec:
+            containers:
+                - name: vaccel-agent
+                  image: vaccel/agent:latest
+                  ports:
+                      - containerPort: 8888
+                        name: rpc
 ```
 
 ### Client Pod
@@ -170,14 +170,14 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: vaccel-client
+    name: vaccel-client
 spec:
-  containers:
-    - name: vaccel-client
-      image: vaccel/client:latest
-      env:
-        - name: VACCEL_RPC_ADDR
-          value: "tcp://vaccel-agent-service:8888"
+    containers:
+        - name: vaccel-client
+          image: vaccel/client:latest
+          env:
+              - name: VACCEL_RPC_ADDR
+                value: "tcp://vaccel-agent-service:8888"
 ```
 
 ---

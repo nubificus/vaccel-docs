@@ -268,5 +268,5 @@ Result Tensor :
 
 This plugin includes bindings that implement simple inference operations. The
 bindings can be used to run native Tensorflow application with vAccel. You can
-find more information at the
+find more information in the
 [relevant page](../../../framework-bindings/tensorflow-bindings.md).
