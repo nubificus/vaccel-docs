@@ -45,22 +45,22 @@ Top-level workflows that coordinate testing, building, and artifact handling.
 
 - [`pr-build-and-verify.yml`]
 
-  Triggers on each pull request and performs:
+    Triggers on each pull request and performs:
 
-  - Linting
-  - Architecture-specific builds
-  - Example (end-to-end tests) execution (via `run_examples.sh`)
-  - Artifact staging
+    - Linting
+    - Architecture-specific builds
+    - Example (end-to-end tests) execution (via `run_examples.sh`)
+    - Artifact staging
 
 - [`verify-build.yml`]
 
-  A reusable workflow invoked by other repos to validate builds with
-  standardized steps.
+    A reusable workflow invoked by other repos to validate builds with
+    standardized steps.
 
 [`pr-build-and-verify.yml`]:
-  https://github.com/nubificus/vaccel/blob/main/.github/workflows/pr-build-and-verify.yml
+    https://github.com/nubificus/vaccel/blob/main/.github/workflows/pr-build-and-verify.yml
 [`verify-build.yml`]:
-  https://github.com/nubificus/vaccel/blob/main/.github/workflows/verify-build.yml
+    https://github.com/nubificus/vaccel/blob/main/.github/workflows/verify-build.yml
 
 ## Testing Strategy
 

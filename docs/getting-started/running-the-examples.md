@@ -122,5 +122,11 @@ ninja run-examples -C build
 
 in your `vaccel` directory.
 
-You can find more information on the environment variables you can use to
-configure vAccel [here](../configuration.md).
+<!-- markdownlint-disable code-block-style -->
+
+!!! info
+
+    You can find more information on the environment variables you can use to
+    configure vAccel in the [Configuration](../configuration.md) page.
+
+<!-- markdownlint-restore -->
