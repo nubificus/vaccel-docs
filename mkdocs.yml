@@ -49,6 +49,9 @@ theme:
     - toc.follow
     - content.code.copy
     - content.tabs.link
+    - search.highlight
+    - search.suggest
+    - search.share
 
 extra_css:
   - assets/stylesheets/theme.css
@@ -100,6 +103,7 @@ markdown_extensions:
 
 
 plugins:
+  - search
   - section-index
   - awesome-nav
   - macros:
