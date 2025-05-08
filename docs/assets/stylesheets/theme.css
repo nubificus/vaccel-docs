@@ -10,6 +10,14 @@
   /*--md-accent-fg-color: #f96e3e;*/
   --md-accent-fg-color: hsla(15, 94%, 61%, 1);
   --md-accent-fg-color--transparent: hsla(15, 94%, 61%, 0.1);
+
+  --md-warning-bg-color: #ffc107;
+  --md-warning-fg-color: #212529;
+}
+
+[data-md-color-scheme="vaccel"] .md-banner.md-banner--warning .md-typeset a:focus,
+[data-md-color-scheme="vaccel"] .md-banner.md-banner--warning .md-typeset a:hover {
+  color: #a2355a;
 }
 
 [data-md-color-scheme="slate"] {
@@ -21,7 +29,18 @@
   --md-accent-fg-color: hsla(15, 94%, 61%, 1);
   --md-accent-fg-color--transparent: hsla(15, 94%, 61%, 0.1);
 
+  --md-warning-bg-color: #b38700;
+  --md-warning-fg-color: #fff3cd;
+
   /*--md-hue: 311; *//* [0, 360] */
+}
+
+[data-md-color-scheme="slate"] .md-banner.md-banner--warning .md-typeset a {
+  color: #ffd86b;
+}
+[data-md-color-scheme="slate"] .md-banner.md-banner--warning .md-typeset a:focus,
+[data-md-color-scheme="slate"] .md-banner.md-banner--warning .md-typeset a:hover {
+  color: #fff6d8;
 }
 
 /*
