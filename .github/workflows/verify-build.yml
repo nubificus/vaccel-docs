@@ -9,6 +9,9 @@ on:
       actions-rev:
         type: string
         default: 'main'
+      strict:
+        type: boolean
+        default: false
       deploy:
         type: boolean
         default: false
@@ -95,11 +98,20 @@ jobs:
             fi
           "
 
-      - name: Install requirements
-        run: sudo pip install -r requirements.txt
-
-      - name: Verify build with mkdocs
-        run: mkdocs build
+      - name: Build docs
+        uses: ./.github/actions/build-docs
+        with:
+          strict: ${{ inputs.strict }}
+          deploy-version: >-
+            ${{ inputs.deploy == true
+              && (contains(github.ref, 'refs/tags/')
+                && github.ref_name || 'main')
+              || '' }}
+          deploy-alias: >-
+            ${{ inputs.deploy == true
+              && (contains(github.ref, 'refs/tags/')
+                && 'latest' || 'dev')
+              || '' }}
 
       - name: Create pull request
         id: create-pr
@@ -141,18 +153,3 @@ jobs:
           echo "Pull request operation: ${pr_operation}"
           echo "Pull request head SHA: ${{ steps.create-pr.outputs.pull-request-head-sha }}"
           echo "Pull request branch: ${{ steps.create-pr.outputs.pull-request-branch }}"
-
-      - name: Deploy to Github Pages
-        if: ${{ inputs.deploy == true }}
-        run: |
-          git config --global \
-            user.name "github-actions[bot]"
-          git config --global \
-            user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            mike deploy --push --update-aliases "${GITHUB_REF_NAME}" latest
-          else
-            mike deploy --push --update-aliases main dev
-          fi
-        shell: bash
