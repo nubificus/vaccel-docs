@@ -124,12 +124,12 @@ This separation ensures that the application is agnostic to where and how
 execution happens, that plugins can evolve independently, and that hardware
 heterogeneity is abstracted away.
 
-<figure>
-  <!--<img src="img/vaccel-overview.svg" width="600" align=left />-->
-  <img src="/assets/images/vaccel-flow.png" width="800" align=center
-    alt="vAccel execution flow"/>
-  <figcaption>Figure 1. vAccel execution flow</figcaption>
-</figure>
+![vAccel workflow](../assets/images/vaccel-workflow-light.svg#only-light){width="800"}
+![vAccel workflow](../assets/images/vaccel-workflow-dark.svg#only-dark){width="800"}
+
+/// caption  
+vAccel execution flow  
+///
 
 ## Multi-Architecture Support
 
