@@ -44,6 +44,7 @@ runs:
           user.name "github-actions[bot]"
         git config --global \
           user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        ./.venv/bin/mike deploy --push --update-aliases \
+        source ./.venv/bin/activate
+        mike deploy --push --update-aliases \
           "${{ inputs.deploy-version }}" "${{ inputs.deploy-alias }}"
       shell: bash

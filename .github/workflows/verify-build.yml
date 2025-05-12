@@ -46,7 +46,7 @@ jobs:
           app-id: ${{ vars.VACCEL_BOT_APP_ID }}
           private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          permission-contents: read
+          permission-contents: write
           permission-pull-requests: write
 
       - name: Initialize workspace
