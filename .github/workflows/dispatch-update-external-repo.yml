@@ -44,10 +44,13 @@ jobs:
 
   update-repo-strict:
     name: Update Repo (Strict)
+    #    if: >-
+    #      ${{ (github.event_name == 'workflow_dispatch')
+    #        && ! github.event.inputs.deploy
+    #        || ! github.event.client_payload.deploy }}
     if: >-
-      ${{ (github.event_name == 'workflow_dispatch')
-        && ! github.event.inputs.deploy
-        || ! github.event.client_payload.deploy }}
+      ${{ ! github.event.client_payload.deploy
+        && ! github.event.inputs.deploy }}
     uses: ./.github/workflows/verify-build.yml
     with:
       external-payload: >-

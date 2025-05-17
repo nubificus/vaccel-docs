@@ -113,6 +113,13 @@ jobs:
                 && 'latest' || 'dev')
               || '' }}
 
+      - name: Get vaccel-bot info
+        id: get-bot-info
+        if: ${{ steps.parse-payload.outputs.ext-deploy == 'true' }}
+        uses: ./.github/actions/get-github-app-info
+        with:
+          app-slug: ${{ steps.generate-token.outputs.app-slug }}
+
       - name: Create pull request
         id: create-pr
         if: ${{ steps.parse-payload.outputs.ext-deploy == 'true' }}
@@ -122,6 +129,8 @@ jobs:
           EXT_REF: ${{ steps.parse-payload.outputs.ext-ref }}
           EXT_BRANCH: ${{ steps.parse-payload.outputs.ext-branch }}
           EXT_REPO: ${{ steps.parse-payload.outputs.ext-repo }}
+          BOT_NAME: ${{ steps.get-bot-info.outputs.name }}
+          BOT_EMAIL: ${{ steps.get-bot-info.outputs.email }}
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: |
@@ -129,6 +138,7 @@ jobs:
 
             Update submodule `${{ env.SUBMODULE }}` to revision
             ${{ env.EXT_REPO }}@${{ env.EXT_REF }}
+          committer: ${{ env.BOT_NAME }} <${{ env.BOT_EMAIL }}>
           sign-commits: true
           signoff: true
           branch: update_${{ env.SUBMODULE }}_${{ env.EXT_BRANCH }}
