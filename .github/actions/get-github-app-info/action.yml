@@ -1,0 +1,41 @@
+name: Get Github App Info
+description: Get information about a Github app
+
+inputs:
+  app-slug:
+    required: true
+  token:
+    default: ${{ github.token }}
+
+outputs:
+  user-id:
+    value: ${{ steps.get-info.outputs.user-id }}
+  name:
+    value: ${{ steps.get-info.outputs.name }}
+  email:
+    value: ${{ steps.get-info.outputs.email }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get info
+      id: get-info
+      run: |
+        app_name="${{ inputs.app-slug }}[bot]"
+        enc_app_name=$(printf '%s' "${app_name}" | jq -s -R -r @uri)
+
+        user_info=$(curl --fail-with-body \
+          --retry 5 --retry-max-time 60 --retry-all-errors \
+          -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "https://api.github.com/users/${enc_app_name}")
+
+        app_user_id=$(echo "${user_info}" | jq -r '.id')
+        app_email="${app_user_id}+${app_name}@users.noreply.github.com"
+
+        echo "user-id=${app_user_id}" >> "$GITHUB_OUTPUT"
+        echo "name=${app_name}" >> "$GITHUB_OUTPUT"
+        echo "email=${app_email}" >> "$GITHUB_OUTPUT"
+      shell: bash
