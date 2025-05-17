@@ -41,3 +41,18 @@ jobs:
           && toJson(github.event.inputs)
           || toJson(github.event.client_payload) }}
     secrets: inherit
+
+  update-repo-strict:
+    name: Update Repo (Strict)
+    if: >-
+      ${{ !fromJson((github.event.inputs.deploy
+        || github.event.client_payload.deploy
+        || 'false')) }}
+    uses: ./.github/workflows/verify-build.yml
+    with:
+      external-payload: >-
+        ${{ (github.event_name == 'workflow_dispatch')
+          && toJson(github.event.inputs)
+          || toJson(github.event.client_payload) }}
+      strict: true
+    secrets: inherit
