@@ -4,6 +4,7 @@ export default {
 	ignores: [
 		(msg) => /Signed-off-by: dependabot\[bot]/m.test(msg),
 		(msg) => /Signed-off-by: github-actions\[bot]/m.test(msg),
+		(msg) => /Signed-off-by: vaccel-bot\[bot]/m.test(msg),
 	],
 	rules: {
 		'header-max-length': [2, 'always', 72],
