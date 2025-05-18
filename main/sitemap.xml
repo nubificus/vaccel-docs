@@ -177,43 +177,59 @@
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/arg/</loc>
+         <lastmod>2025-05-18</lastmod>
+    </url>
+    <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/error/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/exec/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/op/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/genop/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/image/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/blas/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/image_genop/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/exec/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/minmax/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/fpga/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/noop/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/genop/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/pynq_array_copy/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/image/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/pynq_parallel/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/minmax/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/pynq_vector_add/</loc>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/noop/</loc>
+         <lastmod>2025-05-18</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/</loc>
+         <lastmod>2025-05-18</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tflite/</loc>
+         <lastmod>2025-05-18</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/torch/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
     <url>
@@ -222,14 +238,6 @@
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/session/</loc>
-         <lastmod>2025-05-18</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/tensorflow/</loc>
-         <lastmod>2025-05-18</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/test/</loc>
          <lastmod>2025-05-18</lastmod>
     </url>
 </urlset>
