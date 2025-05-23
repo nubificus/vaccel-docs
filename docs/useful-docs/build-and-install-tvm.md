@@ -23,7 +23,9 @@ sudo apt install libllvm15 and libllvm15-dev
 Clone the repo, adjusting `TVM_VERSION` to the desired version:
 
 ```sh
-# Replace this with the desired installation directory
+# Replace '/opt' below with the desired installation directory.
+# If installing in '/opt' or another root owned directory you will have to run
+# the rest of the commands as 'root'.
 cd /opt
 
 TVM_VERSION="v0.19.0"
@@ -58,6 +60,6 @@ pip install -e /opt/tvm/python
 For convenience, the TVM library path can be added to system paths:
 
 ```sh
-echo "/opt/tvm/build" >> /etc/ld.so.conf.d/tvm.conf
-ldconfig
+echo "/opt/tvm/build" | sudo tee /etc/ld.so.conf.d/tvm.conf >/dev/null
+sudo ldconfig
 ```
