@@ -10,8 +10,9 @@ The TVM plugin for vAccel implements image inference vAccel operations with
 ## Installing TVM C/C++ API files
 
 You can find instructions on how to install the required files
-[here](../../../useful-docs/tvm.md). The rest of this guide assumes TVM is
-installed at `/opt/tvm` and its' libraries are at `/opt/tvm/build`.
+[here](../../../useful-docs/build-and-install-tvm.md). The rest of this guide
+assumes TVM is installed at `/opt/tvm` and its' libraries are at
+`/opt/tvm/build`.
 
 ## Installing the plugin
 
