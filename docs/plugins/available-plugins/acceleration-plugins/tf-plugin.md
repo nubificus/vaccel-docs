@@ -16,8 +16,9 @@ operations.
 ## Installing Tensorflow and Tensorflow Lite C/C++ API files
 
 You can find instructions on how to install the required files
-[here](../../../useful-docs/tf.md). The rest of this guide assumes Tensorflow is
-installed at `/usr/local` and its' libraries are at `/usr/local/lib`.
+[here](../../../useful-docs/build-and-install-tensorflow.md). The rest of this
+guide assumes Tensorflow is installed at `/usr/local` and its' libraries are at
+`/usr/local/lib`.
 
 ## Installing the plugin
 
