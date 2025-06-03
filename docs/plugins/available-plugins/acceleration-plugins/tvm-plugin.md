@@ -10,8 +10,9 @@ The TVM plugin for vAccel implements image inference vAccel operations with
 ## Installing TVM C/C++ API files
 
 You can find instructions on how to install the required files
-[here](../../../useful-docs/tvm.md). The rest of this guide assumes TVM is
-installed at `/opt/tvm` and its' libraries are at `/opt/tvm/build`.
+[here](../../../useful-docs/build-and-install-tvm.md). The rest of this guide
+assumes TVM is installed at `/opt/tvm` and its' libraries are at
+`/opt/tvm/build`.
 
 ## Installing the plugin
 
@@ -29,6 +30,8 @@ To install the TAR binary package of the latest TVM plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tvm_[[ versions.plugins.tvm ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tvm_[[ versions.plugins.tvm ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tvm.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -39,6 +42,8 @@ tar xfv vaccel-tvm_[[ versions.plugins.tvm ]]_amd64.tar.gz --strip-components=2 
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tvm_[[ versions.plugins.tvm ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tvm_[[ versions.plugins.tvm ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tvm.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///

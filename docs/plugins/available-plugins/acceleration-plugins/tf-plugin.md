@@ -16,8 +16,9 @@ operations.
 ## Installing Tensorflow and Tensorflow Lite C/C++ API files
 
 You can find instructions on how to install the required files
-[here](../../../useful-docs/tf.md). The rest of this guide assumes Tensorflow is
-installed at `/usr/local` and its' libraries are at `/usr/local/lib`.
+[here](../../../useful-docs/build-and-install-tensorflow.md). The rest of this
+guide assumes Tensorflow is installed at `/usr/local` and its' libraries are at
+`/usr/local/lib`.
 
 ## Installing the plugin
 
@@ -35,6 +36,8 @@ To install the TAR binary package of the latest Tensorflow plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -45,6 +48,8 @@ tar xfv vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz --strip-components=2 -C
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -264,5 +269,5 @@ Result Tensor :
 
 This plugin includes bindings that implement simple inference operations. The
 bindings can be used to run native Tensorflow application with vAccel. You can
-find more information at the
+find more information in the
 [relevant page](../../../framework-bindings/tensorflow-bindings.md).

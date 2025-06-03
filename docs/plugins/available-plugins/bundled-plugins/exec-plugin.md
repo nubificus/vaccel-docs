@@ -7,7 +7,7 @@ libraries using vAccel operations.
 
 !!! warning
 
-    This plugins enables users to call functions from arbitrary libraries.
+    This plugin enables users to call functions from arbitrary libraries.
     Use it only on environments where the users are trusted.
 
 ## Supported operations
