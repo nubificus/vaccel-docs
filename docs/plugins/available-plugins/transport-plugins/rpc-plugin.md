@@ -94,6 +94,8 @@ To install the TAR binary package of the latest RPC plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -104,6 +106,8 @@ tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -114,6 +118,8 @@ tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -170,8 +176,8 @@ To install the DEB package of the latest RPC agent release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_amd64.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_amd64.deb
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_amd64.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_amd64.deb
 ```
 
 ///
@@ -179,8 +185,8 @@ sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_amd64.deb
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_arm64.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_arm64.deb
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_arm64.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_arm64.deb
 ```
 
 ///
@@ -188,8 +194,8 @@ sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_arm64.deb
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_armhf.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc ]]-1_armhf.deb
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_armhf.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]-1_armhf.deb
 ```
 
 ///
@@ -201,9 +207,9 @@ To install the TAR binary package of the latest RPC agent release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_amd64.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -211,9 +217,9 @@ tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-compone
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_arm64.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -221,9 +227,9 @@ tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-compone
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc ]]_armhf.tar.gz
+wget https://github.com/nubificus/vaccel-rust/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_armhf.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.plugins.rpc-agent ]]_armhf.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -432,7 +438,13 @@ classification imagename: This is a dummy imgname!
 2025.04.11-20:08:15.83 - <debug> Unregistered plugin rpc
 ```
 
-You can find detailed tutorials on how to run a vAccel application
-[on a VM](../../../tutorials/running-a-vaccel-application-on-a-vm.md) and
-[remotely](../../../tutorials/running-a-vaccel-application-remotely.md) in the
-[Tutorials](../../../tutorials/index.md) section.
+<!-- markdownlint-disable code-block-style -->
+
+!!! info
+
+    You can find detailed tutorials on how to run a vAccel application
+    [on a VM](../../../tutorials/running-a-vaccel-application-on-a-vm.md) and
+    [remotely](../../../tutorials/running-a-vaccel-application-remotely.md) in the
+    [Tutorials](../../../tutorials/index.md) section.
+
+<!-- markdownlint-restore -->

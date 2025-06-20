@@ -53,6 +53,7 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
+            --retry-wait-time 10
             --exclude '\[\[\s*.*?\s*\]\]'
             --exclude-path docs/language-bindings/python-bindings/api-reference
             docs
@@ -66,7 +67,7 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
-            --retry-wait-time 8
+            --retry-wait-time 20
             --root-dir $(pwd)/site
             --exclude ^https://${{ env.SITE_URL_ESC }}
             site

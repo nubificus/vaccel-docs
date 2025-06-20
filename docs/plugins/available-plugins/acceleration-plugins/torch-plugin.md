@@ -12,14 +12,24 @@ API (LibTorch) support for vAccel operations.
 ## Installing PyTorch C/C++ API files (LibTorch)
 
 You can find instructions on how to install the required files
-[here](../../../useful-docs/pytorch.md). The rest of this guide assumes PyTorch
-is installed at `/opt/pytorch` and its' libraries are at `/opt/pytorch/lib`.
+[here](../../../useful-docs/build-and-install-pytorch.md). The rest of this
+guide assumes PyTorch is installed at `/opt/pytorch` and its' libraries are at
+`/opt/pytorch/lib`.
 
 ## Installing the plugin
 
 You can get the latest Torch plugin binary release from the
 [Releases](https://github.com/nubificus/vaccel/releases) page of the vAccel
 repository. Releases include binaries for x86_64/aarch64 Ubuntu-based systems.
+
+### Requirements
+
+The prebuilt Torch plugin binaries depend on
+[libstb](https://github.com/nothings/stb/). You can install it with:
+
+```sh
+sudo apt install libstb0
+```
 
 ### TAR
 
@@ -31,6 +41,8 @@ To install the TAR binary package of the latest Torch plugin release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -41,6 +53,8 @@ tar xfv vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz --strip-component
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///

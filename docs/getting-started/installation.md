@@ -61,6 +61,8 @@ To install the TAR binary package of the latest vAccel release:
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_amd64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel_[[ versions.vaccel ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -71,6 +73,8 @@ tar xfv vaccel_[[ versions.vaccel ]]_amd64.tar.gz --strip-components=2 -C /usr/l
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_arm64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel_[[ versions.vaccel ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///
@@ -81,6 +85,8 @@ tar xfv vaccel_[[ versions.vaccel ]]_arm64.tar.gz --strip-components=2 -C /usr/l
 wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_armhf.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
 tar xfv vaccel_[[ versions.vaccel ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+# Update pkg-config files with the correct prefix
+find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
 
 ///

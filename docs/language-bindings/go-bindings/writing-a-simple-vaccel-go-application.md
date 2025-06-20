@@ -4,12 +4,12 @@ For a simple example of using the `vaccel` Go package, you can replicate in Go
 an image classification application similar to the image classification example
 from [Running the examples](../../getting-started/running-the-examples.md).
 
-Initialize a new `go-vaccel-classify` project and module:
+Initialize a new `vaccel-go-classify` project and module:
 
 ```sh
-mkdir go-vaccel-classify
-cd go-vaccel-classify
-go mod init go-vaccel-classify
+mkdir vaccel-go-classify
+cd vaccel-go-classify
+go mod init vaccel-go-classify
 ```
 
 Create a new Go file `main.go` with the following content:
@@ -21,7 +21,7 @@ import (
         "fmt"
         "os"
 
-        "github.com/nubificus/go-vaccel/vaccel"
+        "github.com/nubificus/vaccel-go/vaccel"
 )
 
 func main() {
