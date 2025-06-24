@@ -1,11 +1,11 @@
 versions:
-  agent: 0.4.0
+  agent: 0.4.1
   bindings:
-    python: 0.1.0
+    python: 0.2.0
   plugins:
-    rpc: 0.2.0
+    rpc: 0.2.1
     tf: 0.2.0
     torch: 0.2.0
     tvm: 0.1.0
     virtio: 0.2.0
-  vaccel: 0.7.0
+  vaccel: 0.7.1
