@@ -6,12 +6,12 @@ operations.
 
 ## Supported operations
 
-- [TensorFlow session load](../../../api/api-reference/operations.md#tensorflow-session-load)
-- [TensorFlow session run](../../../api/api-reference/operations.md#tensorflow-session-run)
-- [TensorFlow session delete](../../../api/api-reference/operations.md#tensorflow-session-delete)
-- [TensorFlow Lite session load](../../../api/api-reference/operations.md#tensorflow-lite-session-load)
-- [TensorFlow Lite session run](../../../api/api-reference/operations.md#tensorflow-lite-session-run)
-- [TensorFlow Lite session delete](../../../api/api-reference/operations.md#tensorflow-lite-session-delete)
+- [TensorFlow model load](../../../api/api-reference/operations.md#tensorflow-model-load)
+- [TensorFlow model unload](../../../api/api-reference/operations.md#tensorflow-model-unload)
+- [TensorFlow model run](../../../api/api-reference/operations.md#tensorflow-model-run)
+- [TensorFlow Lite model load](../../../api/api-reference/operations.md#tensorflow-lite-model-load)
+- [TensorFlow Lite model unload](../../../api/api-reference/operations.md#tensorflow-lite-model-unload)
+- [TensorFlow Lite model run](../../../api/api-reference/operations.md#tensorflow-lite-model-run)
 
 ## Installing Tensorflow and Tensorflow Lite C/C++ API files
 
