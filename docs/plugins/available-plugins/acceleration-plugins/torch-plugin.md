@@ -6,8 +6,9 @@ API (LibTorch) support for vAccel operations.
 ## Supported operations
 
 - [Image classification](../../../api/api-reference/operations.md#image-classification)
-- [JIT loading and forwarding](../../../api/api-reference/operations.md#jit-loading-and-forwarding)
-- [Matrix-to-matrix multiplication](../../../api/api-reference/operations.md#matrix-to-matrix-multiplication_1)
+- [Torch model load](../../../api/api-reference/operations.md#torch-model-load)
+- [Torch model run](../../../api/api-reference/operations.md#torch-model-run)
+- [Torch matrix-to-matrix multiplication](../../../api/api-reference/operations.md#torch-matrix-to-matrix-multiplication)
 
 ## Installing PyTorch C/C++ API files (LibTorch)
 

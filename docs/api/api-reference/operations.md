@@ -230,12 +230,12 @@ int vaccel_exec_with_resource(struct vaccel_session *sess,
 
 ## TensorFlow operations
 
-### TensorFlow session load
+### TensorFlow model load
 
 ```c
-int vaccel_tf_session_load(struct vaccel_session *session,
-                           struct vaccel_resource *model,
-                           struct vaccel_tf_status *status);
+int vaccel_tf_model_load(struct vaccel_session *session,
+                         struct vaccel_resource *model,
+                         struct vaccel_tf_status *status);
 ```
 
 - `struct vaccel_session *sess`: a pointer to a vAccel session created using
@@ -244,56 +244,56 @@ int vaccel_tf_session_load(struct vaccel_session *session,
   `vaccel_resource_init()` or similar vAccel function, and registered to a
   session using `vaccel_resource_register()`. Internally, it contains the model
   to be used.
-- `struct vaccel_tf_status *status`: return value in the form of
-  `struct vaccel_tf_status()`.
+- `struct vaccel_tf_status *status`: status of the TF operation.
 
-### TensorFlow session run
-
-```c
-int vaccel_tf_session_run(struct vaccel_session *session,
-                          const struct vaccel_resource *model, const struct vaccel_tf_buffer *run_options,
-                          const struct vaccel_tf_node *in_nodes, struct vaccel_tf_tensor *const *in, int nr_inputs,
-                          const struct vaccel_tf_node *out_nodes, struct vaccel_tf_tensor **out, int nr_outputs,
-                          struct vaccel_tf_status *status);
-```
-
-- `struct vaccel_session *sess`: a pointer to a vAccel session created using
-  `vaccel_session_init()`.
-- `struct vaccel_resource *model`: a vAccel resource structure. It should have
-  been loaded previously with `vaccel_tf_session_load()`.
-- `const struct vaccel_tf_buffer *run_options`: runtime parameters for the TF
-  instance in the form of `{data, size}`.
-- `const struct vaccel_tf_node *in_nodes`: input nodes.
-- `const struct vaccel_tf_tensor *const *in`: array of input tensors.
-- `int nr_inputs`: size of input tensors array.
-- `const struct vaccel_tf_node *out_nodes`: output nodes.
-- `const struct vaccel_tf_tensor **out`: array of input tensors.
-- `int nr_outputs`: size of output tensors array.
-- `struct vaccel_tf_status *status`: return value in the form of
-  `struct vaccel_tf_status()`.
-
-### TensorFlow session delete
+### TensorFlow model unload
 
 ```c
-int vaccel_tf_session_delete(struct vaccel_session *session,
-                             struct vaccel_resource *model,
-                                struct vaccel_tf_status *status);
+int vaccel_tf_model_unload(struct vaccel_session *sess,
+                           struct vaccel_resource *model,
+                           struct vaccel_tf_status *status);
 ```
 
 - `struct vaccel_session *sess`: a pointer to a vAccel session created using
   `vaccel_session_init()`.
 - `struct vaccel_resource *model`: a vAccel resource structure that has been
-  previously loaded using `vaccel_tf_session_load()`.
-- `struct vaccel_tf_status *status`: return value in the form of
-  `struct vaccel_tf_status()`.
+  previously loaded using `vaccel_tf_model_load()`.
+- `struct vaccel_tf_status *status`: status of the TF operation.
+
+### TensorFlow model run
+
+```c
+int vaccel_tf_model_run(struct vaccel_session *sess,
+                        const struct vaccel_resource *model,
+                        const struct vaccel_tf_buffer *run_options,
+                        const struct vaccel_tf_node *in_nodes,
+                        struct vaccel_tf_tensor *const *in_tensors,
+                        int nr_inputs, const struct vaccel_tf_node *out_nodes,
+                        struct vaccel_tf_tensor **out_tensors, int nr_outputs,
+                        struct vaccel_tf_status *status);
+```
+
+- `struct vaccel_session *sess`: a pointer to a vAccel session created using
+  `vaccel_session_init()`.
+- `struct vaccel_resource *model`: a vAccel resource structure. It should have
+  been loaded previously with `vaccel_tf_model_load()`.
+- `const struct vaccel_tf_buffer *run_options`: runtime parameters for the TF
+  instance in the form of `{data, size}`.
+- `const struct vaccel_tf_node *in_nodes`: array of input nodes.
+- `const struct vaccel_tf_tensor *const *in_tensors`: array of input tensors.
+- `int nr_inputs`: length of input nodes/tensors array.
+- `const struct vaccel_tf_node *out_nodes`: array of output nodes.
+- `const struct vaccel_tf_tensor **out_tensors`: array of output tensors.
+- `int nr_outputs`: length of output nodes/tensors array.
+- `struct vaccel_tf_status *status`: status of the TF operation.
 
 ## TensorFlow Lite operations
 
-### TensorFlow Lite session load
+### TensorFlow Lite model load
 
 ```c
-int vaccel_tflite_session_load(struct vaccel_session *session,
-                               struct vaccel_resource *model);
+int vaccel_tflite_model_load(struct vaccel_session *sess,
+                             struct vaccel_resource *model);
 ```
 
 - `struct vaccel_session *sess`: a pointer to a vAccel session created using
@@ -302,53 +302,66 @@ int vaccel_tflite_session_load(struct vaccel_session *session,
   the TFLite model, created using `vaccel_resource_init()` or similar vAccel
   function, and registered to a session using `vaccel_resource_register()`.
 
-### TensorFlow Lite session run
+### TensorFlow Lite model unload
 
 ```c
-int vaccel_tflite_session_run(struct vaccel_session *session,
-                              const struct vaccel_resource *model,
-                              struct vaccel_tflite_tensor *const *in,
-                              int nr_inputs, struct vaccel_tflite_tensor **out,
-                              int nr_outputs, uint8_t *status);
-```
-
-- `struct vaccel_session *sess`: a pointer to a vAccel session created using
-  `vaccel_session_init()`.
-- `const struct vaccel_resource *model`: a vAccel resource structure. It should
-  have been loaded previously with `vaccel_tflite_session_load()`.
-- `struct vaccel_tflite_tensor *const *in`: array of input tensors.
-- `int nr_inputs`: size of input tensors array.
-- `struct vaccel_tflite_tensor **out`: array of input tensors.
-- `int nr_outputs`: size of output tensors array.
-- `uint8_t *status`: return value in the form of `uint8_t`.
-
-### TensorFlow Lite session delete
-
-```c
-int vaccel_tflite_session_delete(struct vaccel_session *session,
-                                 struct vaccel_resource *model);
+int vaccel_tflite_model_unload(struct vaccel_session *sess,
+                               struct vaccel_resource *model);
 ```
 
 - `struct vaccel_session *sess`: a pointer to a vAccel session created using
   `vaccel_session_init()`.
 - `struct vaccel_resource *model`: a vAccel resource structure that has been
-  previously loaded using `vaccel_tflite_session_load()`.
+  previously loaded using `vaccel_tflite_model_load()`.
+
+### TensorFlow Lite model run
+
+```c
+int vaccel_tflite_model_run(struct vaccel_session *sess,
+                            const struct vaccel_resource *model,
+                            struct vaccel_tflite_tensor *const *inputs,
+                            int nr_inputs,
+                            struct vaccel_tflite_tensor **outputs,
+                            int nr_outputs, uint8_t *status);
+```
+
+- `struct vaccel_session *sess`: a pointer to a vAccel session created using
+  `vaccel_session_init()`.
+- `const struct vaccel_resource *model`: a vAccel resource structure. It should
+  have been loaded previously with `vaccel_tflite_model_load()`.
+- `struct vaccel_tflite_tensor *const *inputs`: array of input tensors.
+- `int nr_inputs`: length of input tensors array.
+- `struct vaccel_tflite_tensor **outputs`: array of output tensors.
+- `int nr_outputs`: length of output tensors array.
+- `uint8_t *status`: status of the TFLite operation.
 
 ## Torch operations
 
-### JIT loading and forwarding
+### Torch model load
+
+```c
+int vaccel_torch_model_load(struct vaccel_session *sess,
+                            const struct vaccel_resource *model);
+```
+
+- `struct vaccel_session *sess`: a pointer to a vAccel session created using
+  `vaccel_session_init()`.
+- `struct vaccel_resource *model`: a vAccel resource structure that represents
+  the Torch model, created using `vaccel_resource_init()` or similar vAccel
+  function, and registered to a session using `vaccel_resource_register()`.
+
+### Torch model run
 
 The generic Torch operation, which can be used to run inference on any PyTorch
 model, having tensors as input and output:
 
 ```c
-int vaccel_torch_jitload_forward(struct vaccel_session *sess,
-                                 const struct vaccel_resource *model,
-                                 const struct vaccel_torch_buffer *run_options,
-                                 struct vaccel_torch_tensor **in_tensor,
-                                 int nr_read,
-                                 struct vaccel_torch_tensor **out_tensor,
-                                 int nr_write);
+int vaccel_torch_model_run(struct vaccel_session *sess,
+                           const struct vaccel_resource *model,
+                           const struct vaccel_torch_buffer *run_options,
+                           struct vaccel_torch_tensor *const *inputs,
+                           int nr_inputs, struct vaccel_torch_tensor **outputs,
+                           int nr_outputs);
 ```
 
 - `struct vaccel_session *sess`: a pointer to a vAccel session, created with
@@ -359,14 +372,12 @@ int vaccel_torch_jitload_forward(struct vaccel_session *sess,
   `vaccel_resource_register()`.
 - `const struct vaccel_torch_buffer *run_options`: a buffer to hold other data
   that may be useful for the plugin. It may be empty.
-- `struct vaccel_torch_tensor **in_tensor`: the input tensors to be used for the
-  model inference.
-- `int nr_read`: the number of the input tensors.
-- `struct vaccel_torch_tensor **out_tensor`: this tensor array will hold the
-  output tensors after the end of the operation.
-- `int nr_write`: the number of the output tensors.
+- `struct vaccel_torch_tensor *const *inputs`: array of input tensors.
+- `int nr_inputs`: length of input tensors array.
+- `struct vaccel_torch_tensor **outputs`: array of output tensors.
+- `int nr_outputs`: length of output tensors array.
 
-### Matrix-to-matrix multiplication
+### Torch matrix-to-matrix multiplication
 
 An operation that performs the classic single-precision general matrix
 multiplication (SGEMM):
