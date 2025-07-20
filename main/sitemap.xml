@@ -2,322 +2,322 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.vaccel.org/main/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/configuration/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/overview/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/api-guide/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/api-guide/operations/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/api-reference/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/api/api-reference/operations/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/development/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/development/ci/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/development/contributing/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/framework-bindings/tensorflow-bindings/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/getting-started/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/getting-started/architecture/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/getting-started/installation/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/getting-started/introduction-to-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/getting-started/running-the-examples/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/go-bindings/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/go-bindings/usage/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/go-bindings/writing-a-simple-vaccel-go-application/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/installation/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/writing-a-simple-vaccel-python-application/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/rust-bindings/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/rust-bindings/usage/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/rust-bindings/writing-a-simple-vaccel-rust-application/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/about-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/acceleration-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/acceleration-plugins/tf-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/acceleration-plugins/torch-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/acceleration-plugins/tvm-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/bundled-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/bundled-plugins/exec-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/bundled-plugins/mbench-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/bundled-plugins/noop-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/transport-plugins/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/transport-plugins/rpc-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/plugins/available-plugins/transport-plugins/virtio-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tutorials/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tutorials/deploying-vaccel-applications-using-kubernetes/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tutorials/running-a-vaccel-application-on-a-vm/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tutorials/running-a-vaccel-application-remotely/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/tutorials/writing-your-first-plugin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/useful-docs/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/useful-docs/build-and-install-pytorch/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/useful-docs/build-and-install-tensorflow/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/useful-docs/build-and-install-tvm/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/arg/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/config/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/error/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/op/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/blas/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/exec/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/fpga/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/genop/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/image/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/minmax/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/noop/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/buffer/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/lite/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/lite/mixin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/lite/tensor/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/mixin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/node/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/status/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/tf/tensor/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/torch/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/torch/buffer/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/torch/mixin/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/ops/torch/tensor/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/resource/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/session/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
     <url>
          <loc>https://docs.vaccel.org/main/language-bindings/python-bindings/api-reference/vaccel/vaccel/</loc>
-         <lastmod>2025-06-24</lastmod>
+         <lastmod>2025-07-20</lastmod>
     </url>
 </urlset>
