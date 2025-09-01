@@ -1,8 +1,8 @@
 # Build and Install Tensorflow
 
 Official instructions for building and installing
-[Tensorflow](https://www.tensorflow.org/) can be found
-[here](https://www.tensorflow.org/install/source).
+[Tensorflow](https://www.tensorflow.org/) can be found on the Tensorflow
+[Build from source](https://www.tensorflow.org/install/source) page.
 
 In the sections below we provide a short version that can be used to build and
 install Tensorflow and Tensorflow Lite C/C++ API files for use with vAccel. We

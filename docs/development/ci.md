@@ -46,7 +46,6 @@ Top-level workflows that coordinate testing, building, and artifact handling.
 - [`pr-build-and-verify.yml`]
 
     Triggers on each pull request and performs:
-
     - Linting
     - Architecture-specific builds
     - Example (end-to-end tests) execution (via `run_examples.sh`)

@@ -1,7 +1,9 @@
 # Build and Install TVM
 
 Official instructions for building and installing [TVM](https://tvm.apache.org)
-can be found [here](https://tvm.apache.org/docs/install/from_source.html).
+can be found on the TVM
+[Install from Source](https://tvm.apache.org/docs/install/from_source.html)
+page.
 
 In the sections below we provide a short version that can be used to build and
 install TVM C/C++ API files for use with vAccel.
