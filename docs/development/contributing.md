@@ -68,15 +68,15 @@ the [meson_build] document in the vAccel repository. After implementing the
 desired changes, the project should build and install correctly. Additionally,
 code [tests] and [examples] should be implemented (or modified) to include the
 new functionality. The process of formatting and running static analysis on the
-code is described [here].
+code is described in the [Formatting code and running static analysis] section.
 
 [meson_build]: https://github.com/nubificus/vaccel/blob/main/docs/meson_build.md
 [tests]:
     https://github.com/nubificus/vaccel/blob/main/docs/meson_build.md#running-the-tests
 [examples]:
     https://github.com/nubificus/vaccel/blob/main/docs/meson_build.md#running-the-examples
-[here]:
-    ttps://github.com/nubificus/vaccel/blob/main/docs/meson_build.md#formatting-code-and-running-static-analysis
+[Formatting code and running static analysis]:
+    https://github.com/nubificus/vaccel/blob/main/docs/meson_build.md#formatting-code-and-running-static-analysis
 
 ### Preparing for a Pull Request
 

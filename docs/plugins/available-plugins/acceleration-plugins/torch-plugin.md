@@ -12,10 +12,11 @@ API (LibTorch) support for vAccel operations.
 
 ## Installing PyTorch C/C++ API files (LibTorch)
 
-You can find instructions on how to install the required files
-[here](../../../useful-docs/build-and-install-pytorch.md). The rest of this
-guide assumes PyTorch is installed at `/opt/pytorch` and its' libraries are at
-`/opt/pytorch/lib`.
+You can find instructions on how to install the required files on the [Build and
+Install PyTorch] page. The rest of this guide assumes PyTorch is installed at
+`/opt/pytorch` and its' libraries are at `/opt/pytorch/lib`.
+
+[Build and Install PyTorch]: ../../../useful-docs/build-and-install-pytorch.md
 
 ## Installing the plugin
 

@@ -1,7 +1,9 @@
 # Build and Install PyTorch
 
 Official instructions for building and installing [PyTorch](https://pytorch.org)
-can be found [here](https://github.com/pytorch/pytorch#installation).
+can be found in the
+[Installation](https://github.com/pytorch/pytorch#installation) section of the
+PyTorch README.
 
 In the sections below we provide a short version that can be used to build and
 install PyTorch C++ API files (LibTorch) for use with vAccel. We assume that the

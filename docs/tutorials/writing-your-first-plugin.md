@@ -7,28 +7,23 @@ programming language that can generate it.
 The required operations that need to be implemented for a shared object to be
 linked as a vAccel plugin, are the following:
 
-<!-- markdownlint-disable blanks-around-fences -->
-<!-- prettier-ignore-start -->
-
 - An `init()` function, called upon plugin initialization
-  ```c
-  static int init(void) {
-  ...
-  }
-  ```
+
+    ```c
+    static int init(void) {
+    ...
+    }
+    ```
 
 - A `fini()` function, called before unloading the plugin
-  ```c
-  static int fini(void) {
-  ...
-  }
-  ```
 
-<!-- prettier-ignore-end -->
-<!-- markdownlint-restore -->
+    ```c
+    static int fini(void) {
+    ...
+    }
+    ```
 
 - A definition of the `VACCEL_PLUGIN` with:
-
     - `.name` : The name of the plugin
     - `.version` : The version of the plugin
     - `.vaccel_version` : The vAccel library version that the plugin was built
@@ -37,15 +32,15 @@ linked as a vAccel plugin, are the following:
     - `.fini` : The function to call before unloading the plugin (eg. on program
       exit, `fini()`)
 
-```c
-VACCEL_PLUGIN(
-    .name = "vAccel template plugin",
-    .version = "0.9",
-    .vaccel_version = VACCEL_VERSION,
-    .init = init,
-    .fini = fini
-)
-```
+    ```c
+    VACCEL_PLUGIN(
+        .name = "vAccel template plugin",
+        .version = "0.9",
+        .vaccel_version = VACCEL_VERSION,
+        .init = init,
+        .fini = fini
+    )
+    ```
 
 At initialization, the plugin needs to register the vAccel operations that it
 implements. To do that, we use an array of `struct vaccel_op`s, that map each
@@ -124,8 +119,8 @@ The plugin registers `my_noop_function()` to serve as the implementation of the
 ## Install requirements
 
 Before building a vAccel plugin, you need to install the main vAccel library.
-Instructions on how to build vAccel can be found
-[here](../getting-started/installation.md).
+Instructions on how to build vAccel can be found on the
+[Installation](../getting-started/installation.md) page.
 
 You also need some packages to build the plugin itself:
 

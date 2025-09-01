@@ -11,12 +11,10 @@ overhead.
 At a high level, vAccel consists of:
 
 1. The **core library** that:
-
     - Exposes the API and is linked into user-space applications
     - Matches API operations to the underlying plugins
 
 2. The **plugins** that handle the execution of operations:
-
     - A set of transport plugins, which facilitate communication between hosts
     - A set of backend plugins, which execute acceleration operations
 
