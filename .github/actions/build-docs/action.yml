@@ -1,5 +1,5 @@
-name: Build Docs
-description: Build and optionally deploy docs
+name: 'Build Docs'
+description: 'Build and optionally deploy docs'
 
 inputs:
   source-path:
@@ -7,12 +7,12 @@ inputs:
   strict:
     default: 'false'
   deploy-version:
-    default: ''
+    required: false
   deploy-alias:
-    default: ''
+    required: false
 
 runs:
-  using: composite
+  using: 'composite'
   steps:
     - name: Create python virtual env
       working-directory: ${{ inputs.source-path }}
@@ -20,31 +20,39 @@ runs:
         sudo apt-get update
         sudo apt-get install -y python3-venv
         python3 -m venv .venv
+        echo "$(pwd)/.venv/bin" >> "$GITHUB_PATH"
       shell: bash
 
     - name: Install dependencies
       working-directory: ${{ inputs.source-path }}
       run: |
-        ./.venv/bin/pip install --upgrade pip
-        ./.venv/bin/pip install -r requirements.txt
+        pip install --upgrade pip
+        pip install -r requirements.txt
       shell: bash
 
     - name: Build docs
       working-directory: ${{ inputs.source-path }}
+      env:
+        STRICT: ${{ inputs.strict }}
       run: |
-        [[ "${{ inputs.strict }}" == "true" ]] && strict_flags="--strict"
-        ./.venv/bin/mkdocs build ${strict_flags+"${strict_flags}"}
+        if [[ "$STRICT" == 'true' ]]; then
+          strict_flags="--strict"
+        fi
+
+        mkdocs build ${strict_flags+"${strict_flags}"}
       shell: bash
 
     - name: Deploy to Github Pages
       working-directory: ${{ inputs.source-path }}
-      if: ${{ inputs.deploy-version != '' }}
+      if: inputs.deploy-version && inputs.deploy-alias
+      env:
+        DEPLOY_VERSION: ${{ inputs.deploy-version }}
+        DEPLOY_ALIAS: ${{ inputs.deploy-alias }}
       run: |
         git config --global \
           user.name "github-actions[bot]"
         git config --global \
           user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        source ./.venv/bin/activate
-        mike deploy --push --update-aliases \
-          "${{ inputs.deploy-version }}" "${{ inputs.deploy-alias }}"
+
+        mike deploy --push --update-aliases "$DEPLOY_VERSION" "$DEPLOY_ALIAS"
       shell: bash
