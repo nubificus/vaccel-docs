@@ -6,57 +6,76 @@ on:
       actions-repo:
         type: string
         default: 'nubificus/vaccel'
-      actions-rev:
+      actions-ref:
         type: string
         default: 'main'
     secrets:
-      GIT_CLONE_PAT:
-        required: false
       VACCEL_BOT_PRIVATE_KEY:
-        required: true
+        required: false
+
+permissions: read-all
 
 jobs:
   linter-super-linter:
     name: Lint GHActions/Markdown/YAML/JS
-    runs-on: [base-dind-2204-amd64]
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
-
+    runs-on: base-dind-2204-amd64
     steps:
+      - name: Parse repository names
+        id: parse-repos
+        env:
+          ACTIONS_REPO: ${{ inputs.actions-repo }}
+        run: |
+          {
+            echo "repo-name=$(basename "$GITHUB_REPOSITORY")"
+            echo "actions-repo-name=$(basename "$ACTIONS_REPO")"
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Generate initialization vaccel-bot token
+        id: generate-init-token
+        if: vars.VACCEL_BOT_CLIENT_ID
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          repositories: |
+            ${{ steps.parse-repos.outputs.repo-name }}
+            ${{ steps.parse-repos.outputs.actions-repo-name }}
+          permission-contents: read
+
       - name: Checkout .github directory
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: .github
           repository: ${{ inputs.actions-repo }}
-          ref: ${{ inputs.actions-rev }}
-
-      - name: Generate vaccel-bot token
-        id: generate-token
-        uses: actions/create-github-app-token@v2
-        with:
-          app-id: ${{ vars.VACCEL_BOT_APP_ID }}
-          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
-          permission-contents: read
+          ref: ${{ inputs.actions-ref }}
+          token: ${{ steps.generate-init-token.outputs.token || github.token }}
 
       - name: Initialize workspace
         uses: ./.github/actions/initialize-workspace
         with:
-          submodules: 'true'
           remote-actions-repo: ${{ inputs.actions-repo }}
-          token: >-
-            ${{ steps.generate-token.outputs.token ||
-              secrets.GIT_CLONE_PAT || github.token }}
           fetch-depth: 0
+          submodules: 'false'
+          token: ${{ steps.generate-init-token.outputs.token || github.token }}
+
+      - name: Generate linter vaccel-bot token
+        id: generate-linter-token
+        if: vars.VACCEL_BOT_CLIENT_ID
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          permission-contents: read
+          permission-packages: read
+          permission-statuses: write
 
       - name: Run super-linter
         uses: super-linter/super-linter/slim@v8
         env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_GITHUB_ACTIONS_STEP_SUMMARY: false
+          GITHUB_TOKEN: >-
+            ${{ steps.generate-linter-token.outputs.token || github.token }}
+          ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_PYTHON_RUFF: true
           VALIDATE_BASH: true

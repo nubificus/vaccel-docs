@@ -9,6 +9,8 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
+permissions: read-all
+
 jobs:
   build-and-deploy:
     name: Build and Deploy

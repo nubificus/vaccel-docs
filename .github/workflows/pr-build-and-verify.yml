@@ -8,8 +8,11 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: >-
+    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
+
+permissions: read-all
 
 jobs:
   check-pr-status:
@@ -20,14 +23,14 @@ jobs:
   verify-build:
     needs: check-pr-status
     name: Verify Build
-    if: ${{ needs.check-pr-status.outputs.expects-checks == 'true' }}
+    if: needs.check-pr-status.outputs.expects-checks == 'true'
     uses: ./.github/workflows/verify-build.yml
     secrets: inherit
 
   verify-build-strict:
     needs: check-pr-status
     name: Verify Build (Strict)
-    if: ${{ needs.check-pr-status.outputs.expects-checks == 'true' }}
+    if: needs.check-pr-status.outputs.expects-checks == 'true'
     uses: ./.github/workflows/verify-build.yml
     with:
       strict: true
@@ -36,21 +39,21 @@ jobs:
   verify-links:
     needs: check-pr-status
     name: Verify Links
-    if: ${{ needs.check-pr-status.outputs.expects-checks == 'true' }}
+    if: needs.check-pr-status.outputs.expects-checks == 'true'
     uses: ./.github/workflows/verify-links.yml
     secrets: inherit
 
   validate-files-and-commits:
     needs: check-pr-status
     name: Validate Files and Commits
-    if: ${{ needs.check-pr-status.outputs.expects-checks == 'true' }}
+    if: needs.check-pr-status.outputs.expects-checks == 'true'
     uses: nubificus/vaccel/.github/workflows/validate-files-and-commits.yml@main
     secrets: inherit
 
   validate-code-and-markdown:
     needs: check-pr-status
     name: Validate Code and Markdown
-    if: ${{ needs.check-pr-status.outputs.expects-checks == 'true' }}
+    if: needs.check-pr-status.outputs.expects-checks == 'true'
     uses: ./.github/workflows/validate-code-and-markdown.yml
     secrets: inherit
 
@@ -65,11 +68,11 @@ jobs:
       - validate-code-and-markdown
     name: Jobs Completed
     if: >-
-      ${{ always() &&
-        (needs.check-pr-status.outputs.is-approved == 'true' ||
-          (needs.check-pr-status.outputs.expects-checks == 'true' &&
-            !contains(needs.*.result, 'failure') &&
-            !contains(needs.*.result, 'cancelled'))) }}
+      always() &&
+      (needs.check-pr-status.outputs.is-approved == 'true' ||
+        (needs.check-pr-status.outputs.expects-checks == 'true' &&
+          !contains(needs.*.result, 'failure') &&
+          !contains(needs.*.result, 'cancelled')))
     runs-on: base-2204-amd64
     steps:
       - run: exit 0

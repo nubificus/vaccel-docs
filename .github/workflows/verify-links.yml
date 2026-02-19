@@ -1,4 +1,4 @@
-name: "Verify Links"
+name: Verify Links
 
 on:
   workflow_call:
@@ -6,45 +6,70 @@ on:
       actions-repo:
         type: string
         default: 'nubificus/vaccel'
-      actions-rev:
+      actions-ref:
         type: string
         default: 'main'
     secrets:
-      GIT_CLONE_PAT:
-        required: false
       VACCEL_BOT_PRIVATE_KEY:
-        required: true
+        required: false
+
+permissions: read-all
 
 jobs:
   verify-links:
     name: Verify Links
-    runs-on: [base-dind-2204-amd64]
-
+    runs-on: base-dind-2204-amd64
     steps:
-      - name: Checkout .github directory
-        uses: actions/checkout@v5
+      - name: Checkout .gitmodules
+        uses: actions/checkout@v6
         with:
-          sparse-checkout: .github
-          repository: ${{ inputs.actions-repo }}
-          ref: ${{ inputs.actions-rev }}
+          sparse-checkout: .gitmodules
+
+      - name: Parse repository names
+        id: parse-repos
+        env:
+          ACTIONS_REPO: ${{ inputs.actions-repo }}
+        run: |
+          submodule_names=$(git config --file .gitmodules \
+            --get-regexp '\.url$' |
+            awk -F'/' '{sub(/\.git$/, "", $NF); print $NF}')
+
+          {
+            echo "repo-name=$(basename "$GITHUB_REPOSITORY")"
+            echo "actions-repo-name=$(basename "$ACTIONS_REPO")"
+            echo 'submodule-names<<EOF'
+            echo "$submodule_names"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
 
       - name: Generate vaccel-bot token
         id: generate-token
-        uses: actions/create-github-app-token@v2
+        if: vars.VACCEL_BOT_CLIENT_ID
+        uses: actions/create-github-app-token@v3
         with:
-          app-id: ${{ vars.VACCEL_BOT_APP_ID }}
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
           private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
-          owner: ${{ github.repository_owner }}
+          repositories: |
+            ${{ steps.parse-repos.outputs.repo-name }}
+            ${{ steps.parse-repos.outputs.actions-repo-name }}
+            ${{ steps.parse-repos.outputs.submodule-names }}
           permission-contents: read
+
+      - name: Checkout remote .github directory
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+          repository: ${{ inputs.actions-repo }}
+          ref: ${{ inputs.actions-ref }}
+          token: ${{ steps.generate-token.outputs.token || github.token }}
 
       - name: Initialize workspace
         uses: ./.github/actions/initialize-workspace
         with:
-          submodules: 'true'
           remote-actions-repo: ${{ inputs.actions-repo }}
-          token: >-
-            ${{ steps.generate-token.outputs.token ||
-              secrets.GIT_CLONE_PAT || github.token }}
+          submodules: 'true'
+          token: ${{ steps.generate-token.outputs.token || github.token }}
 
       - name: Build docs
         uses: ./.github/actions/build-docs
