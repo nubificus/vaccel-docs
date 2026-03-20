@@ -115,6 +115,7 @@ plugins:
   - section-index
   - awesome-nav
   - macros:
+      module_name: macros/main
       include_yaml: [variables/versions.yml]
       j2_block_start_string: "[%"
       j2_block_end_string: "%]"

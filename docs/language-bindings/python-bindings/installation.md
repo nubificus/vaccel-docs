@@ -33,8 +33,8 @@ To install the Wheel package of the latest `vaccel` release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_x86_64.whl
-pip install vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_x86_64.whl
+wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_x86_64.whl
+pip install vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_x86_64.whl
 ```
 
 ///
@@ -42,8 +42,8 @@ pip install vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_x86_64.whl
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_aarch64.whl
-pip install vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_aarch64.whl
+wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_aarch64.whl
+pip install vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_aarch64.whl
 ```
 
 ///
@@ -51,8 +51,8 @@ pip install vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_aarch64.whl
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_armv7l.whl
-pip install vaccel-[[ versions.bindings.python ]]-cp310-abi3-linux_armv7l.whl
+wget https://github.com/nubificus/vaccel-python/releases/download/v[[ versions.bindings.python ]]/vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_armv7l.whl
+pip install vaccel-[[ versions.bindings.python | base_version ]]-cp310-abi3-linux_armv7l.whl
 ```
 
 ///

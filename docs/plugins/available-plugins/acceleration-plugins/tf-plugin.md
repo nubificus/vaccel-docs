@@ -44,9 +44,9 @@ To install the TAR binary package of the latest Tensorflow plugin release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-tf_[[ versions.plugins.tf ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-tf_[[ versions.plugins.tf ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -56,9 +56,9 @@ find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-tf_[[ versions.plugins.tf ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-tf_[[ versions.plugins.tf ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-tf_[[ versions.plugins.tf ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-tf.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -74,7 +74,7 @@ at:
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/tf/rev/main/x86_64/release/vaccel-tf-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/tf/rev/main/x86_64/release/vaccel-tf_latest_x86_64.tar.gz
 ```
 
 ///
@@ -83,7 +83,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/tf/rev/main/x86_64/release/
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/tf/rev/main/aarch64/release/vaccel-tf-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/tf/rev/main/aarch64/release/vaccel-tf_latest_aarch64.tar.gz
 ```
 
 ///
