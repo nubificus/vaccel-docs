@@ -92,9 +92,9 @@ To install the TAR binary package of the latest RPC plugin release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -104,9 +104,9 @@ find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/loca
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -116,9 +116,9 @@ find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/loca
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc_[[ versions.plugins.rpc ]]_armv7l.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc_[[ versions.plugins.rpc ]]_armv7l.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-rpc.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -135,7 +135,7 @@ You can also find prebuilt artifacts of the latest RPC plugin revision at:
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release/vaccel-rpc_latest_amd64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release/vaccel-rpc-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release/vaccel-rpc_latest.tar.gz
 ```
 
 ///
@@ -146,7 +146,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/x86_64/release
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/aarch64/release/vaccel-rpc_latest_arm64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/aarch64/release/vaccel-rpc-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/aarch64/release/vaccel-rpc_latest.tar.gz
 ```
 
 ///
@@ -157,7 +157,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/aarch64/releas
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/armv7l/release/vaccel-rpc_latest_armhf.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/armv7l/release/vaccel-rpc-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/rpc/rev/main/armv7l/release/vaccel-rpc_latest.tar.gz
 ```
 
 ///
@@ -177,8 +177,8 @@ To install the DEB package of the latest RPC agent release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]-1_amd64.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.agent ]]-1_amd64.deb
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_amd64.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_amd64.deb
 ```
 
 ///
@@ -186,8 +186,8 @@ sudo dpkg -i vaccel-rpc-agent_[[ versions.agent ]]-1_amd64.deb
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]-1_arm64.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.agent ]]-1_arm64.deb
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_arm64.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_arm64.deb
 ```
 
 ///
@@ -195,8 +195,8 @@ sudo dpkg -i vaccel-rpc-agent_[[ versions.agent ]]-1_arm64.deb
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]-1_armhf.deb
-sudo dpkg -i vaccel-rpc-agent_[[ versions.agent ]]-1_armhf.deb
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_armhf.deb
+sudo dpkg -i vaccel-rpc-agent_[[ versions.bindings.rust ]]-1_armhf.deb
 ```
 
 ///
@@ -208,9 +208,9 @@ To install the TAR binary package of the latest RPC agent release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.agent ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.bindings.rust ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -218,9 +218,9 @@ tar xfv vaccel-rpc-agent_[[ versions.agent ]]_amd64.tar.gz --strip-components=2 
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.agent ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.bindings.rust ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -228,9 +228,9 @@ tar xfv vaccel-rpc-agent_[[ versions.agent ]]_arm64.tar.gz --strip-components=2 
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.agent ]]_armhf.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-rpc-agent_[[ versions.bindings.rust ]]_armv7l.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-rpc-agent_[[ versions.agent ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-rpc-agent_[[ versions.bindings.rust ]]_armv7l.tar.gz --strip-components=2 -C /usr/local
 ```
 
 ///
@@ -245,7 +245,7 @@ You can also find prebuilt artifacts of the latest RPC agent revision at:
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/x86_64/release/vaccel-rpc-agent_latest_amd64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/x86_64/release/vaccel-rpc-agent-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/x86_64/release/vaccel-rpc-agent_latest_x86_64.tar.gz
 ```
 
 ///
@@ -254,9 +254,9 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/x86_64/release/vaccel
 
 ```sh
 # DEB
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/aarch64/release/vaccel-rpc-agent-latest-bin.tar.gz
-# TAR
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/aarch64/release/vaccel-rpc-agent_latest_arm64.deb
+# TAR
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/aarch64/release/vaccel-rpc-agent_latest_aarch64.tar.gz
 ```
 
 ///
@@ -265,9 +265,9 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/aarch64/release/vacce
 
 ```sh
 # DEB
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/armv7l/release/vaccel-rpc-agent-latest-bin.tar.gz
-# TAR
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/armv7l/release/vaccel-rpc-agent_latest_armhf.deb
+# TAR
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rust/rev/main/armv7l/release/vaccel-rpc-agent_latest_armv7l.tar.gz
 ```
 
 ///

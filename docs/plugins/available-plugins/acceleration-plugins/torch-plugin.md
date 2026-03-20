@@ -40,9 +40,9 @@ To install the TAR binary package of the latest Torch plugin release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-torch_[[ versions.plugins.torch ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-torch_[[ versions.plugins.torch ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -52,9 +52,9 @@ find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/lo
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-torch_[[ versions.plugins.torch ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-torch_[[ versions.plugins.torch ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-torch_[[ versions.plugins.torch ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-torch.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -69,7 +69,7 @@ You can also find prebuilt artifacts of the latest Torch plugin revision at:
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/x86_64/release/vaccel-torch-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/x86_64/release/vaccel-torch_latest_x86_64.tar.gz
 ```
 
 ///
@@ -78,7 +78,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/x86_64/relea
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/aarch64/release/vaccel-torch-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/torch/rev/main/aarch64/release/vaccel-torch_latest_aarch64.tar.gz
 ```
 
 ///

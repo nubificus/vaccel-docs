@@ -58,9 +58,9 @@ To install the TAR binary package of the latest vAccel release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel_[[ versions.vaccel ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel_[[ versions.vaccel ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -70,9 +70,9 @@ find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel_[[ versions.vaccel ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel_[[ versions.vaccel ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -82,9 +82,9 @@ find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_armhf.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel_[[ versions.vaccel ]]_armv7l.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel_[[ versions.vaccel ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel_[[ versions.vaccel ]]_armv7l.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel*.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -101,7 +101,7 @@ You can also find prebuilt artifacts of the latest vAccel revision at:
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/debug/vaccel_latest_amd64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/debug/vaccel-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/debug/vaccel_latest_x86_64.tar.gz
 ```
 
 ///
@@ -112,7 +112,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/x86_64/debug/vaccel-latest
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/aarch64/debug/vaccel_latest_arm64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/aarch64/debug/vaccel-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/aarch64/debug/vaccel_latest_aarch64.tar.gz
 ```
 
 ///
@@ -123,7 +123,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/aarch64/debug/vaccel-lates
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/armv7l/debug/vaccel_latest_armhf.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/armv7l/debug/vaccel-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/rev/main/armv7l/debug/vaccel_latest_armv7l.tar.gz
 ```
 
 ///

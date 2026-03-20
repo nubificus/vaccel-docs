@@ -97,9 +97,9 @@ To install the TAR binary package of the latest VirtIO plugin release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_x86_64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_x86_64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -109,9 +109,9 @@ find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/l
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_aarch64.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_aarch64.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -121,9 +121,9 @@ find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/l
 /// tab | ARM (32-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_armv7l.tar.gz
 # Replace '/usr/local' below with the desired installation prefix
-tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_armhf.tar.gz --strip-components=2 -C /usr/local
+tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_armv7l.tar.gz --strip-components=2 -C /usr/local
 # Update pkg-config files with the correct prefix
 find /usr/local -name "vaccel-virtio.pc" -exec sed -i 's:^\(prefix=\).*:\1/usr/local:g' {} \;
 ```
@@ -161,7 +161,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/rel
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio_latest_amd64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio_latest_x86_64.tar.gz
 ```
 
 ///
@@ -172,7 +172,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/rele
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio_latest_arm64.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio_latest_aarch64.tar.gz
 ```
 
 ///
@@ -183,7 +183,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/rel
 # DEB
 https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/armv7l/release/vaccel-virtio_latest_armhf.deb
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/armv7l/release/vaccel-virtio-latest-bin.tar.gz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/armv7l/release/vaccel-virtio_latest_armv7l.tar.gz
 ```
 
 ///
@@ -206,9 +206,9 @@ plugin release:
 /// tab | x86
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio-vm_[[ versions.plugins.virtio ]]_amd64.tar.xz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_x86_64_vm.tar.xz
 # Replace 'vm-artifacts' with the desired artifact directory
-mkdir -p vm-artifacts && tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_amd64.tar.gz -C vm-artifacts
+mkdir -p vm-artifacts && tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_x86_64_vm.tar.xz -C vm-artifacts
 find vm-artifacts -name "virtio*.tar.xz" -exec tar xfv {} -C vm-artifacts \;
 rm -r vm-artifacts/virtio*.tar.xz
 ```
@@ -218,9 +218,9 @@ rm -r vm-artifacts/virtio*.tar.xz
 /// tab | ARM (64-bit)
 
 ```sh
-wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio-vm_[[ versions.plugins.virtio ]]_arm64.tar.gz
+wget https://github.com/nubificus/vaccel/releases/download/v[[ versions.vaccel ]]/vaccel-virtio_[[ versions.plugins.virtio ]]_aarch64_vm.tar.xz
 # Replace 'vm-artifacts' with the desired artifact directory
-mkdir -p vm-artifacts && tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_arm64.tar.gz -C vm-artifacts
+mkdir -p vm-artifacts && tar xfv vaccel-virtio_[[ versions.plugins.virtio ]]_aarch64_vm.tar.xz -C vm-artifacts
 find vm-artifacts -name "virtio*.tar.xz" -exec tar xfv {} -C vm-artifacts \;
 rm -r vm-artifacts/virtio*.tar.xz
 ```
@@ -236,7 +236,7 @@ at:
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio-latest-vm.tar.xz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/release/vaccel-virtio_latest_x86_64_vm.tar.xz
 ```
 
 ///
@@ -245,7 +245,7 @@ https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/x86_64/rele
 
 ```sh
 # TAR
-https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio-latest-vm.tar.xz
+https://s3.nbfc.io/nbfc-assets/github/vaccel/plugins/virtio/rev/main/aarch64/release/vaccel-virtio_latest_aarch64_vm.tar.xz
 ```
 
 ///
@@ -258,6 +258,14 @@ virtio-accel-enabled QEMU & vAccel pre-installed for x86_64/aarch64 with:
 ```sh
 docker pull harbor.nbfc.io/nubificus/qemu-vaccel
 ```
+
+or using an explicit tag:
+
+```sh
+docker pull harbor.nbfc.io/nubificus/qemu-vaccel:[[ versions.misc["qemu-vaccel"] | docker_tag ]]
+```
+
+Use the `latest-dev` tag to get the latest development version.
 
 ## Usage
 
