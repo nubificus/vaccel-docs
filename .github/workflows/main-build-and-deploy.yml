@@ -18,3 +18,13 @@ jobs:
     with:
       deploy: true
     secrets: inherit
+
+  update-release:
+    needs: build-and-deploy
+    name: Update Release
+    if: always()
+    uses: nubificus/vaccel/.github/workflows/update-release.yml@main
+    with:
+      create-github-release: false
+      result: ${{ needs.build-and-deploy.result }}
+    secrets: inherit
