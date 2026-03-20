@@ -1,0 +1,289 @@
+name: Prepare Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      actions-repo:
+        description: 'Repository with remote actions'
+        type: string
+        default: 'nubificus/vaccel_test'
+      actions-ref:
+        description: 'Revision of remote actions repository'
+        type: string
+        default: 'main'
+      version:
+        description: 'Version to release (e.g., 0.3.2+core-0.7.0)'
+        type: string
+        required: true
+      component:
+        description: >
+          Component to release. Defaults to the current repository name.
+        type: string
+        required: false
+      branch:
+        description: 'Branch to release'
+        type: string
+        required: false
+      core-component:
+        description: 'Core component name'
+        type: string
+        required: true
+      core-version:
+        description: 'Core component version'
+        type: string
+        required: true
+      tracking-issue-url:
+        description: 'Tracking issue URL'
+        type: string
+        required: true
+      orchestrator-repo:
+        description: 'Repository orchestrating the release (e.g., owner/repo)'
+        type: string
+        required: true
+      dependencies:
+        description: >
+          JSON array of dependencies to update, e.g.,
+          [{"name": "dep1", "version": "0.2.0"}]
+        type: string
+        required: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+permissions: read-all
+
+jobs:
+  prepare:
+    name: Prepare Release
+    runs-on: base-2204-amd64
+    steps:
+      - name: Parse repository names
+        id: parse-repos
+        env:
+          ACTIONS_REPO: ${{ inputs.actions-repo }}
+          COMPONENT_REPO: >-
+            ${{ inputs.component &&
+              format('{0}/{1}', github.repository_owner, inputs.component) ||
+              github.repository }}
+          ORCHESTRATOR_REPO: ${{ inputs.orchestrator-repo }}
+        run: |
+          {
+            echo "repo-name=$(basename "$GITHUB_REPOSITORY")"
+            echo "actions-repo-name=$(basename "$ACTIONS_REPO")"
+            echo "component-repo=${COMPONENT_REPO}"
+            echo "component-repo-name=$(basename "$COMPONENT_REPO")"
+            echo "orchestrator-repo-name=$(basename "$ORCHESTRATOR_REPO")"
+          } >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Generate initialization vaccel-bot token
+        id: generate-initial-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          repositories: |
+            ${{ steps.parse-repos.outputs.actions-repo-name }}
+            ${{ steps.parse-repos.outputs.component-repo-name }}
+          permission-contents: read
+
+      - name: Checkout .github directory
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: .github
+          repository: ${{ inputs.actions-repo }}
+          ref: ${{ inputs.actions-ref }}
+          token: ${{ steps.generate-initial-token.outputs.token }}
+
+      - name: Initialize workspace
+        uses: ./.github/actions/initialize-workspace
+        with:
+          repository: ${{ steps.parse-repos.outputs.component-repo }}
+          remote-actions-repo: ${{ inputs.actions-repo }}
+          ref: ${{ inputs.branch || '' }}
+          fetch-depth: 0
+          submodules: 'false'
+          token: ${{ steps.generate-initial-token.outputs.token }}
+
+      - name: Setup yq
+        uses: dcarbone/install-yq-action@v1
+        with:
+          version: 'v4.52.2'
+
+      - name: Update core build dependency version
+        env:
+          CORE_COMPONENT: ${{ inputs.core-component }}
+          CORE_VERSION: ${{ inputs.core-version }}
+          DEPENDENCIES: ${{ inputs.dependencies }}
+          VERSIONS_PATH: 'variables/versions.yml'
+        run: |
+          result=$(jq -n \
+            --argjson versions "$(yq -o=json .versions "$VERSIONS_PATH")" \
+            --argjson components "$DEPENDENCIES" \
+            --arg core_component "$CORE_COMPONENT" \
+            --arg core_version "$CORE_VERSION" '
+            [$versions | path(.. | scalars)] as $all_paths
+            # Update core component
+            | (if $core_component != "" and $core_version != ""
+               then if ($all_paths | map(. == [$core_component]) | any)
+                    then [{ path:    [$core_component],
+                            old:     ($versions | getpath([$core_component])),
+                            version: $core_version }]
+                    else [{ warning:
+                            ("core " + $core_component
+                            + " not found at versions." + $core_component
+                            + " - skipping") }]
+                    end
+               else [] end) as $core_entries
+            # Update non-core components
+            | [$components[]
+               | .name as $key
+               | .version as $ver
+               | (if ($key | startswith($core_component + "-"))
+                  then ($key | split("-") | .[1:])
+                  else [$key]
+                  end) as $tail
+               | $tail[-1] as $leaf
+               | select($leaf != $core_component)
+               | (if ($tail | length) > 1 then $tail[-2] else null end) as $mid
+               | ($all_paths | map(select(.[-1] == $leaf))) as $candidates
+               | (if $mid
+                  then ($candidates | map(select(.[-2] == $mid)))
+                  else [] end) as $narrowed
+               | (if ($narrowed | length) > 0
+                  then $narrowed else $candidates end) as $targets
+               | if ($targets | length) == 0
+                 then { warning:
+                        ("leaf " + $leaf + " (key " + $key
+                        + ") not found - skipping") }
+                 else $targets[]
+                   | [.[]] as $p
+                   | { path: $p, old: ($versions | getpath($p)), version: $ver }
+                 end
+              ] as $comp_entries
+            # Store update logs and warnings
+            | ($core_entries + $comp_entries) as $entries
+            | ($entries | map(select(.path)))               as $updates
+            | ($entries | map(select(.warning) | .warning)) as $warnings
+            | ($updates | map("  versions." + (.path | join("."))
+                              + ": " + .old + " -> " + .version)) as $log
+            | { versions: (reduce $updates[] as $u
+                            ($versions; setpath($u.path; $u.version))),
+                log:      $log,
+                warnings: $warnings }
+          ')
+
+          NEW_VERSIONS="$(jq -c '.versions' <<< "$result")" \
+            yq -iP '.versions = env(NEW_VERSIONS)' "$VERSIONS_PATH"
+
+          jq -r '.log[]' <<< "$result"
+          jq -r '.warnings[] | "::warning::" + .' <<< "$result"
+
+          printf '\nDone. %s version(s) updated.' \
+            "$(jq '.log | length' <<< "$result")"
+        shell: bash
+
+      - name: Absorb submodule update PRs
+        id: absorb-submodule-prs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPENDENCIES: ${{ inputs.dependencies }}
+        run: |
+          prs=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --label 'submodule-update' \
+            --state open \
+            --json number,headRefName)
+
+          matched_prs=$(jq -c --argjson deps "$DEPENDENCIES" '
+            reverse
+            | [
+                .[]
+                | . as $pr
+                | select(
+                    any($deps[];
+                      . as $dep
+                      | $pr.headRefName
+                      | contains(
+                          "update_external_repos/" +
+                          $dep.name + "_v" + $dep.version
+                        )
+                    )
+                  )
+              ]
+            | .[]
+          ' <<< "$prs")
+
+          git stash
+          while read -r pr; do
+            pr_number=$(jq -r '.number' <<< "$pr")
+            pr_branch=$(jq -r '.headRefName' <<< "$pr")
+
+            echo "Absorbing PR #${pr_number} (${pr_branch})"
+            git fetch origin "$pr_branch"
+            git rebase "origin/${pr_branch}"
+            absorbed_prs+="${absorbed_prs:+ }${pr_number}"
+          done <<< "$matched_prs"
+          git stash pop
+
+          echo "absorbed-prs=${absorbed_prs}" >> "$GITHUB_OUTPUT"
+        shell: bash
+
+      - name: Render pull request
+        id: render-pr
+        uses: ./.github/actions/render-template
+        with:
+          template: .github/templates/prepare-release-pr.md.j2
+          data: |
+            {
+              "version": "${{ inputs.version }}",
+              "tracking_issue_url": "${{ inputs.tracking-issue-url }}",
+              "subprojects": []
+            }
+
+      - name: Generate PR vaccel-bot token
+        id: generate-pr-token
+        if: always()
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          repositories: |
+            ${{ steps.parse-repos.outputs.component-repo-name }}
+            ${{ steps.parse-repos.outputs.orchestrator-repo-name }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-actions: write
+
+      - name: Create release PR
+        id: create-pr
+        if: always()
+        uses: ./.github/actions/create-release-pr
+        with:
+          component: ${{ steps.parse-repos.outputs.component-repo-name }}
+          version: ${{ inputs.version }}
+          body: ${{ steps.render-pr.outputs.result }}
+          orchestrator-repo: ${{ inputs.orchestrator-repo }}
+          core-version: ${{ inputs.core-version }}
+          committer-slug: ${{ steps.generate-pr-token.outputs.app-slug }}
+          result: ${{ job.status }}
+          token: ${{ steps.generate-pr-token.outputs.token }}
+
+      - name: Close absorbed submodule update PRs
+        if: >-
+          steps.create-pr.outputs.pr-number &&
+          steps.absorb-submodule-prs.outputs.absorbed-prs
+        env:
+          GH_TOKEN: ${{ steps.generate-pr-token.outputs.token }}
+          VERSION: ${{ inputs.version }}
+          ABSORBED_PRS: ${{ steps.absorb-submodule-prs.outputs.absorbed-prs }}
+          RELEASE_PR_NUMBER: ${{ steps.create-pr.outputs.pr-number }}
+        run: |
+          for pr_number in $ABSORBED_PRS; do
+            echo "Closing PR #${pr_number}"
+            gh pr close "$pr_number" \
+              --repo "$GITHUB_REPOSITORY" \
+              --delete-branch \
+              --comment "Absorbed into release v${VERSION} PR #${RELEASE_PR_NUMBER}"
+          done
+        shell: bash
