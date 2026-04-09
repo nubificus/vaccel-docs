@@ -176,8 +176,8 @@ Adding operations requires modification and rebuilding of vAccel itself. To use
 an unmodified vAccel with a new operation, you can take advantage of the
 [`Exec` operation](../api-reference/operations.md#exec).
 
-The `Exec` operation - combined with the
-[`Exec` plugin](../../plugins/available-plugins/bundled-plugins/exec-plugin.md) -
+The `Exec` operation, combined with the
+[`Exec` plugin](../../plugins/available-plugins/bundled-plugins/exec-plugin.md),
 enables execution of functions from arbitrary libraries without requiring the
 addition of new operations. The operation's usage is similar to `GenOp`,
 described above.
