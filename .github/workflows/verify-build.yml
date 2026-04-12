@@ -88,37 +88,38 @@ jobs:
           EXTERNAL_PAYLOAD: ${{ inputs.external-payload }}
         run: |
           trigger_id=$(jq -r '.["trigger-id"]' <<< "$EXTERNAL_PAYLOAD")
-          repo=$(jq -r '.["repo"]' <<< "$EXTERNAL_PAYLOAD")
+          repository=$(jq -r '.["repository"]' <<< "$EXTERNAL_PAYLOAD")
           ref=$(jq -r '.["ref"]' <<< "$EXTERNAL_PAYLOAD")
           branch=$(jq -r '.["branch"]' <<< "$EXTERNAL_PAYLOAD")
           deploy=$(jq -r '.["deploy"]' <<< "$EXTERNAL_PAYLOAD")
-          run_url="https://github.com/${repo}/actions/runs/${trigger_id}"
+          run_url="https://github.com/${repository}/actions/runs/${trigger_id}"
 
           {
             echo "## Client request info"
-            echo "Triggered by **${repo}** run [#${trigger_id}](${run_url})"
+            echo "Triggered by **${repository}** run [#${trigger_id}](${run_url})"
           }  >> "$GITHUB_STEP_SUMMARY"
 
           echo "Parsing payload from run: ${run_url}"
           echo "trigger-id=${trigger_id}" | tee -a "$GITHUB_OUTPUT"
           echo "ref=${ref}" | tee -a "$GITHUB_OUTPUT"
           echo "branch=${branch}" | tee -a "$GITHUB_OUTPUT"
-          echo "repo=${repo}" | tee -a "$GITHUB_OUTPUT"
+          echo "repository=${repository}" | tee -a "$GITHUB_OUTPUT"
           echo "deploy=${deploy}" | tee -a "$GITHUB_OUTPUT"
         shell: bash
 
-      - name: "Fetch submodule for ${{ steps.parse-payload.outputs.repo }}"
+      - name: >
+          Fetch submodule for ${{ steps.parse-payload.outputs.repository }}
         id: fetch-submodule
         if: inputs.external-payload
         env:
-          REPO: ${{ steps.parse-payload.outputs.repo }}
+          REPOSITORY: ${{ steps.parse-payload.outputs.repository }}
           REF: ${{ steps.parse-payload.outputs.ref }}
         run: |
           git submodule foreach "
             url=\$(git config --file \${toplevel}/.gitmodules \
               submodule.\${name}.url)
-            if [ \"\${url#*\"$REPO\"}\" != \"\$url\" ]; then
-              echo \"  Updating ${REPO} to ${REF}\"
+            if [ \"\${url#*\"$REPOSITORY\"}\" != \"\$url\" ]; then
+              echo \"  Updating ${REPOSITORY} to ${REF}\"
               git checkout \"$REF\"
               echo \"sm-name=\${name}\" >> \"$GITHUB_OUTPUT\"
               echo \"sm-path=\${path}\" >> \"$GITHUB_OUTPUT\"
@@ -170,7 +171,7 @@ jobs:
           SM_NAME: ${{ steps.fetch-submodule.outputs.sm-name }}
           SM_REF: ${{ steps.parse-payload.outputs.ref }}
           SM_BRANCH: ${{ steps.parse-payload.outputs.branch }}
-          SM_REPO: ${{ steps.parse-payload.outputs.repo }}
+          SM_REPOSITORY: ${{ steps.parse-payload.outputs.repository }}
           BOT_NAME: ${{ steps.get-bot-info.outputs.user-login }}
           BOT_EMAIL: ${{ steps.get-bot-info.outputs.user-email }}
         with:
@@ -179,7 +180,7 @@ jobs:
             chore(${{ env.SM_NAME }}): Update submodule revision
 
             Update submodule `${{ env.SM_NAME }}` to revision
-            ${{ env.SM_REPO }}@${{ env.SM_REF }}
+            ${{ env.SM_REPOSITORY }}@${{ env.SM_REF }}
           committer: "${{ env.BOT_NAME }} <${{ env.BOT_EMAIL }}>"
           sign-commits: true
           signoff: true
@@ -189,7 +190,10 @@ jobs:
           title: "chore(${{ env.SM_NAME }}): Update submodule revision"
           body: >-
             Update submodule `${{ env.SM_NAME }}` to revision
-            ${{ env.SM_REPO }}@${{ env.SM_REF }}
+            ${{ env.SM_REPOSITORY }}@${{ env.SM_REF }}
+          labels: |
+            submodule-update
+            ok-to-test
           add-paths: ${{ env.SM_NAME }}
 
       - name: Print Pull Request info
