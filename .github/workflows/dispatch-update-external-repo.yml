@@ -1,14 +1,13 @@
 name: Update External Repo
 run-name: >-
-  ${{ github.event_name == 'workflow_dispatch' &&
-    github.event.inputs.run-name || github.event.client_payload.run-name }}
+  ${{ format('Update External Repo · {0}',
+    github.event_name == 'workflow_dispatch'
+    && github.event.inputs.repository
+    || github.event.client_payload.repository) }}
 
 on:
   workflow_dispatch:
     inputs:
-      run-name:
-        type: string
-        required: true
       trigger-id:
         type: string
         required: true
@@ -18,7 +17,7 @@ on:
       branch:
         type: string
         required: true
-      repo:
+      repository:
         type: string
         required: true
       deploy:
