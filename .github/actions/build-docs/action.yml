@@ -3,13 +3,35 @@ description: 'Build and optionally deploy docs'
 
 inputs:
   source-path:
+    description: 'Path to the docs source directory containing mkdocs.yml'
     default: '.'
   strict:
+    description: >
+      Whether to pass `--strict` to `mkdocs build`, treating warnings as errors
     default: 'false'
   deploy-version:
+    description: >
+      Version label to deploy to gh-pages via `mike` (e.g. `main` or a tag
+      name). When unset along with `deploy-alias`, the deploy step is skipped.
     required: false
   deploy-alias:
+    description: >
+      Alias to associate with `deploy-version` (e.g. `latest`, `dev`). Required
+      together with `deploy-version` to trigger a deploy.
     required: false
+  token:
+    description: >
+      Token used to authenticate the push to the gh-pages branch. Must have
+      contents:write on the target repository when deploying.
+    default: ${{ github.token }}
+  committer-name:
+    description: >
+      Name to record on the gh-pages commit. Should match the identity behind
+      `token` so commit attribution and push credentials line up.
+    default: 'github-actions[bot]'
+  committer-email:
+    description: 'Email to record on the gh-pages commit.'
+    default: '41898282+github-actions[bot]@users.noreply.github.com'
 
 runs:
   using: 'composite'
@@ -48,11 +70,42 @@ runs:
       env:
         DEPLOY_VERSION: ${{ inputs.deploy-version }}
         DEPLOY_ALIAS: ${{ inputs.deploy-alias }}
+        TOKEN: ${{ inputs.token }}
+        COMMITTER_NAME: ${{ inputs.committer-name }}
+        COMMITTER_EMAIL: ${{ inputs.committer-email }}
       run: |
-        git config --global \
-          user.name "github-actions[bot]"
-        git config --global \
-          user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "$COMMITTER_NAME"
+        git config --local user.email "$COMMITTER_EMAIL"
+
+        if [[ -n "$TOKEN" ]]; then
+          # actions/checkout@v6 stores credentials in
+          # $RUNNER_TEMP/git-credentials-*.config and pulls them in via
+          # `includeIf` from .git/config. Move them aside so our injected
+          # Authorization header isn't duplicated by checkout's.
+          checkout_creds=()
+          if [[ -n "$RUNNER_TEMP" ]]; then
+            while IFS= read -r f; do
+              mv "$f" "$f.bak"
+              checkout_creds+=("$f")
+            done < <(find "$RUNNER_TEMP" -maxdepth 1 -type f \
+              -name 'git-credentials-*.config' 2>/dev/null)
+          fi
+
+          restore_checkout_creds() {
+            git config --local --unset-all \
+              'http.https://github.com/.extraheader' || true
+            for f in "${checkout_creds[@]}"; do
+              mv "$f.bak" "$f" 2>/dev/null || true
+            done
+          }
+          trap restore_checkout_creds EXIT
+
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          git config --local \
+            'http.https://github.com/.extraheader' \
+            "AUTHORIZATION: basic ${auth}"
+        fi
 
         mike deploy --push --update-aliases "$DEPLOY_VERSION" "$DEPLOY_ALIAS"
       shell: bash

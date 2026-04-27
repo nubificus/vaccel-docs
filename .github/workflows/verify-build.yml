@@ -130,6 +130,30 @@ jobs:
           "
         shell: bash
 
+      - name: Generate deploy vaccel-bot token
+        id: generate-deploy-token
+        if: >-
+          inputs.deploy == true ||
+          steps.parse-payload.outputs.deploy == 'true'
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
+          repositories: ${{ steps.parse-repos.outputs.repo-name }}
+          permission-contents: write
+          permission-pull-requests: >-
+            ${{ steps.parse-payload.outputs.deploy == 'true' &&
+              'write' || 'read' }}
+
+      - name: Get vaccel-bot info
+        id: get-bot-info
+        if: >-
+          inputs.deploy == true ||
+          steps.parse-payload.outputs.deploy == 'true'
+        uses: ./.github/actions/get-github-app-info
+        with:
+          app-slug: ${{ steps.generate-deploy-token.outputs.app-slug }}
+
       - name: Build docs
         uses: ./.github/actions/build-docs
         with:
@@ -144,24 +168,10 @@ jobs:
               && (contains(github.ref, 'refs/tags/')
                 && 'latest' || 'dev')
               || '' }}
-
-      - name: Generate PR vaccel-bot token
-        id: generate-pr-token
-        if: steps.parse-payload.outputs.deploy == 'true'
-        uses: actions/create-github-app-token@v3
-        with:
-          client-id: ${{ vars.VACCEL_BOT_CLIENT_ID }}
-          private-key: ${{ secrets.VACCEL_BOT_PRIVATE_KEY }}
-          repositories: ${{ steps.parse-repos.outputs.repo-name }}
-          permission-contents: write
-          permission-pull-requests: write
-
-      - name: Get vaccel-bot info
-        id: get-bot-info
-        if: steps.parse-payload.outputs.deploy == 'true'
-        uses: ./.github/actions/get-github-app-info
-        with:
-          app-slug: ${{ steps.generate-pr-token.outputs.app-slug }}
+          token: >-
+            ${{ steps.generate-deploy-token.outputs.token || github.token }}
+          committer-name: ${{ steps.get-bot-info.outputs.user-login }}
+          committer-email: ${{ steps.get-bot-info.outputs.user-email }}
 
       - name: Create pull request
         id: create-pr
@@ -175,7 +185,7 @@ jobs:
           BOT_NAME: ${{ steps.get-bot-info.outputs.user-login }}
           BOT_EMAIL: ${{ steps.get-bot-info.outputs.user-email }}
         with:
-          token: ${{ steps.generate-pr-token.outputs.token }}
+          token: ${{ steps.generate-deploy-token.outputs.token }}
           commit-message: |
             chore(${{ env.SM_NAME }}): Update submodule revision
 
