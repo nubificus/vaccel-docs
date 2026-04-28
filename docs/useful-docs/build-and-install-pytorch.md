@@ -14,7 +14,7 @@ required dependencies are already installed.
 Clone the PyTorch repo, adjusting `TORCH_VERSION` to the desired version:
 
 ```sh
-TORCH_VERSION=2.6.0
+TORCH_VERSION=v2.7.1
 git clone https://github.com/pytorch/pytorch --depth 1 --recursive \
     -b "${TORCH_VERSION}"
 cd pytorch
@@ -39,20 +39,20 @@ cmake --install build --prefix=/usr/local
 
 ## [Alternative] Install pre-built PyTorch C++ API files (LibTorch)
 
-PyTorch provides pre-built binaries for LibTorch. Ie. for version 2.6.0:
+PyTorch provides pre-built binaries for LibTorch. Ie. for version 2.7.1:
 
 Download and extract CPU-only binaries:
 
 ```sh
-wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.6.0%2Bcpu.zip
-unzip libtorch-cxx11-abi-shared-with-deps-2.6.0+cpu.zip
+wget https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.7.1%2Bcpu.zip
+unzip libtorch-cxx11-abi-shared-with-deps-2.7.1+cpu.zip
 ```
 
-or download and extract binaries with CUDA support (here for CUDA 11.8):
+or download and extract binaries with CUDA support (here for CUDA 12.6):
 
 ```sh
-wget https://download.pytorch.org/libtorch/cu118/libtorch-cxx11-abi-shared-with-deps-2.6.0%2Bcu118.zip
-unzip libtorch-cxx11-abi-shared-with-deps-2.6.0+cu118.zip
+wget https://download.pytorch.org/libtorch/cu126/libtorch-cxx11-abi-shared-with-deps-2.7.1%2Bcu126.zip
+unzip libtorch-cxx11-abi-shared-with-deps-2.7.1+cu126.zip
 ```
 
 and move files to the desired installation directory:
