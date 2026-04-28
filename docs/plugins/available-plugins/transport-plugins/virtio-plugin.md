@@ -39,6 +39,9 @@ implementation of the virtio-accel backend.
 - [Exec](../../../api/api-reference/operations.md#exec)
 - [Exec with resource](../../../api/api-reference/operations.md#exec-with-resource)
 
+- [Torch model load](../../../api/api-reference/operations.md#torch-model-load)
+- [Torch model run](../../../api/api-reference/operations.md#torch-model-run)
+
 - [MinMax](../../../api/api-reference/operations.md#minmax)
 - [Generic operation](../../../api/api-reference/operations.md#generic-operation)
 - [Debug operation](../../../api/api-reference/operations.md#debug-operation)
