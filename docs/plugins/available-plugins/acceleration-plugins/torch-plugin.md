@@ -121,97 +121,103 @@ classification with a ResNet model from `https://s3.nbfc.io/torch/resnet18.pt`
 with:
 
 ```console
-$ classify /usr/local/share/vaccel/images/example.jpg 1 \
-      https://s3.nbfc.io/torch/resnet18.pt
-2025.04.11-15:46:20.07 - <debug> Initializing vAccel
-2025.04.11-15:46:20.07 - <info> vAccel 0.6.1-194-19056528
-2025.04.11-15:46:20.07 - <debug> Config:
-2025.04.11-15:46:20.07 - <debug>   plugins = libvaccel-torch.so
-2025.04.11-15:46:20.07 - <debug>   log_level = debug
-2025.04.11-15:46:20.07 - <debug>   log_file = (null)
-2025.04.11-15:46:20.07 - <debug>   profiling_enabled = false
-2025.04.11-15:46:20.07 - <debug>   version_ignore = false
-2025.04.11-15:46:20.07 - <debug> Created top-level rundir: /run/user/1002/vaccel/w8BHSP
-2025.04.11-15:46:20.53 - <info> Registered plugin torch 0.1.0-25-ab85fa03
-2025.04.11-15:46:20.53 - <debug> Registered op torch_jitload_forward from plugin torch
-2025.04.11-15:46:20.53 - <debug> Registered op torch_sgemm from plugin torch
-2025.04.11-15:46:20.53 - <debug> Registered op image_classify from plugin torch
-2025.04.11-15:46:20.53 - <debug> Loaded plugin torch from libvaccel-torch.so
-2025.04.11-15:46:20.53 - <debug> New rundir for session 1: /run/user/1002/vaccel/w8BHSP/session.1
-2025.04.11-15:46:20.53 - <debug> Initialized session 1
+$ VACCEL_PLUGINS=libvaccel-torch.so VACCEL_TORCH_LABELS=/usr/local/share/vaccel/labels/imagenet.txt VACCEL_LOG_LEVEL=4 classify /usr/local/share/vaccel/images/example.jpg 1 https://s3.nbfc.io/torch/resnet18.pt
+2026.04.29-00:55:13.54 - <debug> Initializing vAccel
+2026.04.29-00:55:13.54 - <info> vAccel 0.7.1-93-ebc23b1f
+2026.04.29-00:55:13.54 - <debug> Config:
+2026.04.29-00:55:13.54 - <debug>   plugins = libvaccel-torch.so
+2026.04.29-00:55:13.54 - <debug>   log_level = debug
+2026.04.29-00:55:13.54 - <debug>   log_file = (null)
+2026.04.29-00:55:13.54 - <debug>   profiling_enabled = false
+2026.04.29-00:55:13.54 - <debug>   version_ignore = false
+2026.04.29-00:55:13.54 - <debug> Created top-level rundir: /run/user/0/vaccel/VTkz2N
+2026.04.29-00:55:14.00 - <info> Registered plugin torch 0.2.1-27-abc7d840
+2026.04.29-00:55:14.00 - <debug> Registered op torch_model_load from plugin torch
+2026.04.29-00:55:14.00 - <debug> Registered op torch_model_run from plugin torch
+2026.04.29-00:55:14.00 - <debug> Registered op torch_sgemm from plugin torch
+2026.04.29-00:55:14.00 - <debug> Registered op image_classify from plugin torch
+2026.04.29-00:55:14.00 - <debug> Loaded plugin torch from libvaccel-torch.so
+2026.04.29-00:55:14.00 - <debug> New rundir for session 1: /run/user/0/vaccel/VTkz2N/session.1
+2026.04.29-00:55:14.00 - <debug> Initialized session 1 with plugin torch
 Initialized session with id: 1
-2025.04.11-15:46:20.53 - <debug> Initialized resource 1
-2025.04.11-15:46:20.53 - <debug> New rundir for resource 1: /run/user/1002/vaccel/w8BHSP/resource.1
-2025.04.11-15:46:20.53 - <debug> Downloading https://s3.nbfc.io/torch/resnet18.pt
-...
-2025.04.11-15:48:41.53 - <debug> Download completed successfully
-2025.04.11-15:48:41.53 - <debug> session:1 Registered resource 1
-2025.04.11-15:48:41.53 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.11-15:48:41.53 - <debug> Returning func from hint plugin torch
-2025.04.11-15:48:41.53 - <debug> Found implementation in torch plugin
-2025.04.11-15:48:41.73 - <debug> [torch] Model loaded successfully from: /run/user/1002/vaccel/w8BHSP/resource.1/resnet18.pt
-2025.04.11-15:48:41.89 - <debug> [torch] Prediction: banana
+2026.04.29-00:55:14.00 - <debug> Initialized resource 1
+2026.04.29-00:55:14.00 - <debug> New rundir for resource 1: /run/user/0/vaccel/VTkz2N/resource.1
+2026.04.29-00:55:14.00 - <debug> Downloading https://s3.nbfc.io/torch/resnet18.pt
+2026.04.29-00:55:15.10 - <debug> Downloaded: 44.7 MB of 44.7 MB (100.0%) | Speed: 40.65 MB/sec
+2026.04.29-00:55:15.10 - <debug> Download completed successfully
+2026.04.29-00:55:15.10 - <debug> session:1 Registered resource 1
+2026.04.29-00:55:15.10 - <debug> session:1 Looking for func implementing op image_classify
+2026.04.29-00:55:15.10 - <debug> Returning func for op image_classify from plugin torch
+2026.04.29-00:55:15.10 - <warn> [torch] Registered model is not loaded; loading...
+2026.04.29-00:55:15.10 - <debug> [torch] Running in CPU mode
+2026.04.29-00:55:15.10 - <debug> [torch] Loading model from /run/user/0/vaccel/VTkz2N/resource.1/resnet18.pt
+2026.04.29-00:55:15.20 - <warn> [torch] cudaMemGetInfo failed: CUDA driver version is insufficient for CUDA runtime version
+2026.04.29-00:55:15.20 - <debug> [torch] Loaded registered model
+2026.04.29-00:55:15.22 - <debug> [torch] Disabling graph executor optimization
+2026.04.29-00:55:15.30 - <debug> [torch] Prediction: banana 87.34%
 classification tags: banana
 classification imagename: PLACEHOLDER
-2025.04.11-15:48:41.91 - <debug> session:1 Unregistered resource 1
-2025.04.11-15:48:41.91 - <debug> Removing file /run/user/1002/vaccel/w8BHSP/resource.1/resnet18.pt
-2025.04.11-15:48:41.92 - <debug> Released resource 1
-2025.04.11-15:48:41.92 - <debug> Released session 1
-2025.04.11-15:48:42.06 - <debug> Cleaning up vAccel
-2025.04.11-15:48:42.06 - <debug> Cleaning up sessions
-2025.04.11-15:48:42.06 - <debug> Cleaning up resources
-2025.04.11-15:48:42.06 - <debug> Cleaning up plugins
-2025.04.11-15:48:42.06 - <debug> Unregistered plugin torch
+2026.04.29-00:55:15.31 - <debug> session:1 Unregistered resource 1
+2026.04.29-00:55:15.31 - <debug> Removing file /run/user/0/vaccel/VTkz2N/resource.1/resnet18.pt
+2026.04.29-00:55:15.32 - <debug> Released resource 1
+2026.04.29-00:55:15.32 - <debug> Released session 1
+2026.04.29-00:55:15.33 - <debug> Cleaning up vAccel
+2026.04.29-00:55:15.33 - <debug> Cleaning up sessions
+2026.04.29-00:55:15.33 - <debug> Cleaning up resources
+2026.04.29-00:55:15.33 - <debug> Cleaning up plugins
+2026.04.29-00:55:15.33 - <debug> Unregistered plugin torch
 ```
 
 To run a torch inference example with the generic `jitload_forward` operation:
 
 ```console
-$ torch_inference /usr/local/share/vaccel/images/example.jpg \
-      https://s3.nbfc.io/torch/resnet18.pt \
-      "${VACCEL_TORCH_LABELS}"
-2025.04.11-15:59:42.95 - <debug> Initializing vAccel
-2025.04.11-15:59:42.95 - <info> vAccel 0.6.1-194-19056528
-2025.04.11-15:59:42.95 - <debug> Config:
-2025.04.11-15:59:42.95 - <debug>   plugins = libvaccel-torch.so
-2025.04.11-15:59:42.95 - <debug>   log_level = debug
-2025.04.11-15:59:42.95 - <debug>   log_file = (null)
-2025.04.11-15:59:42.95 - <debug>   profiling_enabled = false
-2025.04.11-15:59:42.95 - <debug>   version_ignore = false
-2025.04.11-15:59:42.95 - <debug> Created top-level rundir: /run/user/1002/vaccel/fEe2aO
-2025.04.11-15:59:43.41 - <info> Registered plugin torch 0.1.0-25-ab85fa03
-2025.04.11-15:59:43.41 - <debug> Registered op torch_jitload_forward from plugin torch
-2025.04.11-15:59:43.41 - <debug> Registered op torch_sgemm from plugin torch
-2025.04.11-15:59:43.41 - <debug> Registered op image_classify from plugin torch
-2025.04.11-15:59:43.41 - <debug> Loaded plugin torch from libvaccel-torch.so
-2025.04.11-15:59:43.41 - <debug> Initialized resource 1
+$ VACCEL_PLUGINS=libvaccel-torch.so VACCEL_TORCH_LABELS=/usr/local/share/vaccel/labels/imagenet.txt VACCEL_LOG_LEVEL=4 torch_inference /usr/local/share/vaccel/images/example.jpg https://s3.nbfc.io/torch/resnet18.pt "$VACCEL_TORCH_LABELS"
+2026.04.29-00:55:15.45 - <debug> Initializing vAccel
+2026.04.29-00:55:15.45 - <info> vAccel 0.7.1-93-ebc23b1f
+2026.04.29-00:55:15.45 - <debug> Config:
+2026.04.29-00:55:15.45 - <debug>   plugins = libvaccel-torch.so
+2026.04.29-00:55:15.45 - <debug>   log_level = debug
+2026.04.29-00:55:15.45 - <debug>   log_file = (null)
+2026.04.29-00:55:15.45 - <debug>   profiling_enabled = false
+2026.04.29-00:55:15.45 - <debug>   version_ignore = false
+2026.04.29-00:55:15.45 - <debug> Created top-level rundir: /run/user/0/vaccel/v125eL
+2026.04.29-00:55:15.92 - <info> Registered plugin torch 0.2.1-27-abc7d840
+2026.04.29-00:55:15.92 - <debug> Registered op torch_model_load from plugin torch
+2026.04.29-00:55:15.92 - <debug> Registered op torch_model_run from plugin torch
+2026.04.29-00:55:15.92 - <debug> Registered op torch_sgemm from plugin torch
+2026.04.29-00:55:15.92 - <debug> Registered op image_classify from plugin torch
+2026.04.29-00:55:15.92 - <debug> Loaded plugin torch from libvaccel-torch.so
+2026.04.29-00:55:15.92 - <debug> Initialized resource 1
 Initialized model resource 1
-2025.04.11-15:59:43.41 - <debug> New rundir for session 1: /run/user/1002/vaccel/fEe2aO/session.1
-2025.04.11-15:59:43.41 - <debug> Initialized session 1
+2026.04.29-00:55:15.92 - <debug> New rundir for session 1: /run/user/0/vaccel/v125eL/session.1
+2026.04.29-00:55:15.92 - <debug> Initialized session 1 with plugin torch
 Initialized vAccel session 1
-2025.04.11-15:59:43.41 - <debug> New rundir for resource 1: /run/user/1002/vaccel/fEe2aO/resource.1
-2025.04.11-15:59:43.41 - <debug> Downloading https://s3.nbfc.io/torch/resnet18.pt
-...
-2025.04.11-16:05:21.23 - <debug> Download completed successfully
-2025.04.11-16:05:21.23 - <debug> session:1 Registered resource 1
-2025.04.11-16:05:21.27 - <debug> session:1 Looking for plugin implementing torch_jitload_forward operation
-2025.04.11-16:05:21.27 - <debug> Returning func from hint plugin torch
-2025.04.11-16:05:21.27 - <debug> Found implementation in torch plugin
-2025.04.11-16:05:21.27 - <debug> [torch] session:1 Jitload & Forward Process
-2025.04.11-16:05:21.27 - <debug> [torch] Model: /run/user/1002/vaccel/1nB5aC/resource.1/resnet18.pt
-2025.04.11-16:05:21.27 - <debug> [torch] CUDA not available, running in CPU mode
+2026.04.29-00:55:15.92 - <debug> New rundir for resource 1: /run/user/0/vaccel/v125eL/resource.1
+2026.04.29-00:55:15.92 - <debug> Downloading https://s3.nbfc.io/torch/resnet18.pt
+2026.04.29-00:55:16.96 - <debug> Downloaded: 44.7 MB of 44.7 MB (100.0%) | Speed: 42.65 MB/sec
+2026.04.29-00:55:16.96 - <debug> Download completed successfully
+2026.04.29-00:55:16.97 - <debug> session:1 Registered resource 1
+2026.04.29-00:55:16.97 - <debug> session:1 Looking for func implementing op torch_model_load
+2026.04.29-00:55:16.97 - <debug> Returning func for op torch_model_load from plugin torch
+2026.04.29-00:55:16.97 - <debug> [torch] Running in CPU mode
+2026.04.29-00:55:16.97 - <debug> [torch] Loading model from /run/user/0/vaccel/v125eL/resource.1/resnet18.pt
+2026.04.29-00:55:17.06 - <warn> [torch] cudaMemGetInfo failed: CUDA driver version is insufficient for CUDA runtime version
+2026.04.29-00:55:17.08 - <debug> session:1 Looking for func implementing op torch_model_run
+2026.04.29-00:55:17.08 - <debug> Returning func for op torch_model_run from plugin torch
+2026.04.29-00:55:17.08 - <debug> [torch] session:1 Jitload & Forward Process
+2026.04.29-00:55:17.08 - <debug> [torch] Model: /run/user/0/vaccel/v125eL/resource.1/resnet18.pt
+2026.04.29-00:55:17.08 - <debug> [torch] Disabling graph executor optimization
 Success!
 Result Tensor :
-Output tensor => type:7 nr_dims:2
-size: 4000 B
+Output tensor => type:7 nr_dims:2 size:4000B
 Prediction: banana
-2025.04.11-16:05:21.50 - <debug> session:1 Unregistered resource 1
-2025.04.11-16:05:21.50 - <debug> Released session 1
-2025.04.11-16:05:21.50 - <debug> Removing file /run/user/1002/vaccel/1nB5aC/resource.1/resnet18.pt
-2025.04.11-16:05:21.51 - <debug> Released resource 1
-2025.04.11-16:05:21.61 - <debug> Cleaning up vAccel
-2025.04.11-16:05:21.61 - <debug> Cleaning up sessions
-2025.04.11-16:05:21.61 - <debug> Cleaning up resources
-2025.04.11-16:05:21.61 - <debug> Cleaning up plugins
-2025.04.11-16:05:21.61 - <debug> Unregistered plugin torch
+2026.04.29-00:55:17.23 - <debug> session:1 Unregistered resource 1
+2026.04.29-00:55:17.23 - <debug> Released session 1
+2026.04.29-00:55:17.23 - <debug> Removing file /run/user/0/vaccel/v125eL/resource.1/resnet18.pt
+2026.04.29-00:55:17.24 - <debug> Released resource 1
+2026.04.29-00:55:17.26 - <debug> Cleaning up vAccel
+2026.04.29-00:55:17.26 - <debug> Cleaning up sessions
+2026.04.29-00:55:17.26 - <debug> Cleaning up resources
+2026.04.29-00:55:17.26 - <debug> Cleaning up plugins
+2026.04.29-00:55:17.26 - <debug> Unregistered plugin torch
 ```

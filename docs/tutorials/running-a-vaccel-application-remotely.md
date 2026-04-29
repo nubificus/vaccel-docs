@@ -75,47 +75,11 @@ acceleration plugin for demonstration purposes.
 To start a `vaccel-rpc-agent` with the vAccel `NoOp` plugin use:
 
 ```console
-$ VACCEL_BOOTSTRAP_ENABLED=0 vaccel-rpc-agent \
-      -a "${VACCEL_RPC_ADDRESS}" \
-      --vaccel-config "plugins=libvaccel-noop.so,log_level=4"
-2025.04.07-17:19:53.56 - <debug> Initializing vAccel
-2025.04.07-17:19:53.56 - <info> vAccel 0.6.1-194-19056528
-2025.04.07-17:19:53.56 - <debug> Config:
-2025.04.07-17:19:53.56 - <debug>   plugins = libvaccel-noop.so
-2025.04.07-17:19:53.56 - <debug>   log_level = debug
-2025.04.07-17:19:53.56 - <debug>   log_file = (null)
-2025.04.07-17:19:53.56 - <debug>   profiling_enabled = false
-2025.04.07-17:19:53.56 - <debug>   version_ignore = false
-2025.04.07-17:19:53.56 - <debug> Created top-level rundir: /run/user/1002/vaccel/YvIPeM
-2025.04.07-17:19:53.56 - <info> Registered plugin noop 0.6.1-194-19056528
-2025.04.07-17:19:53.56 - <debug> Registered op noop from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op blas_sgemm from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op image_classify from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op image_detect from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op image_segment from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op image_pose from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op image_depth from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op exec from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tf_session_load from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tf_session_run from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tf_session_delete from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op minmax from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op fpga_arraycopy from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op fpga_vectoradd from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op fpga_parallel from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op fpga_mmult from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op exec_with_resource from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op torch_jitload_forward from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op torch_sgemm from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op opencv from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tflite_session_load from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tflite_session_run from plugin noop
-2025.04.07-17:19:53.56 - <debug> Registered op tflite_session_delete from plugin noop
-2025.04.07-17:19:53.56 - <debug> Loaded plugin noop from libvaccel-noop.so
-[2025-04-07T17:19:53Z INFO  ttrpc::sync::server] server listen started
-[2025-04-07T17:19:53Z INFO  ttrpc::sync::server] server started
-[2025-04-07T17:19:53Z INFO  vaccel_rpc_agent] vAccel RPC agent started
-[2025-04-07T17:19:53Z INFO  vaccel_rpc_agent] Listening on 'tcp://0.0.0.0:65500', press Ctrl+C to exit
+$ VACCEL_BOOTSTRAP_ENABLED=0 vaccel-rpc-agent -a "tcp://127.0.0.1:65500" --vaccel-config "plugins=libvaccel-noop.so,log_level=4"
+[2026-04-29T00:55:11Z INFO  ttrpc::sync::server] server listen started
+[2026-04-29T00:55:11Z INFO  ttrpc::sync::server] server started
+[2026-04-29T00:55:11Z INFO  vaccel_rpc_agent] vAccel RPC agent started
+[2026-04-29T00:55:11Z INFO  vaccel_rpc_agent] Listening on 'tcp://127.0.0.1:65500', press Ctrl+C to exit
 ```
 
 ## Running the application on the remote host
@@ -148,80 +112,67 @@ export VACCEL_LOG_LEVEL=4
 Finally, you can run an image classification example with:
 
 ```console
-$ classify /usr/local/share/vaccel/images/example.jpg 1
-2025.04.07-17:23:51.51 - <debug> Initializing vAccel
-2025.04.07-17:23:51.51 - <info> vAccel 0.6.1-194-19056528
-2025.04.07-17:23:51.51 - <debug> Config:
-2025.04.07-17:23:51.51 - <debug>   plugins = /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
-2025.04.07-17:23:51.51 - <debug>   log_level = debug
-2025.04.07-17:23:51.51 - <debug>   log_file = (null)
-2025.04.07-17:23:51.51 - <debug>   profiling_enabled = false
-2025.04.07-17:23:51.51 - <debug>   version_ignore = false
-2025.04.07-17:23:51.51 - <debug> Created top-level rundir: /run/user/1002/vaccel/2Qc6ZB
-2025.04.07-17:23:51.51 - <info> Registered plugin rpc 0.1.0-36-bbffdae6
-2025.04.07-17:23:51.51 - <debug> rpc is a VirtIO module
-2025.04.07-17:23:51.51 - <debug> Registered op blas_sgemm from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op image_classify from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op image_detect from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op image_segment from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op image_depth from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op image_pose from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tflite_session_load from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tflite_session_delete from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tflite_session_run from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op minmax from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op fpga_arraycopy from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op fpga_mmult from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op fpga_vectoradd from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op fpga_parallel from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op exec from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op exec_with_resource from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op torch_jitload_forward from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op opencv from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tf_session_load from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tf_session_delete from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Registered op tf_session_run from plugin rpc
-2025.04.07-17:23:51.51 - <debug> Loaded plugin rpc from /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
-2025.04.07-17:23:51.51 - <debug> [rpc] Initializing new remote session
-2025.04.07-17:23:51.51 - <debug> [rpc] Initialized remote session 1
-2025.04.07-17:23:51.51 - <debug> New rundir for session 1: /run/user/1002/vaccel/2Qc6ZB/session.1
-2025.04.07-17:23:51.51 - <debug> Initialized session 1 with remote (id: 1)
+$ VACCEL_PLUGINS=/usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so VACCEL_LOG_LEVEL=4 classify /usr/local/share/vaccel/images/example.jpg 1
+2026.04.29-00:55:11.38 - <debug> Initializing vAccel
+2026.04.29-00:55:11.38 - <info> vAccel 0.7.1-93-ebc23b1f
+2026.04.29-00:55:11.38 - <debug> Config:
+2026.04.29-00:55:11.38 - <debug>   plugins = /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2026.04.29-00:55:11.38 - <debug>   log_level = debug
+2026.04.29-00:55:11.38 - <debug>   log_file = (null)
+2026.04.29-00:55:11.38 - <debug>   profiling_enabled = false
+2026.04.29-00:55:11.38 - <debug>   version_ignore = false
+2026.04.29-00:55:11.38 - <debug> Created top-level rundir: /run/user/0/vaccel/Z7kdjj
+2026.04.29-00:55:11.39 - <info> Registered plugin rpc 0.2.1-21-e08235e7
+2026.04.29-00:55:11.39 - <debug> rpc is a VirtIO module
+2026.04.29-00:55:11.39 - <debug> Registered op exec from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op exec_with_resource from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op image_classify from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op image_detect from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op image_segment from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op image_depth from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op image_pose from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tflite_model_load from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tflite_model_unload from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tflite_model_run from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op torch_model_load from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op torch_model_run from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op blas_sgemm from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op fpga_arraycopy from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op fpga_mmult from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op fpga_parallel from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op fpga_vectoradd from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op minmax from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op opencv from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tf_model_load from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tf_model_unload from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Registered op tf_model_run from plugin rpc
+2026.04.29-00:55:11.39 - <debug> Loaded plugin rpc from /usr/local/lib/x86_64-linux-gnu/libvaccel-rpc.so
+2026.04.29-00:55:11.39 - <debug> [rpc] Initializing new remote session
+2026.04.29-00:55:11.39 - <debug> [rpc] Initialized remote session 1
+2026.04.29-00:55:11.39 - <debug> New rundir for session 1: /run/user/0/vaccel/Z7kdjj/session.1
+2026.04.29-00:55:11.39 - <debug> Initialized session 1 with plugin rpc (remote id: 1)
 Initialized session with id: 1
-2025.04.07-17:23:51.51 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.07-17:23:51.51 - <debug> Returning func from hint plugin rpc
-2025.04.07-17:23:51.51 - <debug> Found implementation in rpc plugin
+2026.04.29-00:55:11.39 - <debug> session:1 Looking for func implementing op image_classify
+2026.04.29-00:55:11.39 - <debug> Returning func for op image_classify from plugin rpc
+2026.04.29-00:55:11.39 - <debug> [rpc] session:1 Executing op image_classify
 classification tags: This is a dummy classification tag!
 classification imagename: This is a dummy imgname!
-2025.04.07-17:23:51.55 - <debug> [rpc] Releasing remote session 1
-2025.04.07-17:23:51.64 - <debug> Released session 1
-2025.04.07-17:23:51.64 - <debug> Cleaning up vAccel
-2025.04.07-17:23:51.64 - <debug> Cleaning up sessions
-2025.04.07-17:23:51.64 - <debug> Cleaning up resources
-2025.04.07-17:23:51.64 - <debug> Cleaning up plugins
-2025.04.07-17:23:51.64 - <debug> Unregistered plugin rpc
+2026.04.29-00:55:11.43 - <debug> [rpc] Releasing remote session 1
+2026.04.29-00:55:11.51 - <debug> Released session 1
+2026.04.29-00:55:11.51 - <debug> Cleaning up vAccel
+2026.04.29-00:55:11.51 - <debug> Cleaning up sessions
+2026.04.29-00:55:11.51 - <debug> Cleaning up resources
+2026.04.29-00:55:11.51 - <debug> Cleaning up plugins
+2026.04.29-00:55:11.51 - <debug> Unregistered plugin rpc
 ```
 
 In the host terminal, where the vAccel RPC agent is running, you should also see
 the corresponding host vAccel output:
 
 ```console
-2025.04.07-17:23:51.51 - <debug> New rundir for session 1: /run/user/1002/vaccel/YvIPeM/session.1
-2025.04.07-17:23:51.51 - <debug> Initialized session 1
-[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::session] Created session 1
-[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::ops::genop] Genop session 1
-2025.04.07-17:23:51.51 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.07-17:23:51.51 - <debug> Returning func from hint plugin noop
-2025.04.07-17:23:51.51 - <debug> Found implementation in noop plugin
-2025.04.07-17:23:51.51 - <debug> [noop] Calling Image classification for session 1
-2025.04.07-17:23:51.51 - <debug> [noop] Dumping arguments for Image classification:
-2025.04.07-17:23:51.51 - <debug> [noop] model: (null)
-2025.04.07-17:23:51.51 - <debug> [noop] len_img: 79281
-2025.04.07-17:23:51.51 - <debug> [noop] len_out_text: 512
-2025.04.07-17:23:51.51 - <debug> [noop] len_out_imgname: 512
-2025.04.07-17:23:51.51 - <debug> [noop] will return a dummy result
-2025.04.07-17:23:51.51 - <debug> [noop] will return a dummy result
-2025.04.07-17:23:51.60 - <debug> Released session 1
-[2025-04-07T17:23:51Z INFO  vaccel_rpc_agent::session] Destroyed session 1
+[2026-04-29T00:55:11Z INFO  vaccel_rpc_agent::session] Created session 1
+[2026-04-29T00:55:11Z INFO  vaccel_rpc_agent::ops::genop] session:1 Genop
+[2026-04-29T00:55:11Z INFO  vaccel_rpc_agent::session] Destroyed session 1
 ```
 
 If you compare the application output with the
