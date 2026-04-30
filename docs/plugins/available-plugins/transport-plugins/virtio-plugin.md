@@ -342,63 +342,63 @@ $ docker run --rm --device=/dev/kvm -it \
       harbor.nbfc.io/nubificus/qemu-vaccel \
       -r rootfs.img --drive-cache -k bzImage* \
       -M pc,accel=kvm --vcpus 2 -m 2048 \
-      -c "classify /usr/local/share/vaccel/images/example.jpg"
-2025.04.12-20:01:09.85 - <debug> Initializing vAccel
-2025.04.12-20:01:09.85 - <info> vAccel 0.6.1-194-19056528
-2025.04.12-20:01:09.85 - <debug> Config:
-2025.04.12-20:01:09.85 - <debug>   plugins = libvaccel-noop.so
-2025.04.12-20:01:09.85 - <debug>   log_level = debug
-2025.04.12-20:01:09.85 - <debug>   log_file = (null)
-2025.04.12-20:01:09.85 - <debug>   profiling_enabled = false
-2025.04.12-20:01:09.85 - <debug>   version_ignore = false
-2025.04.12-20:01:09.85 - <debug> Created top-level rundir: /run/user/0/vaccel/u05Rjf
-2025.04.12-20:01:09.85 - <info> Registered plugin noop 0.6.1-194-19056528
-2025.04.12-20:01:09.85 - <debug> Registered op noop from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op blas_sgemm from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_classify from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_detect from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_segment from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_pose from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_depth from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op exec from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_load from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_run from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_delete from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op minmax from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_arraycopy from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_vectoradd from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_parallel from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_mmult from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op exec_with_resource from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op torch_jitload_forward from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op torch_sgemm from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op opencv from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_load from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_run from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_delete from plugin noop
-2025.04.12-20:01:09.85 - <debug> Loaded plugin noop from libvaccel-noop.so
-2025.04.12-20:01:16.73 - <debug> New rundir for session 1: /run/user/0/vaccel/u05Rjf/session.1
-2025.04.12-20:01:16.73 - <debug> Initialized session 1
-2025.04.12-20:01:16.73 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.12-20:01:16.73 - <debug> Returning func from hint plugin noop
-2025.04.12-20:01:16.73 - <debug> Found implementation in noop plugin
-2025.04.12-20:01:16.73 - <debug> [noop] Calling Image classification for session 1
-2025.04.12-20:01:16.73 - <debug> [noop] Dumping arguments for Image classification:
-2025.04.12-20:01:16.73 - <debug> [noop] model: (null)
-2025.04.12-20:01:16.73 - <debug> [noop] len_img: 79281
-2025.04.12-20:01:16.73 - <debug> [noop] len_out_text: 512
-2025.04.12-20:01:16.73 - <debug> [noop] len_out_imgname: 512
-2025.04.12-20:01:16.73 - <debug> [noop] will return a dummy result
-2025.04.12-20:01:16.73 - <debug> [noop] will return a dummy result
-2025.04.12-20:01:16.73 - <debug> Released session 1
+      -c "classify /usr/share/vaccel/images/example.jpg"
+2026.04.30-13:00:51.21 - <debug> Initializing vAccel
+2026.04.30-13:00:51.21 - <info> vAccel 0.7.1-92-995d8f4c
+2026.04.30-13:00:51.21 - <debug> Config:
+2026.04.30-13:00:51.21 - <debug>   plugins = libvaccel-noop.so
+2026.04.30-13:00:51.21 - <debug>   log_level = debug
+2026.04.30-13:00:51.21 - <debug>   log_file = (null)
+2026.04.30-13:00:51.21 - <debug>   profiling_enabled = false
+2026.04.30-13:00:51.21 - <debug>   version_ignore = false
+2026.04.30-13:00:51.21 - <debug> Created top-level rundir: /run/user/0/vaccel/dx3GKu
+2026.04.30-13:00:51.21 - <info> Registered plugin noop 0.7.1-92-995d8f4c
+2026.04.30-13:00:51.21 - <debug> Registered op noop from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op exec from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op exec_with_resource from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_classify from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_detect from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_segment from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_pose from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_depth from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_unload from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_unload from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_sgemm from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op blas_sgemm from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_arraycopy from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_vectoradd from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_parallel from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_mmult from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op minmax from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op opencv from plugin noop
+2026.04.30-13:00:51.21 - <debug> Loaded plugin noop from libvaccel-noop.so
+2026.04.30-13:00:57.90 - <debug> New rundir for session 1: /run/user/0/vaccel/dx3GKu/session.1
+2026.04.30-13:00:57.90 - <debug> Initialized session 1 with plugin noop
+2026.04.30-13:00:57.90 - <debug> session:1 Looking for func implementing op image_classify
+2026.04.30-13:00:57.90 - <debug> Returning func for op image_classify from plugin noop
+2026.04.30-13:00:57.90 - <debug> [noop] Calling Image classification for session 1
+2026.04.30-13:00:57.90 - <debug> [noop] Dumping arguments for Image classification:
+2026.04.30-13:00:57.90 - <debug> [noop] model: (null)
+2026.04.30-13:00:57.90 - <debug> [noop] len_img: 79281
+2026.04.30-13:00:57.90 - <debug> [noop] len_out_text: 512
+2026.04.30-13:00:57.90 - <debug> [noop] len_out_imgname: 512
+2026.04.30-13:00:57.90 - <debug> [noop] will return a dummy result
+2026.04.30-13:00:57.90 - <debug> [noop] will return a dummy result
+2026.04.30-13:00:57.90 - <debug> Released session 1
 Initialized session with id: 1
 classification tags: This is a dummy classification tag!
 classification imagename: This is a dummy imgname!
-2025.04.12-20:01:17.06 - <debug> Cleaning up vAccel
-2025.04.12-20:01:17.06 - <debug> Cleaning up sessions
-2025.04.12-20:01:17.06 - <debug> Cleaning up resources
-2025.04.12-20:01:17.06 - <debug> Cleaning up plugins
-2025.04.12-20:01:17.06 - <debug> Unregistered plugin noop
+2026.04.30-13:00:58.32 - <debug> Cleaning up vAccel
+2026.04.30-13:00:58.32 - <debug> Cleaning up sessions
+2026.04.30-13:00:58.32 - <debug> Cleaning up resources
+2026.04.30-13:00:58.32 - <debug> Cleaning up plugins
+2026.04.30-13:00:58.32 - <debug> Unregistered plugin noop
 ```
 
 ///
@@ -413,61 +413,61 @@ $ docker run --rm --device=/dev/kvm -it \
       -r rootfs.img --drive-cache -k Image* \
       --cmdline-append "console=ttyAMA0,115200" \
       -M virt --no-pci --vcpus 2 -m 2048 \
-      -c "classify /usr/local/share/vaccel/images/example.jpg"
-2025.04.12-20:01:09.85 - <debug> Initializing vAccel
-2025.04.12-20:01:09.85 - <info> vAccel 0.6.1-194-19056528
-2025.04.12-20:01:09.85 - <debug> Config:
-2025.04.12-20:01:09.85 - <debug>   plugins = libvaccel-noop.so
-2025.04.12-20:01:09.85 - <debug>   log_level = debug
-2025.04.12-20:01:09.85 - <debug>   log_file = (null)
-2025.04.12-20:01:09.85 - <debug>   profiling_enabled = false
-2025.04.12-20:01:09.85 - <debug>   version_ignore = false
-2025.04.12-20:01:09.85 - <debug> Created top-level rundir: /run/user/0/vaccel/u05Rjf
-2025.04.12-20:01:09.85 - <info> Registered plugin noop 0.6.1-194-19056528
-2025.04.12-20:01:09.85 - <debug> Registered op noop from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op blas_sgemm from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_classify from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_detect from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_segment from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_pose from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op image_depth from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op exec from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_load from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_run from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tf_session_delete from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op minmax from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_arraycopy from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_vectoradd from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_parallel from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op fpga_mmult from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op exec_with_resource from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op torch_jitload_forward from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op torch_sgemm from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op opencv from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_load from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_run from plugin noop
-2025.04.12-20:01:09.85 - <debug> Registered op tflite_session_delete from plugin noop
-2025.04.12-20:01:09.85 - <debug> Loaded plugin noop from libvaccel-noop.so
-2025.04.12-20:01:16.73 - <debug> New rundir for session 1: /run/user/0/vaccel/u05Rjf/session.1
-2025.04.12-20:01:16.73 - <debug> Initialized session 1
-2025.04.12-20:01:16.73 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.12-20:01:16.73 - <debug> Returning func from hint plugin noop
-2025.04.12-20:01:16.73 - <debug> Found implementation in noop plugin
-2025.04.12-20:01:16.73 - <debug> [noop] Calling Image classification for session 1
-2025.04.12-20:01:16.73 - <debug> [noop] Dumping arguments for Image classification:
-2025.04.12-20:01:16.73 - <debug> [noop] model: (null)
-2025.04.12-20:01:16.73 - <debug> [noop] len_img: 79281
-2025.04.12-20:01:16.73 - <debug> [noop] len_out_text: 512
-2025.04.12-20:01:16.73 - <debug> [noop] len_out_imgname: 512
-2025.04.12-20:01:16.73 - <debug> [noop] will return a dummy result
-2025.04.12-20:01:16.73 - <debug> [noop] will return a dummy result
-2025.04.12-20:01:16.73 - <debug> Released session 1
+      -c "classify /usr/share/vaccel/images/example.jpg"
+2026.04.30-13:00:51.21 - <debug> Initializing vAccel
+2026.04.30-13:00:51.21 - <info> vAccel 0.7.1-92-995d8f4c
+2026.04.30-13:00:51.21 - <debug> Config:
+2026.04.30-13:00:51.21 - <debug>   plugins = libvaccel-noop.so
+2026.04.30-13:00:51.21 - <debug>   log_level = debug
+2026.04.30-13:00:51.21 - <debug>   log_file = (null)
+2026.04.30-13:00:51.21 - <debug>   profiling_enabled = false
+2026.04.30-13:00:51.21 - <debug>   version_ignore = false
+2026.04.30-13:00:51.21 - <debug> Created top-level rundir: /run/user/0/vaccel/dx3GKu
+2026.04.30-13:00:51.21 - <info> Registered plugin noop 0.7.1-92-995d8f4c
+2026.04.30-13:00:51.21 - <debug> Registered op noop from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op exec from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op exec_with_resource from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_classify from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_detect from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_segment from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_pose from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op image_depth from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_unload from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tf_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_unload from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op tflite_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_model_load from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_model_run from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op torch_sgemm from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op blas_sgemm from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_arraycopy from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_vectoradd from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_parallel from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op fpga_mmult from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op minmax from plugin noop
+2026.04.30-13:00:51.21 - <debug> Registered op opencv from plugin noop
+2026.04.30-13:00:51.21 - <debug> Loaded plugin noop from libvaccel-noop.so
+2026.04.30-13:00:57.90 - <debug> New rundir for session 1: /run/user/0/vaccel/dx3GKu/session.1
+2026.04.30-13:00:57.90 - <debug> Initialized session 1 with plugin noop
+2026.04.30-13:00:57.90 - <debug> session:1 Looking for func implementing op image_classify
+2026.04.30-13:00:57.90 - <debug> Returning func for op image_classify from plugin noop
+2026.04.30-13:00:57.90 - <debug> [noop] Calling Image classification for session 1
+2026.04.30-13:00:57.90 - <debug> [noop] Dumping arguments for Image classification:
+2026.04.30-13:00:57.90 - <debug> [noop] model: (null)
+2026.04.30-13:00:57.90 - <debug> [noop] len_img: 79281
+2026.04.30-13:00:57.90 - <debug> [noop] len_out_text: 512
+2026.04.30-13:00:57.90 - <debug> [noop] len_out_imgname: 512
+2026.04.30-13:00:57.90 - <debug> [noop] will return a dummy result
+2026.04.30-13:00:57.90 - <debug> [noop] will return a dummy result
+2026.04.30-13:00:57.90 - <debug> Released session 1
 Initialized session with id: 1
 classification tags: This is a dummy classification tag!
 classification imagename: This is a dummy imgname!
-2025.04.12-20:01:17.06 - <debug> Cleaning up vAccel
-2025.04.12-20:01:17.06 - <debug> Cleaning up sessions
-2025.04.12-20:01:17.06 - <debug> Cleaning up resources
-2025.04.12-20:01:17.06 - <debug> Cleaning up plugins
-2025.04.12-20:01:17.06 - <debug> Unregistered plugin noop
+2026.04.30-13:00:58.32 - <debug> Cleaning up vAccel
+2026.04.30-13:00:58.32 - <debug> Cleaning up sessions
+2026.04.30-13:00:58.32 - <debug> Cleaning up resources
+2026.04.30-13:00:58.32 - <debug> Cleaning up plugins
+2026.04.30-13:00:58.32 - <debug> Unregistered plugin noop
 ```
