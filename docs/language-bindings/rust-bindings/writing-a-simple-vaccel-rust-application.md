@@ -64,7 +64,7 @@ use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use vaccel::*;
+use vaccel::session::Session;
 
 fn main() {
     env_logger::Builder::from_env(Env::default().default_filter_or("debug")).init();
@@ -83,14 +83,14 @@ fn main() {
     }
 
     info!("Creating new vAccel session");
-    let mut sess = match Session::new(0) {
+    let mut sess = match Session::new() {
         Ok(sess) => sess,
         Err(e) => {
             error!("Error creating session: {}", e);
             return;
         }
     };
-    info!("Initialized session {}", sess.id());
+    info!("Initialized session {}", sess.id().unwrap());
 
     info!("Reading image file: {}", image_path);
     let mut file = match File::open(image_path) {
@@ -109,7 +109,7 @@ fn main() {
     info!("Read image data: {} bytes", image_data.len());
 
     info!("Performing image classification");
-    let ret = sess.image_classification(&mut image_data);
+    let ret = sess.image_classification(&image_data);
 
     match ret {
         Ok((first_vec, second_vec)) => {
@@ -124,23 +124,11 @@ fn main() {
             error!("Classification failed: {:?}", e);
         }
     }
-
-    info!("Releasing session {}", sess.id());
-    match sess.release() {
-        Ok(()) => info!("Session released successfully"),
-        Err(e) => error!("Error releasing session: {}", e),
-    }
 }
 ```
 
-<!-- markdownlint-disable code-block-style -->
-
-!!! note
-
-    You can omit `sess.release()` if you don't need custom error handling. The
-    session will be released when the object is dropped.
-
-<!-- markdownlint-restore -->
+The session is released automatically when `sess` is dropped at the end of
+`main()`.
 
 Build it:
 
@@ -148,21 +136,18 @@ Build it:
 $ cargo build
     Updating crates.io index
     Updating git repository `https://github.com/nubificus/vaccel-rust`
-    Updating git repository `https://github.com/nubificus/ttrpc-rust.git`
-   Compiling proc-macro2 v1.0.95
-   Compiling unicode-ident v1.0.18
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
    Compiling autocfg v1.4.0
    Compiling cfg-if v1.0.0
 [snipped]
-   Compiling tokio-vsock v0.4.0
-   Compiling vaccel v0.0.0 (https://github.com/nubificus/vaccel-rust#0af1c664)
-   Compiling protobuf-parse v3.7.2
-   Compiling protobuf-codegen v3.7.2
-   Compiling ttrpc-codegen v0.5.0 (https://github.com/nubificus/ttrpc-rust.git?branch=vaccel-dev#30b79e78)
-   Compiling ttrpc v0.8.3 (https://github.com/nubificus/ttrpc-rust.git?branch=vaccel-dev#30b79e78)
-   Compiling vaccel-rpc-proto v0.0.0 (https://github.com/nubificus/vaccel-rust#0af1c664)
-   Compiling rust-vaccel-classify v0.1.0 (/home/ananos/develop/fresh/playground/rust-vaccel-classify)
-    Finished dev [unoptimized + debuginfo] target(s) in 25.90s
+   Compiling protobuf v3.7.2
+   Compiling protobuf-support v3.7.2
+   Compiling vaccel v0.0.0 (https://github.com/nubificus/vaccel-rust)
+   Compiling dashmap v6.1.0
+   Compiling env_logger v0.11.10
+   Compiling rust-vaccel-classify v0.1.0 (/tmp/rust-vaccel-classify)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 25.90s
 ```
 
 And you are ready to run your application.
@@ -177,75 +162,71 @@ export VACCEL_LOG_LEVEL=4
 and run with:
 
 ```console
-$ cargo run /usr/share/vaccel/images/example.jpg
-    Finished dev [unoptimized + debuginfo] target(s) in 0.07s
-     Running `target/debug/rust-vaccel-classify /usr/share/vaccel/images/example.jpg`
-2025.04.16-14:39:45.13 - <debug> Initializing vAccel
-2025.04.16-14:39:45.13 - <info> vAccel 0.6.1-194-19056528
-2025.04.16-14:39:45.13 - <debug> Config:
-2025.04.16-14:39:45.13 - <debug>   plugins = libvaccel-noop.so
-2025.04.16-14:39:45.13 - <debug>   log_level = debug
-2025.04.16-14:39:45.13 - <debug>   log_file = (null)
-2025.04.16-14:39:45.13 - <debug>   profiling_enabled = true
-2025.04.16-14:39:45.13 - <debug>   version_ignore = true
-2025.04.16-14:39:45.13 - <debug> Created top-level rundir: /run/user/1000/vaccel/jesuwX
-2025.04.16-14:39:45.13 - <info> Registered plugin noop 0.6.1-194-19056528
-2025.04.16-14:39:45.13 - <debug> Registered op noop from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op blas_sgemm from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op image_classify from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op image_detect from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op image_segment from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op image_pose from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op image_depth from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op exec from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tf_session_load from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tf_session_run from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tf_session_delete from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op minmax from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op fpga_arraycopy from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op fpga_vectoradd from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op fpga_parallel from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op fpga_mmult from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op exec_with_resource from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op torch_jitload_forward from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op torch_sgemm from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op opencv from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tflite_session_load from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tflite_session_run from plugin noop
-2025.04.16-14:39:45.13 - <debug> Registered op tflite_session_delete from plugin noop
-2025.04.16-14:39:45.13 - <debug> Loaded plugin noop from libvaccel-noop.so
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Starting vAccel classification example
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Creating new vAccel session
-2025.04.16-14:39:45.13 - <debug> New rundir for session 1: /run/user/1000/vaccel/jesuwX/session.1
-2025.04.16-14:39:45.13 - <debug> Initialized session 1
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Initialized session 1
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Reading image file: /usr/share/vaccel/images/example.jpg
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Read image data: 79281 bytes
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Performing image classification
-2025.04.16-14:39:45.13 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.16-14:39:45.13 - <debug> Start profiling region vaccel_image_op
-2025.04.16-14:39:45.13 - <debug> Returning func from hint plugin noop
-2025.04.16-14:39:45.13 - <debug> Found implementation in noop plugin
-2025.04.16-14:39:45.13 - <debug> [noop] Calling Image classification for session 1
-2025.04.16-14:39:45.13 - <debug> [noop] Dumping arguments for Image classification:
-2025.04.16-14:39:45.13 - <debug> [noop] model: (null)
-2025.04.16-14:39:45.13 - <debug> [noop] len_img: 79281
-2025.04.16-14:39:45.13 - <debug> [noop] len_out_text: 1024
-2025.04.16-14:39:45.13 - <debug> [noop] len_out_imgname: 1024
-2025.04.16-14:39:45.13 - <debug> [noop] will return a dummy result
-2025.04.16-14:39:45.13 - <debug> [noop] will return a dummy result
-2025.04.16-14:39:45.13 - <debug> Stop profiling region vaccel_image_op
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Classification completed successfully
+$ cargo run /usr/local/share/vaccel/images/example.jpg
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target/debug/rust-vaccel-classify /usr/local/share/vaccel/images/example.jpg`
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Starting vAccel classification example
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Creating new vAccel session
+2026.04.29-14:57:01.16 - <debug> Initializing vAccel
+2026.04.29-14:57:01.16 - <info> vAccel 0.7.1-93-ebc23b1f
+2026.04.29-14:57:01.16 - <debug> Config:
+2026.04.29-14:57:01.16 - <debug>   plugins = libvaccel-noop.so
+2026.04.29-14:57:01.16 - <debug>   log_level = debug
+2026.04.29-14:57:01.16 - <debug>   log_file = (null)
+2026.04.29-14:57:01.16 - <debug>   profiling_enabled = false
+2026.04.29-14:57:01.16 - <debug>   version_ignore = false
+2026.04.29-14:57:01.16 - <debug> Created top-level rundir: /run/user/0/vaccel/kZ5YUT
+2026.04.29-14:57:01.16 - <info> Registered plugin noop 0.7.1-93-ebc23b1f
+2026.04.29-14:57:01.16 - <debug> Registered op noop from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op exec from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op exec_with_resource from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op image_classify from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op image_detect from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op image_segment from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op image_pose from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op image_depth from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tf_model_load from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tf_model_unload from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tf_model_run from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tflite_model_load from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tflite_model_unload from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op tflite_model_run from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op torch_model_load from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op torch_model_run from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op torch_sgemm from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op blas_sgemm from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op fpga_arraycopy from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op fpga_vectoradd from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op fpga_parallel from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op fpga_mmult from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op minmax from plugin noop
+2026.04.29-14:57:01.16 - <debug> Registered op opencv from plugin noop
+2026.04.29-14:57:01.16 - <debug> Loaded plugin noop from libvaccel-noop.so
+2026.04.29-14:57:01.16 - <debug> New rundir for session 1: /run/user/0/vaccel/kZ5YUT/session.1
+2026.04.29-14:57:01.16 - <debug> Initialized session 1 with plugin noop
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Initialized session 1
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Reading image file: /usr/local/share/vaccel/images/example.jpg
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Read image data: 79281 bytes
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Performing image classification
+2026.04.29-14:57:01.16 - <debug> session:1 Looking for func implementing op image_classify
+2026.04.29-14:57:01.16 - <debug> Returning func for op image_classify from plugin noop
+2026.04.29-14:57:01.16 - <debug> [noop] Calling Image classification for session 1
+2026.04.29-14:57:01.16 - <debug> [noop] Dumping arguments for Image classification:
+2026.04.29-14:57:01.16 - <debug> [noop] model: (null)
+2026.04.29-14:57:01.16 - <debug> [noop] len_img: 79281
+2026.04.29-14:57:01.16 - <debug> [noop] len_out_text: 1024
+2026.04.29-14:57:01.16 - <debug> [noop] len_out_imgname: 1024
+2026.04.29-14:57:01.16 - <debug> [noop] will return a dummy result
+2026.04.29-14:57:01.16 - <debug> [noop] will return a dummy result
+[2026-04-29T14:57:01Z INFO  rust_vaccel_classify] Classification completed successfully
 Classification tags: This is a dummy classification tag!
 Annotated image: This is a dummy imgname!
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Releasing session 1
-2025.04.16-14:39:45.13 - <debug> Released session 1
-[2025-04-16T14:39:45Z INFO  rust_vaccel_classify] Session released successfully
-2025.04.16-14:39:45.13 - <debug> Cleaning up vAccel
-2025.04.16-14:39:45.13 - <debug> Cleaning up sessions
-2025.04.16-14:39:45.13 - <debug> Cleaning up resources
-2025.04.16-14:39:45.13 - <debug> Cleaning up plugins
-2025.04.16-14:39:45.13 - <debug> Unregistered plugin noop
+2026.04.29-14:57:01.16 - <debug> Released session 1
+2026.04.29-14:57:01.16 - <debug> Cleaning up vAccel
+2026.04.29-14:57:01.16 - <debug> Cleaning up sessions
+2026.04.29-14:57:01.16 - <debug> Cleaning up resources
+2026.04.29-14:57:01.16 - <debug> Cleaning up plugins
+2026.04.29-14:57:01.16 - <debug> Unregistered plugin noop
 ```
 
 The vAccel output of

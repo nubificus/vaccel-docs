@@ -23,32 +23,27 @@ themselves (ie. undefined symbols) but the operation will fail at runtime:
 
 ```console
 $ classify /usr/local/share/vaccel/images/example.jpg 1
-2025.04.05-19:25:04.80 - <debug> Initializing vAccel
-2025.04.05-19:25:04.80 - <info> vAccel 0.6.1-194-19056528
-2025.04.05-19:25:04.80 - <debug> Config:
-2025.04.05-19:25:04.80 - <debug>   plugins = (null)
-2025.04.05-19:25:04.80 - <debug>   log_level = debug
-2025.04.05-19:25:04.80 - <debug>   log_file = (null)
-2025.04.05-19:25:04.80 - <debug>   profiling_enabled = false
-2025.04.05-19:25:04.80 - <debug>   version_ignore = false
-2025.04.05-19:25:04.80 - <debug> Created top-level rundir: /run/user/1002/vaccel/k0R150
-2025.04.05-19:25:04.80 - <debug> New rundir for session 1: /run/user/1002/vaccel/k0R150/session.1
-2025.04.05-19:25:04.80 - <debug> Initialized session 1
-Initialized session with id: 1
-2025.04.05-19:25:04.80 - <debug> session:1 Looking for plugin implementing VACCEL_OP_IMAGE_CLASSIFY
-2025.04.05-19:25:04.80 - <warn> None of the loaded plugins implement VACCEL_OP_IMAGE_CLASSIFY
-Could not run op: 95
-2025.04.05-19:25:04.80 - <debug> Released session 1
-2025.04.05-19:25:04.80 - <debug> Cleaning up vAccel
-2025.04.05-19:25:04.80 - <debug> Cleaning up sessions
-2025.04.05-19:25:04.80 - <debug> Cleaning up resources
-2025.04.05-19:25:04.80 - <debug> Cleaning up plugins
+2026.04.29-14:49:05.41 - <debug> Initializing vAccel
+2026.04.29-14:49:05.41 - <info> vAccel 0.7.1-93-ebc23b1f
+2026.04.29-14:49:05.41 - <debug> Config:
+2026.04.29-14:49:05.41 - <debug>   plugins = (null)
+2026.04.29-14:49:05.41 - <debug>   log_level = debug
+2026.04.29-14:49:05.41 - <debug>   log_file = (null)
+2026.04.29-14:49:05.41 - <debug>   profiling_enabled = false
+2026.04.29-14:49:05.41 - <debug>   version_ignore = false
+2026.04.29-14:49:05.41 - <debug> Created top-level rundir: /run/user/0/vaccel/wrlzzl
+2026.04.29-14:49:05.41 - <error> No plugins registered
+Could not initialize session
+2026.04.29-14:49:05.41 - <debug> Cleaning up vAccel
+2026.04.29-14:49:05.41 - <debug> Cleaning up sessions
+2026.04.29-14:49:05.41 - <debug> Cleaning up resources
+2026.04.29-14:49:05.41 - <debug> Cleaning up plugins
 ```
 
-It is clear from the output that no implementation is found for the
-`VACCEL_OP_IMAGE_CLASSIFY` operation. By comparing the output with
+It is clear from the output that the session cannot be initialized because no
+plugin has been loaded. By comparing the output with
 [classify](running-the-examples.md#classify-noop-debug) from the previous
-document, you can see that the reason is that no plugin has been loaded.
+document, you can see that there are no registered plugins.
 
 You can find out more about the available plugins and their usage in the
 [Plugins](../plugins/index.md) section.
