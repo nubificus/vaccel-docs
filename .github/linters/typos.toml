@@ -1,6 +1,9 @@
 [default.extend-identifiers]
 ScatterND = "ScatterND"
 
+[default.extend-words]
+ba = "ba"
+
 [files]
 extend-exclude = [
   "docs/language-bindings/python-bindings/api-reference/**",
