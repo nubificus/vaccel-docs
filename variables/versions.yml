@@ -1,13 +1,13 @@
 versions:
   bindings:
-    rust: 0.4.1
-    python: 0.2.0
+    rust: 0.5.0+vaccel.0.8.0
+    python: 0.3.0+vaccel.0.8.0
   plugins:
-    rpc: 0.2.1
-    tf: 0.2.0
-    torch: 0.2.0
-    tvm: 0.1.0
-    virtio: 0.2.0
+    rpc: 0.3.0+vaccel.0.8.0
+    tf: 0.3.0+vaccel.0.8.0
+    torch: 0.3.0+vaccel.0.8.0
+    tvm: 0.2.0+vaccel.0.8.0
+    virtio: 0.3.0+vaccel.0.8.0
   misc:
-    qemu-vaccel: 10.0.0
-  vaccel: 0.7.1
+    qemu-vaccel: 10.2.0+vaccel.0.8.0
+  vaccel: 0.8.0
