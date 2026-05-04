@@ -114,149 +114,139 @@ classification with a ResNet model from
 `https://s3.nbfc.io/models/tf/resnet18-v2-7_saved_model.tar.xz` with:
 
 ```console
-$ tf_inference \
-      /usr/local/share/vaccel/images/example.jpg \
-      https://s3.nbfc.io/models/tf/resnet18-v2-7_saved_model.tar.xz \
-      /usr/local/share/vaccel/labels/imagenet.txt
-2026-04-29 15:13:10.336778: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2026-04-29 15:13:10.358481: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2026.04.29-15:13:10.26 - <debug> Initializing vAccel
-2026.04.29-15:13:10.26 - <info> vAccel 0.7.1-93-ebc23b1f
-2026.04.29-15:13:10.26 - <debug> Config:
-2026.04.29-15:13:10.26 - <debug>   plugins = libvaccel-tf.so
-2026.04.29-15:13:10.26 - <debug>   log_level = debug
-2026.04.29-15:13:10.26 - <debug>   log_file = (null)
-2026.04.29-15:13:10.26 - <debug>   profiling_enabled = false
-2026.04.29-15:13:10.26 - <debug>   version_ignore = false
-2026.04.29-15:13:10.26 - <debug> Created top-level rundir: /run/user/0/vaccel/9QDV7g
-2026.04.29-15:13:10.36 - <info> Registered plugin tf 0.2.0-22-b9061d01
-2026.04.29-15:13:10.36 - <debug> Registered op tf_model_load from plugin tf
-2026.04.29-15:13:10.36 - <debug> Registered op tf_model_unload from plugin tf
-2026.04.29-15:13:10.36 - <debug> Registered op tf_model_run from plugin tf
-2026.04.29-15:13:10.36 - <debug> Registered op tflite_model_load from plugin tf
-2026.04.29-15:13:10.36 - <debug> Registered op tflite_model_unload from plugin tf
-2026.04.29-15:13:10.36 - <debug> Registered op tflite_model_run from plugin tf
-2026.04.29-15:13:10.36 - <debug> Loaded plugin tf from libvaccel-tf.so
-2026.04.29-15:13:10.36 - <debug> Initialized resource 1
+$ VACCEL_PLUGINS=libvaccel-tf.so VACCEL_LOG_LEVEL=4 tf_inference /usr/local/share/vaccel/images/example.jpg https://s3.nbfc.io/models/tf/resnet18-v2-7_saved_model.tar.xz /usr/local/share/vaccel/labels/imagenet.txt
+2026.05.02-23:20:18.47 - <debug> Initializing vAccel
+2026.05.02-23:20:18.47 - <info> vAccel 0.8.0
+2026.05.02-23:20:18.47 - <debug> Config:
+2026.05.02-23:20:18.47 - <debug>   plugins = libvaccel-tf.so
+2026.05.02-23:20:18.47 - <debug>   log_level = debug
+2026.05.02-23:20:18.47 - <debug>   log_file = (null)
+2026.05.02-23:20:18.47 - <debug>   profiling_enabled = false
+2026.05.02-23:20:18.47 - <debug>   version_ignore = false
+2026.05.02-23:20:18.47 - <debug> Created top-level rundir: /run/user/0/vaccel/HbjFIO
+2026.05.02-23:20:18.56 - <info> Registered plugin tf 0.3.0+vaccel.0.8.0
+2026.05.02-23:20:18.56 - <debug> Registered op tf_model_load from plugin tf
+2026.05.02-23:20:18.56 - <debug> Registered op tf_model_unload from plugin tf
+2026.05.02-23:20:18.56 - <debug> Registered op tf_model_run from plugin tf
+2026.05.02-23:20:18.56 - <debug> Registered op tflite_model_load from plugin tf
+2026.05.02-23:20:18.56 - <debug> Registered op tflite_model_unload from plugin tf
+2026.05.02-23:20:18.56 - <debug> Registered op tflite_model_run from plugin tf
+2026.05.02-23:20:18.56 - <debug> Loaded plugin tf from libvaccel-tf.so
+2026.05.02-23:20:18.56 - <debug> Initialized resource 1
 Initialized model resource 1
-2026.04.29-15:13:10.36 - <debug> New rundir for session 1: /run/user/0/vaccel/9QDV7g/session.1
-2026.04.29-15:13:10.36 - <debug> Initialized session 1 with plugin tf
+2026.05.02-23:20:18.56 - <debug> New rundir for session 1: /run/user/0/vaccel/HbjFIO/session.1
+2026.05.02-23:20:18.56 - <debug> Initialized session 1 with plugin tf
 Initialized vAccel session 1
-2026.04.29-15:13:10.36 - <debug> New rundir for resource 1: /run/user/0/vaccel/9QDV7g/resource.1
-2026.04.29-15:13:10.36 - <debug> Downloading https://s3.nbfc.io/models/tf/resnet18-v2-7_saved_model.tar.xz
-2026.04.29-15:13:11.40 - <debug> Downloaded: 41.0 MB of 41.0 MB (100.0%) | Speed: 39.37 MB/sec
-2026.04.29-15:13:11.40 - <debug> Download completed successfully
-2026.04.29-15:13:11.40 - <debug> session:1 Registered resource 1
-2026.04.29-15:13:11.40 - <debug> session:1 Looking for func implementing op tf_model_load
-2026.04.29-15:13:11.40 - <debug> Returning func for op tf_model_load from plugin tf
-2026.04.29-15:13:13.52 - <debug> [tf] Loading session from SavedModel
-2026.04.29-15:13:13.53 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/
-2026.04.29-15:13:13.53 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/assets/
-2026.04.29-15:13:13.53 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/fingerprint.pb
-2026.04.29-15:13:13.53 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/saved_model.pb
-2026.04.29-15:13:15.66 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables/
-2026.04.29-15:13:15.66 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables/variables.data-00000-of-00001
-2026.04.29-15:13:15.66 - <debug> [tf] Extracting: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables/variables.index
-2026-04-29 15:13:15.669831: I tensorflow/cc/saved_model/reader.cc:83] Reading SavedModel from: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model
-2026-04-29 15:13:15.690971: I tensorflow/cc/saved_model/reader.cc:52] Reading meta graph with tags { serve }
-2026-04-29 15:13:15.691028: I tensorflow/cc/saved_model/reader.cc:147] Reading SavedModel debug info (if present) from: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model
-2026-04-29 15:13:15.691160: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2026-04-29 15:13:15.777876: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:388] MLIR V1 optimization pass is not enabled
-2026-04-29 15:13:15.778679: I tensorflow/cc/saved_model/loader.cc:236] Restoring SavedModel bundle.
-2026-04-29 15:13:15.815605: I tensorflow/cc/saved_model/loader.cc:220] Running initialization op on SavedModel bundle at path: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model
-2026-04-29 15:13:15.849330: I tensorflow/cc/saved_model/loader.cc:462] SavedModel load for tags { serve }; Status: success: OK. Took 179498 microseconds.
-2026.04.29-15:13:15.90 - <debug> [tf] Model loaded correctly
+2026.05.02-23:20:18.56 - <debug> New rundir for resource 1: /run/user/0/vaccel/HbjFIO/resource.1
+2026.05.02-23:20:18.56 - <debug> Downloading https://s3.nbfc.io/models/tf/resnet18-v2-7_saved_model.tar.xz
+2026.05.02-23:20:19.71 - <debug> Downloaded: 41.0 MB of 41.0 MB (100.0%) | Speed: 35.72 MB/sec
+2026-05-02 23:20:24.973552: I tensorflow/cc/saved_model/reader.cc:83] Reading SavedModel from: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model
+2026-05-02 23:20:25.006098: I tensorflow/cc/saved_model/reader.cc:52] Reading meta graph with tags { serve }
+2026-05-02 23:20:25.006134: I tensorflow/cc/saved_model/reader.cc:147] Reading SavedModel debug info (if present) from: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model
+2026-05-02 23:20:25.006202: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-05-02 23:20:25.129745: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:388] MLIR V1 optimization pass is not enabled
+2026-05-02 23:20:25.130777: I tensorflow/cc/saved_model/loader.cc:236] Restoring SavedModel bundle.
+2026-05-02 23:20:25.181441: I tensorflow/cc/saved_model/loader.cc:220] Running initialization op on SavedModel bundle at path: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model
+2026-05-02 23:20:25.233147: I tensorflow/cc/saved_model/loader.cc:462] SavedModel load for tags { serve }; Status: success: OK. Took 259617 microseconds.
+2026.05.02-23:20:19.71 - <debug> Download completed successfully
+2026.05.02-23:20:19.71 - <debug> session:1 Registered resource 1
+2026.05.02-23:20:19.71 - <debug> session:1 Looking for func implementing op tf_model_load
+2026.05.02-23:20:19.71 - <debug> Returning func for op tf_model_load from plugin tf
+2026.05.02-23:20:22.32 - <debug> [tf] Loading session from SavedModel
+2026.05.02-23:20:22.34 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/
+2026.05.02-23:20:22.34 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/assets/
+2026.05.02-23:20:22.34 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/fingerprint.pb
+2026.05.02-23:20:22.34 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/saved_model.pb
+2026.05.02-23:20:24.97 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables/
+2026.05.02-23:20:24.97 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables/variables.data-00000-of-00001
+2026.05.02-23:20:24.97 - <debug> [tf] Extracting: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables/variables.index
+2026.05.02-23:20:25.31 - <debug> [tf] Model loaded correctly
 Session load status => code:0 message:
-2026.04.29-15:13:15.91 - <debug> session:1 Looking for func implementing op tf_model_run
-2026.04.29-15:13:15.91 - <debug> Returning func for op tf_model_run from plugin tf
-2026.04.29-15:13:15.91 - <debug> [tf] Running session
-2026.04.29-15:13:16.65 - <debug> [tf] Success
+2026.05.02-23:20:25.32 - <debug> session:1 Looking for func implementing op tf_model_run
+2026.05.02-23:20:25.32 - <debug> Returning func for op tf_model_run from plugin tf
+2026.05.02-23:20:25.32 - <debug> [tf] Running session
+2026.05.02-23:20:26.29 - <debug> [tf] Success
 Session run status => code:0 message:
 Success!
 Output tensor => type:1 nr_dims:2 size:4000B
 Prediction: banana
-2026.04.29-15:13:16.65 - <debug> session:1 Looking for func implementing op tf_model_unload
-2026.04.29-15:13:16.65 - <debug> Returning func for op tf_model_unload from plugin tf
-2026.04.29-15:13:16.65 - <debug> [tf] Deleting session
-2026.04.29-15:13:16.66 - <debug> [tf] Removed file: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/fingerprint.pb
-2026.04.29-15:13:16.66 - <debug> [tf] Removed file: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables/variables.index
-2026.04.29-15:13:16.66 - <debug> [tf] Removed file: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables/variables.data-00000-of-00001
-2026.04.29-15:13:16.66 - <debug> [tf] Removed directory: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/variables
-2026.04.29-15:13:16.66 - <debug> [tf] Removed file: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/saved_model.pb
-2026.04.29-15:13:16.66 - <debug> [tf] Removed directory: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model/assets
-2026.04.29-15:13:16.66 - <debug> [tf] Removed directory: /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model
+2026.05.02-23:20:26.29 - <debug> session:1 Looking for func implementing op tf_model_unload
+2026.05.02-23:20:26.29 - <debug> Returning func for op tf_model_unload from plugin tf
+2026.05.02-23:20:26.29 - <debug> [tf] Deleting session
+2026.05.02-23:20:26.30 - <debug> [tf] Removed file: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/fingerprint.pb
+2026.05.02-23:20:26.31 - <debug> [tf] Removed file: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/saved_model.pb
+2026.05.02-23:20:26.31 - <debug> [tf] Removed directory: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/assets
+2026.05.02-23:20:26.31 - <debug> [tf] Removed file: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables/variables.index
+2026.05.02-23:20:26.31 - <debug> [tf] Removed file: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables/variables.data-00000-of-00001
+2026.05.02-23:20:26.31 - <debug> [tf] Removed directory: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model/variables
+2026.05.02-23:20:26.31 - <debug> [tf] Removed directory: /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model
 Session delete status => code:0 message:
-2026.04.29-15:13:16.66 - <debug> session:1 Unregistered resource 1
-2026.04.29-15:13:16.66 - <debug> Released session 1
-2026.04.29-15:13:16.66 - <debug> Removing file /run/user/0/vaccel/9QDV7g/resource.1/resnet18-v2-7_saved_model.tar.xz
-2026.04.29-15:13:16.67 - <debug> Released resource 1
-2026.04.29-15:13:16.67 - <debug> Cleaning up vAccel
-2026.04.29-15:13:16.67 - <debug> Cleaning up sessions
-2026.04.29-15:13:16.67 - <debug> Cleaning up resources
-2026.04.29-15:13:16.67 - <debug> Cleaning up plugins
-2026.04.29-15:13:16.67 - <debug> Unregistered plugin tf
+2026.05.02-23:20:26.31 - <debug> session:1 Unregistered resource 1
+2026.05.02-23:20:26.31 - <debug> Released session 1
+2026.05.02-23:20:26.31 - <debug> Removing file /run/user/0/vaccel/HbjFIO/resource.1/resnet18-v2-7_saved_model.tar.xz
+2026.05.02-23:20:26.32 - <debug> Released resource 1
+2026.05.02-23:20:26.33 - <debug> Cleaning up vAccel
+2026.05.02-23:20:26.33 - <debug> Cleaning up sessions
+2026.05.02-23:20:26.33 - <debug> Cleaning up resources
+2026.05.02-23:20:26.33 - <debug> Cleaning up plugins
+2026.05.02-23:20:26.33 - <debug> Unregistered plugin tf
 ```
 
 You can also run a similar inference example using Tensorflow Lite with:
 
 ```console
-$ tflite_inference \
-      /usr/local/share/vaccel/images/example.jpg \
-      https://s3.nbfc.io/models/tf/resnet18-v2-7_float32.tflite \
-      /usr/local/share/vaccel/labels/imagenet.txt
-2026-04-29 15:14:03.525122: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2026-04-29 15:14:03.546097: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2026.04.29-15:14:03.49 - <debug> Initializing vAccel
-2026.04.29-15:14:03.49 - <info> vAccel 0.7.1-93-ebc23b1f
-2026.04.29-15:14:03.49 - <debug> Config:
-2026.04.29-15:14:03.49 - <debug>   plugins = libvaccel-tf.so
-2026.04.29-15:14:03.49 - <debug>   log_level = debug
-2026.04.29-15:14:03.49 - <debug>   log_file = (null)
-2026.04.29-15:14:03.49 - <debug>   profiling_enabled = false
-2026.04.29-15:14:03.49 - <debug>   version_ignore = false
-2026.04.29-15:14:03.49 - <debug> Created top-level rundir: /run/user/0/vaccel/NFiJEK
-2026.04.29-15:14:03.54 - <info> Registered plugin tf 0.2.0-22-b9061d01
-2026.04.29-15:14:03.54 - <debug> Registered op tf_model_load from plugin tf
-2026.04.29-15:14:03.54 - <debug> Registered op tf_model_unload from plugin tf
-2026.04.29-15:14:03.54 - <debug> Registered op tf_model_run from plugin tf
-2026.04.29-15:14:03.54 - <debug> Registered op tflite_model_load from plugin tf
-2026.04.29-15:14:03.54 - <debug> Registered op tflite_model_unload from plugin tf
-2026.04.29-15:14:03.54 - <debug> Registered op tflite_model_run from plugin tf
-2026.04.29-15:14:03.54 - <debug> Loaded plugin tf from libvaccel-tf.so
-2026.04.29-15:14:03.54 - <debug> Initialized resource 1
+$ VACCEL_PLUGINS=libvaccel-tf.so VACCEL_LOG_LEVEL=4 tflite_inference /usr/local/share/vaccel/images/example.jpg https://s3.nbfc.io/models/tf/resnet18-v2-7_float32.tflite /usr/local/share/vaccel/labels/imagenet.txt
+2026.05.02-23:20:26.41 - <debug> Initializing vAccel
+2026.05.02-23:20:26.41 - <info> vAccel 0.8.0
+2026.05.02-23:20:26.41 - <debug> Config:
+2026.05.02-23:20:26.41 - <debug>   plugins = libvaccel-tf.so
+2026.05.02-23:20:26.41 - <debug>   log_level = debug
+2026.05.02-23:20:26.41 - <debug>   log_file = (null)
+2026.05.02-23:20:26.41 - <debug>   profiling_enabled = false
+2026.05.02-23:20:26.41 - <debug>   version_ignore = false
+2026.05.02-23:20:26.41 - <debug> Created top-level rundir: /run/user/0/vaccel/WQOHcO
+2026.05.02-23:20:26.50 - <info> Registered plugin tf 0.3.0+vaccel.0.8.0
+2026.05.02-23:20:26.50 - <debug> Registered op tf_model_load from plugin tf
+2026.05.02-23:20:26.50 - <debug> Registered op tf_model_unload from plugin tf
+2026.05.02-23:20:26.50 - <debug> Registered op tf_model_run from plugin tf
+2026.05.02-23:20:26.50 - <debug> Registered op tflite_model_load from plugin tf
+2026.05.02-23:20:26.50 - <debug> Registered op tflite_model_unload from plugin tf
+2026.05.02-23:20:26.50 - <debug> Registered op tflite_model_run from plugin tf
+2026.05.02-23:20:26.50 - <debug> Loaded plugin tf from libvaccel-tf.so
+2026.05.02-23:20:26.50 - <debug> Initialized resource 1
 Initialized model resource 1
-2026.04.29-15:14:03.54 - <debug> New rundir for session 1: /run/user/0/vaccel/NFiJEK/session.1
-2026.04.29-15:14:03.54 - <debug> Initialized session 1 with plugin tf
+2026.05.02-23:20:26.50 - <debug> New rundir for session 1: /run/user/0/vaccel/WQOHcO/session.1
+2026.05.02-23:20:26.50 - <debug> Initialized session 1 with plugin tf
 Initialized vAccel session 1
-2026.04.29-15:14:03.54 - <debug> New rundir for resource 1: /run/user/0/vaccel/NFiJEK/resource.1
-2026.04.29-15:14:03.54 - <debug> Downloading https://s3.nbfc.io/models/tf/resnet18-v2-7_float32.tflite
-2026.04.29-15:14:04.73 - <debug> Downloaded: 44.6 MB of 44.6 MB (100.0%) | Speed: 37.63 MB/sec
-2026.04.29-15:14:04.73 - <debug> Download completed successfully
-2026.04.29-15:14:04.73 - <debug> session:1 Registered resource 1
-2026.04.29-15:14:04.73 - <debug> session:1 Looking for func implementing op tflite_model_load
-2026.04.29-15:14:04.73 - <debug> Returning func for op tflite_model_load from plugin tf
-2026.04.29-15:14:04.73 - <debug> [tf][tflite] Loading session from model
-2026.04.29-15:14:04.73 - <debug> [tf][tflite] Model loaded correctly
-2026.04.29-15:14:04.74 - <debug> session:1 Looking for func implementing op tflite_model_run
-2026.04.29-15:14:04.74 - <debug> Returning func for op tflite_model_run from plugin tf
-2026.04.29-15:14:04.74 - <debug> [tf][tflite] Running session
-2026.04.29-15:14:04.84 - <debug> [tf][tflite] Success
+2026.05.02-23:20:26.50 - <debug> New rundir for resource 1: /run/user/0/vaccel/WQOHcO/resource.1
+2026.05.02-23:20:26.51 - <debug> Downloading https://s3.nbfc.io/models/tf/resnet18-v2-7_float32.tflite
+2026.05.02-23:20:27.64 - <debug> Downloaded: 44.6 MB of 44.6 MB (100.0%) | Speed: 39.31 MB/sec
+2026.05.02-23:20:27.64 - <debug> Download completed successfully
+2026.05.02-23:20:27.64 - <debug> session:1 Registered resource 1
+2026.05.02-23:20:27.64 - <debug> session:1 Looking for func implementing op tflite_model_load
+2026.05.02-23:20:27.64 - <debug> Returning func for op tflite_model_load from plugin tf
+2026.05.02-23:20:27.64 - <debug> [tf][tflite] Loading session from model
+2026.05.02-23:20:27.64 - <debug> [tf][tflite] Model loaded correctly
+2026.05.02-23:20:27.65 - <debug> session:1 Looking for func implementing op tflite_model_run
+2026.05.02-23:20:27.65 - <debug> Returning func for op tflite_model_run from plugin tf
+2026.05.02-23:20:27.65 - <debug> [tf][tflite] Running session
+2026.05.02-23:20:27.83 - <debug> [tf][tflite] Success
 Session run status: 0
 Success!
 Output tensor => type:1 nr_dims:2 size:4000B
 Prediction: banana
-2026.04.29-15:14:04.84 - <debug> session:1 Looking for func implementing op tflite_model_unload
-2026.04.29-15:14:04.84 - <debug> Returning func for op tflite_model_unload from plugin tf
-2026.04.29-15:14:04.84 - <debug> session:1 Unregistered resource 1
-2026.04.29-15:14:04.84 - <debug> Released session 1
-2026.04.29-15:14:04.84 - <debug> Removing file /run/user/0/vaccel/NFiJEK/resource.1/resnet18-v2-7_float32.tflite
-2026.04.29-15:14:04.85 - <debug> Released resource 1
-2026.04.29-15:14:04.85 - <debug> Cleaning up vAccel
-2026.04.29-15:14:04.85 - <debug> Cleaning up sessions
-2026.04.29-15:14:04.85 - <debug> Cleaning up resources
-2026.04.29-15:14:04.85 - <debug> Cleaning up plugins
-2026.04.29-15:14:04.85 - <debug> Unregistered plugin tf
+2026.05.02-23:20:27.83 - <debug> session:1 Looking for func implementing op tflite_model_unload
+2026.05.02-23:20:27.83 - <debug> Returning func for op tflite_model_unload from plugin tf
+2026.05.02-23:20:27.84 - <debug> session:1 Unregistered resource 1
+2026.05.02-23:20:27.84 - <debug> Released session 1
+2026.05.02-23:20:27.84 - <debug> Removing file /run/user/0/vaccel/WQOHcO/resource.1/resnet18-v2-7_float32.tflite
+2026.05.02-23:20:27.85 - <debug> Released resource 1
+2026.05.02-23:20:27.85 - <debug> Cleaning up vAccel
+2026.05.02-23:20:27.85 - <debug> Cleaning up sessions
+2026.05.02-23:20:27.85 - <debug> Cleaning up resources
+2026.05.02-23:20:27.85 - <debug> Cleaning up plugins
+2026.05.02-23:20:27.85 - <debug> Unregistered plugin tf
 ```
 
 ## Using the vAccel Tensorflow bindings

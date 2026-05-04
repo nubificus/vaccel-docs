@@ -22,22 +22,22 @@ If you run the example, there will be no errors concerning the binaries
 themselves (ie. undefined symbols) but the operation will fail at runtime:
 
 ```console
-$ classify /usr/local/share/vaccel/images/example.jpg 1
-2026.04.29-14:49:05.41 - <debug> Initializing vAccel
-2026.04.29-14:49:05.41 - <info> vAccel 0.7.1-93-ebc23b1f
-2026.04.29-14:49:05.41 - <debug> Config:
-2026.04.29-14:49:05.41 - <debug>   plugins = (null)
-2026.04.29-14:49:05.41 - <debug>   log_level = debug
-2026.04.29-14:49:05.41 - <debug>   log_file = (null)
-2026.04.29-14:49:05.41 - <debug>   profiling_enabled = false
-2026.04.29-14:49:05.41 - <debug>   version_ignore = false
-2026.04.29-14:49:05.41 - <debug> Created top-level rundir: /run/user/0/vaccel/wrlzzl
-2026.04.29-14:49:05.41 - <error> No plugins registered
+$ VACCEL_LOG_LEVEL=4 classify /usr/local/share/vaccel/images/example.jpg 1
 Could not initialize session
-2026.04.29-14:49:05.41 - <debug> Cleaning up vAccel
-2026.04.29-14:49:05.41 - <debug> Cleaning up sessions
-2026.04.29-14:49:05.41 - <debug> Cleaning up resources
-2026.04.29-14:49:05.41 - <debug> Cleaning up plugins
+2026.05.02-23:20:11.42 - <debug> Initializing vAccel
+2026.05.02-23:20:11.42 - <info> vAccel 0.8.0
+2026.05.02-23:20:11.42 - <debug> Config:
+2026.05.02-23:20:11.42 - <debug>   plugins = (null)
+2026.05.02-23:20:11.42 - <debug>   log_level = debug
+2026.05.02-23:20:11.42 - <debug>   log_file = (null)
+2026.05.02-23:20:11.42 - <debug>   profiling_enabled = false
+2026.05.02-23:20:11.42 - <debug>   version_ignore = false
+2026.05.02-23:20:11.42 - <debug> Created top-level rundir: /run/user/0/vaccel/i5fLGv
+2026.05.02-23:20:11.42 - <error> No plugins registered
+2026.05.02-23:20:11.42 - <debug> Cleaning up vAccel
+2026.05.02-23:20:11.42 - <debug> Cleaning up sessions
+2026.05.02-23:20:11.42 - <debug> Cleaning up resources
+2026.05.02-23:20:11.42 - <debug> Cleaning up plugins
 ```
 
 It is clear from the output that the session cannot be initialized because no

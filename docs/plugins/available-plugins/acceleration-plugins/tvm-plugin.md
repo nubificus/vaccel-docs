@@ -100,45 +100,44 @@ classification with a ResNet model from
 /// tab | x86
 
 ```console
-$ classify /usr/local/share/vaccel/images/example.jpg 1 \
-      https://s3.nbfc.io/models/tvm/x86_64/resnet18-v2-7.so
-2026.04.29-15:22:46.01 - <debug> Initializing vAccel
-2026.04.29-15:22:46.01 - <info> vAccel 0.7.1-93-ebc23b1f
-2026.04.29-15:22:46.01 - <debug> Config:
-2026.04.29-15:22:46.01 - <debug>   plugins = libvaccel-tvm.so
-2026.04.29-15:22:46.01 - <debug>   log_level = debug
-2026.04.29-15:22:46.01 - <debug>   log_file = (null)
-2026.04.29-15:22:46.01 - <debug>   profiling_enabled = false
-2026.04.29-15:22:46.01 - <debug>   version_ignore = false
-2026.04.29-15:22:46.01 - <debug> Created top-level rundir: /run/user/0/vaccel/sCOIDY
-2026.04.29-15:22:46.01 - <info> Registered plugin tvm 0.1.0-11-6da3ba19
-2026.04.29-15:22:46.01 - <debug> Registered op image_classify from plugin tvm
-2026.04.29-15:22:46.01 - <debug> Loaded plugin tvm from libvaccel-tvm.so
-2026.04.29-15:22:46.01 - <debug> New rundir for session 1: /run/user/0/vaccel/sCOIDY/session.1
-2026.04.29-15:22:46.01 - <debug> Initialized session 1 with plugin tvm
+$ VACCEL_PLUGINS=libvaccel-tvm.so VACCEL_LOG_LEVEL=4 classify /usr/local/share/vaccel/images/example.jpg 1 https://s3.nbfc.io/models/tvm/x86_64/resnet18-v2-7.so
+2026.05.02-23:20:27.88 - <debug> Initializing vAccel
+2026.05.02-23:20:27.88 - <info> vAccel 0.8.0
+2026.05.02-23:20:27.88 - <debug> Config:
+2026.05.02-23:20:27.88 - <debug>   plugins = libvaccel-tvm.so
+2026.05.02-23:20:27.88 - <debug>   log_level = debug
+2026.05.02-23:20:27.88 - <debug>   log_file = (null)
+2026.05.02-23:20:27.88 - <debug>   profiling_enabled = false
+2026.05.02-23:20:27.88 - <debug>   version_ignore = false
+2026.05.02-23:20:27.88 - <debug> Created top-level rundir: /run/user/0/vaccel/FO36GI
+2026.05.02-23:20:27.89 - <info> Registered plugin tvm 0.2.0+vaccel.0.8.0
+2026.05.02-23:20:27.89 - <debug> Registered op image_classify from plugin tvm
+2026.05.02-23:20:27.89 - <debug> Loaded plugin tvm from libvaccel-tvm.so
+2026.05.02-23:20:27.89 - <debug> New rundir for session 1: /run/user/0/vaccel/FO36GI/session.1
+2026.05.02-23:20:27.89 - <debug> Initialized session 1 with plugin tvm
 Initialized session with id: 1
-2026.04.29-15:22:46.01 - <debug> Initialized resource 1
-2026.04.29-15:22:46.01 - <debug> New rundir for resource 1: /run/user/0/vaccel/sCOIDY/resource.1
-2026.04.29-15:22:46.01 - <debug> Downloading https://s3.nbfc.io/models/tvm/x86_64/resnet18-v2-7.so
-2026.04.29-15:22:47.36 - <debug> Downloaded: 45.8 MB of 45.8 MB (100.0%) | Speed: 34.00 MB/sec
-2026.04.29-15:22:47.36 - <debug> Download completed successfully
-2026.04.29-15:22:47.36 - <debug> session:1 Registered resource 1
-2026.04.29-15:22:47.36 - <debug> session:1 Looking for func implementing op image_classify
-2026.04.29-15:22:47.36 - <debug> Returning func for op image_classify from plugin tvm
-2026.04.29-15:22:47.36 - <debug> [tvm] Resource path: /run/user/0/vaccel/sCOIDY/resource.1/resnet18-v2-7.so
-loading file: /run/user/0/vaccel/sCOIDY/resource.1/resnet18-v2-7.so
-2026.04.29-15:22:47.47 - <debug> [tvm] Prediction: banana
+2026.05.02-23:20:27.89 - <debug> Initialized resource 1
+2026.05.02-23:20:27.89 - <debug> New rundir for resource 1: /run/user/0/vaccel/FO36GI/resource.1
+2026.05.02-23:20:27.89 - <debug> Downloading https://s3.nbfc.io/models/tvm/x86_64/resnet18-v2-7.so
+2026.05.02-23:20:28.94 - <debug> Downloaded: 45.8 MB of 45.8 MB (100.0%) | Speed: 43.68 MB/sec
+2026.05.02-23:20:28.94 - <debug> Download completed successfully
+2026.05.02-23:20:28.94 - <debug> session:1 Registered resource 1
+2026.05.02-23:20:28.94 - <debug> session:1 Looking for func implementing op image_classify
+2026.05.02-23:20:28.94 - <debug> Returning func for op image_classify from plugin tvm
+2026.05.02-23:20:28.94 - <debug> [tvm] Resource path: /run/user/0/vaccel/FO36GI/resource.1/resnet18-v2-7.so
+loading file: /run/user/0/vaccel/FO36GI/resource.1/resnet18-v2-7.so
+2026.05.02-23:20:29.07 - <debug> [tvm] Prediction: banana
 classification tags: banana
 classification imagename: PLACEHOLDER
-2026.04.29-15:22:47.47 - <debug> session:1 Unregistered resource 1
-2026.04.29-15:22:47.47 - <debug> Removing file /run/user/0/vaccel/sCOIDY/resource.1/resnet18-v2-7.so
-2026.04.29-15:22:47.47 - <debug> Released resource 1
-2026.04.29-15:22:47.47 - <debug> Released session 1
-2026.04.29-15:22:47.54 - <debug> Cleaning up vAccel
-2026.04.29-15:22:47.54 - <debug> Cleaning up sessions
-2026.04.29-15:22:47.54 - <debug> Cleaning up resources
-2026.04.29-15:22:47.54 - <debug> Cleaning up plugins
-2026.04.29-15:22:47.54 - <debug> Unregistered plugin tvm
+2026.05.02-23:20:29.07 - <debug> session:1 Unregistered resource 1
+2026.05.02-23:20:29.07 - <debug> Removing file /run/user/0/vaccel/FO36GI/resource.1/resnet18-v2-7.so
+2026.05.02-23:20:29.07 - <debug> Released resource 1
+2026.05.02-23:20:29.07 - <debug> Released session 1
+2026.05.02-23:20:29.31 - <debug> Cleaning up vAccel
+2026.05.02-23:20:29.31 - <debug> Cleaning up sessions
+2026.05.02-23:20:29.31 - <debug> Cleaning up resources
+2026.05.02-23:20:29.31 - <debug> Cleaning up plugins
+2026.05.02-23:20:29.31 - <debug> Unregistered plugin tvm
 ```
 
 ///

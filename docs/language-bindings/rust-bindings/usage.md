@@ -95,9 +95,9 @@ and, assuming vAccel is installed at `/usr/local`, run with:
 
 ```console
 $ ../target/debug/examples/session
-[2026-04-29T14:51:35Z INFO  session] Starting vAccel session handling example
-[2026-04-29T14:51:35Z INFO  session] Creating new vAccel session
-[2026-04-29T14:51:35Z INFO  session] Initialized session 1
+[2026-05-02T23:20:51Z INFO  session] Starting vAccel session handling example
+[2026-05-02T23:20:51Z INFO  session] Creating new vAccel session
+[2026-05-02T23:20:51Z INFO  session] Initialized session 1
 ```
 
 By setting log level to debug:
@@ -110,50 +110,50 @@ you can see the verbose vAccel output:
 
 ```console
 $ ../target/debug/examples/session
-[2026-04-29T14:51:35Z INFO  session] Starting vAccel session handling example
-[2026-04-29T14:51:35Z INFO  session] Creating new vAccel session
-2026.04.29-14:51:35.50 - <debug> Initializing vAccel
-2026.04.29-14:51:35.50 - <info> vAccel 0.7.1-93-ebc23b1f
-2026.04.29-14:51:35.50 - <debug> Config:
-2026.04.29-14:51:35.50 - <debug>   plugins = libvaccel-noop.so
-2026.04.29-14:51:35.50 - <debug>   log_level = debug
-2026.04.29-14:51:35.50 - <debug>   log_file = (null)
-2026.04.29-14:51:35.50 - <debug>   profiling_enabled = false
-2026.04.29-14:51:35.50 - <debug>   version_ignore = false
-2026.04.29-14:51:35.50 - <debug> Created top-level rundir: /run/user/0/vaccel/qAtMaP
-2026.04.29-14:51:35.50 - <info> Registered plugin noop 0.7.1-93-ebc23b1f
-2026.04.29-14:51:35.50 - <debug> Registered op noop from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op exec from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op exec_with_resource from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op image_classify from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op image_detect from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op image_segment from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op image_pose from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op image_depth from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tf_model_load from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tf_model_unload from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tf_model_run from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tflite_model_load from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tflite_model_unload from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op tflite_model_run from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op torch_model_load from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op torch_model_run from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op torch_sgemm from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op blas_sgemm from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op fpga_arraycopy from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op fpga_vectoradd from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op fpga_parallel from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op fpga_mmult from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op minmax from plugin noop
-2026.04.29-14:51:35.50 - <debug> Registered op opencv from plugin noop
-2026.04.29-14:51:35.50 - <debug> Loaded plugin noop from libvaccel-noop.so
-2026.04.29-14:51:35.50 - <debug> New rundir for session 1: /run/user/0/vaccel/qAtMaP/session.1
-2026.04.29-14:51:35.50 - <debug> Initialized session 1 with plugin noop
-[2026-04-29T14:51:35Z INFO  session] Initialized session 1
-2026.04.29-14:51:35.50 - <debug> Released session 1
-2026.04.29-14:51:35.50 - <debug> Cleaning up vAccel
-2026.04.29-14:51:35.50 - <debug> Cleaning up sessions
-2026.04.29-14:51:35.50 - <debug> Cleaning up resources
-2026.04.29-14:51:35.50 - <debug> Cleaning up plugins
-2026.04.29-14:51:35.50 - <debug> Unregistered plugin noop
+[2026-05-02T23:20:51Z INFO  session] Starting vAccel session handling example
+[2026-05-02T23:20:51Z INFO  session] Creating new vAccel session
+[2026-05-02T23:20:51Z INFO  session] Initialized session 1
+2026.05.02-23:20:51.76 - <debug> Initializing vAccel
+2026.05.02-23:20:51.76 - <info> vAccel 0.8.0
+2026.05.02-23:20:51.76 - <debug> Config:
+2026.05.02-23:20:51.76 - <debug>   plugins = libvaccel-noop.so
+2026.05.02-23:20:51.76 - <debug>   log_level = debug
+2026.05.02-23:20:51.76 - <debug>   log_file = (null)
+2026.05.02-23:20:51.76 - <debug>   profiling_enabled = false
+2026.05.02-23:20:51.76 - <debug>   version_ignore = false
+2026.05.02-23:20:51.76 - <debug> Created top-level rundir: /run/user/0/vaccel/X341aI
+2026.05.02-23:20:51.76 - <info> Registered plugin noop 0.8.0
+2026.05.02-23:20:51.76 - <debug> Registered op noop from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op exec from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op exec_with_resource from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op image_classify from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op image_detect from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op image_segment from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op image_pose from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op image_depth from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tf_model_load from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tf_model_unload from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tf_model_run from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tflite_model_load from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tflite_model_unload from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op tflite_model_run from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op torch_model_load from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op torch_model_run from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op torch_sgemm from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op blas_sgemm from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op fpga_arraycopy from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op fpga_vectoradd from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op fpga_parallel from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op fpga_mmult from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op minmax from plugin noop
+2026.05.02-23:20:51.76 - <debug> Registered op opencv from plugin noop
+2026.05.02-23:20:51.76 - <debug> Loaded plugin noop from libvaccel-noop.so
+2026.05.02-23:20:51.76 - <debug> New rundir for session 1: /run/user/0/vaccel/X341aI/session.1
+2026.05.02-23:20:51.76 - <debug> Initialized session 1 with plugin noop
+2026.05.02-23:20:51.76 - <debug> Released session 1
+2026.05.02-23:20:51.76 - <debug> Cleaning up vAccel
+2026.05.02-23:20:51.76 - <debug> Cleaning up sessions
+2026.05.02-23:20:51.76 - <debug> Cleaning up resources
+2026.05.02-23:20:51.76 - <debug> Cleaning up plugins
+2026.05.02-23:20:51.76 - <debug> Unregistered plugin noop
 ```
